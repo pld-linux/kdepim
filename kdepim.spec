@@ -7,7 +7,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040401
+%define		_snap		040407
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -24,7 +24,7 @@ Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 #Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
 Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	2d327cb847e44280abe6244bf8f89188
+# Source0-md5:	37bb78cd211dda1fec96b465ac2a5bd3
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -34,6 +34,11 @@ BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
+BuildRequires:	bluez-libs-devel
+BuildRequires:	gpgme-devel
+BuildRequires:	gnupg >= 1.9.5
+BuildRequires:	lockdev-devel
+BuildRequires:  libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
@@ -897,8 +902,8 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 ### </i18n stuff>
 
 %prep
-#%setup -q -n %{name}
-%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name}
+##%setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1130,7 +1135,7 @@ rm -rf $RPM_BUILD_ROOT
 # kolabwizard
 %doc README.Kolab
 %attr(755,root,root) %{_bindir}/kolabwizard
-%attr(755,root,root) %{_bindir}/groupwarewizard
+%attr(755,root,root) %{_bindir}/*groupwarewizard
 # kitchensync part
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
@@ -1660,6 +1665,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/kde3/libegroupwarewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so.*.*.*
+%{_libdir}/kde3/libkolabwizard.la
+%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so.*.*.*
 # kitchensync part
 %{_libdir}/libkitchensyncui.la
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.0.0.0
