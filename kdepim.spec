@@ -9,8 +9,8 @@ Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.0.3
-Release:	6
+Version:	3.0.4
+Release:	1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -18,9 +18,8 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 Source1:	kde-i18n-%{name}-%{version}.tar.bz2
-Patch0:		%{name}-fix-knotes-crash.patch
-Patch1:		%{name}-desktop.patch
-Patch2:		%{name}-no_versioned_modules.patch
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-no_versioned_modules.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -147,7 +146,6 @@ bazuj╠cych na kdepim.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
