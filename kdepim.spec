@@ -31,7 +31,8 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 %if ! %{with cvs}
 Source0:        ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-# Source0-md5:  53b213398dc488af5de57b74c6b3bbf5
+#Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
+##%% Source0-md5:  53b213398dc488af5de57b74c6b3bbf5
 %else
 Source0:        kdesource.tar.gz
 %endif
@@ -510,10 +511,10 @@ TODO.
 TODO.
 
 %prep
-%if %{with cvs}
-%setup -q -n %{name} -D
-%else
+%if ! %{with cvs}
 %setup -q -n %{name}-%{_snap} 
+%else
+%setup -q -n %{name} -D
 %endif
 %patch0 -p1
 %patch1 -p1
@@ -847,8 +848,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-#%{_kdedocdir}/en/%{name}-apidocs
-%{_kdedocdir}/en/%{name}-%{_snap}-apidocs
+%{_kdedocdir}/en/%{name}%{!?with_cvs:-%{_snap}}-apidocs
 %endif
 
 %files -n kde-kio-sieve
