@@ -9,7 +9,7 @@
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
-Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
+Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
@@ -38,19 +38,19 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
-for the K Desktop Enviromnent (KDE).
+for the K Desktop Environment (KDE).
 
 %description -l pl
-kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
 (KDE). 
 
 %description -l ru
 kdepim - это набор утилит для управления персональной информацией для
-K Desktop Enviromnent (KDE).
+K Desktop Environment (KDE).
 
 %description -l uk
 kdepim - це наб╕р утил╕т для керування персональною информац╕╓ю для K
-Desktop Enviromnent (KDE).
+Desktop Environment (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
@@ -64,7 +64,7 @@ This package contains header files needed if you wish to build
 applications based on kdepim.
 
 %description devel -l pl
-Pakiet ten zawiera pliki nagЁСwkowe potzrebne do budowy aplikacji
+Pakiet ten zawiera pliki nagЁСwkowe potrzebne do budowy aplikacji
 bazuj╠cych na kdepim.
 
 %description devel -l uk
@@ -82,10 +82,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description kaddressbook
-Address Book
+Address Book.
 
 %description kaddressbook -l pl
-Ksi╠©ka adresowa
+Ksi╠©ka adresowa.
 
 %package kalarm
 Summary:	Alarm
@@ -94,14 +94,14 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description kalarm
-Reminder Message Scheduler
+Reminder Message Scheduler.
 
 %description kalarm -l pl
-Nastawianie przypominania o zdarzeniach
+Nastawianie przypominania o zdarzeniach.
 
 %package kandy
 Summary:        A communication program between mobile phone and PC
-Summary(pl):    Program do komunikacji miЙdzy PC a tel. komСrkowym.
+Summary(pl):    Program do komunikacji miЙdzy PC a tel. komСrkowym
 Group:          X11/Applications
 Obsoletes:	%{name}-cellphone
 
@@ -123,7 +123,7 @@ Requires:	%{name}-kaddressbook = %{version}-%{release}
 Requires:       %{name}-korganizer = %{version}-%{release}
 
 %description kaplan
-Kaplan is a PIM application, whcih integrates the knotes, kmail,
+Kaplan is a PIM application, which integrates the knotes, kmail,
 korganizer, kaddressbook parts.
 
 %description kaplan -l pl
