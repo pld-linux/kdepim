@@ -256,7 +256,7 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 %{__make}
 
 #cd kaplan
-#%{__make}
+#%%{__make}
 #cd .. 
 
 %install
