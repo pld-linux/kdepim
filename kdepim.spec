@@ -6,7 +6,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040325
+%define		_snap		040401
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -21,8 +21,9 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
-##%% Source0-md5:	657a61e0f3d90d2afec3820e77f81306
+#Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
+Source0:       http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	2d327cb847e44280abe6244bf8f89188
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -872,7 +873,7 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 ### </i18n stuff>
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1305,7 +1306,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-apidocs
+%lang(en) %{_kdedocdir}/en/%{name}-%{_snap}-apidocs
 %endif
 
 %files -n kde-kio-sieve
