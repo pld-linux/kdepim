@@ -5,7 +5,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040206
+%define		_snap		040209
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -1108,6 +1108,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
+%{_mandir}/man1/kandy.1*
 
 %files karm -f karm_en.lang
 %defattr(644,root,root,755)
@@ -1123,6 +1124,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kgpgcertmanager
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
+# TODO
 %{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_libdir}/kde3/libkmailpart.la
@@ -1221,6 +1223,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ghns
 %attr(755,root,root) %{_bindir}/kalarm*
 %attr(755,root,root) %{_bindir}/khotnewstuff
+%attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
@@ -1241,6 +1244,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/ksync
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
+%{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/services/korganizer_configcolors.desktop
 %{_datadir}/services/korganizer_configfonts.desktop
@@ -1262,6 +1266,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kalarm.png
 %{_iconsdir}/crystalsvg/*/actions/knewstuff.png
 %{_iconsdir}/*/*/*/korganizer*.png
+%{_mandir}/man1/ical2vcal.1*
+%{_mandir}/man1/kalarmd.1*
+%{_mandir}/man1/korganizer.1*
 # kitchensync part
 #%attr(755,root,root) %{_bindir}/kitchensync
 #%attr(755,root,root) %{_bindir}/simplealarmdaemon
@@ -1362,6 +1369,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
+%{_mandir}/man1/kpilot.1*
 
 # TODO
 %files kresources
