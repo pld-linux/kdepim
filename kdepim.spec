@@ -15,8 +15,8 @@
 %define		_snap		040508
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040505
-%define		_minbaseevr	9:3.2.90.040505
+%define		_minlibsevr	9:3.2.90.040508
+%define		_minbaseevr	9:3.2.90.040508
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
