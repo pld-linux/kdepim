@@ -336,6 +336,22 @@ Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
+Obsoletes:	kdenetwork
+Obsoletes:	kdepim-commonlibs
+Obsoletes:	kdepim-kaddressbook-libs
+Obsoletes:	kdepim-kmail-libs
+Obsoletes:	kdepim-kontact-libs
+Obsoletes:	kdepim-korganizer-libs
+Obsoletes:	kdepim-libkcal
+Obsoletes:	kdepim-libkdenetwork
+Obsoletes:	kdepim-libkdepim
+Obsoletes:	kdepim-libkmailprivate
+Obsoletes:	kdepim-libknodecommon
+Obsoletes:	kdepim-libknotes_xmlrpc
+Obsoletes:	kdepim-libkpilot
+Obsoletes:	kdepim-libksieve
+Obsoletes:	kdepim-libktnef
+Obsoletes:	kdepim-libmimelib
 
 %description libs
 TODO.
