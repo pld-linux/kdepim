@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030504
+%define		_snap		030509
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
@@ -414,6 +414,33 @@ cat kalarmd.lang >> korganizer.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	kaddressbook	-p /sbin/ldconfig
+%postun	kaddressbook	-p /sbin/ldconfig
+
+%post	kontact		-p /sbin/ldconfig
+%postun	kontact		-p /sbin/ldconfig
+
+%post	korganizer	-p /sbin/ldconfig
+%postun	korganizer	-p /sbin/ldconfig
+
+%post	kpilot		-p /sbin/ldconfig
+%postun	kpilot		-p /sbin/ldconfig
+
+%post	ksync		-p /sbin/ldconfig
+%postun	ksync		-p /sbin/ldconfig
+
+%post	ktnef		-p /sbin/ldconfig
+%postun	ktnef		-p /sbin/ldconfig
+
+%post	libkdenetwork	-p /sbin/ldconfig
+%postun	libkdenetwork	-p /sbin/ldconfig
+
+%post	libkdepim	-p /sbin/ldconfig
+%postun	libkdepim	-p /sbin/ldconfig
+
+%post	libmimelib	-p /sbin/ldconfig
+%postun	libmimelib	-p /sbin/ldconfig
+
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
@@ -424,7 +451,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
 %{_libdir}/libkaddressbook.la
-%attr(755,root,root) %{_libdir}/libkaddressbook.so.*
+%attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
 %{_libdir}/kde3/kcm_kabconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
 %{_libdir}/kde3/kcm_kabldapconfig.la
@@ -515,7 +542,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
 %{_libdir}/libkpinterfaces.la
-%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
+%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
 %{_libdir}/kde3/libkp*plugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
 %{_datadir}/apps/kp*plugin
@@ -590,7 +617,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
 %{_libdir}/libkpilot.la
-%attr(755,root,root) %{_libdir}/libkpilot.so.*
+%attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
 %{_libdir}/kde3/*conduit.la
 %attr(755,root,root) %{_libdir}/kde3/*conduit.so*
 %{_datadir}/apps/kpilot
@@ -605,14 +632,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ksync
 %{_libdir}/libksync.la
-%attr(755,root,root) %{_libdir}/libksync.so.*
+%attr(755,root,root) %{_libdir}/libksync.so.*.*.*
 %{_datadir}/apps/ksync
 
 %files ktnef
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ktnef
 %{_libdir}/libktnef.la
-%attr(755,root,root) %{_libdir}/libktnef.so.*
+%attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/ktnef.desktop
@@ -622,16 +649,16 @@ rm -rf $RPM_BUILD_ROOT
 %doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
 %defattr(644,root,root,755)
 %{_libdir}/libkdenetwork.la
-%attr(755,root,root) %{_libdir}/libkdenetwork.so.*
+%attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
 
 %files libkdepim
 %defattr(644,root,root,755)
 %doc README*
 %{_libdir}/libkdepim.la
-%attr(755,root,root) %{_libdir}/libkdepim.so.*
+%attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
 
 %files libmimelib
 %doc mimelib/{Changes,README*,Tutorial}
 %defattr(644,root,root,755)
 %{_libdir}/libmimelib.la
-%attr(755,root,root) %{_libdir}/libmimelib.so.*
+%attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
