@@ -7,7 +7,8 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040407
+%define		_snap		040412
+%define		_packager	djurban
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -23,8 +24,8 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 #Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	37bb78cd211dda1fec96b465ac2a5bd3
+Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	1622230a860808c47be7df072b67e8f1
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -131,6 +132,19 @@ KDE SIEVE protocol service.
 
 %description -n kde-kio-sieve -l pl
 Obs³uga protoko³u SIEVE.
+
+%package -n kde-kio-newimap4
+Summary:        New IMAP4 protocol service 
+Summary(pl):    Nowa obs³uga protoko³u IMAP4
+Group:          X11/Libraries
+#Requires:      %{name}-libksieve = %{epoch}:%{version}-%{release}
+
+%description -n kde-kio-newimap4
+New IMAP4 protocol service.
+
+%description -n kde-kio-newimap4 -l pl
+Nowa obs³uga protoko³u IMAP4.
+
 
 %package kaddressbook
 Summary:	Address Book
@@ -1352,6 +1366,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_datadir}/services/sieve.protocol
 
+%files -n kde-kio-newimap4
+%defattr(644,root,root,755)
+%{_libdir}/kde3/kio_newimap4.la
+%attr(755,root,root) %{_libdir}/kde3/kio_newimap4.so
+%{_datadir}/services/newimap4.protocol
+%{_datadir}/services/newimaps.protocol
+
 %files kaddressbook -f kaddressbook_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
@@ -1374,8 +1395,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
 %{_libdir}/kde3/libkaddrbk_iconview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
-%{_libdir}/kde3/libkaddrbk_location.la
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
+##%{_libdir}/kde3/libkaddrbk_location.la
+##%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
 #%{_libdir}/kde3/libkaddrbk_merge.la
 #%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_merge.so
 %{_libdir}/kde3/libkaddrbk_tableview.la
