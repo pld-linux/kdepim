@@ -24,7 +24,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1
+Release:	1.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -262,23 +262,6 @@ znakСw.
 %description kmail -l pt_BR
 Poderoso cliente / leitor de e-mails para o KDE.
 
-%package kmail-libs
-Summary:	kmailprivate library
-Summary(pl):	Biblioteka kmailprivate
-Group:		X11/Libraries
-#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
-Obsoletes:	kdepim-libkmailprivate
-Obsoletes:	kdepim-libksieve
-
-%description kmail-libs
-kdmailprivate library.
-
-%description kmail-libs -l pl
-Biblioteka kmailprivate.
-
 %package knode
 Summary:	KDE News Reader
 Summary(pl):	Czytnik newsСw dla KDE
@@ -439,18 +422,6 @@ knodecommon library.
 %description libknodecommon -l pl
 Biblioteka knodecommon.
 
-%package libknotes_xmlrpc
-Summary:	knotes_xmlrpc library
-Summary(pl):	Biblioteka knotes_xmlrpc
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libknotes_xmlrpc
-knotes_xmlrpc library.
-
-%description libknotes_xmlrpc -l pl
-Biblioteka knotes_xmlrpc.
-
 %package libkpilot
 Summary:	kpilot library
 Summary(pl):	Biblioteka kpilot
@@ -462,18 +433,6 @@ kpilot library.
 
 %description libkpilot -l pl
 Biblioteka kpilot.
-
-%package libksieve
-Summary:	ksieve library
-Summary(pl):	Biblioteka ksieve
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libksieve
-ksieve library.
-
-%description libksieve -l pl
-Biblioteka ksieve.
 
 %package libktnef
 Summary:	ktnef library
@@ -594,39 +553,6 @@ sed -i 's/.*apidocs.*//' *.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post	kaddressbook-libs	-p /sbin/ldconfig
-%postun	kaddressbook-libs	-p /sbin/ldconfig
-
-%post	kmail-libs		-p /sbin/ldconfig
-%postun	kmail-libs		-p /sbin/ldconfig
-
-%post	libkcal			-p /sbin/ldconfig
-%postun	libkcal			-p /sbin/ldconfig
-
-%post	libkdenetwork		-p /sbin/ldconfig
-%postun	libkdenetwork		-p /sbin/ldconfig
-
-%post	libkdepim		-p /sbin/ldconfig
-%postun	libkdepim		-p /sbin/ldconfig
-
-%post	libknodecommon		-p /sbin/ldconfig
-%postun	libknodecommon		-p /sbin/ldconfig
-
-%post	libknotes_xmlrpc	-p /sbin/ldconfig
-%postun	libknotes_xmlrpc	-p /sbin/ldconfig
-
-%post	libkpilot		-p /sbin/ldconfig
-%postun	libkpilot		-p /sbin/ldconfig
-
-%post	libksieve		-p /sbin/ldconfig
-%postun	libksieve		-p /sbin/ldconfig
-
-%post	libktnef		-p /sbin/ldconfig
-%postun	libktnef		-p /sbin/ldconfig
-
-%post	libmimelib		-p /sbin/ldconfig
-%postun	libmimelib		-p /sbin/ldconfig
 
 %post	libs			-p /sbin/ldconfig
 %postun	libs			-p /sbin/ldconfig
@@ -935,13 +861,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
 
-%files kaddressbook-libs
-%defattr(644,root,root,755)
-%{_libdir}/libkaddressbook.la
-%attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
-%{_libdir}/libkabinterfaces.la
-%attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
-
 %files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
@@ -1029,18 +948,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_datadir}/services/sieve.protocol
-
-%files kmail-libs
-%defattr(644,root,root,755)
-# For kmail only?
-%{_libdir}/libkleopatra.la
-%attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
-#
-%{_libdir}/libkmailprivate.la
-%attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
-# libksieve
-%{_libdir}/libksieve.la
-%attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -1151,54 +1058,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
 
-%files libkcal
-%defattr(644,root,root,755)
-%doc libkcal/{HACKING,README}
-%{_libdir}/libkcal.la
-%attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
-
-%files libkdenetwork
-%defattr(644,root,root,755)
-%doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
-%{_libdir}/libgpgme++.la
-%attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
-%{_libdir}/libkdenetwork.la
-%attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
-%{_libdir}/libqgpgme.la
-%attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
-
-%files libkdepim
-%defattr(644,root,root,755)
-%doc README*
-%{_libdir}/libkdepim.la
-%attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
-
-%files libknodecommon
-%defattr(644,root,root,755)
-%{_libdir}/libknodecommon.la
-%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
-
-%files libknotes_xmlrpc
-%defattr(644,root,root,755)
-%{_libdir}/libknotes_xmlrpc.la
-%attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
-
-%files libkpilot
-%defattr(644,root,root,755)
-%{_libdir}/libkpilot.la
-%attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
-
-%files libktnef
-%defattr(644,root,root,755)
-%{_libdir}/libktnef.la
-%attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
-
-%files libmimelib
-%defattr(644,root,root,755)
-%doc mimelib/{Changes,README*,Tutorial}
-%{_libdir}/libmimelib.la
-%attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
-
 %files libs
 %defattr(644,root,root,755)
 # kitchensync part
@@ -1247,3 +1106,49 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
 %{_libdir}/libkslox.la
 %attr(755,root,root) %{_libdir}/libkslox.so.*.*.*
+# merged kaddressbook-libs
+%{_libdir}/libkaddressbook.la
+%attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
+%{_libdir}/libkabinterfaces.la
+%attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
+# merged kmail-libs
+%{_libdir}/libkleopatra.la
+%attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
+%{_libdir}/libkmailprivate.la
+%attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
+# merged libksieve
+%{_libdir}/libksieve.la
+%attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
+# merged libknotes_xmlrpc
+%{_libdir}/libknotes_xmlrpc.la
+%attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
+# merged libkcal
+#%%doc libkcal/{HACKING,README}
+%{_libdir}/libkcal.la
+%attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
+# merged libkdenetwork
+#%%doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
+%{_libdir}/libgpgme++.la
+%attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
+%{_libdir}/libkdenetwork.la
+%attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
+%{_libdir}/libqgpgme.la
+%attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
+# merged libkdepim
+#% %doc README*
+%{_libdir}/libkdepim.la
+%attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
+# merged libknodecommon
+%{_libdir}/libknodecommon.la
+%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+# merged libkpilot
+%{_libdir}/libkpilot.la
+%attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
+# merged libktnef
+%{_libdir}/libktnef.la
+%attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
+# merged libmimelib
+%defattr(644,root,root,755)
+#%%doc mimelib/{Changes,README*,Tutorial}
+%{_libdir}/libmimelib.la
+%attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
