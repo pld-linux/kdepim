@@ -607,6 +607,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
+%{_kdedocdir}/en/kaddressbook
 
 %files kandy
 %defattr(644,root,root,755)
@@ -615,6 +616,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
 %{_mandir}/man1/kandy.1*
+%{_kdedocdir}/en/kandy
 
 %files karm
 %defattr(644,root,root,755)
@@ -622,6 +624,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
+%{_kdedocdir}/en/karm
 
 %files kmail
 %defattr(644,root,root,755)
@@ -652,6 +655,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kmail.png
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
+%{_kdedocdir}/en/kmail
+%{_kdedocdir}/en/kgpgcertmanager
 
 %files knode
 %defattr(644,root,root,755)
@@ -663,20 +668,23 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
+%{_kdedocdir}/en/knode
 
 %files knotes
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
 %{_datadir}/apps/knotes
-%{_datadir}/config/*
+%{_datadir}/config.kcfg/knotes.kcfg
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
+%{_kdedocdir}/en/knotes
 
 %files konsolekalendar
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
+%{_kdedocdir}/en/konsolekalendar
 
 %files kontact
 %defattr(644,root,root,755)
@@ -710,6 +718,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kontactplugin.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
+%{_kdedocdir}/en/kontact
 
 %files korganizer
 %defattr(644,root,root,755)
@@ -760,6 +769,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/ical2vcal.1*
 %{_mandir}/man1/kalarmd.1*
 %{_mandir}/man1/korganizer.1*
+%{_kdedocdir}/en/korganizer
+%{_kdedocdir}/en/kalarm
+%{_kdedocdir}/en/kcontrol/kalarmd
 # kitchensync part
 #%attr(755,root,root) %{_bindir}/kitchensync
 #%attr(755,root,root) %{_bindir}/simplealarmdaemon
@@ -790,6 +802,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/korn
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
+%{_kdedocdir}/en/korn
 
 %files kpilot
 %defattr(644,root,root,755)
@@ -821,6 +834,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot.1*
+%{_kdedocdir}/en/kpilot
 
 %files libkdenetwork
 %defattr(644,root,root,755)
