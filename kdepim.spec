@@ -1,8 +1,3 @@
-#
-# Todo
-#	- Deps verifying	
-#
-
 %define         _state          snapshots
 %define         _ver		3.2
 %define		_snap		030317
@@ -58,6 +53,7 @@ Summary(pl):	Pliki nagЁСwkowe do KDE pim
 Summary(uk):	Файли розробки для kdepim
 Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
+Obsoletes:	kdenetwork-devel < 3.2
 
 %description devel
 This package contains header files needed if you wish to build
