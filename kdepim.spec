@@ -3,7 +3,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.1.93
-%define		_snap		031103
+%define		_snap		031105
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -19,13 +19,14 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	24088cdec4ffaff715f6872bfc7c4b22
+# Source0-md5:	aa08ee1c15d38274aee430b201500fc1
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
+BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -467,7 +468,6 @@ ksieve ktnef.
 %description libktnef -l pl
 Biblioteka ktnef.
 
-
 %package libmimelib
 Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
@@ -506,7 +506,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT\
 	kde_appsdir=%{_applnkdir} \
-	kde_htmldir=%{_docdir}/kde/HTML
+	kde_htmldir=%{_kdedocdir}
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -525,6 +525,13 @@ rm -rf $RPM_BUILD_ROOT
 cat kalarm.lang >> korganizer.lang
 cat kalarmd.lang >> korganizer.lang
 cat kgpgcertmanager.lang >> kmail.lang
+
+for f in *.lang; do
+	if grep -q %{name}-%{_snap}-apidocs $f; then
+		grep -v %{name}-%{_snap}-apidocs $f > $f.tmp
+		mv $f.tmp $f
+	fi	
+done	
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -567,6 +574,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%lang(en) %{_kdedocdir}/en/%{name}-%{_snap}-apidocs
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
