@@ -1,0 +1,52 @@
+diff -urN -x CVS kdepim.orig/kdgantt/KDGanttView.cpp kdepim/kdgantt/KDGanttView.cpp
+--- kdepim.orig/kdgantt/KDGanttView.cpp	Fri Oct 24 16:26:38 2003
++++ kdepim/kdgantt/KDGanttView.cpp	Sat Jun  5 09:38:53 2004
+@@ -1,5 +1,5 @@
+ /* -*- Mode: C++ -*-
+-   $Id$
++   $Id$
+    KDGantt - a multi-platform charting engine
+ */
+ 
+@@ -896,9 +896,10 @@
+ void KDGanttView::centerTimelineAfterShow( const QDateTime& center )
+ {
+   myTimeHeader->centerDateTime( center );
+-  if ( isVisible() ) return;
+-  dtCenterTimeLineAfterShow = center;
+-  fCenterTimeLineAfterShow = true;
++  if ( ! isVisible() ) {
++    dtCenterTimeLineAfterShow = center;
++    fCenterTimeLineAfterShow = true;
++  }
+ }
+ 
+ /*!
+diff -urN -x CVS kdepim.orig/kdgantt/KDGanttViewSubwidgets.cpp kdepim/kdgantt/KDGanttViewSubwidgets.cpp
+--- kdepim.orig/kdgantt/KDGanttViewSubwidgets.cpp	Sun Nov  2 14:26:11 2003
++++ kdepim/kdgantt/KDGanttViewSubwidgets.cpp	Sat Jun  5 09:38:53 2004
+@@ -1,5 +1,5 @@
+ /* -*- Mode: C++ -*-
+-   $Id$
++   $Id$
+    KDGantt - a multi-platform charting engine
+ */
+ 
+@@ -2129,8 +2129,17 @@
+ 
+ void KDTimeHeaderWidget::centerDateTime( const QDateTime& center )
+ {
++    if( center < myHorizonStart || center > myHorizonEnd ) {
++        myHorizonStart = center;
++        flagStartTimeSet = true;
++        //qDebug("myHorizonStart reset");
++    }
++    updateTimeTable();
++    repaint();
+     moveTimeLineTo(getCoordX( center )-(myGanttView->myCanvasView->viewport()->width() /2));
+     //  qDebug("centerDateTime %s %d %d", center.toString().latin1(),getCoordX( center ),(myGanttView->myCanvasView->viewport()->width() /2) );
++    updateTimeTable();
++    repaint();
+ }
+ 
+ 
