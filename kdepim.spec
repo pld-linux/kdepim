@@ -44,6 +44,7 @@ BuildRequires:	gnupg >= 1.9.5
 BuildRequires:	lockdev-devel
 BuildRequires:  libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
+BuildRequires:	qt-designer-libs
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
 BuildRequires:	zlib-devel
