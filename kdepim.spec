@@ -3,8 +3,8 @@
 # - find out why cant this app find gtk+.h
 
 %define         _state          snapshots
-%define         _ver		3.1.90
-%define		_snap		030901
+%define         _ver		3.1.91
+%define		_snap		030918
 
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -14,26 +14,24 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	0.1
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	d5aa4691c9f0f064a94a1de64e81330c
+# Source0-md5:	bd87127d7c2ce19d53819fd84bf17945
 #Source0:        http://team.pld.org.pl/~djurban/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
-Patch2:		%{name}-fix-libkontact_korganizerplugin_ldflags.patch
+#Patch2:		%{name}-fix-libkontact_korganizerplugin_ldflags.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         _htmldir        %{_docdir}/kde/HTML
 
 %define         no_install_post_chrpath         1
 
@@ -397,7 +395,7 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 
 %build
 
@@ -408,7 +406,7 @@ for plik in `find ./ -name *.desktop` ; do
 	fi
 done
 
-%{__make} -f Makefile.cvs
+%{__make} -f admin/Makefile.common cvs
 
 #%%configure \
 #	--enable-final	
@@ -423,10 +421,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT\
 	kde_appsdir=%{_applnkdir} \
-	kde_htmldir=%{_htmldir}
-
-mv $RPM_BUILD_ROOT%{_applnkdir}/Utilities/More/karm.desktop \
-	$RPM_BUILD_ROOT%{_desktopdir}/kde
+	kde_htmldir=%{_docdir}/kde/HTML
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -515,8 +510,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
 %{_libdir}/kde3/ldifvcardthumbnail.la
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
-#%{_libdir}/kde3/libaddressbookpart.la
-#%attr(755,root,root) %{_libdir}/kde3/libaddressbookpart.so
 %{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %{_libdir}/kde3/libkaddrbk_distributionlist.la
@@ -534,6 +527,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libkaddressbookpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
+%{_datadir}/services/kabconfig.desktop
+%{_datadir}/services/kabldapconfig.desktop
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/ldifvcardthumbnail.desktop
@@ -541,8 +536,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
-%{_applnkdir}/.hidden/kabconfig.desktop
-%{_applnkdir}/.hidden/kabldapconfig.desktop
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
 
@@ -627,14 +620,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
 %{_libdir}/kde3/libkontact_todoplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
-#%{_datadir}/apps/kp*plugin
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
-#%{_datadir}/apps/summaryviewpart
 %{_datadir}/services/kontact
-#%{_datadir}/services/kp*plugin.*
+%{_datadir}/services/kontactconfig.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
-%{_applnkdir}/.hidden/kontactconfig.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
 
@@ -649,12 +639,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_bindir}/simplealarmdaemon
-#%{_libdir}/libagendakonnector.la
-#%attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
-#%{_libdir}/libdummykonnector.la
-#%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
-#%{_libdir}/liblocalkonnector.la
-#%attr(755,root,root) %{_libdir}/liblocalkonnector.so.*.*.*
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
 %{_libdir}/libkdgantt.la
@@ -671,8 +655,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
-#%{_libdir}/libqtopiakonnector.la
-#%attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
 %{_libdir}/kde3/kcm_korganizer.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
 %{_libdir}/kde3/libkded_ksharedfile.la
@@ -691,8 +673,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
-#%{_libdir}/kde3/liborganizerpart.la
-#%attr(755,root,root) %{_libdir}/kde3/liborganizerpart.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
@@ -707,12 +687,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/mimelnk/kdedevice/cellphone.desktop
 %{_datadir}/mimelnk/kdedevice/pda.desktop
+%{_datadir}/services/configcolors.desktop
+%{_datadir}/services/configfonts.desktop
+%{_datadir}/services/configgroupautomation.desktop
+%{_datadir}/services/configgroupscheduling.desktop
+%{_datadir}/services/configmain.desktop
+%{_datadir}/services/configtime.desktop
+%{_datadir}/services/configviews.desktop
 %{_datadir}/services/kded/ksharedfile.desktop
 %{_datadir}/services/kitchensync
 %{_datadir}/services/overview.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/services/kresources/konnector
-#%{_datadir}/services/organizer.desktop
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
@@ -720,13 +706,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kitchensync.desktop
 %{_datadir}/servicetypes/konnector.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
-%{_applnkdir}/.hidden/configcolors.desktop
-%{_applnkdir}/.hidden/configfonts.desktop
-%{_applnkdir}/.hidden/configgroupautomation.desktop
-%{_applnkdir}/.hidden/configgroupscheduling.desktop
-%{_applnkdir}/.hidden/configmain.desktop
-%{_applnkdir}/.hidden/configtime.desktop
-%{_applnkdir}/.hidden/configviews.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
 %{_desktopdir}/kde/kalarm.desktop
 %{_desktopdir}/kde/korganizer.desktop
