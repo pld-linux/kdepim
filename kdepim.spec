@@ -560,33 +560,33 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_bindir}/simplealarmdaemon
 %{_libdir}/libkalarmd.la
-%attr(755,root,root) %{_libdir}/libkalarmd.so.*
+%attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
 %{_libdir}/libkcal*.la
-%attr(755,root,root) %{_libdir}/libkcal*.so.*
+%attr(755,root,root) %{_libdir}/libkcal*.so.*.*.*
 %{_libdir}/libkdgantt.la
-%attr(755,root,root) %{_libdir}/libkdgantt.so.*
+%attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
 %{_libdir}/libkgantt.la
-%attr(755,root,root) %{_libdir}/libkgantt.so.*
+%attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
 %{_libdir}/libknewstuff.la
-%attr(755,root,root) %{_libdir}/libknewstuff.so.*
+%attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
 %{_libdir}/libkorganizer.la
-%attr(755,root,root) %{_libdir}/libkorganizer.so.*
+%attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %{_libdir}/libkpimexchange.la
-%attr(755,root,root) %{_libdir}/libkpimexchange.so.*
-%{_libdir}/kde3/kcal_dir.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_dir.so
+%attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
+%{_libdir}/kde3/kcal_imap.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_imap.so
 %{_libdir}/kde3/kcal_kabc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
 %{_libdir}/kde3/kcal_remote.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
+%{_libdir}/kde3/kcal_localdir.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
 %{_libdir}/kde3/libkcm_kcalendars.la
 %attr(755,root,root) %{_libdir}/kde3/libkcm_kcalendars.so
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
-%{_libdir}/kde3/resourcecalendarimap.la
-%attr(755,root,root) %{_libdir}/kde3/resourcecalendarimap.so
 %{_datadir}/apps/kalarm*
 %{_datadir}/apps/kgantt
 %{_datadir}/apps/korganizer
@@ -594,11 +594,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/services/korganizer
+%{_datadir}/services/kresources/kcal/imap.desktop
+%{_datadir}/services/kresources/kcal/kabc.desktop
+%{_datadir}/services/kresources/kcal/local.desktop
+%{_datadir}/services/kresources/kcal/localdir.desktop
+%{_datadir}/services/kresources/kcal/remote.desktop
+%{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
-%{_datadir}/services/webcal.protocol
 %{_applnkdir}/.hidden/kalarmd.desktop
 %{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
 %{_desktopdir}/kalarm.desktop
