@@ -85,6 +85,10 @@ Summary(pl):	Pliki nag³ówkowe do KDE pim
 Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Summary(ru):	æÁÊÌÙ ÒÁÚÒÁÂÏÔËÉ ÄÌÑ kdepim
 Group:		X11/Development/Libraries
+Requires:	%{name} = %{version}
+Requires:	%{name}-common = %{version}
+Requires:	%{name}-kaddressbook = %{version}
+
 
 %description devel
 This package contains header files needed if you wish to build
@@ -125,6 +129,17 @@ Address Book
 %description kaddressbook
 Ksi±¿ka adresowa
 
+%package knotes                                                                 
+Summary:        Yellow cards                                                    
+Summary(pl):    ¯ó³te karteczki                                                 
+Group:          X11/Applications                                                
+                                                                                
+%description knotes                                                             
+Yellow cards                                                                    
+                                                                                
+%description knotes                                                             
+¯ó³te karteczki  
+
 %prep
 %setup -q
 
@@ -152,7 +167,7 @@ mv $ALD/Utilities/{More/*,.}
 
 #programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes \
 #korganizer kpilot ksync libkcal twister"
-programs="kalarm kalarmd kandy karm knotes korganizer kpilot"
+programs="kalarm kalarmd kandy karm korganizer kpilot"
 
 > kdepim.lang
 for i in $programs; do
@@ -161,6 +176,7 @@ for i in $programs; do
 done
 
 %find_lang kaddressbook		--with-kde
+%find_lang knotes               --with-kde
 
 %clean
 %{!?_without_clean:rm -rf $RPM_BUILD_ROOT}
@@ -168,23 +184,27 @@ done
 %files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_bindir}/?[!a]*
-%attr(755,root,root) %{_bindir}/?a[!bd]*
+%attr(755,root,root) %{_bindir}/?[!n][!bd]*
 %attr(755,root,root) %{_libdir}/????[!d]*.la
 %attr(755,root,root) %{_libdir}/????[!d]*.so.*
 %attr(755,root,root) %{_libdir}/kde3/kfile*
 %attr(755,root,root) %{_libdir}/kde3/*conduit.la
 %attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
 %attr(755,root,root) %{_libdir}/kde3/libkorg*
-%{_datadir}/apps/??[!d]*
+%{_datadir}/apps/?[!n][!d]*
 %{_datadir}/autostart/*
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
-%{_datadir}/config/*
-%{_pixmapsdir}/*/*/*/??[!d]*
+%{_pixmapsdir}/*/*/*/?[!n][!d]*
 %{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Utilities/??[!d]*
+%{_applnkdir}/Utilities/?[!n][!d]*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/*
+%{_libdir}/*.so
+%{_libdir}/kde3/*conduit.so
 
 %files common
 %attr(755,root,root) %{_libdir}/libkdepim.la
@@ -198,8 +218,9 @@ done
 %{_pixmapsdir}/*/*/*/kaddressbook.png
 %{_applnkdir}/Utilities/kaddressbook.desktop
 
-%files devel
-%defattr(644,root,root,755)
-%{_includedir}/*
-%{_libdir}/*.so
-%{_libdir}/kde3/*conduit.so
+%files knotes -f knotes.lang                    
+%attr(755,root,root) %{_bindir}/knotes          
+%{_datadir}/apps/knotes                         
+%{_datadir}/config/*                            
+%{_pixmapsdir}/*/*/*/knotes.png                 
+%{_applnkdir}/Utilities/knotes.desktop
