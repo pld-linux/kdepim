@@ -3,7 +3,7 @@
 
 %define		_state		stable
 %define		_ver		3.2.90
-%define		_snap		040128
+%define		_snap		040206
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -564,21 +564,22 @@ cat kalarm.lang >> korganizer.lang
 cat kalarmd.lang >> korganizer.lang
 cat kgpgcertmanager.lang >> kmail.lang
 
-programs="kaddressbook \
-kandy \
-korganizer \
-karm \
-kmail \
-knode \
-knotes \
-konsolekalendar \
-kontact \
-korn \
-kpilot"
+programs="\
+	kaddressbook \
+	kandy \
+	korganizer \
+	karm \
+	kmail \
+	knode \
+	knotes \
+	konsolekalendar \
+	kontact \
+	korn \
+	kpilot"
 
 for f in *.lang; do
 	if grep -q %{name}-%{_snap}-apidocs $f; then
-		grep -v %{name}-apidocs $f > $f.tmp
+		grep -v %{name}-%{_snap}-apidocs $f > $f.tmp
 		mv $f.tmp $f
 	fi
 done
@@ -747,6 +748,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kgpgcertmanager
+%{_libdir}/kde3/kcm_kmail.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
 %{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_libdir}/kde3/libkmailpart.la
@@ -756,6 +759,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kgpgcertmanager/kgpgcertmanagerui.rc
 %{_datadir}/apps/kmail
 %{_datadir}/apps/kmailcvt
+%{_datadir}/services/kmail_config_appearance.desktop
+%{_datadir}/services/kmail_config_composer.desktop
+%{_datadir}/services/kmail_config_identity.desktop
+%{_datadir}/services/kmail_config_misc.desktop
+%{_datadir}/services/kmail_config_network.desktop
+%{_datadir}/services/kmail_config_security.desktop
 %{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
