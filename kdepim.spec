@@ -5,7 +5,7 @@
 %bcond_without  i18n    # dont build i18n subpackage
 #
 %define		_state		stable
-%define		_ver		3.2.0
+%define		_ver		3.2.1
 #%%define		_snap		031114
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -15,14 +15,14 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	6
+Release:	0.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{version}.tar.bz2
+Source0:	http://download.kde.org/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
+# Source0-md5:	362bec23869328a85845e0501020c938
 #Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
-# Source0-md5:	657a61e0f3d90d2afec3820e77f81306
 %if %{with i18n}
 Source1:        http://ep09.pld-linux.org/~djurban/kde/i18n/kde-i18n-%{name}-%{version}.tar.bz2
 # Source1-md5:  2fdecd2aa0f0a125800e0071f36f6277
@@ -784,7 +784,7 @@ Pliki umiЙdzynarodawiaj╠ce dla libkdgantt.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1
+#%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 
@@ -814,7 +814,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-cd debian
+cd debian/man
 %{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
 mv -f alarmd.sgml kalarmd.sgml
 for f in *.sgml ; do
@@ -823,7 +823,7 @@ for f in *.sgml ; do
 	db2man $f
 	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
 done
-cd ..
+cd ../..
 
 %if %{with i18n}
 if [ -f "%{SOURCE1}" ] ; then
