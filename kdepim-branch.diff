@@ -93,7 +93,7 @@ diff -urN -x CVS kdepim.orig/admin/acinclude.m4.in kdepim/admin/acinclude.m4.in
      ])
 diff -urN -x CVS kdepim.orig/admin/am_edit kdepim/admin/am_edit
 --- kdepim.orig/admin/am_edit	2004-12-17 21:18:28.000000000 +0100
-+++ kdepim/admin/am_edit	2005-03-01 19:46:09.000000000 +0100
++++ kdepim/admin/am_edit	2005-03-29 11:15:16.000000000 +0200
 @@ -483,6 +483,7 @@
              $MakefileData =~ s/$lookup/$replacement/;
              $lookup =~ s/\\\$\\\(CXXFLAGS\\\)/\\\$\\\(KCXXFLAGS\\\)/;
@@ -102,6 +102,15 @@ diff -urN -x CVS kdepim.orig/admin/am_edit kdepim/admin/am_edit
              substituteLine($lookup, $replacement);
          } else {
              $found = 0;
+@@ -634,7 +635,7 @@
+ 		if ($pre eq '' && exists($varcontent{$variable})) {
+ 		    my @addlist = split(/[\034\s]+/, $varcontent{$variable});
+ 		    push(@objlist, @addlist);
+-                } elsif ($variable !~ 'OBJEXT') {
++                } elsif ($variable !~ 'OBJEXT' && $variable !~ /am__objects_\d+/ ) {
+                     $ocv = 1;
+ 		}
+             }
 @@ -2276,7 +2277,7 @@
             "\t        echo \"\$\$i\"; \\\n" . 
             "\t        if ! ";
@@ -158,7 +167,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/addfeeddialog.cpp kdepim/akregator/sr
  
 diff -urN -x CVS kdepim.orig/akregator/src/akregator.desktop kdepim/akregator/src/akregator.desktop
 --- kdepim.orig/akregator/src/akregator.desktop	2005-02-23 06:06:58.000000000 +0100
-+++ kdepim/akregator/src/akregator.desktop	2005-03-18 09:22:12.000000000 +0100
++++ kdepim/akregator/src/akregator.desktop	2005-03-28 09:03:32.000000000 +0200
 @@ -1,7 +1,6 @@
  [Desktop Entry]
  Encoding=UTF-8
@@ -172,7 +181,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/akregator.desktop kdepim/akregator/sr
  GenericName[ru]=Чтение лент новостей
  GenericName[sl]=Bralnik dovodov RSS
 +GenericName[sr]=Читач RSS довода
-+GenericName[sr@Latn]=Читач RSS довода
++GenericName[sr@Latn]=Čitač RSS dovoda
  GenericName[sv]=Läsare av RSS-källor
  GenericName[uk]=Програма для читання подач RSS
  GenericName[zh_CN]=RSS 种子阅读器
@@ -181,7 +190,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/akregator.desktop kdepim/akregator/sr
  Comment[ru]=Чтение лент новостей RSS
  Comment[sl]=Zbiralnik RSS za KDE
 +Comment[sr]=Сакупљач RSS довода за KDE
-+Comment[sr@Latn]=Сакупљач RSS довода за KDE
++Comment[sr@Latn]=Sakupljač RSS dovoda za KDE
  Comment[sv]=En RSS-samlare för KDE
  Comment[uk]=Агрегатор RSS для KDE
  Comment[zh_CN]=KDE RSS 新闻收集器
@@ -351,7 +360,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/articlelist.cpp kdepim/akregator/src/
  void ArticleList::keyPressEvent(QKeyEvent* e)
 diff -urN -x CVS kdepim.orig/akregator/src/eventsrc kdepim/akregator/src/eventsrc
 --- kdepim.orig/akregator/src/eventsrc	2005-02-23 06:06:58.000000000 +0100
-+++ kdepim/akregator/src/eventsrc	2005-03-18 09:22:12.000000000 +0100
++++ kdepim/akregator/src/eventsrc	2005-03-28 09:03:32.000000000 +0200
 @@ -3,7 +3,6 @@
  Comment=Akregator
  Comment[da]=Akregator Plugin
@@ -365,7 +374,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/eventsrc kdepim/akregator/src/eventsr
  Name[ru]=Лента новостей добавлена
  Name[sl]=Dovod je dodan
 +Name[sr]=Довод је додат
-+Name[sr@Latn]=Довод је додат
++Name[sr@Latn]=Dovod je dodat
  Name[sv]=Källa tillagd
  Name[uk]=Подачу додано
 -Name[xx]=xxFeed addedxx
@@ -377,7 +386,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/eventsrc kdepim/akregator/src/eventsr
  Comment[ru]=Новая лента новостей добавлена в список Akregator
  Comment[sl]=Nov dovod je bil oddaljeno dodan k Akregatorju
 +Comment[sr]=Нови довод је удаљено додат у Akregator
-+Comment[sr@Latn]=Нови довод је удаљено додат у Akregator
++Comment[sr@Latn]=Novi dovod je udaljeno dodat u Akregator
  Comment[sv]=En ny källa har lagts till i aKregator utifrån
  Comment[uk]=Нову подачу було віддалено додано до Akregator
 -Comment[xx]=xxA new feed was remotely added to Akregatorxx
@@ -389,7 +398,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/eventsrc kdepim/akregator/src/eventsr
  Name[se]=Ođđa artihkkalat
  Name[sl]=Novi članki
 +Name[sr]=Нови чланци
-+Name[sr@Latn]=Нови чланци
++Name[sr@Latn]=Novi članci
  Name[sv]=Nya artiklar
  Name[uk]=Нові статті
 -Name[xx]=xxNew Articlesxx
@@ -409,7 +418,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/eventsrc kdepim/akregator/src/eventsr
  Comment[se]=Ođđa artihkkalat vižžon
  Comment[sl]=Povlečeni so bili novi članki
 +Comment[sr]=Добављени су нови чланци
-+Comment[sr@Latn]=Добављени су нови чланци
++Comment[sr@Latn]=Dobavljeni su novi članci
  Comment[sv]=Nya artiklar har hämtats
  Comment[uk]=Отримано нові статті
 -Comment[xx]=xxNew articles were fetchedxx
@@ -629,7 +638,7 @@ diff -urN -x CVS kdepim.orig/akregator/src/viewer.cpp kdepim/akregator/src/viewe
          switch (Settings::mMBBehaviour())
 diff -urN -x CVS kdepim.orig/certmanager/conf/kleopatra_config_appear.desktop kdepim/certmanager/conf/kleopatra_config_appear.desktop
 --- kdepim.orig/certmanager/conf/kleopatra_config_appear.desktop	2005-01-29 04:59:02.000000000 +0100
-+++ kdepim/certmanager/conf/kleopatra_config_appear.desktop	2005-03-07 15:21:28.000000000 +0100
++++ kdepim/certmanager/conf/kleopatra_config_appear.desktop	2005-03-30 08:48:38.000000000 +0200
 @@ -47,13 +47,12 @@
  Name[sk]=Vzhľad
  Name[sl]=Videz
@@ -645,7 +654,15 @@ diff -urN -x CVS kdepim.orig/certmanager/conf/kleopatra_config_appear.desktop kd
  Name[zh_CN]=外观
  Comment=Colors & Fonts Configuration
  Comment[be]=Канфігурацыя колераў і шрыфтоў
-@@ -85,13 +84,12 @@
+@@ -63,6 +62,7 @@
+ Comment[cs]=Nastavení barev a písem
+ Comment[da]=Indstilling af farver & skrifttype
+ Comment[de]=Farb- & Schriftkonfiguration
++Comment[el]=Ρύθμιση χρωμάτων & γραμματοσειρών
+ Comment[en_GB]=Colours & Fonts Configuration
+ Comment[es]=Configuración de colores y tipografías
+ Comment[et]=Värvide ja fontide seadistamine
+@@ -85,13 +85,12 @@
  Comment[sk]=Nastavenie písiem a farieb
  Comment[sl]=Nastavitev pisav in barv
  Comment[sr]=Подешавање боја и фонтова
@@ -660,7 +677,7 @@ diff -urN -x CVS kdepim.orig/certmanager/conf/kleopatra_config_appear.desktop kd
  Comment[zh_CN]=颜色和字体配置
  Keywords=color,font, configuration
  Keywords[be]=колер, шрыфт, канфігурацыя, color, font, configuration
-@@ -125,11 +123,10 @@
+@@ -125,11 +124,10 @@
  Keywords[sk]=farba,písmo,nastavenie
  Keywords[sl]=barva,barve,pisava,pisave,nastavi,nastavitve
  Keywords[sr]=боја,фонт,подешавања
@@ -808,7 +825,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/kleo/job.cpp kdepim/certmanager/lib
  
 diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certmanager/lib/libkleopatrarc.desktop
 --- kdepim.orig/certmanager/lib/libkleopatrarc.desktop	2005-02-23 06:06:58.000000000 +0100
-+++ kdepim/certmanager/lib/libkleopatrarc.desktop	2005-03-18 09:22:13.000000000 +0100
++++ kdepim/certmanager/lib/libkleopatrarc.desktop	2005-03-28 09:03:33.000000000 +0200
 @@ -8,6 +8,7 @@
  Name[de]=Ungeprüfter Schlüssel
  Name[es]=Clave no validada
@@ -822,7 +839,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Непроверенный ключ
  Name[sl]=Nepreverjen ključ
 +Name[sr]=Неоверени кључ
-+Name[sr@Latn]=Неоверени кључ
++Name[sr@Latn]=Neovereni ključ
  Name[sv]=Nyckeln har inte validerats
  Name[uk]=Неперевірений ключ
  Name[zh_CN]=未校验的密钥
@@ -839,7 +856,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Утерявший силу ключ
  Name[sl]=Pretečen ključ
 +Name[sr]=Истекли кључ
-+Name[sr@Latn]=Истекли кључ
++Name[sr@Latn]=Istekli ključ
  Name[sv]=Utgången nyckel
  Name[uk]=Застарілий ключ
  Name[zh_CN]=过期密钥
@@ -856,7 +873,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Отозванный ключ
  Name[sl]=Preklican ključ
 +Name[sr]=Опозвани кључ
-+Name[sr@Latn]=Опозвани кључ
++Name[sr@Latn]=Opozvani ključ
  Name[sv]=Återkallad nyckel
  Name[uk]=Анульований ключ
  Name[zh_CN]=吊销的密钥
@@ -873,7 +890,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Доверяемый корневой сертификат
  Name[sl]=Zaupan korenski certifikat
 +Name[sr]=Корени сертификат од поверења
-+Name[sr@Latn]=Корени сертификат од поверења
++Name[sr@Latn]=Koreni sertifikat od poverenja
  Name[sv]=Pålitligt rotcertifikat
  Name[uk]=Кореневий сертифікат з довірою
  Name[zh_CN]=可信任的根证书
@@ -890,7 +907,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Не доверяемый корневой сертификат
  Name[sl]=Nezaupan korenski certifikat
 +Name[sr]=Корени сертификат који није од поверења
-+Name[sr@Latn]=Корени сертификат који није од поверења
++Name[sr@Latn]=Koreni sertifikat koji nije od poverenja
  Name[sv]=Opålitligt rotcertifikat
  Name[uk]=Кореневий сертифікат без довіри
  Name[zh_CN]=未信任的根证书
@@ -907,7 +924,7 @@ diff -urN -x CVS kdepim.orig/certmanager/lib/libkleopatrarc.desktop kdepim/certm
  Name[ru]=Другие ключи
  Name[sl]=Drugi ključi
 +Name[sr]=Други кључеви
-+Name[sr@Latn]=Други кључеви
++Name[sr@Latn]=Drugi ključevi
  Name[sv]=Andra nycklar
  Name[uk]=Інші ключі
  Name[zh_CN]=其它密钥
@@ -1356,13 +1373,13 @@ diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/gaduprotocol.desktop
  
 diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/groupwiseprotocol.desktop kdepim/kaddressbook/editors/protocols/groupwiseprotocol.desktop
 --- kdepim.orig/kaddressbook/editors/protocols/groupwiseprotocol.desktop	2005-02-18 05:08:34.000000000 +0100
-+++ kdepim/kaddressbook/editors/protocols/groupwiseprotocol.desktop	2005-03-18 09:22:13.000000000 +0100
++++ kdepim/kaddressbook/editors/protocols/groupwiseprotocol.desktop	2005-03-28 09:03:33.000000000 +0200
 @@ -15,8 +15,12 @@
  Comment[pl]=Komunikator Novell GroupWise
  Comment[pt_BR]=Mensageiro GroupWise da Novell
  Comment[ru]=Обмен сообщениями Novell GroupWise
 +Comment[sr]=Novell-ов GroupWise Messenger
-+Comment[sr@Latn]=Novell-ов GroupWise Messenger
++Comment[sr@Latn]=Novell-ov GroupWise Messenger
  Comment[sv]=Novell Groupwise Messenger
  Comment[zh_CN]=Novell GroupWise 信使
  Name=GroupWise
@@ -1372,8 +1389,16 @@ diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/groupwiseprotocol.de
  
 diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/icqprotocol.desktop kdepim/kaddressbook/editors/protocols/icqprotocol.desktop
 --- kdepim.orig/kaddressbook/editors/protocols/icqprotocol.desktop	2005-02-11 05:53:22.000000000 +0100
-+++ kdepim/kaddressbook/editors/protocols/icqprotocol.desktop	2005-03-07 15:21:30.000000000 +0100
-@@ -34,14 +34,12 @@
++++ kdepim/kaddressbook/editors/protocols/icqprotocol.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -13,6 +13,7 @@
+ Comment[cs]=ICQ protokol
+ Comment[da]=ICQ Protokol
+ Comment[de]=ICQ Protokoll
++Comment[el]=Προτόκολο ICQ
+ Comment[es]=Protocolo ICQ
+ Comment[et]=ICQ protokoll
+ Comment[fi]=ICQ-protokolla
+@@ -34,14 +35,12 @@
  Comment[sk]=Protokol ICQ
  Comment[sl]=Protokol ICQ
  Comment[sr]=ICQ протокол
@@ -1429,21 +1454,24 @@ diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/jabberprotocol.deskt
  
 diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/meanwhileprotocol.desktop kdepim/kaddressbook/editors/protocols/meanwhileprotocol.desktop
 --- kdepim.orig/kaddressbook/editors/protocols/meanwhileprotocol.desktop	2005-02-23 06:06:59.000000000 +0100
-+++ kdepim/kaddressbook/editors/protocols/meanwhileprotocol.desktop	2005-03-18 09:22:13.000000000 +0100
-@@ -12,6 +12,7 @@
++++ kdepim/kaddressbook/editors/protocols/meanwhileprotocol.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -10,8 +10,10 @@
+ Comment[cs]=Meanwhile protokol
+ Comment[da]=Meanwhile Protokol
  Comment[de]=Meanwhile Protokoll
++Comment[el]=Προτόκολο Meanwhile
  Comment[es]=Protocolo Meanwhile
  Comment[et]=Meanwhile'i protokoll
 +Comment[fi]=Meanwhile-protokolla
  Comment[fr]=Protocole Meanwhile
  Comment[hu]=Meanwhile protokoll
  Comment[is]=Meanwhile samskiptamátinn
-@@ -23,6 +24,8 @@
+@@ -23,6 +25,8 @@
  Comment[pt_BR]=Protocolo Meanwhile
  Comment[ru]=Протокол Meanwhile
  Comment[sl]=Protokol Meanwhile
 +Comment[sr]=Meanwhile протокол
-+Comment[sr@Latn]=Meanwhile протокол
++Comment[sr@Latn]=Meanwhile protokol
  Comment[sv]=Meanwhile-protokoll
  Comment[uk]=Протокол Meanwhile
  Comment[zh_CN]=Meanwhile 协议
@@ -1465,8 +1493,16 @@ diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/msnprotocol.desktop 
  
 diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/smsprotocol.desktop kdepim/kaddressbook/editors/protocols/smsprotocol.desktop
 --- kdepim.orig/kaddressbook/editors/protocols/smsprotocol.desktop	2005-02-11 05:53:22.000000000 +0100
-+++ kdepim/kaddressbook/editors/protocols/smsprotocol.desktop	2005-03-07 15:21:30.000000000 +0100
-@@ -34,15 +34,13 @@
++++ kdepim/kaddressbook/editors/protocols/smsprotocol.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -13,6 +13,7 @@
+ Comment[cs]=SMS protokol
+ Comment[da]=SMS Protokol
+ Comment[de]=SMS Protokoll
++Comment[el]=Προτόκολο SMS
+ Comment[es]=Protocolo SMS
+ Comment[et]=SMS protokoll
+ Comment[fi]=SMS-protokolla
+@@ -34,15 +35,13 @@
  Comment[sk]=Protokol SMS
  Comment[sl]=Protokol SMS
  Comment[sr]=SMS протокол
@@ -1485,8 +1521,16 @@ diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/smsprotocol.desktop 
  
 diff -urN -x CVS kdepim.orig/kaddressbook/editors/protocols/yahooprotocol.desktop kdepim/kaddressbook/editors/protocols/yahooprotocol.desktop
 --- kdepim.orig/kaddressbook/editors/protocols/yahooprotocol.desktop	2005-02-11 05:53:22.000000000 +0100
-+++ kdepim/kaddressbook/editors/protocols/yahooprotocol.desktop	2005-03-07 15:21:30.000000000 +0100
-@@ -34,14 +34,12 @@
++++ kdepim/kaddressbook/editors/protocols/yahooprotocol.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -13,6 +13,7 @@
+ Comment[cs]=Yahoo protokol
+ Comment[da]=Yahoo Protokol
+ Comment[de]=Yahoo Protokoll
++Comment[el]=Προτόκολο Yahoo
+ Comment[es]=Protocolo Yahoo
+ Comment[et]=Yahoo protokoll
+ Comment[fi]=Yahoo-protokolla
+@@ -34,14 +35,12 @@
  Comment[sk]=Protokol Yahoo
  Comment[sl]=Protokol Yahoo
  Comment[sr]=Yahoo протокол
@@ -1667,7 +1711,7 @@ diff -urN -x CVS kdepim.orig/kaddressbook/kabcore.cpp kdepim/kaddressbook/kabcor
  }
 diff -urN -x CVS kdepim.orig/kaddressbook/kaddressbook.desktop kdepim/kaddressbook/kaddressbook.desktop
 --- kdepim.orig/kaddressbook/kaddressbook.desktop	2005-02-23 06:06:59.000000000 +0100
-+++ kdepim/kaddressbook/kaddressbook.desktop	2005-03-18 09:22:13.000000000 +0100
++++ kdepim/kaddressbook/kaddressbook.desktop	2005-03-28 09:03:33.000000000 +0200
 @@ -4,11 +4,11 @@
  Name[cy]=KAddressBook/LlyfrKyfeiriadau
  Name[de]=Adressbuch
@@ -1694,7 +1738,7 @@ diff -urN -x CVS kdepim.orig/kaddressbook/kaddressbook.desktop kdepim/kaddressbo
  GenericName[ru]=Адресная книга
  GenericName[sl]=Upravitelj naslovov
 +GenericName[sr]=Менаџер адреса
-+GenericName[sr@Latn]=Менаџер адреса
++GenericName[sr@Latn]=Menadžer adresa
  GenericName[sv]=Adresshanterare
  GenericName[uk]=Менеджер адрес
 -GenericName[xx]=xxAddress Managerxx
@@ -2294,6 +2338,24 @@ diff -urN -x CVS kdepim.orig/kalarm/Changelog kdepim/kalarm/Changelog
  Pop up message windows far from cursor to avoid accidental acknowledgement.
  Start KMix if not already running, for setting alarm sound level.
  Fix alarms not triggering if IDs are duplicated in different calendar files.
+diff -urN -x CVS kdepim.orig/kalarm/configure.in.bot kdepim/kalarm/configure.in.bot
+--- kdepim.orig/kalarm/configure.in.bot	1970-01-01 01:00:00.000000000 +0100
++++ kdepim/kalarm/configure.in.bot	2005-03-29 21:07:44.000000000 +0200
+@@ -0,0 +1,8 @@
++if test -z "$KMIX"; then
++  echo ""
++  echo "================================================================="
++  echo "kmix (from the kdemultimedia package) is missing."
++  echo "KAlarm will not be able to set the absolute sound volume when"
++  echo "playing audio files until you install kmix."
++  echo "================================================================="
++fi
+diff -urN -x CVS kdepim.orig/kalarm/configure.in.in kdepim/kalarm/configure.in.in
+--- kdepim.orig/kalarm/configure.in.in	2003-08-25 10:10:45.000000000 +0200
++++ kdepim/kalarm/configure.in.in	2005-03-29 21:07:44.000000000 +0200
+@@ -1 +1 @@
+-#DO_NOT_COMPILE="$DO_NOT_COMPILE kalarm"
++KDE_FIND_PATH(kmix, KMIX, [$kde_default_bindirs])
 diff -urN -x CVS kdepim.orig/kalarm/editdlg.cpp kdepim/kalarm/editdlg.cpp
 --- kdepim.orig/kalarm/editdlg.cpp	2005-02-01 19:52:42.000000000 +0100
 +++ kdepim/kalarm/editdlg.cpp	2005-03-24 01:04:10.000000000 +0100
@@ -2307,7 +2369,7 @@ diff -urN -x CVS kdepim.orig/kalarm/editdlg.cpp kdepim/kalarm/editdlg.cpp
  		mEmailBcc->setChecked(preferences->defaultEmailBcc());
 diff -urN -x CVS kdepim.orig/kalarm/kalarmd/kalarmd.autostart.desktop kdepim/kalarm/kalarmd/kalarmd.autostart.desktop
 --- kdepim.orig/kalarm/kalarmd/kalarmd.autostart.desktop	2005-02-23 06:07:00.000000000 +0100
-+++ kdepim/kalarm/kalarmd/kalarmd.autostart.desktop	2005-03-16 09:33:18.000000000 +0100
++++ kdepim/kalarm/kalarmd/kalarmd.autostart.desktop	2005-03-30 08:48:39.000000000 +0200
 @@ -10,6 +10,7 @@
  Name[de]=KAlarm Erinnerungsprogramm
  Name[es]=Daemon de KAlarm
@@ -2337,9 +2399,11 @@ diff -urN -x CVS kdepim.orig/kalarm/kalarmd/kalarmd.autostart.desktop kdepim/kal
  Comment[fr]=Le démon d'alarme de KOrganizer et de KAlarm démarre automatiquement lors de la connexion
  Comment[hu]=A KAlarm emlékeztető szolgáltatás automatikus elindítása
  Comment[it]=Avvio automatico del demone degli avvisi
-@@ -46,11 +47,10 @@
+@@ -45,12 +46,12 @@
+ Comment[pt]=Servidor de alarme do KAlarm auto-iniciável no arranque
  Comment[pt_BR]=Servidor de alarmes do KAlarm inicia automaticamente no login
  Comment[ru]=Демон KAlarm запускается вместе с KDE
++Comment[sl]=Samodejni zagon alarmskega strežnika KAlarma ob zagonu
  Comment[sr]=Аутоматско покретање алармног демона KAlarm-а по пријављивању
 -Comment[sr@Latn]=Аутоматско покретање алармног демона KAlarm-а по пријављивању
 +Comment[sr@Latn]=Automatsko pokretanje alarmnog demona KAlarm-a po prijavljivanju
@@ -4639,8 +4703,8 @@ diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/overview/overview.desktop k
  Name[zu]=Ingxenye yokufingqiwe
 diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck.desktop kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck.desktop
 --- kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck.desktop	2005-02-21 19:18:39.000000000 +0100
-+++ kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck.desktop	2005-03-24 08:21:32.000000000 +0100
-@@ -11,6 +11,7 @@
++++ kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -11,18 +11,19 @@
  Name[es]=Añadir a la extensión Plucker de KitchenSync
  Name[et]=Lisa KitchenSynci Pluckeri pluginale
  Name[fr]=Ajouter le module Plucker à KitchenSync
@@ -4648,9 +4712,10 @@ diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck.d
  Name[it]=Aggiungi al plugin KitchenSync Plucker
  Name[nl]=Toevoegen aan KitchenSync Plucker Plugin
  Name[pl]=Wtyczka dodania do KitchenSync Plucker
-@@ -18,11 +19,10 @@
+ Name[pt]=Adicionar ao 'Plugin' Plucker do KitchenSync
  Name[pt_BR]=Adicionar ao Plug-in Plucker do KitchenSync
  Name[ru]=Добавить в модуль KitchenSync Plucker
++Name[sl]=Dodaj k vstavku Plucker za KitchenSync
  Name[sr]=Прикључак за додавање у KitchenSync Plucker
 -Name[sr@Latn]=Прикључак за додавање у KitchenSync Plucker
 +Name[sr@Latn]=Priključak za dodavanje u KitchenSync Plucker
@@ -4663,8 +4728,8 @@ diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck.d
  Icon=knode
 diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck-rdf.desktop kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck-rdf.desktop
 --- kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck-rdf.desktop	2005-02-21 19:18:39.000000000 +0100
-+++ kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck-rdf.desktop	2005-03-24 08:21:32.000000000 +0100
-@@ -11,6 +11,7 @@
++++ kdepim/kitchensync/kitchensync/plucker/kitchensync-pluck-rdf.desktop	2005-03-30 08:48:39.000000000 +0200
+@@ -11,18 +11,19 @@
  Name[es]=Añadir a la extensión Plucker de KitchenSync
  Name[et]=Lisa KitchenSynci Pluckeri pluginale
  Name[fr]=Ajouter le module Plucker à KitchenSync
@@ -4672,9 +4737,10 @@ diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/plucker/kitchensync-pluck-r
  Name[it]=Aggiungi al plugin KitchenSync Plucker
  Name[nl]=Toevoegen aan KitchenSync Plucker Plugin
  Name[pl]=Wtyczka dodania do KitchenSync Plucker
-@@ -18,11 +19,10 @@
+ Name[pt]=Adicionar ao 'Plugin' Plucker do KitchenSync
  Name[pt_BR]=Adicionar ao Plug-in Plucker do KitchenSync
  Name[ru]=Добавить в модуль KitchenSync Plucker
++Name[sl]=Dodaj k vstavku Plucker za KitchenSync
  Name[sr]=Прикључак за додавање у KitchenSync Plucker
 -Name[sr@Latn]=Прикључак за додавање у KitchenSync Plucker
 +Name[sr@Latn]=Priključak za dodavanje u KitchenSync Plucker
@@ -4732,10 +4798,12 @@ diff -urN -x CVS kdepim.orig/kitchensync/kitchensync/viewer/viewer.desktop kdepi
  ServiceTypes=KitchenSync/ActionPart
 diff -urN -x CVS kdepim.orig/kitchensync/libkonnector2/filter.desktop kdepim/kitchensync/libkonnector2/filter.desktop
 --- kdepim.orig/kitchensync/libkonnector2/filter.desktop	2005-02-21 19:18:40.000000000 +0100
-+++ kdepim/kitchensync/libkonnector2/filter.desktop	2005-03-07 15:21:40.000000000 +0100
-@@ -17,11 +17,10 @@
++++ kdepim/kitchensync/libkonnector2/filter.desktop	2005-03-30 08:48:40.000000000 +0200
+@@ -16,12 +16,12 @@
+ Comment[pt]=Filtro para o Conector KitchenSync
  Comment[pt_BR]=Filtro para o Konnector do KitchenSync
  Comment[ru]=Фильтр для KitchenSync Konnector
++Comment[sl]=Fstavek za Konnector KitchenSync
  Comment[sr]=Филтер за KitchenSync Konnector
 -Comment[sr@Latn]=Филтер за KitchenSync Konnector
 +Comment[sr@Latn]=Filter za KitchenSync Konnector
@@ -4746,7 +4814,7 @@ diff -urN -x CVS kdepim.orig/kitchensync/libkonnector2/filter.desktop kdepim/kit
  Comment[zh_CN]=KitchenSync Konnector 的过滤器
  Name=KitchenSyncFilter
  Name[bg]=Филтър за KitchenSync
-@@ -30,4 +29,3 @@
+@@ -30,4 +30,3 @@
  Name[hu]=KitchenSync-szűrő
  Name[pt_BR]=Filtro KitchenSync
  Name[sv]=Kitchensync-filter
@@ -4900,20 +4968,20 @@ diff -urN -x CVS kdepim.orig/kitchensync/libkonnector2/plugins/remote/remotekonn
  Vendor=KDE Team
 diff -urN -x CVS kdepim.orig/kitchensync/libkonnector2/plugins/threadedkonnector/threadedkonnector.desktop kdepim/kitchensync/libkonnector2/plugins/threadedkonnector/threadedkonnector.desktop
 --- kdepim.orig/kitchensync/libkonnector2/plugins/threadedkonnector/threadedkonnector.desktop	2005-02-21 19:18:40.000000000 +0100
-+++ kdepim/kitchensync/libkonnector2/plugins/threadedkonnector/threadedkonnector.desktop	2005-03-18 09:22:13.000000000 +0100
++++ kdepim/kitchensync/libkonnector2/plugins/threadedkonnector/threadedkonnector.desktop	2005-03-28 09:03:33.000000000 +0200
 @@ -18,6 +18,9 @@
  Name[pt]=Conector de Demonstração para uma Implementação Multitarefa
  Name[pt_BR]=Konnector de demonstração para uma implementação com linhas de execução
  Name[ru]=Демонстрационный коннектор для реализации нитей
 +Name[sl]=Demonstracijski povezovalnik za nitensko implementacijo
 +Name[sr]=Демонстрациони konnector за нитну имплементацију
-+Name[sr@Latn]=Демонстрациони konnector за нитну имплементацију
++Name[sr@Latn]=Demonstracioni konnector za nitnu implementaciju
  Name[sv]=Demonstration av Konnector för trådad implementering
  Name[uk]=Konnector для демонстрації реалізації через нитки
  Name[zh_CN]=线程实现的 Konnector 演示
 diff -urN -x CVS kdepim.orig/kitchensync/multisynk/multisynk.desktop kdepim/kitchensync/multisynk/multisynk.desktop
 --- kdepim.orig/kitchensync/multisynk/multisynk.desktop	2005-02-23 06:07:01.000000000 +0100
-+++ kdepim/kitchensync/multisynk/multisynk.desktop	2005-03-18 09:22:14.000000000 +0100
++++ kdepim/kitchensync/multisynk/multisynk.desktop	2005-03-28 09:03:34.000000000 +0200
 @@ -2,7 +2,6 @@
  Encoding=UTF-8
  Name=MultiSynK
@@ -4927,7 +4995,7 @@ diff -urN -x CVS kdepim.orig/kitchensync/multisynk/multisynk.desktop kdepim/kitc
  GenericName[ru]=Синхронизация
  GenericName[sl]=Usklajevanje
 +GenericName[sr]=Синхронизација
-+GenericName[sr@Latn]=Синхронизација
++GenericName[sr@Latn]=Sinhronizacija
  GenericName[sv]=Synkronisering
  GenericName[uk]=Синхронізація
 -GenericName[xx]=xxSynchronizationxx
@@ -5611,6 +5679,17 @@ diff -urN -x CVS kdepim.orig/kmail/KMail.desktop kdepim/kmail/KMail.desktop
  GenericName[zh_CN]=邮件客户程序
  GenericName[zu]=Imeyili Yomthengi
  Terminal=false
+diff -urN -x CVS kdepim.orig/kmail/kmailicalifaceimpl.cpp kdepim/kmail/kmailicalifaceimpl.cpp
+--- kdepim.orig/kmail/kmailicalifaceimpl.cpp	2005-02-17 17:38:50.000000000 +0100
++++ kdepim/kmail/kmailicalifaceimpl.cpp	2005-03-30 11:00:57.000000000 +0200
+@@ -1379,6 +1379,7 @@
+     }
+     return;
+   }
++  mUseResourceIMAP = enabled;
+ 
+   // Read remaining options
+   const bool hideFolders = GlobalSettings::hideGroupwareFolders();
 diff -urN -x CVS kdepim.orig/kmail/kmail_view.desktop kdepim/kmail/kmail_view.desktop
 --- kdepim.orig/kmail/kmail_view.desktop	2005-02-13 05:31:01.000000000 +0100
 +++ kdepim/kmail/kmail_view.desktop	2005-03-07 15:21:44.000000000 +0100
@@ -5683,7 +5762,7 @@ diff -urN -x CVS kdepim.orig/kmail/kmcomposewin.cpp kdepim/kmail/kmcomposewin.cp
        mRecipientsEditor->addRecipient( ident.bcc(), Recipient::Bcc );
 diff -urN -x CVS kdepim.orig/kmail/kmfoldercachedimap.cpp kdepim/kmail/kmfoldercachedimap.cpp
 --- kdepim.orig/kmail/kmfoldercachedimap.cpp	2005-02-17 14:49:23.000000000 +0100
-+++ kdepim/kmail/kmfoldercachedimap.cpp	2005-03-08 16:30:18.000000000 +0100
++++ kdepim/kmail/kmfoldercachedimap.cpp	2005-03-30 11:00:57.000000000 +0200
 @@ -393,7 +393,7 @@
  
    // Make the change appear to the user with setLabel, but we'll do the change
@@ -5693,7 +5772,159 @@ diff -urN -x CVS kdepim.orig/kmail/kmfoldercachedimap.cpp kdepim/kmail/kmfolderc
    // don't rename, but also make sure the rename is reset, in the case of
    // A -> B -> A renames.
    if ( name() != aName )
-@@ -1584,7 +1584,7 @@
+@@ -536,7 +536,7 @@
+ {
+   switch( state ) {
+   case SYNC_STATE_INITIAL:           return "SYNC_STATE_INITIAL";
+-  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
++  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
+   case SYNC_STATE_PUT_MESSAGES:      return "SYNC_STATE_PUT_MESSAGES";
+   case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
+   case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
+@@ -548,15 +548,15 @@
+   case SYNC_STATE_GET_MESSAGES:      return "SYNC_STATE_GET_MESSAGES";
+   case SYNC_STATE_EXPUNGE_MESSAGES:  return "SYNC_STATE_EXPUNGE_MESSAGES";
+   case SYNC_STATE_HANDLE_INBOX:      return "SYNC_STATE_HANDLE_INBOX";
+-  case SYNC_STATE_GET_USERRIGHTS:    return "SYNC_STATE_GET_USERRIGHTS";
++  case SYNC_STATE_TEST_ANNOTATIONS:  return "SYNC_STATE_TEST_ANNOTATIONS";
+   case SYNC_STATE_GET_ANNOTATIONS:   return "SYNC_STATE_GET_ANNOTATIONS";
+   case SYNC_STATE_SET_ANNOTATIONS:   return "SYNC_STATE_SET_ANNOTATIONS";
+   case SYNC_STATE_GET_ACLS:          return "SYNC_STATE_GET_ACLS";
+   case SYNC_STATE_SET_ACLS:          return "SYNC_STATE_SET_ACLS";
+   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
+   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
+-  case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
+   case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
++  case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
+   default:                           return "Unknown state";
+   }
+ }
+@@ -579,6 +579,7 @@
+    delete_messages 10
+    expunge_messages 5
+    get_messages variable (remaining-5) i.e. minimum 15.
++   check_annotations 0 (rare)
+    set_annotations 0 (rare)
+    get_annotations 2
+    set_acls 0 (rare)
+@@ -643,7 +644,7 @@
+   case SYNC_STATE_GET_USERRIGHTS:
+     //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
+ 
+-    mSyncState = SYNC_STATE_TEST_ANNOTATIONS;
++    mSyncState = SYNC_STATE_RENAME_FOLDER;
+ 
+     if( !noContent() && mAccount->hasACLSupport() ) {
+       // Check the user's own rights. We do this every time in case they changed.
+@@ -653,34 +654,7 @@
+       mAccount->getUserRights( folder(), imapPath() ); // after connecting, due to the INBOX case
+       break;
+     }
+-
+-  #define KOLAB_FOLDERTEST "/vendor/kolab/folder-test"
+-  case SYNC_STATE_TEST_ANNOTATIONS:
+-    mSyncState = SYNC_STATE_RENAME_FOLDER;
+-    // The first folder with user rights to write annotations
+-    if( !mAccount->annotationCheckPassed() &&
+-         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )  
+-      ){
+-      newState( mProgress, i18n("Checking annotation support"));
+-    
+-      KURL url = mAccount->getUrl();
+-      url.setPath( imapPath() );
+-      KMail::AnnotationList annotations; // to be set
+-      
+-      KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
+-      annotations.append( attr );
+-      
+-      kdDebug(5006) << "Setting test attribute to "<< url << endl;
+-      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
+-          url, annotations );
+-      ImapAccountBase::jobData jd( url.url(), folder() );
+-      jd.cancellable = true; // we can always do so later
+-      mAccount->insertJob(job, jd);
+-       connect(job, SIGNAL(result(KIO::Job *)),
+-              SLOT(slotTestAnnotationResult(KIO::Job *)));
+-      break;
+-    }
+-    
++   
+   case SYNC_STATE_RENAME_FOLDER:
+   {
+     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+@@ -837,26 +811,57 @@
+   case SYNC_STATE_HANDLE_INBOX:
+     // Wrap up the 'download emails' stage. We always end up at 95 here.
+     mProgress = 95;
++    mSyncState = SYNC_STATE_TEST_ANNOTATIONS;
+ 
++  #define KOLAB_FOLDERTEST "/vendor/kolab/folder-test"
++  case SYNC_STATE_TEST_ANNOTATIONS:
+     mSyncState = SYNC_STATE_GET_ANNOTATIONS;
+-
+-  case SYNC_STATE_GET_ANNOTATIONS:
++    // The first folder with user rights to write annotations
++    if( !mAccount->annotationCheckPassed() &&
++         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) )
++         && !imapPath().isEmpty() && imapPath() != "/" ) {
++      kdDebug(5006) << "Setting test attribute on folder: "<< folder()->prettyURL() << endl;
++      newState( mProgress, i18n("Checking annotation support"));
++    
++      KURL url = mAccount->getUrl();
++      url.setPath( imapPath() );
++      KMail::AnnotationList annotations; // to be set
++      
++      KMail::AnnotationAttribute attr( KOLAB_FOLDERTEST, "value.shared", "true" );
++      annotations.append( attr );
++      
++      kdDebug(5006) << "Setting test attribute to "<< url << endl;
++      KIO::Job* job = AnnotationJobs::multiSetAnnotation( mAccount->slave(), 
++          url, annotations );
++      ImapAccountBase::jobData jd( url.url(), folder() );
++      jd.cancellable = true; // we can always do so later
++      mAccount->insertJob(job, jd);
++       connect(job, SIGNAL(result(KIO::Job *)),
++              SLOT(slotTestAnnotationResult(KIO::Job *)));
++      break;
++    }
++ 
++  case SYNC_STATE_GET_ANNOTATIONS: {
+ #define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
+ #define KOLAB_INCIDENCESFOR "/vendor/kolab/incidences-for"
+ //#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
+     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
+ 
++    bool needToGetInitialAnnotations = false;
+     if ( !noContent() ) {
+       // for a folder we didn't create ourselves: get annotation from server
+-      if ( mAnnotationFolderType == "FROMSERVER" )
++      if ( mAnnotationFolderType == "FROMSERVER" ) {
++        needToGetInitialAnnotations = true;
+         mAnnotationFolderType = QString::null;
+-      else
++      } else {
+         updateAnnotationFolderType();
++      }
+     }
+ 
+     // First retrieve the annotation, so that we know we have to set it if it's not set.
+     // On the other hand, if the user changed the contentstype, there's no need to get first.
+-    if ( !noContent() && mAccount->hasAnnotationSupport() && kmkernel->iCalIface().isEnabled() ) {
++    if ( !noContent() && mAccount->hasAnnotationSupport() && 
++        ( kmkernel->iCalIface().isEnabled() || needToGetInitialAnnotations ) ) {
+       QStringList annotations; // list of annotations to be fetched
+       if ( !mAnnotationFolderTypeChanged || mAnnotationFolderType.isEmpty() )
+         annotations << KOLAB_FOLDERTYPE;
+@@ -879,7 +884,7 @@
+         break;
+       }
+     }
+-
++  } // case
+   case SYNC_STATE_SET_ANNOTATIONS:
+ 
+     mSyncState = SYNC_STATE_SET_ACLS;
+@@ -1584,7 +1589,7 @@
  
        if ( locallyDeleted ) {
          kdDebug(5006) << subfolderPath << " was deleted locally => delete on server." << endl;
@@ -6671,6 +6902,102 @@ diff -urN -x CVS kdepim.orig/kmobile/libkmobile.desktop kdepim/kmobile/libkmobil
  Name[uk]=Мобільний пристрій KDE драйвер працюючий з пристроєм напряму
 -Name[xx]=xxKDE Mobile Device Lowlevel Hardware Driverxx
  Name[zh_CN]=KDE 移动设备低级硬件驱动程序
+diff -urN -x CVS kdepim.orig/knode/headerview.cpp kdepim/knode/headerview.cpp
+--- kdepim.orig/knode/headerview.cpp	2005-01-29 15:32:48.000000000 +0100
++++ kdepim/knode/headerview.cpp	2005-03-28 15:30:14.000000000 +0200
+@@ -1,6 +1,6 @@
+ /*
+     KNode, the KDE newsreader
+-    Copyright (c) 1999-2004 the KNode authors.
++    Copyright (c) 1999-2005 the KNode authors.
+     See file AUTHORS for details
+ 
+     This program is free software; you can redistribute it and/or modify
+@@ -39,7 +39,8 @@
+   mSortByThreadChangeDate( false ),
+   mDelayedCenter( -1 ),
+   mActiveItem( 0 ),
+-  mShowingFolder( false )
++  mShowingFolder( false ),
++  mInitDone( false )
+ {
+   mPaintInfo.subCol    = addColumn( i18n("Subject"), 310 );
+   mPaintInfo.senderCol = addColumn( i18n("From"), 115 );
+@@ -98,13 +99,12 @@
+ 
+ void KNHeaderView::readConfig()
+ {
+-  static bool initDone = false;
+-  if ( !initDone ) {
+-    initDone = true;
++  if ( !mInitDone ) {
+     KConfig *conf = knGlobals.config();
+     conf->setGroup( "HeaderView" );
+     mSortByThreadChangeDate = conf->readBoolEntry( "sortByThreadChangeDate", false );
+     restoreLayout( conf, "HeaderView" );
++    mInitDone = true;
+   }
+ 
+   KNConfig::ReadNewsGeneral *rngConf = knGlobals.configManager()->readNewsGeneral();
+@@ -208,7 +208,7 @@
+ {
+   if ( column == mSortCol ) {
+     mSortAsc = ascending;
+-    if ( column == mPaintInfo.dateCol && ascending )
++    if ( mInitDone && column == mPaintInfo.dateCol && ascending )
+       mSortByThreadChangeDate = !mSortByThreadChangeDate;
+   } else {
+     mSortCol = column;
+diff -urN -x CVS kdepim.orig/knode/headerview.h kdepim/knode/headerview.h
+--- kdepim.orig/knode/headerview.h	2004-12-30 16:38:16.000000000 +0100
++++ kdepim/knode/headerview.h	2005-03-28 15:30:14.000000000 +0200
+@@ -1,6 +1,6 @@
+ /*
+     KNode, the KDE newsreader
+-    Copyright (c) 1999-2004 the KNode authors.
++    Copyright (c) 1999-2005 the KNode authors.
+     See file AUTHORS for details
+ 
+     This program is free software; you can redistribute it and/or modify
+@@ -22,6 +22,7 @@
+ #include <kmime_util.h>
+ 
+ class KPopupMenu;
++class KNHdrViewItem;
+ 
+ class KNHeaderView : public KListView  {
+ 
+@@ -93,6 +94,7 @@
+     KMime::DateFormatter mDateFormatter;
+     KPopupMenu *mPopup;
+     bool mShowingFolder;
++    bool mInitDone;
+ 
+   private slots:
+     void slotCenterDelayed();
+diff -urN -x CVS kdepim.orig/knode/knarticlewidget.cpp kdepim/knode/knarticlewidget.cpp
+--- kdepim.orig/knode/knarticlewidget.cpp	2005-02-03 14:09:08.000000000 +0100
++++ kdepim/knode/knarticlewidget.cpp	2005-03-28 16:20:50.000000000 +0200
+@@ -102,6 +102,7 @@
+   style->setFontUnderline(app->articleFixedFont().underline());
+   style->setFontWeight(app->articleFixedFont().weight());
+   style->setFontItalic(app->articleFixedFont().italic());
++  style->setColor( app->textColor() );
+ 
+   setText(QString("<qt><txt>%1</txt></qt>").arg(htmlCode));
+   KNHelper::restoreWindowSize("sourceWindow", this, QSize(500,300));
+diff -urN -x CVS kdepim.orig/knode/kncollectionview.cpp kdepim/knode/kncollectionview.cpp
+--- kdepim.orig/knode/kncollectionview.cpp	2005-01-07 10:30:54.000000000 +0100
++++ kdepim/knode/kncollectionview.cpp	2005-03-28 16:20:50.000000000 +0200
+@@ -127,6 +127,8 @@
+   setAlternateBackground( app->backgroundColor() );
+   // FIXME: make this configurable
+   mPaintInfo.colUnread = QColor( "blue" );
++  mPaintInfo.colFore = app->textColor();
++  mPaintInfo.colBack = app->backgroundColor();
+ }
+ 
+ 
 diff -urN -x CVS kdepim.orig/knode/knconfigwidgets.cpp kdepim/knode/knconfigwidgets.cpp
 --- kdepim.orig/knode/knconfigwidgets.cpp	2005-02-16 12:06:56.000000000 +0100
 +++ kdepim/knode/knconfigwidgets.cpp	2005-03-15 16:13:25.000000000 +0100
@@ -6683,6 +7010,62 @@ diff -urN -x CVS kdepim.orig/knode/knconfigwidgets.cpp kdepim/knode/knconfigwidg
    xgbL->addMultiCellWidget(placeHolders, 5, 5, 0, 1);
  
    i_ncUaCB=new QCheckBox(i18n("Do not add the \"&User-Agent\" identification header"), xgb);
+diff -urN -x CVS kdepim.orig/knode/kngroup.cpp kdepim/knode/kngroup.cpp
+--- kdepim.orig/knode/kngroup.cpp	2004-12-27 18:10:06.000000000 +0100
++++ kdepim/knode/kngroup.cpp	2005-03-28 16:25:03.000000000 +0200
+@@ -257,9 +257,16 @@
+         for (uint i = buff.toUInt(); i > 0; --i) {
+           buff = f.readLine();
+           int pos = buff.find(':');
++          QCString hdrName = buff.left( pos );
++          // skip headers we already set above and which we actually never should
++          // find here, but however it still happens... (eg. #101355)
++          if ( hdrName == "Subject" || hdrName == "From" || hdrName == "Date"
++              || hdrName == "Message-ID" || hdrName == "References"
++              || hdrName == "Bytes" || hdrName == "Lines" )
++            continue;
+           hdrValue = buff.right( buff.length() - (pos + 2) );
+           if (hdrValue.length() > 0)
+-            art->setHeader( new KMime::Headers::Generic( buff.left(pos), art, hdrValue ) );
++            art->setHeader( new KMime::Headers::Generic( hdrName, art, hdrValue ) );
+         }
+       }
+ 
+@@ -455,7 +462,7 @@
+       int pos = hdr.find(':');
+       hdrName = hdr.left( pos );
+       // if the header format is 'full' we have to strip the header name
+-      if (hdr.findRev("full") == (int)(hdr.length() - 5))
++      if (hdr.findRev("full") == (int)(hdr.length() - 4))
+         data = data.right( data.length() - (hdrName.length() + 2) );
+ 
+       // add header
+diff -urN -x CVS kdepim.orig/knode/knnetaccess.cpp kdepim/knode/knnetaccess.cpp
+--- kdepim.orig/knode/knnetaccess.cpp	2004-10-01 22:19:26.000000000 +0200
++++ kdepim/knode/knnetaccess.cpp	2005-03-28 16:44:36.000000000 +0200
+@@ -89,9 +89,9 @@
+   if(mSMTPProgressItem)
+     mSMTPProgressItem->setComplete();
+ 
+-  nntpClient->terminate();
++  nntpClient->terminateClient();
+   nntpClient->wait();
+-  smtpClient->terminate();
++  smtpClient->terminateClient();
+   smtpClient->wait();
+ 
+   delete nntpClient;
+diff -urN -x CVS kdepim.orig/knode/knnntpclient.cpp kdepim/knode/knnntpclient.cpp
+--- kdepim.orig/knode/knnntpclient.cpp	2004-08-24 12:55:09.000000000 +0200
++++ kdepim/knode/knnntpclient.cpp	2005-03-28 16:25:03.000000000 +0200
+@@ -402,6 +402,7 @@
+     QStrList tmp;
+     if (getMsg(tmp)) {
+       for(QCString s = tmp.first(); s; s = tmp.next()) {
++        s = s.stripWhiteSpace();
+         // remove the mandatory xover header
+         if (s == "Subject:" || s == "From:" || s == "Date:" || s == "Message-ID:"
+             || s == "References:" || s == "Bytes:" || s == "Lines:")
 diff -urN -x CVS kdepim.orig/knode/knode_config_accounts.desktop kdepim/knode/knode_config_accounts.desktop
 --- kdepim.orig/knode/knode_config_accounts.desktop	2005-02-13 05:31:02.000000000 +0100
 +++ kdepim/knode/knode_config_accounts.desktop	2005-03-22 18:38:50.000000000 +0100
@@ -6963,6 +7346,114 @@ diff -urN -x CVS kdepim.orig/knode/KNode.desktop kdepim/knode/KNode.desktop
  GenericName[zh_CN]=新闻阅读器
  GenericName[zu]=Umfundi wezindaba
  X-KDE-StartupNotify=true
+diff -urN -x CVS kdepim.orig/knode/knprotocolclient.cpp kdepim/knode/knprotocolclient.cpp
+--- kdepim.orig/knode/knprotocolclient.cpp	2005-02-20 17:36:35.000000000 +0100
++++ kdepim/knode/knprotocolclient.cpp	2005-03-28 16:44:36.000000000 +0200
+@@ -34,8 +34,13 @@
+ #include "knprotocolclient.h"
+ 
+ 
+-KNProtocolClient::KNProtocolClient(int NfdPipeIn, int NfdPipeOut)
+-:  job(0L), inputSize(10000), fdPipeIn(NfdPipeIn), fdPipeOut(NfdPipeOut), tcpSocket(-1)
++KNProtocolClient::KNProtocolClient(int NfdPipeIn, int NfdPipeOut) :
++  job( 0 ),
++  inputSize( 10000 ),
++  fdPipeIn( NfdPipeIn ),
++  fdPipeOut( NfdPipeOut ),
++  tcpSocket( -1 ),
++  mTerminate( false )
+ {
+   input = new char[inputSize];
+ }
+@@ -88,6 +93,7 @@
+   timeval tv;
+   int selectRet;
+ 
++  int holdTime = 1000 * account.hold();
+   while (true) {
+     if (isConnected()) {  // we are connected, hold the connection for xx secs
+       FD_ZERO(&fdsR);
+@@ -95,14 +101,24 @@
+       FD_SET(tcpSocket, &fdsR);
+       FD_ZERO(&fdsE);
+       FD_SET(tcpSocket, &fdsE);
+-      tv.tv_sec = account.hold();
+-      tv.tv_usec = 0;
++      tv.tv_sec = 0;
++      tv.tv_usec = 1000;
++      --holdTime;
+       selectRet = KSocks::self()->select(FD_SETSIZE, &fdsR, NULL, &fdsE, &tv);
+       if (selectRet == 0) {
++        if (holdTime <= 0) {
+ #ifndef NDEBUG
+-        qDebug("knode: KNProtocolClient::waitForWork(): hold time elapsed, closing connection.");
++          qDebug("knode: KNProtocolClient::waitForWork(): hold time elapsed, closing connection.");
+ #endif
+-        closeConnection();               // nothing happend...
++          closeConnection();               // nothing happend...
++          holdTime = 1000 * account.hold();
++        } else {
++          if ( mTerminate ) {
++            closeConnection();
++            return;
++          }
++          continue;
++        }
+       } else {
+         if (((selectRet > 0)&&(!FD_ISSET(fdPipeIn,&fdsR)))||(selectRet == -1)) {
+ #ifndef NDEBUG
+@@ -113,11 +129,16 @@
+       }
+     }
+ 
++    struct timeval timeout;
+     do {
++      timeout.tv_sec = 0;
++      timeout.tv_usec = 1000;
+       FD_ZERO(&fdsR);
+       FD_SET(fdPipeIn, &fdsR);
+-    } while (select(FD_SETSIZE, &fdsR, NULL, NULL, NULL)<0);  // don't get tricked by signals
+-    
++      if (mTerminate)
++        return;
++    } while (select(FD_SETSIZE, &fdsR, NULL, NULL, &timeout) <= 0);  // don't get tricked by signals
++
+     clearPipe();      // remove start signal
+ 
+     timer.start();
+diff -urN -x CVS kdepim.orig/knode/knprotocolclient.h kdepim/knode/knprotocolclient.h
+--- kdepim.orig/knode/knprotocolclient.h	2002-11-08 22:03:28.000000000 +0100
++++ kdepim/knode/knprotocolclient.h	2005-03-28 16:44:36.000000000 +0200
+@@ -50,7 +50,8 @@
+     /** bytes in&out for the current connection */
+     int getByteCount() const { return byteCount; };
+     bool isInByteCountMode() const { return byteCountMode; };
+-  
++
++    void terminateClient() { mTerminate = true; }
+   protected:
+ 
+     /** main loop, maintains connection and waits for next job */
+@@ -114,6 +115,7 @@
+     /** bytes in&out for the current connection */
+     int byteCount;
+     QTime timer;
++    bool mTerminate;
+ 
+ };
+ 
+diff -urN -x CVS kdepim.orig/knode/resource.h kdepim/knode/resource.h
+--- kdepim.orig/knode/resource.h	2005-02-22 16:29:05.000000000 +0100
++++ kdepim/knode/resource.h	2005-03-28 16:46:42.000000000 +0200
+@@ -24,7 +24,7 @@
+ 
+ //========= KNode Version Information ============
+ 
+-#define KNODE_VERSION "0.9.0"
++#define KNODE_VERSION "0.9.1"
+ 
+ //================= StatusBar ====================
+ 
 diff -urN -x CVS kdepim.orig/knotes/knotes.desktop kdepim/knotes/knotes.desktop
 --- kdepim.orig/knotes/knotes.desktop	2005-01-29 04:59:14.000000000 +0100
 +++ kdepim/knotes/knotes.desktop	2005-03-07 15:21:48.000000000 +0100
@@ -7051,13 +7542,13 @@ diff -urN -x CVS kdepim.orig/kontact/interfaces/kontactplugin.desktop kdepim/kon
  [PropertyDef::X-KDE-KontactPluginVersion]
 diff -urN -x CVS kdepim.orig/kontact/plugins/akregator/akregatorplugin3.2.desktop kdepim/kontact/plugins/akregator/akregatorplugin3.2.desktop
 --- kdepim.orig/kontact/plugins/akregator/akregatorplugin3.2.desktop	2005-02-23 06:07:02.000000000 +0100
-+++ kdepim/kontact/plugins/akregator/akregatorplugin3.2.desktop	2005-03-18 09:22:14.000000000 +0100
++++ kdepim/kontact/plugins/akregator/akregatorplugin3.2.desktop	2005-03-28 09:03:34.000000000 +0200
 @@ -33,6 +33,8 @@
  Comment[pt_BR]=Plugin do Akregator
  Comment[ru]=Модуль Akregator
  Comment[sl]=Vstavek Akregator
 +Comment[sr]=Прикључак Akregator-а
-+Comment[sr@Latn]=Прикључак Akregator-а
++Comment[sr@Latn]=Priključak Akregator-a
  Comment[sv]=Akregator-insticksprogram
  Comment[uk]=Втулок Akregator
  Comment[zh_CN]=Akregator 插件
@@ -7075,13 +7566,13 @@ diff -urN -x CVS kdepim.orig/kontact/plugins/akregator/akregatorplugin3.2.deskto
  
 diff -urN -x CVS kdepim.orig/kontact/plugins/akregator/akregatorplugin.desktop kdepim/kontact/plugins/akregator/akregatorplugin.desktop
 --- kdepim.orig/kontact/plugins/akregator/akregatorplugin.desktop	2005-02-23 06:07:02.000000000 +0100
-+++ kdepim/kontact/plugins/akregator/akregatorplugin.desktop	2005-03-18 09:22:14.000000000 +0100
++++ kdepim/kontact/plugins/akregator/akregatorplugin.desktop	2005-03-28 09:03:34.000000000 +0200
 @@ -34,6 +34,8 @@
  Comment[pt_BR]=Plugin do Akregator
  Comment[ru]=Модуль Akregator
  Comment[sl]=Vstavek Akregator
 +Comment[sr]=Прикључак Akregator-а
-+Comment[sr@Latn]=Прикључак Akregator-а
++Comment[sr@Latn]=Priključak Akregator-a
  Comment[sv]=Akregator-insticksprogram
  Comment[uk]=Втулок Akregator
  Comment[zh_CN]=Akregator 插件
@@ -8840,13 +9331,13 @@ diff -urN -x CVS kdepim.orig/korganizer/plugins/hebrew/hebrew.desktop kdepim/kor
  ServiceTypes=Calendar/Plugin,Calendar/Decoration
 diff -urN -x CVS kdepim.orig/korganizer/plugins/printing/journal/journalprint.desktop kdepim/korganizer/plugins/printing/journal/journalprint.desktop
 --- kdepim.orig/korganizer/plugins/printing/journal/journalprint.desktop	2005-02-23 06:07:05.000000000 +0100
-+++ kdepim/korganizer/plugins/printing/journal/journalprint.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/korganizer/plugins/printing/journal/journalprint.desktop	2005-03-28 09:03:34.000000000 +0200
 @@ -16,6 +16,8 @@
  Name[pt_BR]=Estilo de Impressão de Diário
  Name[ru]=Стиль печати журнала
  Name[sl]=Dnevniški slog tiskanja
 +Name[sr]=Дневнички стил штампе
-+Name[sr@Latn]=Дневнички стил штампе
++Name[sr@Latn]=Dnevnički stil štampe
  Name[sv]=Journal-utskriftsstil
  Name[uk]=Стиль друку журналом
  Name[zh_CN]=日记打印样式
@@ -8855,19 +9346,19 @@ diff -urN -x CVS kdepim.orig/korganizer/plugins/printing/journal/journalprint.de
  Comment[ru]=Этот модуль позволяет печатать журнал в виде дневника.
  Comment[sl]=Ta vstavek vam omogoča natis vnosov v dnevnik.
 +Comment[sr]=Овај прикључак вам омогућава да одштампате уносе из дневника.
-+Comment[sr@Latn]=Овај прикључак вам омогућава да одштампате уносе из дневника.
++Comment[sr@Latn]=Ovaj priključak vam omogućava da odštampate unose iz dnevnika.
  Comment[sv]=Det här insticksprogrammet gör att du kan skriva ut journalanteckningar (dagboksanteckningar).
  Comment[uk]=Цей журнал надає можливість друкувати записи журналу (записи щоденника).
  Comment[zh_CN]=此插件允许您打印日记项目。
 diff -urN -x CVS kdepim.orig/korganizer/plugins/printing/list/listprint.desktop kdepim/korganizer/plugins/printing/list/listprint.desktop
 --- kdepim.orig/korganizer/plugins/printing/list/listprint.desktop	2005-02-23 06:07:05.000000000 +0100
-+++ kdepim/korganizer/plugins/printing/list/listprint.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/korganizer/plugins/printing/list/listprint.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Estilo de Impressão em Lista
  Name[ru]=Стиль печати списка
  Name[sl]=Slog tiskanja v obliki list
 +Name[sr]=Листајући стил штампе
-+Name[sr@Latn]=Листајући стил штампе
++Name[sr@Latn]=Listajući stil štampe
  Name[sv]=List-utskriftsstil
  Name[uk]=Стиль друку списком
  Name[zh_CN]=列表打印样式
@@ -8886,13 +9377,13 @@ diff -urN -x CVS kdepim.orig/korganizer/plugins/printing/list/listprint.desktop 
  ServiceTypes=Calendar/Plugin,KOrganizer/PrintPlugin
 diff -urN -x CVS kdepim.orig/korganizer/plugins/printing/whatsnext/whatsnextprint.desktop kdepim/korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
 --- kdepim.orig/korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	2005-02-23 06:07:05.000000000 +0100
-+++ kdepim/korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -16,6 +16,8 @@
  Name[pt_BR]=Estilo de impressão "A Seguir"
  Name[ru]=Стиль печати дайджеста "Что дальше?"
  Name[sl]=Slog tiskanja v obliki »Kaj je naslednje«
 +Name[sr]=Стил штампе „Шта је следеће“
-+Name[sr@Latn]=Стил штампе „Шта је следеће“
++Name[sr@Latn]=Stil štampe „Šta je sledeće“
  Name[sv]=Vad står på tur-utskriftsstil
  Name[uk]=Стиль друку "Що далі?"
  Name[zh_CN]=下步安排打印样式
@@ -9781,37 +10272,37 @@ diff -urN -x CVS kdepim.orig/kresources/egroupware/kabc_resourcexmlrpc.cpp kdepi
  }
 diff -urN -x CVS kdepim.orig/kresources/egroupware/kabc_xmlrpc.desktop kdepim/kresources/egroupware/kabc_xmlrpc.desktop
 --- kdepim.orig/kresources/egroupware/kabc_xmlrpc.desktop	2005-02-21 19:18:47.000000000 +0100
-+++ kdepim/kresources/egroupware/kabc_xmlrpc.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/kresources/egroupware/kabc_xmlrpc.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Servidor eGroupware (via XML-RPC)
  Name[ru]=Сервер eGroupware (через XML-RPC)
  Name[sl]=Strežnik eGroupware (preko XML-RPC)
 +Name[sr]=eGroupware сервер (преко XML-RPC)
-+Name[sr@Latn]=eGroupware сервер (преко XML-RPC)
++Name[sr@Latn]=eGroupware server (preko XML-RPC)
  Name[sv]=eGroupware-server (via XML-RPC)
  Name[uk]=Сервер eGroupware (через XML-RPC)
  Name[zh_CN]=eGroupware 服务器(通过 XML-RPC)
 diff -urN -x CVS kdepim.orig/kresources/egroupware/kcal_xmlrpc.desktop kdepim/kresources/egroupware/kcal_xmlrpc.desktop
 --- kdepim.orig/kresources/egroupware/kcal_xmlrpc.desktop	2005-02-21 19:18:47.000000000 +0100
-+++ kdepim/kresources/egroupware/kcal_xmlrpc.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/kresources/egroupware/kcal_xmlrpc.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Servidor eGroupware (via XML-RPC)
  Name[ru]=Сервер eGroupware (через XML-RPC)
  Name[sl]=Strežnik eGroupware (preko XML-RPC)
 +Name[sr]=eGroupware сервер (преко XML-RPC)
-+Name[sr@Latn]=eGroupware сервер (преко XML-RPC)
++Name[sr@Latn]=eGroupware server (preko XML-RPC)
  Name[sv]=eGroupware-server (via XML-RPC)
  Name[uk]=Сервер eGroupware (через XML-RPC)
  Name[zh_CN]=eGroupware 服务器(通过 XML-RPC)
 diff -urN -x CVS kdepim.orig/kresources/egroupware/knotes_xmlrpc.desktop kdepim/kresources/egroupware/knotes_xmlrpc.desktop
 --- kdepim.orig/kresources/egroupware/knotes_xmlrpc.desktop	2005-02-21 19:18:47.000000000 +0100
-+++ kdepim/kresources/egroupware/knotes_xmlrpc.desktop	2005-03-18 09:22:15.000000000 +0100
++++ kdepim/kresources/egroupware/knotes_xmlrpc.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Servidor eGroupware (via XML-RPC)
  Name[ru]=Сервер eGroupware (через XML-RPC)
  Name[sl]=Strežnik eGroupware (preko XML-RPC)
 +Name[sr]=eGroupware сервер (преко XML-RPC)
-+Name[sr@Latn]=eGroupware сервер (преко XML-RPC)
++Name[sr@Latn]=eGroupware server (preko XML-RPC)
  Name[sv]=eGroupware-server (via XML-RPC)
  Name[uk]=Сервер eGroupware (через XML-RPC)
  Name[zh_CN]=eGroupware 服务器(通过 XML-RPC)
@@ -9829,13 +10320,13 @@ diff -urN -x CVS kdepim.orig/kresources/egroupware/xmlrpciface.cpp kdepim/kresou
    stream.writeRawBytes( xmlMarkup.utf8(), xmlMarkup.utf8().length() );
 diff -urN -x CVS kdepim.orig/kresources/exchange/exchange_deprecated.desktop kdepim/kresources/exchange/exchange_deprecated.desktop
 --- kdepim.orig/kresources/exchange/exchange_deprecated.desktop	2005-02-21 19:18:47.000000000 +0100
-+++ kdepim/kresources/exchange/exchange_deprecated.desktop	2005-03-18 09:22:16.000000000 +0100
++++ kdepim/kresources/exchange/exchange_deprecated.desktop	2005-03-28 09:03:35.000000000 +0200
 @@ -18,8 +18,9 @@
  Name[pt_BR]=Servidor Exchange2000 (versão de compatibilidade)
  Name[ru]=Сервер Exchange 2000 (устаревший)
  Name[sl]=Strežnik Exchange 2000 (opuščeno)
 +Name[sr]=Exchange 2000 сервер (неодобраван)
-+Name[sr@Latn]=Exchange 2000 сервер (неодобраван)
++Name[sr@Latn]=Exchange 2000 server (neodobravan)
  Name[sv]=Exchange 2000-server (avråds från)
  Name[uk]=Сервер Exchange 2000 (застаріле)
 -Name[xx]=xxExchange 2000 Server (deprecated)xx
@@ -9952,7 +10443,7 @@ diff -urN -x CVS kdepim.orig/kresources/groupware/kcal_groupware.desktop kdepim/
  Type=Service
 diff -urN -x CVS kdepim.orig/kresources/groupwise/kabc_groupwise.desktop kdepim/kresources/groupwise/kabc_groupwise.desktop
 --- kdepim.orig/kresources/groupwise/kabc_groupwise.desktop	2005-02-18 05:08:44.000000000 +0100
-+++ kdepim/kresources/groupwise/kabc_groupwise.desktop	2005-03-24 08:21:32.000000000 +0100
++++ kdepim/kresources/groupwise/kabc_groupwise.desktop	2005-03-28 09:03:36.000000000 +0200
 @@ -10,6 +10,7 @@
  Name[et]=Novelli GroupWise server
  Name[fr]=Serveur de travail collaboratif GroupWise de Novell
@@ -9966,13 +10457,13 @@ diff -urN -x CVS kdepim.orig/kresources/groupwise/kabc_groupwise.desktop kdepim/
  Name[ru]=Сервер Novell GroupWise
  Name[sl]=Strežnik Novell GroupWise
 +Name[sr]=Novell-ов GroupWise сервер
-+Name[sr@Latn]=Novell-ов GroupWise сервер
++Name[sr@Latn]=Novell-ov GroupWise server
  Name[sv]=Novell Groupwise-server
  Name[uk]=Сервер Novell GroupWise
  Name[zh_CN]=Novell GroupWise 服务器
 diff -urN -x CVS kdepim.orig/kresources/groupwise/kcal_groupwise.desktop kdepim/kresources/groupwise/kcal_groupwise.desktop
 --- kdepim.orig/kresources/groupwise/kcal_groupwise.desktop	2005-02-18 05:08:44.000000000 +0100
-+++ kdepim/kresources/groupwise/kcal_groupwise.desktop	2005-03-24 08:21:32.000000000 +0100
++++ kdepim/kresources/groupwise/kcal_groupwise.desktop	2005-03-28 09:03:36.000000000 +0200
 @@ -10,6 +10,7 @@
  Name[et]=Novelli GroupWise server
  Name[fr]=Serveur de travail collaboratif GroupWise de Novell
@@ -9986,19 +10477,19 @@ diff -urN -x CVS kdepim.orig/kresources/groupwise/kcal_groupwise.desktop kdepim/
  Name[ru]=Сервер Novell GroupWise
  Name[sl]=Strežnik Novell GroupWise
 +Name[sr]=Novell-ов GroupWise сервер
-+Name[sr@Latn]=Novell-ов GroupWise сервер
++Name[sr@Latn]=Novell-ov GroupWise server
  Name[sv]=Novell Groupwise-server
  Name[uk]=Сервер Novell GroupWise
  Name[zh_CN]=Novell GroupWise 服务器
 diff -urN -x CVS kdepim.orig/kresources/kolab/kabc/kolab.desktop kdepim/kresources/kolab/kabc/kolab.desktop
 --- kdepim.orig/kresources/kolab/kabc/kolab.desktop	2005-02-21 19:18:48.000000000 +0100
-+++ kdepim/kresources/kolab/kabc/kolab.desktop	2005-03-18 09:22:16.000000000 +0100
++++ kdepim/kresources/kolab/kabc/kolab.desktop	2005-03-28 09:03:36.000000000 +0200
 @@ -18,6 +18,8 @@
  Name[pt_BR]=Livro de Endereços em servidor IMAP via KMail
  Name[ru]=Адресная книга на сервере IMAP через KMail
  Name[sl]=Adresar na strežniku IMAP preko KMaila
 +Name[sr]=Адресар на IMAP серверу преко KMail-а
-+Name[sr@Latn]=Адресар на IMAP серверу преко KMail-а
++Name[sr@Latn]=Adresar na IMAP serveru preko KMail-a
  Name[sv]=Adressbok på IMAP-server via Kmail
  Name[uk]=Адресна книга на сервері IMAP через KMail
  Name[zh_CN]=通过 KMail 访问 IMAP 服务器上的地址簿
@@ -10065,13 +10556,13 @@ diff -urN -x CVS kdepim.orig/kresources/kolab/kcal/incidence.cpp kdepim/kresourc
      } else kdWarning() << "Unhandled recurrence cycle " << mRecurrence.cycle << endl;
 diff -urN -x CVS kdepim.orig/kresources/kolab/kcal/kolab.desktop kdepim/kresources/kolab/kcal/kolab.desktop
 --- kdepim.orig/kresources/kolab/kcal/kolab.desktop	2005-02-21 19:18:48.000000000 +0100
-+++ kdepim/kresources/kolab/kcal/kolab.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/kolab/kcal/kolab.desktop	2005-03-28 09:03:36.000000000 +0200
 @@ -18,6 +18,8 @@
  Name[pt_BR]=Calendário em Servidor IMAP via KMail
  Name[ru]=Календарь на сервере IMAP через KMail
  Name[sl]=Koledar na strežniku IMAP preko KMaila
 +Name[sr]=Календар на IMAP серверу преко KMail-а
-+Name[sr@Latn]=Календар на IMAP серверу преко KMail-а
++Name[sr@Latn]=Kalendar na IMAP serveru preko KMail-a
  Name[sv]=Kalender på IMAP-server via Kmail
  Name[uk]=Календар на сервері IMAP через KMail
  Name[zh_CN]=通过 KMail 访问 IMAP 服务器上的日历
@@ -10089,13 +10580,13 @@ diff -urN -x CVS kdepim.orig/kresources/kolab/kcal/resourcekolab.cpp kdepim/kres
  }
 diff -urN -x CVS kdepim.orig/kresources/kolab/knotes/kolabresource.desktop kdepim/kresources/kolab/knotes/kolabresource.desktop
 --- kdepim.orig/kresources/kolab/knotes/kolabresource.desktop	2005-02-21 19:18:48.000000000 +0100
-+++ kdepim/kresources/kolab/knotes/kolabresource.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/kolab/knotes/kolabresource.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -18,6 +18,8 @@
  Name[pt_BR]=Servidor IMAP via KMail
  Name[ru]=Доступ к серверу IMAP через KMail
  Name[sl]=Strežnik IMAP preko KMaila
 +Name[sr]=IMAP сервер преко KMail-а
-+Name[sr@Latn]=IMAP сервер преко KMail-а
++Name[sr@Latn]=IMAP server preko KMail-a
  Name[sv]=IMAP-server via Kmail
  Name[uk]=Сервер IMAP через KMail
  Name[zh_CN]=通过 KMail 访问 IMAP 服务器
@@ -10113,13 +10604,13 @@ diff -urN -x CVS kdepim.orig/kresources/kolab/knotes/resourcekolab.cpp kdepim/kr
  ResourceKolab::~ResourceKolab()
 diff -urN -x CVS kdepim.orig/kresources/newexchange/kabc_newexchange.desktop kdepim/kresources/newexchange/kabc_newexchange.desktop
 --- kdepim.orig/kresources/newexchange/kabc_newexchange.desktop	2005-02-21 19:18:49.000000000 +0100
-+++ kdepim/kresources/newexchange/kabc_newexchange.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/newexchange/kabc_newexchange.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -17,9 +17,10 @@
  Name[pt_BR]=Livro de Endereços em um Servidor Exchange (experimenal)
  Name[ru]=Адресная книга на сервере Exchange (экспериментально)
  Name[sl]=Adresar na strežniku Exchange (poskusno)
 +Name[sr]=Адресар на Exchange серверу (експериментално)
-+Name[sr@Latn]=Адресар на Exchange серверу (експериментално)
++Name[sr@Latn]=Adresar na Exchange serveru (eksperimentalno)
  Name[sv]=Adressbok på en Exchange-server (experimentell)
  Name[uk]=Адресна книга на сервері Exchange (експериментальне)
 -Name[xx]=xxAddressbook on an Exchange Server (experimental)xx
@@ -10141,13 +10632,13 @@ diff -urN -x CVS kdepim.orig/kresources/newexchange/kabc_newexchange_final.deskt
  Name[zh_CN]=Exchange 服务器上的地址簿
 diff -urN -x CVS kdepim.orig/kresources/newexchange/kcal_newexchange.desktop kdepim/kresources/newexchange/kcal_newexchange.desktop
 --- kdepim.orig/kresources/newexchange/kcal_newexchange.desktop	2005-02-21 19:18:49.000000000 +0100
-+++ kdepim/kresources/newexchange/kcal_newexchange.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/newexchange/kcal_newexchange.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -17,9 +17,10 @@
  Name[pt_BR]=Calendário em um Servidor Exchange (experimental)
  Name[ru]=Календарь на сервере Exchange (экспериментально)
  Name[sl]=Koledar na strežniku Exchange (poskusno)
 +Name[sr]=Календар на Exchange серверу (експериментално)
-+Name[sr@Latn]=Календар на Exchange серверу (експериментално)
++Name[sr@Latn]=Kalendar na Exchange serveru (eksperimentalno)
  Name[sv]=Kalender på en Exchange-server (experimentell)
  Name[uk]=Календар на сервері Exchange (експериментальне)
 -Name[xx]=xxCalendar on an Exchange Server (experimental)xx
@@ -10192,13 +10683,13 @@ diff -urN -x CVS kdepim.orig/kresources/slox/kabcresourceslox.cpp kdepim/kresour
    return true;
 diff -urN -x CVS kdepim.orig/kresources/slox/kabc_slox.desktop kdepim/kresources/slox/kabc_slox.desktop
 --- kdepim.orig/kresources/slox/kabc_slox.desktop	2005-02-21 19:18:49.000000000 +0100
-+++ kdepim/kresources/slox/kabc_slox.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/slox/kabc_slox.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Servidor OpenExchange do SUSE Linux (SLOX)
  Name[ru]=Сервер SUSE LINUX Openexchange
  Name[sl]=Strežnik SUSE LINUX Openexchange
 +Name[sr]=Openexchange сервер SUSE-овог Linux-а
-+Name[sr@Latn]=Openexchange сервер SUSE-овог Linux-а
++Name[sr@Latn]=Openexchange server SUSE-ovog Linux-a
  Name[sv]=SUSE Linux Openexchange-server
  Name[uk]=Сервер SUSE LINUX Openexchange
  Name[zh_CN]=SUSE LINUX Openexchange 服务器
@@ -10341,13 +10832,13 @@ diff -urN -x CVS kdepim.orig/kresources/slox/kcalresourceslox.h kdepim/kresource
      void parseTodoAttribute( const QDomElement &e, KCal::Todo *todo );
 diff -urN -x CVS kdepim.orig/kresources/slox/kcal_slox.desktop kdepim/kresources/slox/kcal_slox.desktop
 --- kdepim.orig/kresources/slox/kcal_slox.desktop	2005-02-21 19:18:49.000000000 +0100
-+++ kdepim/kresources/slox/kcal_slox.desktop	2005-03-18 09:22:17.000000000 +0100
++++ kdepim/kresources/slox/kcal_slox.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -17,6 +17,8 @@
  Name[pt_BR]=Servidor OpenExchange do SUSE Linux (SLOX)
  Name[ru]=Сервер SUSE LINUX Openexchange
  Name[sl]=Strežnik SUSE LINUX Openexchange
 +Name[sr]=Openexchange сервер SUSE-овог Linux-а
-+Name[sr@Latn]=Openexchange сервер SUSE-овог Linux-а
++Name[sr@Latn]=Openexchange server SUSE-ovog Linux-a
  Name[sv]=SUSE Linux Openexchange-server
  Name[uk]=Сервер SUSE LINUX Openexchange
  Name[zh_CN]=SUSE LINUX Openexchange 服务器
@@ -10361,7 +10852,7 @@ diff -urN -x CVS kdepim.orig/ksync/src/ksync.desktop kdepim/ksync/src/ksync.desk
 -Name[xx]=xxKsyncxx
 diff -urN -x CVS kdepim.orig/ktnef/gui/ktnef.desktop kdepim/ktnef/gui/ktnef.desktop
 --- kdepim.orig/ktnef/gui/ktnef.desktop	2005-02-23 06:07:06.000000000 +0100
-+++ kdepim/ktnef/gui/ktnef.desktop	2005-03-18 09:22:18.000000000 +0100
++++ kdepim/ktnef/gui/ktnef.desktop	2005-03-28 09:03:37.000000000 +0200
 @@ -1,7 +1,6 @@
  [Desktop Entry]
  Name=KTnef
@@ -10375,7 +10866,7 @@ diff -urN -x CVS kdepim.orig/ktnef/gui/ktnef.desktop kdepim/ktnef/gui/ktnef.desk
  GenericName[ru]=Просмотр файлов TNEF
  GenericName[sl]=Pregledovalnik datotek TNEF
 +GenericName[sr]=Приказивач TNEF фајлова
-+GenericName[sr@Latn]=Приказивач TNEF фајлова
++GenericName[sr@Latn]=Prikazivač TNEF fajlova
  GenericName[sv]=TNEF-filvisning
  GenericName[uk]=Переглядач файлів TNEF
 -GenericName[xx]=xxTNEF File Viewerxx
@@ -11115,6 +11606,26 @@ diff -urN -x CVS kdepim.orig/libkdepim/komposer/plugins/default/defaulteditor.de
  Comment[uk]=Типовий редактор Komposer
 -Comment[xx]=xxKomposer default editorxx
  Comment[zh_CN]=Komposer 默认编辑器
+diff -urN -x CVS kdepim.orig/libkdepim/linklocator.cpp kdepim/libkdepim/linklocator.cpp
+--- kdepim.orig/libkdepim/linklocator.cpp	2005-02-13 12:31:37.000000000 +0100
++++ kdepim/libkdepim/linklocator.cpp	2005-03-29 09:56:32.000000000 +0200
+@@ -400,12 +400,11 @@
+       htmlRep = QString::null;
+     }
+     else {
+-      // create an image tag with nested span (the text in the span is used
++      // create an image tag (the text in attribute alt is used
+       // for copy & paste) representing the smiley
+-      htmlRep = QString("<span class=\"pimsmileytext\">%1</span>"
+-                        "<img class=\"pimsmileyimg\" src=\"%2\" "
+-                        "alt=\"%3\" title=\"%4\"/>")
+-                .arg( QStyleSheet::escape( smiley ), dataUrl,
++      htmlRep = QString("<img class=\"pimsmileyimg\" src=\"%1\" "
++                        "alt=\"%2\" title=\"%3\"/>")
++                .arg( dataUrl,
+                       QStyleSheet::escape( smiley ),
+                       QStyleSheet::escape( smiley ) );
+     }
 diff -urN -x CVS kdepim.orig/mimelib/boyermor.cpp kdepim/mimelib/boyermor.cpp
 --- kdepim.orig/mimelib/boyermor.cpp	2003-05-24 11:22:47.000000000 +0200
 +++ kdepim/mimelib/boyermor.cpp	2005-03-26 22:18:21.000000000 +0100
@@ -11144,7 +11655,7 @@ diff -urN -x CVS kdepim.orig/mimelib/boyermor.cpp kdepim/mimelib/boyermor.cpp
      }
 diff -urN -x CVS kdepim.orig/networkstatus/networkstatus.desktop kdepim/networkstatus/networkstatus.desktop
 --- kdepim.orig/networkstatus/networkstatus.desktop	2005-02-22 05:13:38.000000000 +0100
-+++ kdepim/networkstatus/networkstatus.desktop	2005-03-18 09:22:18.000000000 +0100
++++ kdepim/networkstatus/networkstatus.desktop	2005-03-30 08:48:40.000000000 +0200
 @@ -3,7 +3,7 @@
  Name=Network Status Daemon
  Name[bg]=Демон за състояние на мрежата
@@ -11159,19 +11670,20 @@ diff -urN -x CVS kdepim.orig/networkstatus/networkstatus.desktop kdepim/networks
  Name[ru]=Демон использования сети
  Name[sl]=Demon za omrežno stanje
 +Name[sr]=Демон за статус мреже
-+Name[sr@Latn]=Демон за статус мреже
++Name[sr@Latn]=Demon za status mreže
  Name[sv]=Nätverksstatusdemon
  Name[uk]=Даемон стану мережі
 -Name[xx]=xxNetwork Status Daemonxx
  Name[zh_CN]=网络状态守护程序
  Comment=Tracks status of network interfaces and provides notification to applications using the network.
  Comment[bg]=Следене на състоянието на мрежата и предаване на информацията на програмите, които имат нужда
-@@ -35,9 +36,10 @@
+@@ -35,9 +36,11 @@
  Comment[pt]=Vigia o estado das interfaces de rede e avisa as aplicações que utilizam a rede.
  Comment[pt_BR]=Controla o status das interfaces de rede e fornece notificações para aplicativos utilizando a rede.
  Comment[ru]=Демон отслеживания состояния сетевых интерфейсов и обращения приложений к сети.
++Comment[sl]=Sledi stanju omrežnim vmesnikom in omogoča obvestila programom, ki uporabljajo omrežje
 +Comment[sr]=Прати статус мрежних интерфејса и пружа обавештења програмима који користе мрежу.
-+Comment[sr@Latn]=Прати статус мрежних интерфејса и пружа обавештења програмима који користе мрежу.
++Comment[sr@Latn]=Prati status mrežnih interfejsa i pruža obaveštenja programima koji koriste mrežu.
  Comment[sv]=Bevakar status för nätverksgränssnitt och tillhandahåller underrättelser till program som använder nätverket.
  Comment[uk]=Слідкує за станом інтерфейсів мережі і сповіщає програми, які користуються мережею.
 -Comment[xx]=xxTracks status of network interfaces and provides notification to applications using the network.xx
@@ -11263,7 +11775,7 @@ diff -urN -x CVS kdepim.orig/plugins/kmail/bodypartformatter/text_vcard.desktop 
  [Plugin]
 diff -urN -x CVS kdepim.orig/plugins/kmail/bodypartformatter/text_xdiff.desktop kdepim/plugins/kmail/bodypartformatter/text_xdiff.desktop
 --- kdepim.orig/plugins/kmail/bodypartformatter/text_xdiff.desktop	2005-02-21 19:18:50.000000000 +0100
-+++ kdepim/plugins/kmail/bodypartformatter/text_xdiff.desktop	2005-03-25 08:43:02.000000000 +0100
++++ kdepim/plugins/kmail/bodypartformatter/text_xdiff.desktop	2005-03-30 08:48:40.000000000 +0200
 @@ -15,12 +15,11 @@
  Name[ru]=Бинарный поток приложения
  Name[sl]=Programski Octetstream
@@ -11278,12 +11790,13 @@ diff -urN -x CVS kdepim.orig/plugins/kmail/bodypartformatter/text_xdiff.desktop 
  Name[zh_CN]=应用程序 Octetstream
  Comment=A bodypart formatter plugin for text/x-diff
  Comment[bg]=Редактор с поддръжка на форматиране за текст/x-diff
-@@ -36,13 +35,12 @@
+@@ -36,13 +35,13 @@
  Comment[pl]=Wtyczka formatująca dla text/x-diff
  Comment[pt]=Um 'plugin' de formatação para text/x-diff
  Comment[pt_BR]=Um plug-in formatador de componente para o tipo text/x-diff
 -Comment[ru]=Модуль форматирования text/x-diff
 +Comment[ru]=Форматирование text/x-diff
++Comment[sl]=Oblikovalni vstavek za text/x-diff
  Comment[sr]=Прикључак за форматитање тела за text/x-diff
 -Comment[sr@Latn]=Прикључак за форматитање тела за text/x-diff
 +Comment[sr@Latn]=Priključak za formatitanje tela za text/x-diff
