@@ -7,10 +7,11 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
+%bcond_with     cvs             # use cvs checkouts instead of tarballs
 
 %define		_state		snapshots
-%define		_ver		3.2.90
-%define		_snap		040521
+%define		_ver		3.2.91
+%define		_snap		040523
 %define		_packager	adgor
 
 %define		_minlibsevr	9:3.2.90.040519
@@ -23,15 +24,17 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	3
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
-#Source0:	%{name}-%{_snap}.tar.bz2
-##%% Source0-md5:	509467a5c635fed8096e44afd0af9014
+%if ! %{with cvs}
+Source0:        ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+# Source0-md5:  53b213398dc488af5de57b74c6b3bbf5
+%else
+Source0:        kdesource.tar.gz
+%endif
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -507,7 +510,11 @@ TODO.
 TODO.
 
 %prep
-%setup -q -n %{name}-%{_snap}
+%if %{with cvs}
+%setup -q -n %{name} -D
+%else
+%setup -q -n %{name}-%{_snap} 
+%endif
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
