@@ -14,14 +14,14 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1
+Release:	1.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
-#Source1:	kde-i18n-%{name}-%{version}.tar.bz2
+Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -280,6 +280,8 @@ cd ..
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 mv $ALD/{Applications/*,Office/PIMs}
 mv $ALD/Utilities/{More/*,.}
+
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
