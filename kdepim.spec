@@ -1,9 +1,10 @@
-# TODO:
+#
+# TODO (still on time?):
 # - find out why cant this app find gtk+.h
 
 %define         _state          snapshots
 %define         _ver		3.1.93
-%define		_snap		031105
+%define		_snap		031114
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -19,7 +20,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	aa08ee1c15d38274aee430b201500fc1
+# Source0-md5:	b30dc8fd2e84fb5cb78cbd81f95dfa28
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -579,12 +580,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
-%{_includedir}/ksharedfile.h
 %{_includedir}/calendar
 %{_includedir}/kaddressbook
 %{_includedir}/kdepim
 %{_includedir}/kgantt
-%{_includedir}/kitchensync
 %{_includedir}/knewstuff
 %{_includedir}/kontact
 %{_includedir}/korganizer
@@ -592,7 +591,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ksieve
 %{_includedir}/ktnef
 %{_includedir}/mimelib
-%{_libdir}/libdummykonnector.so
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkalarmd.so
@@ -600,24 +598,28 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkdenetwork.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
-%{_libdir}/libkitchensyncui.so
 %{_libdir}/libkmailprivate.so
 %{_libdir}/libknewstuff.so
-%{_libdir}/libkonnector.so
 %{_libdir}/libkontact.so
 %{_libdir}/libkorganizer.so
 %{_libdir}/libkorganizer_eventviewer.so
 %{_libdir}/libkpilot.so
 %{_libdir}/libkpimexchange.so
 %{_libdir}/libkpinterfaces.so
-%{_libdir}/libksharedfile.so
 %{_libdir}/libksieve.so
 %{_libdir}/libksync.so
-%{_libdir}/libksync2.so
 %{_libdir}/libktnef.so
-%{_libdir}/liblocalkonnector.so
 %{_libdir}/libmimelib.so
-%{_libdir}/libqtopiakonnector.so
+# kitchensync part
+#%{_includedir}/kitchensync
+#%{_includedir}/ksharedfile.h
+#%{_libdir}/libdummykonnector.so
+#%{_libdir}/libkitchensyncui.so
+#%{_libdir}/libkonnector.so
+#%{_libdir}/libksharedfile.so
+#%{_libdir}/libksync2.so
+#%{_libdir}/liblocalkonnector.so
+#%{_libdir}/libqtopiakonnector.so
 
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
@@ -712,6 +714,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/knewsservice.protocol
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
+%{_iconsdir}/*/*/*/knode2.png
 
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
@@ -730,8 +733,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kontact
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
-%{_libdir}/kde3/libkontact_kitchensync.la
-%attr(755,root,root) %{_libdir}/kde3/libkontact_kitchensync.so
+# kitchensync kontact plugin
+#%{_libdir}/kde3/libkontact_kitchensync.la
+#%attr(755,root,root) %{_libdir}/kde3/libkontact_kitchensync.so
 %{_libdir}/kde3/libkontact_kmailplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
 %{_libdir}/kde3/libkontact_knodeplugin.la
@@ -768,46 +772,28 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ghns
 %attr(755,root,root) %{_bindir}/kalarm*
-%attr(755,root,root) %{_bindir}/kitchensync
 %attr(755,root,root) %{_bindir}/khotnewstuff
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/ical2vcal
-#%attr(755,root,root) %{_bindir}/simplealarmdaemon
 %{_libdir}/kde3/kcm_korganizer.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
-%{_libdir}/kde3/libkded_ksharedfile.la
-%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
-%{_libdir}/kde3/libkitchensyncpart.la
-%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
-%{_libdir}/kde3/libksync_backup.la
-%attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
-%{_libdir}/kde3/libksync_debugger.la
-%attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
-%{_libdir}/kde3/libksync_syncerpart.la
-%attr(755,root,root) %{_libdir}/kde3/libksync_syncerpart.so
-%{_libdir}/kde3/liboverviewpart.la
-%attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
 %{_datadir}/apps/kgantt
-%{_datadir}/apps/kitchensync
 %{_datadir}/apps/knewstuff
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
-#%{_datadir}/apps/kresources
 %{_datadir}/apps/ksync
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/korganizer.kcfg
-%{_datadir}/mimelnk/kdedevice/cellphone.desktop
-%{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/configcolors.desktop
 %{_datadir}/services/configfonts.desktop
 %{_datadir}/services/configfreebusy.desktop
@@ -816,17 +802,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/configmain.desktop
 %{_datadir}/services/configtime.desktop
 %{_datadir}/services/configviews.desktop
-%{_datadir}/services/kded/ksharedfile.desktop
-%{_datadir}/services/kitchensync
-%{_datadir}/services/overview.desktop
 %{_datadir}/services/korganizer
-%{_datadir}/services/kresources/konnector
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
-%{_datadir}/servicetypes/kitchensync.desktop
-%{_datadir}/servicetypes/konnector.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
 %{_desktopdir}/kde/kalarm.desktop
@@ -834,31 +814,56 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kalarm.png
 %{_iconsdir}/crystalsvg/*/actions/knewstuff.png
 %{_iconsdir}/*/*/*/korganizer*.png
+# kitchensync part
+#%attr(755,root,root) %{_bindir}/kitchensync
+#%attr(755,root,root) %{_bindir}/simplealarmdaemon
+#%{_libdir}/kde3/libkded_ksharedfile.la
+#%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+#%{_libdir}/kde3/libkitchensyncpart.la
+#%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
+#%{_libdir}/kde3/libksync_backup.la
+#%attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
+#%{_libdir}/kde3/libksync_debugger.la
+#%attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
+#%{_libdir}/kde3/libksync_syncerpart.la
+#%attr(755,root,root) %{_libdir}/kde3/libksync_syncerpart.so
+#%{_libdir}/kde3/liboverviewpart.la
+#%attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
+#%{_datadir}/apps/kitchensync
+#%{_datadir}/mimelnk/kdedevice/cellphone.desktop
+#%{_datadir}/mimelnk/kdedevice/pda.desktop
+#%{_datadir}/services/kded/ksharedfile.desktop
+#%{_datadir}/services/kitchensync
+#%{_datadir}/services/overview.desktop
+#%{_datadir}/services/kresources/konnector
+#%{_datadir}/servicetypes/kitchensync.desktop
+#%{_datadir}/servicetypes/konnector.desktop
 
 %files korganizer-libs
 %defattr(644,root,root,755)
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
-%{_libdir}/libkitchensyncui.la
-%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
-%{_libdir}/libkonnector.la
-%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
 %{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %{_libdir}/libkorganizer_eventviewer.la
 %attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
 %{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
-%{_libdir}/libksharedfile.la
-%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
-%{_libdir}/libksync2.la
-%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
+# kitchensync part
+#%{_libdir}/libkitchensyncui.la
+#%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
+#%{_libdir}/libkonnector.la
+#%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
+#%{_libdir}/libksharedfile.la
+#%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
+#%{_libdir}/libksync2.la
+#%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
 
 %files korn -f korn.lang
 %defattr(644,root,root,755)
