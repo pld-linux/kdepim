@@ -12,7 +12,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -22,6 +22,7 @@ Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
 # Source0-md5:	e4244c1d1a461954c6fdde30bb094b70
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
@@ -522,8 +523,9 @@ z=kpilot/conduits/configure.in.in
 grep -v KPILOT_CHECK_PISOCK $z > $z.1
 mv $z.1 $z
 %{__make} -f admin/Makefile.common cvs
-
+cp -f /usr/share/automake/config.sub admin
 %configure \
+	--with-qt-libraries=%{_libdir} \
 	--disable-rpath \
 	--enable-final
 
