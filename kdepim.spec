@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030418
+%define		_snap		030423
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -602,7 +602,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/expense-conduit.desktop
 %{_datadir}/services/abbrowser_conduit.desktop
 %{_datadir}/services/knotes-conduit.desktop
-%{_datadir}/services/null-conduit.desktop
+#%{_datadir}/services/null-conduit.desktop
 %{_datadir}/services/popmail-conduit.desktop
 %{_datadir}/services/time_conduit.desktop
 %{_datadir}/services/todo-conduit.desktop
