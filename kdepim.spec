@@ -7,15 +7,14 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
-%bcond_without	kimproxy	# without kimproxy support (for botstrap)
 
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040516
+%define		_snap		040521
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040515
-%define		_minbaseevr	9:3.2.90.040515
+%define		_minlibsevr	9:3.2.90.040519
+%define		_minbaseevr	9:3.2.90.040519
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -24,7 +23,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1
+Release:	3
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -36,8 +35,6 @@ Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
-Patch3:		%{name}-kimproxy-kmail.patch
-Patch4:		%{name}-kimproxy-libkdepim.patch
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -49,7 +46,6 @@ BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gpgme-devel
 BuildRequires:	gnupg >= 1.2.2
-%{?with_kimproxy:BuildRequires:	kimproxy-devel}
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
 BuildRequires:	pcre-devel
@@ -515,13 +511,6 @@ TODO.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%if %{with kimproxy}
-cd kmail
-%patch3 -p0
-cd ../libkdepim
-%patch4 -p0
-cd ..
-%endif
 
 echo "KDE_OPTIONS = nofinal" >> kitchensync/kitchensync/backup/Makefile.am
 echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
@@ -890,6 +879,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
 %{_libdir}/kde3/libkaddrbk_iconview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
+%{_libdir}/kde3/libkaddrbk_instantmessaging.la
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_instantmessaging.so
 ##%{_libdir}/kde3/libkaddrbk_location.la
 ##%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
 #%{_libdir}/kde3/libkaddrbk_merge.la
