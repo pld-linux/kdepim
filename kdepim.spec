@@ -14,13 +14,14 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.%{_snap}.0.3
+Release:	0.%{_snap}.0.4
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
+Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -320,6 +321,7 @@ Obsoletes:	kdenetwork
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
+%patch1 -p1
 
 %build
 kde_appsdir="%{_applnkdir}"; export kde_appsdir
