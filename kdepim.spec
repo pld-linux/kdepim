@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	6
+Release:	7
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -435,6 +435,9 @@ Obsoletes:	kdepim-libkpilot
 Obsoletes:	kdepim-libksieve
 Obsoletes:	kdepim-libktnef
 Obsoletes:	kdepim-libmimelib
+Provides:	kdepim-libkdenetwork = %{epoch}:%{version}-%{release}
+Provides:	kdepim-libkdepim = %{epoch}:%{version}-%{release}
+Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
 
 %description libs
 Libraries shared between PIM applications in KDE, which include:
