@@ -16,7 +16,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.1
+Release:	1
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
@@ -46,6 +46,8 @@ BuildRequires:	qt-designer-libs
 BuildRequires:	rpmbuild(macros) >= 1.129
 #BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
+BuildRequires:	cyrus-sasl-devel
+BuildRequires:	gnupg-agent
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
