@@ -1,407 +1,1021 @@
-diff -urN -x CVS kdepim.orig/certmanager/certificateinfowidget.ui kdepim/certmanager/certificateinfowidget.ui
---- kdepim.orig/certmanager/certificateinfowidget.ui	Tue Nov 25 21:41:28 2003
-+++ kdepim/certmanager/certificateinfowidget.ui	Wed Jun 16 22:55:00 2004
-@@ -18,9 +18,6 @@
-             <height>0</height>
-         </size>
-     </property>
--    <property name="caption">
--        <string>CertificateInfoWidget</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kaddressbook/ldapoptionswidget.ui kdepim/kaddressbook/ldapoptionswidget.ui
---- kdepim.orig/kaddressbook/ldapoptionswidget.ui	Tue Sep 17 22:50:24 2002
-+++ kdepim/kaddressbook/ldapoptionswidget.ui	Wed Jun 16 22:55:00 2004
-@@ -31,9 +31,6 @@
-             <height>302</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>LDAPOptionsWidget</string>
--    </property>
-     <vbox>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kdgantt/KDGanttView.cpp kdepim/kdgantt/KDGanttView.cpp
---- kdepim.orig/kdgantt/KDGanttView.cpp	Fri Oct 24 16:26:38 2003
-+++ kdepim/kdgantt/KDGanttView.cpp	Sat Jun  5 09:38:53 2004
-@@ -1,5 +1,5 @@
- /* -*- Mode: C++ -*-
--   $Id$
-+   $Id$
-    KDGantt - a multi-platform charting engine
- */
+diff -urN -x CVS kdepim.orig/kaddressbook/features/resourceselection.cpp kdepim/kaddressbook/features/resourceselection.cpp
+--- kdepim.orig/kaddressbook/features/resourceselection.cpp	Thu Aug  5 16:45:51 2004
++++ kdepim/kaddressbook/features/resourceselection.cpp	Thu Aug 19 22:43:51 2004
+@@ -139,7 +139,7 @@
  
-@@ -896,9 +896,10 @@
- void KDGanttView::centerTimelineAfterShow( const QDateTime& center )
- {
-   myTimeHeader->centerDateTime( center );
--  if ( isVisible() ) return;
--  dtCenterTimeLineAfterShow = center;
--  fCenterTimeLineAfterShow = true;
-+  if ( ! isVisible() ) {
-+    dtCenterTimeLineAfterShow = center;
-+    fCenterTimeLineAfterShow = true;
-+  }
+   if ( dlg.exec() ) {
+     core()->addressBook()->addResource( resource );
+-    core()->addressBook()->asyncLoad();
++    resource->asyncLoad();
+ 
+     mLastResource = resource->identifier();
+     updateView();
+@@ -159,7 +159,7 @@
+ 
+   if ( dlg.exec() ) {
+     mManager->change( item->resource() );
+-    core()->addressBook()->asyncLoad();
++    item->resource()->asyncLoad();
+ 
+     mLastResource = item->resource()->identifier();
+     updateView();
+@@ -182,7 +182,7 @@
+   mLastResource = item->resource()->identifier();
+ 
+   core()->addressBook()->removeResource( item->resource() );
+-  core()->addressBook()->asyncLoad();
++  core()->addressBook()->emitAddressBookChanged();
+ 
+   updateView();
  }
+@@ -205,7 +205,16 @@
+     resource->setActive( resItem->isOn() );
  
- /*!
-diff -urN -x CVS kdepim.orig/kdgantt/KDGanttViewSubwidgets.cpp kdepim/kdgantt/KDGanttViewSubwidgets.cpp
---- kdepim.orig/kdgantt/KDGanttViewSubwidgets.cpp	Sun Nov  2 14:26:11 2003
-+++ kdepim/kdgantt/KDGanttViewSubwidgets.cpp	Sat Jun  5 09:38:53 2004
-@@ -1,5 +1,5 @@
- /* -*- Mode: C++ -*-
--   $Id$
-+   $Id$
-    KDGantt - a multi-platform charting engine
- */
- 
-@@ -2129,8 +2129,17 @@
- 
- void KDTimeHeaderWidget::centerDateTime( const QDateTime& center )
- {
-+    if( center < myHorizonStart || center > myHorizonEnd ) {
-+        myHorizonStart = center;
-+        flagStartTimeSet = true;
-+        //qDebug("myHorizonStart reset");
+     mManager->change( resource );
+-    core()->addressBook()->asyncLoad();
++
++    if ( resItem->checked() ) {
++      if ( !resource->addressBook() )
++        resource->setAddressBook( core()->addressBook() );
++
++      if ( !resource->isOpen() )
++        resource->open();
++
++      resource->asyncLoad();
 +    }
-+    updateTimeTable();
-+    repaint();
-     moveTimeLineTo(getCoordX( center )-(myGanttView->myCanvasView->viewport()->width() /2));
-     //  qDebug("centerDateTime %s %d %d", center.toString().latin1(),getCoordX( center ),(myGanttView->myCanvasView->viewport()->width() /2) );
-+    updateTimeTable();
-+    repaint();
+ 
+     mLastResource = resource->identifier();
+     updateView();
+diff -urN -x CVS kdepim.orig/kalarm/Changelog kdepim/kalarm/Changelog
+--- kdepim.orig/kalarm/Changelog	Wed Jul 28 20:26:22 2004
++++ kdepim/kalarm/Changelog	Wed Aug 18 14:34:12 2004
+@@ -1,6 +1,9 @@
+ KAlarm
+ 
+-=== Version 1.1.3 --- 28 July 2004 ===
++=== Version 1.1.4 --- 18 August 2004 ===
++Fix message window size not fitting message (bug introduced in 1.1.3).
++
++=== Version 1.1.3 (KDE 3.3) --- 28 July 2004 ===
+ Fix dialog sizing the first time KAlarm is run.
+ 
+ === Version 1.1.2 (KDE 3.3 beta2) --- 11 July 2004 ===
+diff -urN -x CVS kdepim.orig/kalarm/kalarm.h kdepim/kalarm/kalarm.h
+--- kdepim.orig/kalarm/kalarm.h	Wed Jul 28 20:26:22 2004
++++ kdepim/kalarm/kalarm.h	Wed Aug 18 14:34:12 2004
+@@ -16,7 +16,6 @@
+  *  You should have received a copy of the GNU General Public License
+  *  along with this program; if not, write to the Free Software
+  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+  */
+ 
+ #ifndef KALARM_H
+@@ -27,7 +26,7 @@
+ #include <config.h>
+ #endif
+ 
+-#define KALARM_VERSION "1.1.3"
++#define KALARM_VERSION "1.1.4"
+ 
+ #include <kdeversion.h>
+ extern int  marginKDE2;   // KDE2 compatibility
+diff -urN -x CVS kdepim.orig/kalarm/messagewin.cpp kdepim/kalarm/messagewin.cpp
+--- kdepim.orig/kalarm/messagewin.cpp	Sat Jul 24 16:00:01 2004
++++ kdepim/kalarm/messagewin.cpp	Wed Aug 18 14:31:53 2004
+@@ -236,7 +236,7 @@
+ /******************************************************************************
+ *  Construct the message window.
+ */
+-QSize MessageWin::initView()
++void MessageWin::initView()
+ {
+ 	bool reminder = (!mErrorWindow  &&  (mAlarmType & KAAlarm::REMINDER_ALARM));
+ 	int leading = fontMetrics().leading();
+@@ -512,7 +512,6 @@
+ 	unsigned long wstate = (Preferences::instance()->modalMessages() ? NET::Modal : 0) | NET::Sticky | NET::StaysOnTop;
+ 	KWin::setState(winid, wstate);
+ 	KWin::setOnAllDesktops(winid, true);
+-	return sizeHint();
  }
  
+ /******************************************************************************
+@@ -845,12 +844,10 @@
+ 	MainWindowBase::showEvent(se);
+ 	if (!mShown  &&  !mErrorWindow)
+ 	{
++		QSize s = sizeHint();     // fit the window round the message
+ 		if (mAction == KAEvent::FILE  &&  !mErrorMsgs.count())
+-		{
+-			QSize s;
+-			if (KAlarm::readConfigWindowSize("FileMessage", s))
+-				resize(s);
+-		}
++			KAlarm::readConfigWindowSize("FileMessage", s);
++		resize(s);
+ 		playAudio();
+ 		if (mRescheduleEvent)
+ 			theApp()->alarmShowing(mEvent, mAlarmType, mDateTime);
+diff -urN -x CVS kdepim.orig/kalarm/messagewin.h kdepim/kalarm/messagewin.h
+--- kdepim.orig/kalarm/messagewin.h	Sun May 30 13:18:21 2004
++++ kdepim/kalarm/messagewin.h	Wed Aug 18 14:31:53 2004
+@@ -78,7 +78,7 @@
+ 		void                setRemainingTextMinute();
  
-diff -urN -x CVS kdepim.orig/kgantt/kgantt/itemedit.ui kdepim/kgantt/kgantt/itemedit.ui
---- kdepim.orig/kgantt/kgantt/itemedit.ui	Sat Sep 13 23:11:09 2003
-+++ kdepim/kgantt/kgantt/itemedit.ui	Wed Jun 16 22:55:00 2004
-@@ -12,9 +12,6 @@
-             <height>431</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <property name="layoutMargin" stdset="0">
-     </property>
-     <property name="layoutSpacing" stdset="0">
-diff -urN -x CVS kdepim.orig/kgantt/kgantt/itemedit2.ui kdepim/kgantt/kgantt/itemedit2.ui
---- kdepim.orig/kgantt/kgantt/itemedit2.ui	Sat Sep 13 23:11:09 2003
-+++ kdepim/kgantt/kgantt/itemedit2.ui	Wed Jun 16 22:55:00 2004
-@@ -12,9 +12,6 @@
-             <height>345</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <property name="layoutMargin" stdset="0">
-     </property>
-     <property name="layoutSpacing" stdset="0">
-diff -urN -x CVS kdepim.orig/kmail/kmcommands.cpp kdepim/kmail/kmcommands.cpp
---- kdepim.orig/kmail/kmcommands.cpp	Wed Feb 25 00:29:28 2004
-+++ kdepim/kmail/kmcommands.cpp	Sat Jun 12 15:46:48 2004
-@@ -688,10 +688,7 @@
- 
- void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
- {
--  QCString str( msg->fromEmail() );
--  if ( str.isEmpty() )
--    str = "unknown@unknown.invalid";
--  str = "From " + str + " " + msg->dateShortStr() + "\n";
-+  QCString str( msg->mboxMessageSeparator() );
-   str += KMFolderMbox::escapeFrom( msg->asString() );
-   str += "\n";
-   msg->setTransferInProgress(false);
-diff -urN -x CVS kdepim.orig/kmail/kmcomposewin.cpp kdepim/kmail/kmcomposewin.cpp
---- kdepim.orig/kmail/kmcomposewin.cpp	Wed Apr 14 18:25:31 2004
-+++ kdepim/kmail/kmcomposewin.cpp	Sat Jun 12 15:46:48 2004
-@@ -611,7 +611,7 @@
-   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
-   if (fd != -1)
-   {
--    QCString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
-+    QCString startStr( mMsg->mboxMessageSeparator() );
-     ::write(fd, startStr, startStr.length());
-     ::write(fd, msgStr, msgStr.length());
-     ::write(fd, "\n", 1);
-diff -urN -x CVS kdepim.orig/kmail/kmfoldermaildir.cpp kdepim/kmail/kmfoldermaildir.cpp
---- kdepim.orig/kmail/kmfoldermaildir.cpp	Thu Apr 29 08:47:27 2004
-+++ kdepim/kmail/kmfoldermaildir.cpp	Fri Jun 11 23:52:02 2004
-@@ -106,9 +106,10 @@
-       emit statusMsg(str);
-     } else {
-       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
--      if ( mIndexStream )
-+      if ( mIndexStream ) {
-         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
--      updateIndexStreamPtr();
-+        updateIndexStreamPtr();
-+      }
+ 	private:
+-		QSize               initView();
++		void                initView();
+ #ifndef WITHOUT_ARTS
+ 		void                initAudio(bool firstTime);
+ #endif
+diff -urN -x CVS kdepim.orig/kmail/callback.cpp kdepim/kmail/callback.cpp
+--- kdepim.orig/kmail/callback.cpp	Mon Jun 21 15:02:36 2004
++++ kdepim/kmail/callback.cpp	Tue Aug 17 13:20:05 2004
+@@ -112,21 +112,17 @@
+     // Only one receiver, so that has to be us
+     mReceiver = mMsg->to();
+   else {
+-    bool found = false;
++    int found = 0;
+     for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
+       if( kmkernel->identityManager()->identityForAddress( *it ) !=
+           KPIM::Identity::null ) {
+ 	// Ok, this could be us
+-	if( found != 0 ) {
+-	  // Whoops! Something is wrong here. Found more than one
+-          found = false;
+-          break;
+-        } else
+-          mReceiver = *it;
++        ++found;
++        mReceiver = *it;
+       }
      }
  
-     if (!mIndexStream)
-diff -urN -x CVS kdepim.orig/kmail/kmfoldermbox.cpp kdepim/kmail/kmfoldermbox.cpp
---- kdepim.orig/kmail/kmfoldermbox.cpp	Thu Apr 29 08:47:27 2004
-+++ kdepim/kmail/kmfoldermbox.cpp	Sat Jun 12 15:46:48 2004
-@@ -137,7 +137,8 @@
-        emit statusMsg(str);
-      } else {
-        mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
--       updateIndexStreamPtr();
-+       if ( mIndexStream )
-+         updateIndexStreamPtr();
-      }
+-    if( !found ) {
++    if( found != 1 ) {
+       bool ok;
+       mReceiver =
+         KInputDialog::getItem( i18n( "Select Address" ),
+diff -urN -x CVS kdepim.orig/kmail/folderstorage.cpp kdepim/kmail/folderstorage.cpp
+--- kdepim.orig/kmail/folderstorage.cpp	Tue Aug  3 22:29:57 2004
++++ kdepim/kmail/folderstorage.cpp	Thu Aug 19 09:04:13 2004
+@@ -997,6 +997,11 @@
+ {
+   if ( type != mContentsType ) {
+     mContentsType = type;
++    // FIXME KConfigXT
++    // make sure everything is on disk, connected slots will call readConfig()
++    // when creating a new folder. Can't do it in the folder dialog, that doesn't
++    // have a folder yet at that point.
++    writeConfig();
+     kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
+   }
+ }
+diff -urN -x CVS kdepim.orig/kmail/kmfiltermgr.cpp kdepim/kmail/kmfiltermgr.cpp
+--- kdepim.orig/kmail/kmfiltermgr.cpp	Wed Mar  3 00:57:49 2004
++++ kdepim/kmail/kmfiltermgr.cpp	Sat Aug 21 01:53:20 2004
+@@ -39,6 +39,8 @@
+   if (bPopFilter)
+     kdDebug(5006) << "pPopFilter set" << endl;
+   setAutoDelete(TRUE);
++  connect( kmkernel, SIGNAL( folderRemoved( KMFolder* ) ),
++           this, SLOT( slotFolderRemoved( KMFolder* ) ) );
+ }
  
-      if (!mIndexStream)
-@@ -978,11 +979,8 @@
-     return error;
+ 
+@@ -322,6 +324,11 @@
+ }
+ 
+ 
++void KMFilterMgr::slotFolderRemoved( KMFolder * aFolder )
++{
++  folderRemoved( aFolder, 0 );
++}
++
+ //-----------------------------------------------------------------------------
+ bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
+ {
+diff -urN -x CVS kdepim.orig/kmail/kmfiltermgr.h kdepim/kmail/kmfiltermgr.h
+--- kdepim.orig/kmail/kmfiltermgr.h	Sun Jan 18 14:29:33 2004
++++ kdepim/kmail/kmfiltermgr.h	Sat Aug 21 01:53:20 2004
+@@ -114,6 +114,8 @@
+   bool showLaterMsgs() const {
+     return mShowLater;
+   }
++public slots:
++  void slotFolderRemoved( KMFolder *aFolder );
+ 
+ signals:
+   void filterListUpdated();
+diff -urN -x CVS kdepim.orig/kmail/kmfoldercachedimap.cpp kdepim/kmail/kmfoldercachedimap.cpp
+--- kdepim.orig/kmail/kmfoldercachedimap.cpp	Mon Aug  2 11:18:42 2004
++++ kdepim/kmail/kmfoldercachedimap.cpp	Wed Aug 18 11:34:12 2004
+@@ -122,13 +122,12 @@
+     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
+     mSubfolderState( imapNoInformation ), mIsSelected( false ),
+     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
+-    mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
+-    mFolderRemoved( false ), mResync( false ),
++    uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
++    mUserRights( 0 ), mFolderRemoved( false ), mResync( false ),
+     /*mHoldSyncs( false ),*/ mRecurse( true ),
+     mContentsTypeChanged( false ), mStatusChangedLocally( false )
+ {
+   setUidValidity("");
+-  mLastUid=0;
+   readUidCache();
+ 
+   mProgress = 0;
+@@ -221,8 +220,8 @@
+           setUidValidity( QString::fromLocal8Bit( buf).stripWhiteSpace() );
+           len = uidcache.readLine( buf, sizeof(buf) );
+           if( len > 0 ) {
+-            mLastUid =
+-              QString::fromLocal8Bit( buf).stripWhiteSpace().toULong();
++            // load the last known highest uid from the on disk cache
++            setLastUid( QString::fromLocal8Bit( buf).stripWhiteSpace().toULong() );
+             return 0;
+           }
+         }
+@@ -265,7 +264,6 @@
+     if( !msg ) continue;
+     ulong uid = msg->UID();
+     uidMap.insert( uid, i );
+-    if( uid > mLastUid ) setLastUid( uid );
+   }
+   close();
+   uidMapDirty = false;
+@@ -286,8 +284,6 @@
+   ulong uid = msg->UID();
+   if( uid != 0 ) {
+     uidMapDirty = true;
+-    if( uid > mLastUid )
+-      setLastUid( uid );
    }
  
--  QCString address( aMsg->fromEmail() );
--  if ( address.isEmpty() )
--    address = "unknown@unknown.invalid";
--  fprintf(mStream, "From %s %s\n", address.data(),
--          (const char *)aMsg->dateShortStr());
-+  QCString messageSeparator( aMsg->mboxMessageSeparator() );
-+  fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
-   off_t offs = ftell(mStream);
-   fwrite(msgText, len, 1, mStream);
-   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
-diff -urN -x CVS kdepim.orig/kmail/kmmessage.cpp kdepim/kmail/kmmessage.cpp
---- kdepim.orig/kmail/kmmessage.cpp	Wed Apr 14 18:25:32 2004
-+++ kdepim/kmail/kmmessage.cpp	Sat Jun 12 15:46:48 2004
-@@ -4193,3 +4193,19 @@
-   return codec->toUnicode( bodyDecoded() );
+   // Add the message
+@@ -474,6 +470,7 @@
+     return;
+   }
+ #endif
++  mTentativeHighestUid = 0; // reset, last sync could have been canceled
+ 
+   mResync = false;
+   serverSyncInternal();
+@@ -723,17 +720,25 @@
+                                                 this );
+         connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
+                  this, SLOT( slotProgress(unsigned long, unsigned long) ) );
++        connect( job, SIGNAL( finished() ), this, SLOT( slotUpdateLastUid() ) );
+         connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+         job->start();
+         mMsgsForDownload.clear();
+         break;
+       } else {
+         newState( mProgress, i18n("No new messages from server"));
++        /* There were no messages to download, but it could be that we uploaded some
++           which we didn't need to download again because we already knew the uid.
++           Now that we are sure there is nothing to download, and everything that had
++           to be deleted on the server has been deleted, adjust our local notion of the
++           highes uid seen thus far. */
++        slotUpdateLastUid();
+         if( mLastUid == 0 && uidWriteTimer == -1 )
+           // This is probably a new and empty folder. Write the UID cache
+           writeUidCache();
+       }
+     }
++
+     // Else carry on
+ 
+   case SYNC_STATE_HANDLE_INBOX:
+@@ -1171,8 +1176,8 @@
+         }
+         uidsOnServer.insert( uid, &v );
+       }
+-      if (  uid <= lastUid()) {
+-        /*
++      if (  uid <= lastUid() ) {
++       /*
+         * If this message UID is not present locally, then it must
+         * have been deleted by the user, so we delete it on the
+         * server also.
+@@ -1195,11 +1200,17 @@
+         }
+         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
+       } else {
+-        ulong size = msg.headerField("X-Length").toULong();
+-        mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
+-        if( imapPath() == "/INBOX/" )
+-          mUidsForDownload << uid;
+-
++        // The message is new since the last sync, but we might have just uploaded it, in which case
++        // the uid map already contains it.
++        if ( !uidMap.contains( uid ) ) {
++          ulong size = msg.headerField("X-Length").toULong();
++          mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
++          if( imapPath() == "/INBOX/" )
++            mUidsForDownload << uid;
++        }
++        // Remember the highest uid and once the download is completed, update mLastUid
++        if ( uid > mTentativeHighestUid )
++          mTentativeHighestUid = uid;
+       }
+     }
+     (*it).cdata.remove(0, pos);
+@@ -1640,4 +1651,11 @@
+   }
  }
  
-+//-----------------------------------------------------------------------------
-+QCString KMMessage::mboxMessageSeparator()
++void KMFolderCachedImap::slotUpdateLastUid()
 +{
-+  QCString str( fromEmail() );
-+  if ( str.isEmpty() )
-+    str = "unknown@unknown.invalid";
-+  QCString dateStr( dateShortStr() );
-+  if ( dateStr.isEmpty() ) {
-+    time_t t = ::time( 0 );
-+    dateStr = ctime( &t );
-+    const int len = dateStr.length();
-+    if ( dateStr[len-1] == '\n' )
-+      dateStr.truncate( len - 1 );
-+  }
-+  return "From " + str + " " + dateStr + "\n";
++  if( mTentativeHighestUid != 0 )
++    setLastUid( mTentativeHighestUid );
++  mTentativeHighestUid = 0;
 +}
-diff -urN -x CVS kdepim.orig/kmail/kmmessage.h kdepim/kmail/kmmessage.h
---- kdepim.orig/kmail/kmmessage.h	Sun Dec 14 17:46:46 2003
-+++ kdepim/kmail/kmmessage.h	Sat Jun 12 15:46:48 2004
-@@ -296,6 +296,8 @@
- 
-   /** Get or set the 'Date' header field */
-   QString dateStr() const;
-+  /** Returns the message date in asctime format or an empty string if the
-+      message lacks a Date header. */
-   QCString dateShortStr() const;
-   QString dateIsoStr() const;
-   time_t date() const;
-@@ -794,6 +796,12 @@
-   /** Returns the last DwBodyPart that was updated */
-   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
- 
-+  /** Returns an mbox message separator line for this message, i.e. a
-+      string of the form
-+      "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".
-+  */
-+  QCString mboxMessageSeparator();
 +
- private:
-   /** Returns message body with quoting header and indented by the
-     given indentation string. This is suitable for including the message
-diff -urN -x CVS kdepim.orig/kmail/kmmsgbase.cpp kdepim/kmail/kmmsgbase.cpp
---- kdepim.orig/kmail/kmmsgbase.cpp	Sat Jan  3 12:40:09 2004
-+++ kdepim/kmail/kmmsgbase.cpp	Mon Jun 21 22:56:05 2004
-@@ -132,7 +132,11 @@
-       mStatus &= ~KMMsgStatusIgnored;
-     if (aStatus == KMMsgStatusIgnored) {
-       mStatus &= ~KMMsgStatusWatched;
--      setStatus(KMMsgStatusRead, idx);
-+      // Set to read. Don't use setStatus, that emits msgStatusChanged
-+      // and we only want to do that once.
-+      mStatus &= ~KMMsgStatusUnread;
-+      mStatus &= ~KMMsgStatusNew;
-+      mStatus |= KMMsgStatusRead;
+ #include "kmfoldercachedimap.moc"
+diff -urN -x CVS kdepim.orig/kmail/kmfoldercachedimap.h kdepim/kmail/kmfoldercachedimap.h
+--- kdepim.orig/kmail/kmfoldercachedimap.h	Wed Jul 14 21:57:13 2004
++++ kdepim/kmail/kmfoldercachedimap.h	Wed Aug 18 11:34:12 2004
+@@ -294,6 +294,7 @@
+ private slots:
+   void serverSyncInternal();
+   void slotIncreaseProgress();
++  void slotUpdateLastUid();
+ 
+ signals:
+   void folderComplete(KMFolderCachedImap *folder, bool success);
+@@ -354,13 +355,29 @@
+   QValueList<KMFolderCachedImap*> mSubfoldersForSync;
+   KMFolderCachedImap* mCurrentSubfolder;
+ 
+-  /* Mapping uid ->index
+-     Keep updated in addMsg, take and removeMsg */
++  /** Mapping uid -> index
++      Keep updated in addMsg, take and removeMsg. This is used to lookup
++      whether a mail is present locally or not.  */
+   QMap<ulong,int> uidMap;
+   bool uidMapDirty;
+-  ulong mLastUid;
+-  int uidWriteTimer;
+   void reloadUidMap();
++  int uidWriteTimer;
++
++  /** This is the last uid that we have seen from the server on the last
++      sync. It is crucially important that this is correct at all times
++      and not bumped up permaturely, as it is the watermark which is used
++      to discern message which are not present locally, because they were
++      deleted locally and now need to be deleted from the server,
++      from those which are new and need to be downloaded. Sucessfull
++      downloading of all pending mail from the server sets this. Between
++      invocations it is stored on disk in the uidcache file. It must not
++      change during a sync. */
++  ulong mLastUid;
++  /** The highest id encountered while syncing. Once the sync process has
++      successfully downloaded all pending mail and deleted on the server
++      all messages that were removed locally, this will become the new
++      mLastUid. See above for details. */
++  ulong mTentativeHighestUid;
+ 
+   int mUserRights;
+   ACLList mACLList;
+diff -urN -x CVS kdepim.orig/kmail/kmfoldertree.cpp kdepim/kmail/kmfoldertree.cpp
+--- kdepim.orig/kmail/kmfoldertree.cpp	Fri Aug  6 19:40:56 2004
++++ kdepim/kmail/kmfoldertree.cpp	Tue Aug 17 17:39:03 2004
+@@ -104,17 +104,20 @@
+       default:
+         icon = "folder";break;
      }
-     if (aStatus == KMMsgStatusSpam)
-       mStatus &= ~KMMsgStatusHam;
-diff -urN -x CVS kdepim.orig/kontact/src/main.cpp kdepim/kontact/src/main.cpp
---- kdepim.orig/kontact/src/main.cpp	Sat Feb 28 11:40:03 2004
-+++ kdepim/kontact/src/main.cpp	Tue Jun 15 11:15:54 2004
-@@ -41,7 +41,7 @@
- static const char description[] =
-     I18N_NOOP( "A KDE Personal Information Manager" );
+-  } else if ( mFolder->isSystemFolder() ) {
++  } else {
++    // special folders
+     switch ( type() ) {
+       case Inbox: icon = "folder_inbox"; break;
+       case Outbox: icon = "folder_outbox"; break;
+       case SentMail: icon = "folder_sent_mail"; break;
+       case Trash: icon = "trashcan_empty"; break;
+-      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
+       case Drafts: icon = "edit";break;
++      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
++    }
++    // non-root search folders
++    if ( protocol() == KMFolderTreeItem::Search) {
++      icon = "mail_find";
+     }
+-  } else if ( protocol() == KMFolderTreeItem::Search) {
+-    icon = "mail_find";
+   }
  
--static const char version[] = "0.8.1";
-+static const char version[] = "0.8.3";
+   if ( icon.isEmpty() )
+@@ -138,7 +141,9 @@
+ {
+   QPixmap pm;
  
- class KontactApp : public KUniqueApplication {
-   public:
-diff -urN -x CVS kdepim.orig/korganizer/koagenda.cpp kdepim/korganizer/koagenda.cpp
---- kdepim.orig/korganizer/koagenda.cpp	Mon Apr 19 12:58:54 2004
-+++ kdepim/korganizer/koagenda.cpp	Thu Jun 10 17:57:56 2004
-@@ -526,14 +526,14 @@
- //        kdDebug(5850) << "koagenda: filtered button press" << endl;
-       if (object != viewport()) {
-         if (me->button() == RightButton) {
--          mClickedItem = (KOAgendaItem *)object;
-+          mClickedItem = dynamic_cast<KOAgendaItem *>(object);
-           if (mClickedItem) {
-             selectItem(mClickedItem);
-             emit showIncidencePopupSignal(mClickedItem->incidence());
+-  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() )
++  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder()
++    || kmkernel->folderIsTrash( mFolder )
++    || kmkernel->folderIsDraftOrOutbox( mFolder ) )
+     pm = normalIcon( size );
+ 
+   KIconLoader * il = KGlobal::instance()->iconLoader();
+@@ -165,23 +170,31 @@
+ 
+   if ( depth() == 0 )
+     setType(Root);
+-  else if (mFolder->isSystemFolder()) {
+-    if (mFolder == kmkernel->inboxFolder()
+-        || mFolder->folderType() == KMFolderTypeImap
+-        || mFolder->folderType() == KMFolderTypeCachedImap)
+-      setType(Inbox);
+-    else if (mFolder == kmkernel->outboxFolder())
+-      setType(Outbox);
+-    else if (mFolder == kmkernel->sentFolder())
+-      setType(SentMail);
+-    else if (mFolder == kmkernel->draftsFolder())
+-      setType(Drafts);
+-    else if (mFolder == kmkernel->trashFolder())
+-      setType(Trash);
+-    else if(kmkernel->iCalIface().isResourceImapFolder(mFolder))
+-      setType(kmkernel->iCalIface().folderType(mFolder));
+-  } else
+-    setRenameEnabled(0, false);
++  else {
++    if ( mFolder == kmkernel->inboxFolder() )
++      setType( Inbox );
++    else if ( kmkernel->folderIsDraftOrOutbox( mFolder ) ) {
++      if ( mFolder == kmkernel->outboxFolder() )
++        setType( Outbox );
++      else
++        setType( Drafts );
++    }
++    else if ( kmkernel->folderIsSentMailFolder( mFolder ) )
++      setType( SentMail );
++    else if ( kmkernel->folderIsTrash( mFolder ) )
++      setType( Trash );
++    else if( kmkernel->iCalIface().isResourceImapFolder(mFolder) )
++      setType( kmkernel->iCalIface().folderType(mFolder) );
++    // System folders on dimap or imap which are not resource folders are
++    // inboxes. Urgs.
++    if ( mFolder->isSystemFolder() &&
++        !kmkernel->iCalIface().isResourceImapFolder( mFolder) &&
++         ( mFolder->folderType() == KMFolderTypeImap
++        || mFolder->folderType() == KMFolderTypeCachedImap ) )
++      setType( Inbox );
++  }
++  if ( !mFolder->isSystemFolder() )
++    setRenameEnabled( 0, false );
+ }
+ 
+ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
+diff -urN -x CVS kdepim.orig/kmail/kmheaders.cpp kdepim/kmail/kmheaders.cpp
+--- kdepim.orig/kmail/kmheaders.cpp	Fri Jul 30 16:19:51 2004
++++ kdepim/kmail/kmheaders.cpp	Thu Aug 19 21:52:06 2004
+@@ -1737,6 +1737,8 @@
+   kdDebug(5006) << k_funcinfo << command->result() << endl;
+   bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
+   if ( command->result() == KMCommand::OK ) {
++    // make sure the current item is shown
++    makeHeaderVisible();
+ #if 0 // enable after the message-freeze
+     BroadcastStatus::instance()->setStatusMsg(
+        deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
+diff -urN -x CVS kdepim.orig/kmail/kmkernel.cpp kdepim/kmail/kmkernel.cpp
+--- kdepim.orig/kmail/kmkernel.cpp	Thu Aug 12 15:07:10 2004
++++ kdepim/kmail/kmkernel.cpp	Sat Aug 21 01:53:21 2004
+@@ -1023,13 +1023,13 @@
+ #endif
+ 
+   connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ),
+-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
++           this, SIGNAL( folderRemoved(KMFolder*) ) );
+   connect( the_dimapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
+-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
++           this, SIGNAL( folderRemoved(KMFolder*) ) );
+   connect( the_imapFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
+-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
++           this, SIGNAL( folderRemoved(KMFolder*) ) );
+   connect( the_searchFolderMgr, SIGNAL( folderRemoved(KMFolder*) ),
+-           this, SLOT( slotFolderRemoved(KMFolder*) ) );
++           this, SIGNAL( folderRemoved(KMFolder*) ) );
+ 
+   mBackgroundTasksTimer = new QTimer( this );
+   connect( mBackgroundTasksTimer, SIGNAL( timeout() ), this, SLOT( slotRunBackgroundTasks() ) );
+@@ -1507,10 +1507,13 @@
+ {
+   assert(folder);
+   if (folder == the_trashFolder) return true;
+-  if (folder->folderType() != KMFolderTypeImap) return false;
+-  KMFolderImap *fi = static_cast<KMFolderImap*>(folder->storage());
+-  if (fi->account() && fi->account()->trash() == folder->idString())
+-    return true;
++  QStringList actList = acctMgr()->getAccounts(false);
++  QStringList::Iterator it( actList.begin() );
++  for( ; it != actList.end() ; ++it ) {
++    KMAccount* act = acctMgr()->findByName( *it );
++    if ( act && ( act->trash() == folder->idString() ) )
++      return true;
++  }
+   return false;
+ }
+ 
+@@ -1676,11 +1679,6 @@
+   return 0;
+ }
+ 
+-void KMKernel::slotFolderRemoved( KMFolder * aFolder )
+-{
+-  if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
+-}
+-
+ void KMKernel::slotRunBackgroundTasks() // called regularly by timer
+ {
+   // Hidden KConfig keys. Not meant to be used, but a nice fallback in case
+diff -urN -x CVS kdepim.orig/kmail/kmkernel.h kdepim/kmail/kmkernel.h
+--- kdepim.orig/kmail/kmkernel.h	Sat Jun 19 22:41:05 2004
++++ kdepim/kmail/kmkernel.h	Sat Aug 21 01:53:21 2004
+@@ -293,10 +293,10 @@
+   void slotDataReq(KIO::Job*,QByteArray&);
+   void slotResult(KIO::Job*);
+   void slotConfigChanged();
+-  void slotFolderRemoved(KMFolder*);
+ 
+ signals:
+   void configChanged();
++  void folderRemoved( KMFolder* aFolder );
+ 
+ private:
+   void openReader( bool onlyCheck );
+diff -urN -x CVS kdepim.orig/kmail/kmmainwidget.cpp kdepim/kmail/kmmainwidget.cpp
+--- kdepim.orig/kmail/kmmainwidget.cpp	Fri Aug  6 19:40:56 2004
++++ kdepim/kmail/kmmainwidget.cpp	Thu Aug 19 20:02:58 2004
+@@ -3175,6 +3175,7 @@
+ //-----------------------------------------------------------------------------
+ void KMMainWidget::slotChangeCaption(QListViewItem * i)
+ {
++  if ( !i ) return;
+   // set the caption to the current full path
+   QStringList names;
+   for ( QListViewItem * item = i ; item ; item = item->parent() )
+diff -urN -x CVS kdepim.orig/knode/knode_config_accounts.desktop kdepim/knode/knode_config_accounts.desktop
+--- kdepim.orig/knode/knode_config_accounts.desktop	Wed Aug  4 08:48:59 2004
++++ kdepim/knode/knode_config_accounts.desktop	Fri Aug 20 20:31:27 2004
+@@ -1,6 +1,6 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+-Icon=server_big
++Icon=network
+ Type=Service
+ ServiceTypes=KCModule
+ 
+diff -urN -x CVS kdepim.orig/knotes/ChangeLog kdepim/knotes/ChangeLog
+--- kdepim.orig/knotes/ChangeLog	Sun May  2 17:29:37 2004
++++ kdepim/knotes/ChangeLog	Fri Aug 20 21:55:47 2004
+@@ -1,6 +1,16 @@
+ ChangeLog for KNotes
+ ====================
+ 
++2004/08/20  Michael Brade <brade@kde.org>
++
++    * fixed #85973: respect newlines when switching from plain text to
++      rich text
++    * fixed #87266 by making sure that at least 10 pixels of a note are visible
++
++2004/05/02  Michael Brade <brade@kde.org>
++
++    * Security: listening on the network for new notes is now off by default
++
+ 2004/05/02  Michael Brade <brade@kde.org>
+ 
+     * Most probably fix a bug that freezed KNotes every now and then: file_copy
+diff -urN -x CVS kdepim.orig/knotes/knote.cpp kdepim/knotes/knote.cpp
+--- kdepim.orig/knotes/knote.cpp	Sun May  2 17:29:38 2004
++++ kdepim/knotes/knote.cpp	Fri Aug 20 21:55:47 2004
+@@ -224,9 +224,12 @@
+         m_keepBelow->setChecked( false );
+     }
+ 
+-    // let KWin do the placement if the position is illegal
++    // let KWin do the placement if the position is illegal--at least 10 pixels
++    // of a note need to be visible
+     const QPoint& position = m_config->position();
+-    if ( kapp->desktop()->rect().intersects( QRect( position, QSize( width, height ) ) ) )
++    QRect desk = kapp->desktop()->rect();
++    desk.addCoords( 10, 10, -10, -10 );
++    if ( desk.intersects( QRect( position, QSize( width, height ) ) ) )
+         move( position );           // do before calling show() to avoid flicker
+ 
+     // read configuration settings...
+diff -urN -x CVS kdepim.orig/knotes/knoteedit.cpp kdepim/knotes/knoteedit.cpp
+--- kdepim.orig/knotes/knoteedit.cpp	Sun Apr 25 17:23:54 2004
++++ kdepim/knotes/knoteedit.cpp	Fri Aug 20 19:55:03 2004
+@@ -206,7 +206,13 @@
+     {
+         QString t = text();
+         KTextEdit::setTextFormat( f );
+-        setText( t );
++        
++        // if the note contains html/xml source try to display it, otherwise
++        // get the modified text again and set it to preserve newlines
++        if ( QStyleSheet::mightBeRichText( t ) )
++            setText( t );
++        else
++            setText( text() );
+ 
+         enableRichTextActions();
+     }
+diff -urN -x CVS kdepim.orig/korganizer/kogroupware.cpp kdepim/korganizer/kogroupware.cpp
+--- kdepim.orig/korganizer/kogroupware.cpp	Tue Aug  3 14:57:07 2004
++++ kdepim/korganizer/kogroupware.cpp	Tue Aug 17 16:47:38 2004
+@@ -43,6 +43,7 @@
+ #include "koviewmanager.h"
+ #include "kocore.h"
+ 
++#include <libkdepim/email.h>
+ #include <ktnef/ktnefparser.h>
+ #include <ktnef/ktnefmessage.h>
+ #include <ktnef/ktnefdefs.h>
+@@ -106,17 +107,16 @@
+   mCalendar = calendar;
+ 
+   // Set up the dir watch of the three incoming dirs
+-  const QString incomingDirName = locateLocal("data","korganizer/income");
+   KDirWatch* watcher = KDirWatch::self();
+-  watcher->addDir( incomingDirName + ".accepted" );
+-  watcher->addDir( incomingDirName + ".cancel" );
+-  watcher->addDir( incomingDirName + ".reply" );
++  watcher->addDir( locateLocal( "data", "korganizer/income.accepted/" ) );
++  watcher->addDir( locateLocal( "data", "korganizer/income.cancel/" ) );
++  watcher->addDir( locateLocal( "data", "korganizer/income.reply/" ) );
+   connect( watcher, SIGNAL( dirty( const QString& ) ),
+            this, SLOT( incomingDirChanged( const QString& ) ) );
+   // Now set the ball rolling
+-  incomingDirChanged( incomingDirName + ".accepted" );
+-  incomingDirChanged( incomingDirName + ".cancel" );
+-  incomingDirChanged( incomingDirName + ".reply" );
++  incomingDirChanged( locateLocal( "data", "korganizer/income.accepted/" ) );
++  incomingDirChanged( locateLocal( "data", "korganizer/income.cancel/" ) );
++  incomingDirChanged( locateLocal( "data", "korganizer/income.reply/" ) );
+ }
+ 
+ FreeBusyManager *KOGroupware::freeBusyManager()
+@@ -133,11 +133,16 @@
+ 
+ void KOGroupware::incomingDirChanged( const QString& path )
+ {
+-  const QString incomingDirName = locateLocal("data","korganizer/income.");
+-  if ( !path.startsWith( incomingDirName ) )
+-    // Not our problem
++  const QString incomingDirName = locateLocal( "data","korganizer/" )
++                                  + "income.";
++  if ( !path.startsWith( incomingDirName ) ) {
++    kdDebug(5850) << "incomingDirChanged: Wrong dir " << path << endl;
+     return;
+-  const QString action = path.mid( incomingDirName.length() );
++  }
++  QString action = path.mid( incomingDirName.length() );
++  while ( action.length() > 0 && action[ action.length()-1 ] == '/' )
++    // Strip slashes at the end
++    action.truncate( action.length()-1 );
+ 
+   // Handle accepted invitations
+   QDir dir( path );
+@@ -154,6 +159,7 @@
+   }
+   QTextStream t(&f);
+   t.setEncoding( QTextStream::UnicodeUTF8 );
++  QString receiver = KPIM::getEmailAddr( t.readLine() );
+   QString iCal = t.read();
+ 
+   ScheduleMessage *message = mFormat.parseScheduleMessage( mCalendar, iCal );
+@@ -174,9 +180,19 @@
+   KCal::Incidence* incidence =
+     dynamic_cast<KCal::Incidence*>( message->event() );
+   KCal::MailScheduler scheduler( mCalendar );
+-  if ( action.startsWith( "accepted" ) )
++  if ( action.startsWith( "accepted" ) ) {
++    // Find myself and set to answered and accepted
++    KCal::Attendee::List attendees = incidence->attendees();
++    KCal::Attendee::List::ConstIterator it;
++    for ( it = attendees.begin(); it != attendees.end(); ++it ) {
++      if( (*it)->email() == receiver ) {
++        (*it)->setStatus( KCal::Attendee::Accepted );
++        (*it)->setRSVP(false);
++        break;
++      }
++    }
+     scheduler.acceptTransaction( incidence, method, status );
+-  else if ( action.startsWith( "cancel" ) )
++  } else if ( action.startsWith( "cancel" ) )
+     // TODO: Could this be done like the others?
+     mCalendar->deleteIncidence( incidence );
+   else if ( action.startsWith( "reply" ) )
+diff -urN -x CVS kdepim.orig/korganizer/komailclient.cpp kdepim/korganizer/komailclient.cpp
+--- kdepim.orig/korganizer/komailclient.cpp	Mon Jun 28 18:43:53 2004
++++ kdepim/korganizer/komailclient.cpp	Tue Aug 17 13:20:51 2004
+@@ -55,11 +55,11 @@
+   Attendee::List attendees = incidence->attendees();
+   if (attendees.count() == 0) return false;
+ 
+-  QString from = KOPrefs::instance()->email();
++  const QString from = incidence->organizer();
+   QStringList toList;
+   for(uint i=0; i<attendees.count();++i) {
+-    QString email = (*attendees.at(i))->email();
+-    if( email != from )
++    const QString email = (*attendees.at(i))->email();
++    if( !KOPrefs::instance()->thatIsMe( email ) )
+       // Don't send a mail to ourselves
+       toList << email;
+   }
+@@ -254,7 +254,7 @@
+     //    << arg7 << " , " << arg8 << " , " << arg9
+     //    << arg10<< " , " << arg11<< " , " << arg12
+     //    << arg13<< " , " << arg14<< " )" << endl;
+-    
++
+     int result = 0;
+ 
+     QByteArray data, replyData;
+diff -urN -x CVS kdepim.orig/libkcal/freebusy.cpp kdepim/libkcal/freebusy.cpp
+--- kdepim.orig/libkcal/freebusy.cpp	Sun Mar 14 14:57:40 2004
++++ kdepim/libkcal/freebusy.cpp	Fri Aug 20 15:53:58 2004
+@@ -43,7 +43,7 @@
+   setDtEnd(end);
+ 
+   // Get all the events in the calendar
+-  Event::List eventList = mCalendar->events();
++  Event::List eventList = mCalendar->rawEvents( start.date(), end.date() );
+ 
+   int extraDays, i, x, duration;
+   duration = start.daysTo(end);
+@@ -55,7 +55,30 @@
+   for( it = eventList.begin(); it != eventList.end(); ++it ) {
+     Event *event = *it;
+ 
+-    // This whole for loop is for recurring events, it loops through 
++    // The code below can not handle floating events. Fixing this resulted
++    // in a lot of duplicated code. Instead, make a copy of the event and
++    // set the period to the full day(s). This trick works for recurring,
++    // multiday, and single day floating events.
++    Event *floatingEvent = 0;
++    if ( event->doesFloat() ) {
++      // Floating event. Do the hack
++      kdDebug(5800) << "Floating event\n";
++      floatingEvent = new Event( *event );
++
++      // Set the start and end times to be on midnight
++      QDateTime start( floatingEvent->dtStart().date(), QTime( 0, 0 ) );
++      QDateTime end( floatingEvent->dtEnd().date(), QTime( 23, 59, 59, 999 ) );
++      floatingEvent->setFloats( false );
++      floatingEvent->setDtStart( start );
++      floatingEvent->setDtEnd( end );
++
++      kdDebug(5800) << "Use: " << start.toString() << " to " << end.toString()
++                    << endl;
++      // Finally, use this event for the setting below
++      event = floatingEvent;
++    }
++
++    // This whole for loop is for recurring events, it loops through
+     // each of the days of the freebusy request
+ 
+     // First check if this is transparent. If it is, it shouldn't be in the
+@@ -91,10 +114,13 @@
            }
-     //            mItemPopup->popup(QCursor::pos());
-         } else {
--          mActionItem = (KOAgendaItem *)object;
-+          mActionItem = dynamic_cast<KOAgendaItem *>(object);
-           if (mActionItem) {
-             selectItem(mActionItem);
-             Incidence *incidence = mActionItem->incidence();
-@@ -569,14 +569,14 @@
- 
-     case QEvent::MouseMove:
-       if (object != viewport()) {
--        KOAgendaItem *moveItem = (KOAgendaItem *)object;
--        if (!moveItem->incidence()->isReadOnly() &&
-+        KOAgendaItem *moveItem = dynamic_cast<KOAgendaItem *>(object);
-+        if (moveItem && !moveItem->incidence()->isReadOnly() &&
-             !moveItem->incidence()->recurrence()->doesRecur() )
-           if (!mActionItem)
-             setNoActionCursor(moveItem,viewportPos);
-           else
-             performItemAction(viewportPos);
--        } else {
-+      } else {
-           if ( mActionType == SELECT ) {
-             performSelectAction( viewportPos );
-           }
-@@ -592,9 +592,11 @@
-         contentsToGrid(x,y,gx,gy);
-         emit newEventSignal(gx,gy);
-       } else {
--        KOAgendaItem *doubleClickedItem = (KOAgendaItem *)object;
--        selectItem(doubleClickedItem);
--        emit editIncidenceSignal(doubleClickedItem->incidence());
-+        KOAgendaItem *doubleClickedItem = dynamic_cast<KOAgendaItem *>(object);
-+        if (doubleClickedItem) {
-+          selectItem(doubleClickedItem);
-+          emit editIncidenceSignal(doubleClickedItem->incidence());
-+        }
+         }
        }
-       break;
+-    
++
+     }
+     // Non-recurring events
+     addLocalPeriod(event->dtStart(), event->dtEnd());
++
++    // Clean up
++    delete floatingEvent;
+   }
  
-diff -urN -x CVS kdepim.orig/korganizer/kogroupwareprefspage.ui kdepim/korganizer/kogroupwareprefspage.ui
---- kdepim.orig/korganizer/kogroupwareprefspage.ui	Fri Oct 31 22:50:11 2003
-+++ kdepim/korganizer/kogroupwareprefspage.ui	Wed Jun 16 22:55:01 2004
-@@ -12,9 +12,6 @@
-             <height>531</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <vbox>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/korganizer/publishdialog_base.ui kdepim/korganizer/publishdialog_base.ui
---- kdepim.orig/korganizer/publishdialog_base.ui	Sat Nov  8 14:12:44 2003
-+++ kdepim/korganizer/publishdialog_base.ui	Wed Jun 16 22:55:01 2004
-@@ -12,9 +12,6 @@
-             <height>379</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>PublishDialog_base</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui kdepim/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui
---- kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui	Fri Oct 24 01:42:05 2003
-+++ kdepim/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui	Wed Jun 16 22:55:01 2004
-@@ -12,9 +12,6 @@
-             <height>348</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui kdepim/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui
---- kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui	Sat Jul 20 19:34:44 2002
-+++ kdepim/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui	Wed Jun 16 22:55:01 2004
-@@ -12,9 +12,6 @@
-             <height>480</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kpilot/conduits/expense/expenseConduit.ui kdepim/kpilot/conduits/expense/expenseConduit.ui
---- kdepim.orig/kpilot/conduits/expense/expenseConduit.ui	Sat Mar 29 07:17:32 2003
-+++ kdepim/kpilot/conduits/expense/expenseConduit.ui	Wed Jun 16 22:55:01 2004
-@@ -13,9 +13,6 @@
-             <height>307</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form2</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kpilot/conduits/malconduit/mal-setup_dialog.ui kdepim/kpilot/conduits/malconduit/mal-setup_dialog.ui
---- kdepim.orig/kpilot/conduits/malconduit/mal-setup_dialog.ui	Tue Mar 11 08:22:13 2003
-+++ kdepim/kpilot/conduits/malconduit/mal-setup_dialog.ui	Wed Jun 16 22:55:01 2004
-@@ -13,9 +13,6 @@
-             <height>503</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form2</string>
--    </property>
-     <grid>
-         <property name="name">
-             <cstring>unnamed</cstring>
-diff -urN -x CVS kdepim.orig/kpilot/conduits/popmail/setup-dialog.ui kdepim/kpilot/conduits/popmail/setup-dialog.ui
---- kdepim.orig/kpilot/conduits/popmail/setup-dialog.ui	Mon Dec 29 15:24:23 2003
-+++ kdepim/kpilot/conduits/popmail/setup-dialog.ui	Wed Jun 16 22:55:02 2004
-@@ -12,9 +12,6 @@
-             <height>298</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <widget class="QTabWidget">
-         <property name="name">
-             <cstring>fTabWidget</cstring>
-diff -urN -x CVS kdepim.orig/libkdepim/cfgc/myoptions_base.ui kdepim/libkdepim/cfgc/myoptions_base.ui
---- kdepim.orig/libkdepim/cfgc/myoptions_base.ui	Fri Aug 22 22:08:12 2003
-+++ kdepim/libkdepim/cfgc/myoptions_base.ui	Wed Jun 16 22:55:02 2004
-@@ -12,9 +12,6 @@
-             <height>480</height>
-         </rect>
-     </property>
--    <property name="caption">
--        <string>Form1</string>
--    </property>
-     <widget class="QLabel">
-         <property name="name">
-             <cstring>textLabel1</cstring>
+   sortList();
+@@ -126,7 +152,7 @@
+ 
+   //Check to see if the start *or* end of the event is
+   //between the start and end of the freebusy dates.
+-  if (!((((this->dtStart()).secsTo(eventStart)>=0)&&(eventStart.secsTo(this->dtEnd())>=0)) 
++  if (!((((this->dtStart()).secsTo(eventStart)>=0)&&(eventStart.secsTo(this->dtEnd())>=0))
+     ||(((this->dtStart()).secsTo(eventEnd) >= 0)&&(eventEnd.secsTo(this->dtEnd()) >= 0))))
+     return false;
+ 
+@@ -140,9 +166,9 @@
+     tmpEnd = this->dtEnd();
+   } else {
+     tmpEnd = eventEnd;
+-  }  
++  }
+ 
+-  Period p(tmpStart, tmpEnd);  
++  Period p(tmpStart, tmpEnd);
+   mBusyPeriods.append( p );
+ 
+   return true;
+@@ -168,7 +194,7 @@
+         earlyTime=(*tmpPeriod).start();
+         earlyPeriod=tmpPeriod;
+       }
+-    } 
++    }
+     //Move tmpPeriod to sortedList
+     Period tmpPeriod( (*earlyPeriod).start(), (*earlyPeriod).end() );
+     sortedList.append( tmpPeriod );
+diff -urN -x CVS kdepim.orig/libkcal/icalformatimpl.cpp kdepim/libkcal/icalformatimpl.cpp
+--- kdepim.orig/libkcal/icalformatimpl.cpp	Wed Aug  4 20:57:18 2004
++++ kdepim/libkcal/icalformatimpl.cpp	Sat Aug 14 15:19:29 2004
+@@ -395,8 +395,10 @@
+   icalcomponent_add_property(vtodo,
+       icalproperty_new_percentcomplete(todo->percentComplete()));
+ 
+-  icalcomponent_add_property(vtodo,
+-      icalproperty_new_recurrenceid( writeICalDateTime( todo->dtDue())));
++  if( todo->doesRecur() ) {
++    icalcomponent_add_property(vtodo,
++        icalproperty_new_recurrenceid( writeICalDateTime( todo->dtDue())));
++  }
+ 
+   return vtodo;
+ }
+diff -urN -x CVS kdepim.orig/libkcal/resourcekabc.cpp kdepim/libkcal/resourcekabc.cpp
+--- kdepim.orig/libkcal/resourcekabc.cpp	Tue Jul 13 16:05:22 2004
++++ kdepim/libkcal/resourcekabc.cpp	Fri Aug 20 15:53:47 2004
+@@ -157,6 +157,7 @@
+       ev->setDtEnd(birthdate);
+       ev->setHasEndDate(true);
+       ev->setFloats(true);
++      ev->setTransparency( Event::Transparent );
+ 
+       ev->setSummary(summary);
+ 
+diff -urN -x CVS kdepim.orig/libkcal/scheduler.cpp kdepim/libkcal/scheduler.cpp
+--- kdepim.orig/libkcal/scheduler.cpp	Wed Jun 23 14:24:50 2004
++++ kdepim/libkcal/scheduler.cpp	Wed Aug 18 10:08:37 2004
+@@ -322,13 +322,18 @@
+           kdDebug(5800) << "Scheduler::acceptTransaction update attendee" << endl;
+           attEv->setStatus(attIn->status());
+ 	  attEv->setRSVP(false);
+-	  // better to not update the sequence number with replys
+-          //if (ev) ev->setRevision(ev->revision()+1);
+-	  //if (to) to->setRevision(to->revision()+1);
+           ret = true;
+         }
+       }
+     }
++    if ( ret ) {
++      // We set at least one of the attendees, so the incidence changed
++      // Note: This should not result in a sequence number bump
++      if ( ev )
++        ev->updated();
++      else if ( to )
++        to->updated();
++    }
+   }
+   if (ret) deleteTransaction(incidence);
+   return ret;
+diff -urN -x CVS kdepim.orig/libkdepim/addressesdialog.cpp kdepim/libkdepim/addressesdialog.cpp
+--- kdepim.orig/libkdepim/addressesdialog.cpp	Sat Jul 17 22:55:32 2004
++++ kdepim/libkdepim/addressesdialog.cpp	Wed Aug 18 10:50:23 2004
+@@ -527,7 +527,7 @@
+   else
+   {
+     selectedSelectedAddresses.remove(item);
+-  } 
++  }
+   if ( selected ) {
+     AddresseeViewItem* child = static_cast<AddresseeViewItem*>(item->firstChild());
+     while (child) {
+@@ -550,8 +550,6 @@
+            SLOT(addSelectedBCC())  );
+   connect( d->ui->mSaveAs, SIGNAL(clicked()),
+            SLOT(saveAs())  );
+-  connect( d->ui->mAddressBook, SIGNAL(clicked()),
+-           SLOT(launchAddressBook())  );
+   connect( d->ui->mRemoveButton, SIGNAL(clicked()),
+            SLOT(removeEntry()) );
+   connect( d->ui->mAvailableView, SIGNAL(selectionChanged()),
+@@ -762,7 +760,7 @@
+     selectedToAvailableMapping.remove( item );
+     selectedToAvailableMapping.remove( correspondingItem );
+   }
+-    
++
+   AddresseeViewItem* child = static_cast<AddresseeViewItem*>(item->firstChild());
+   while (child)
+   {
+diff -urN -x CVS kdepim.orig/libkdepim/addresspicker.ui kdepim/libkdepim/addresspicker.ui
+--- kdepim.orig/libkdepim/addresspicker.ui	Mon Jul 12 00:26:20 2004
++++ kdepim/libkdepim/addresspicker.ui	Wed Aug 18 10:50:23 2004
+@@ -300,14 +300,6 @@
+                 <bool>true</bool>
+             </property>
+         </widget>
+-        <widget class="QPushButton" row="2" column="1">
+-            <property name="name">
+-                <cstring>mAddressBook</cstring>
+-            </property>
+-            <property name="text">
+-                <string>Address &amp;Book</string>
+-            </property>
+-        </widget>
+     </grid>
+ </widget>
+ <layoutdefaults spacing="6" margin="11"/>
+diff -urN -x CVS kdepim.orig/libkdepim/kpimprefs.cpp kdepim/libkdepim/kpimprefs.cpp
+--- kdepim.orig/libkdepim/kpimprefs.cpp	Wed Aug  4 13:31:19 2004
++++ kdepim/libkdepim/kpimprefs.cpp	Tue Aug 17 16:19:38 2004
+@@ -19,6 +19,8 @@
+     Boston, MA 02111-1307, USA.
+ */
+ 
++#include <config.h>
++
+ #include <time.h>
+ #include <unistd.h>
+ #include <stdlib.h>
+diff -urN -x CVS kdepim.orig/plugins/kmail/bodypartformatter/text_calendar.cpp kdepim/plugins/kmail/bodypartformatter/text_calendar.cpp
+--- kdepim.orig/plugins/kmail/bodypartformatter/text_calendar.cpp	Wed Aug  4 13:58:47 2004
++++ kdepim/plugins/kmail/bodypartformatter/text_calendar.cpp	Tue Aug 17 16:13:00 2004
+@@ -53,10 +53,11 @@
+ #include <kmessagebox.h>
+ #include <kstandarddirs.h>
+ #include <kapplication.h>
++#include <ktempfile.h>
+ 
+ #include <qurl.h>
+-#include <qfile.h>
+ #include <qdir.h>
++#include <qtextstream.h>
+ 
+ using namespace KCal;
+ 
+@@ -530,39 +531,36 @@
+       return callback.mailICal( incidence->organizer(), msg, subject );
+     }
+ 
+-    bool saveFile( const QString& iCal, const QString& type ) const
++    bool saveFile( const QString& receiver, const QString& iCal,
++                   const QString& type ) const
+     {
+-      QString location = locateLocal( "data", "korganizer/income." + type,
+-                                      true );
+-      QDir dir;
+-      if ( !dir.exists( location ) ) dir.mkdir( location );
+-      QString file;
+-      do {
+-        file = location + "/" + KApplication::randomString( 10 );
+-      } while ( QFile::exists( file ) );
+-      QFile f( file );
+-      if ( !f.open( IO_WriteOnly ) ) {
+-        KMessageBox::error( 0, i18n("Could not open file for writing:\n%1")
+-                            .arg( file ) );
++      KTempFile file( locateLocal( "data", "korganizer/income." + type + '/',
++                                   true ) );
++      QTextStream* ts = file.textStream();
++      if ( !ts ) {
++        KMessageBox::error( 0, i18n("Could not save file to KOrganizer") );
+         return false;
+-      } else {
+-        QByteArray msgArray = iCal.utf8();
+-        f.writeBlock( msgArray, msgArray.size() );
+-        f.close();
+       }
++      ts->setEncoding( QTextStream::UnicodeUTF8 );
++      (*ts) << receiver << '\n' << iCal;
+       return true;
+     }
+ 
+     bool handleAccept( const QString& iCal, KMail::Callback& callback ) const
+     {
++      const QString receiver = callback.receiver();
++      if ( receiver.isEmpty() )
++        // Must be some error. Still return true though, since we did handle it
++        return true;
++
+       // First, save it for KOrganizer to handle
+-      saveFile( iCal, "accepted" );
++      saveFile( receiver, iCal, "accepted" );
+ 
+       // Now produce the return message
+       ICalFormat format;
+       Incidence* incidence = icalToString( iCal, format );
+       if( !incidence ) return false;
+-      setStatusOnMyself( incidence, Attendee::Accepted, callback.receiver() );
++      setStatusOnMyself( incidence, Attendee::Accepted, receiver );
+       return mail( incidence, callback );
+     }
+ 
+@@ -587,7 +585,7 @@
+         return handleDecline( iCal, c );
+       if ( path == "reply" || path == "cancel" )
+         // These should just be saved with their type as the dir
+-        return saveFile( iCal, path );
++        return saveFile( "Reciever Not Searched", iCal, path );
+ 
+       return false;
+     }
