@@ -19,6 +19,8 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_ftpdir}/%{version}/src/%{name}-%{version}.tar.bz2
+# generated from kde-i18n
+Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	zlib-devel
 BuildRequires:	bison
@@ -100,6 +102,8 @@ install -d $RPM_BUILD_ROOT%{_applnkdir}{/Office/PIMs,/Settings/KDE}
 
 mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
 mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs/}
+
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT%
 
 gzip -9nf README*
 
