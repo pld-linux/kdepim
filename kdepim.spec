@@ -1,6 +1,9 @@
+# TODO:
+# - make separate subpackages
+
 %define		_ver		3.0.3
 #define		_sub_ver
-%define		_rel		0.1
+%define		_rel		1
 
 %{?_sub_ver:	%define	_version	%{_ver}%{_sub_ver}}
 %{!?_sub_ver:	%define	_version	%{_ver}}
@@ -24,6 +27,7 @@ Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
+BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
@@ -85,11 +89,8 @@ Pliki nag³owkowe do KDE pim.
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
-        CPPFLAGS="`pkg-config libpng12 --cflags`"
-fi
-
-%configure
+%configure \
+	--enable-final
 
 %{__make}
 
@@ -105,10 +106,17 @@ mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs/}
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
+programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot ksync libkcal twister"
+> kdepim.lang
+for i in $programs; do
+	%find_lang $i --with-kde
+	cat $i.lang >> kdepim.lang
+done
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
 %attr(755,root,root) %{_bindir}/*
@@ -124,6 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libnullconduit.so.*.*.*
 %{_libdir}/kde3/libpopmailconduit.la
 %{_libdir}/kde3/libpopmailconduit.so.*.*.*
+%{_libdir}/kde3/libtodoconduit.la
+%{_libdir}/kde3/libtodoconduit.so.*.*.*
 %{_libdir}/kde3/libvcalconduit.la
 %{_libdir}/kde3/libvcalconduit.so.*.*.*
 
