@@ -504,6 +504,10 @@ for f in `find . -name \*.desktop`; do
 	fi
 done
 
+# change annoyance-filter path (required by autodetect in kmail)
+%{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
+	kmail/kmail.antispamrc
+
 %build
 cp %{_datadir}/automake/config.sub admin
 
