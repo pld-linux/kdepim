@@ -3,10 +3,10 @@
 
 %define		_state		unstable
 %define		_ver		3.3.92
-%define		_snap		050210
+%define		_snap		050217
 
-%define		_minlibsevr	9:3.3.92.020510
-%define		_minbaseevr	9:3.3.92.020510
+%define		_minlibsevr	9:3.3.92.020517
+%define		_minbaseevr	9:3.3.92.020517
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
