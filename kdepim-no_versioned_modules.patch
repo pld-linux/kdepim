@@ -1,0 +1,150 @@
+--- kdepim-3.0.3/kpilot/conduits/abbrowserconduit/Makefile.am~	Sat Oct 12 18:07:19 2002
++++ kdepim-3.0.3/kpilot/conduits/abbrowserconduit/Makefile.am	Sat Oct 12 18:07:19 2002
+@@ -18,7 +18,7 @@
+ 	abbrowser-setup.cc \
+ 	abbrowser-conduit.cc \
+ 	abbrowserConduitConfig_base.ui
+-libabbrowserconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
++libabbrowserconduit_la_LDFLAGS = -module -no-undefined -avoid-version
+ libabbrowserconduit_la_LIBADD = ../../lib/libkpilot.la
+ # You may want to enable debugging like this on systems with broken kdelibs
+ #
+--- kdepim-3.0.3/kpilot/conduits/abbrowserconduit/Makefile.in~	Sat Oct 12 18:07:18 2002
++++ kdepim-3.0.3/kpilot/conduits/abbrowserconduit/Makefile.in	Sat Oct 12 18:07:18 2002
+@@ -258,7 +258,7 @@
+ 	abbrowser-conduit.cc \
+ 	 abbrowserConduitConfig_base.cc
+ 
+-libabbrowserconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
++libabbrowserconduit_la_LDFLAGS = -module -no-undefined -avoid-version
+ libabbrowserconduit_la_LIBADD = ../../lib/libkpilot.la
+ 
+ # You may want to enable debugging like this on systems with broken kdelibs
+--- kdepim-3.0.3/kpilot/conduits/expense/Makefile.in~	Sat Oct 12 18:09:53 2002
++++ kdepim-3.0.3/kpilot/conduits/expense/Makefile.in	Sat Oct 12 18:09:53 2002
+@@ -249,8 +249,8 @@
+ libexpenseconduit_la_SOURCES= setupDialog.cc \
+ 	expense.cc expense-factory.cc expenseConduit.cc
+ 
+-libexpenseconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libexpenseconduit_la_LIBADD = -lkpilot
++libexpenseconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libexpenseconduit_la_LIBADD = ../../lib/libkpilot.la
+ 
+ # this option you can leave out. Just, if you use "make dist", you need it
+ noinst_HEADERS = expense.h setupDialog.h 
+--- kdepim-3.0.3/kpilot/conduits/expense/Makefile.am~	Sat Oct 12 18:10:04 2002
++++ kdepim-3.0.3/kpilot/conduits/expense/Makefile.am	Sat Oct 12 18:10:04 2002
+@@ -13,8 +13,8 @@
+ 
+ libexpenseconduit_la_SOURCES = expenseConduit.ui setupDialog.cc \
+ 	expense.cc expense-factory.cc
+-libexpenseconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libexpenseconduit_la_LIBADD  =  -lkpilot
++libexpenseconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libexpenseconduit_la_LIBADD  = ../../lib/libkpilot.la
+ 
+ # this option you can leave out. Just, if you use "make dist", you need it
+ noinst_HEADERS = expense.h setupDialog.h 
+--- kdepim-3.0.3/kpilot/conduits/knotes/Makefile.in~	Sat Oct 12 18:11:26 2002
++++ kdepim-3.0.3/kpilot/conduits/knotes/Makefile.in	Sat Oct 12 18:11:26 2002
+@@ -250,7 +250,7 @@
+ 	 \
+ 	 KNotesIface_stub.cc setup_base.cc
+ 
+-libknotesconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
++libknotesconduit_la_LDFLAGS = -module -no-undefined -avoid-version
+ libknotesconduit_la_LIBADD = ../../lib/libkpilot.la
+ subdir = kpilot/conduits/knotes
+ mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
+--- kdepim-3.0.3/kpilot/conduits/knotes/Makefile.am~	Sat Oct 12 18:11:06 2002
++++ kdepim-3.0.3/kpilot/conduits/knotes/Makefile.am	Sat Oct 12 18:11:06 2002
+@@ -12,6 +12,6 @@
+ 	knotes-setup.cc knotes-action.cc \
+ 	setup_base.ui \
+ 	KNotesIface.stub
+-libknotesconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
++libknotesconduit_la_LDFLAGS = -module -no-undefined -avoid-version
+ libknotesconduit_la_LIBADD = ../../lib/libkpilot.la
+ 
+--- kdepim-3.0.3/kpilot/conduits/null/Makefile.in~	Sat Oct 12 18:12:53 2002
++++ kdepim-3.0.3/kpilot/conduits/null/Makefile.in	Sat Oct 12 18:12:53 2002
+@@ -243,8 +243,8 @@
+ #>- libnullconduit_la_SOURCES = setup_base.ui null-conduit.cc null-factory.cc
+ #>+ 1
+ libnullconduit_la_SOURCES= null-conduit.cc null-factory.cc setup_base.cc
+-libnullconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libnullconduit_la_LIBADD = -lkpilot
++libnullconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libnullconduit_la_LIBADD = ../../lib/libkpilot.la
+ subdir = kpilot/conduits/null
+ mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
+ CONFIG_HEADER = $(top_builddir)/config.h
+--- kdepim-3.0.3/kpilot/conduits/null/Makefile.am~	Sat Oct 12 18:12:58 2002
++++ kdepim-3.0.3/kpilot/conduits/null/Makefile.am	Sat Oct 12 18:12:58 2002
+@@ -9,6 +9,6 @@
+ 
+ 
+ libnullconduit_la_SOURCES = setup_base.ui null-conduit.cc null-factory.cc
+-libnullconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libnullconduit_la_LIBADD = -lkpilot
++libnullconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libnullconduit_la_LIBADD = ../../lib/libkpilot.la
+ 
+--- kdepim-3.0.3/kpilot/conduits/popmail/Makefile.in~	Sat Oct 12 18:14:20 2002
++++ kdepim-3.0.3/kpilot/conduits/popmail/Makefile.in	Sat Oct 12 18:14:20 2002
+@@ -250,8 +250,8 @@
+ libpopmailconduit_la_SOURCES = popmail-factory.cc setupDialog.cc \
+ 	passworddialog.cc popmail-conduit.cc parsedate.c
+ 
+-libpopmailconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libpopmailconduit_la_LIBADD = -lkpilot
++libpopmailconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libpopmailconduit_la_LIBADD = ../../lib/libkpilot.la
+ 
+ # this option you can leave out. Just, if you use "make dist", you need it
+ noinst_HEADERS = popmail-conduit.h passworddialog.h setupDialog.h
+--- kdepim-3.0.3/kpilot/conduits/popmail/Makefile.am~	Sat Oct 12 18:14:24 2002
++++ kdepim-3.0.3/kpilot/conduits/popmail/Makefile.am	Sat Oct 12 18:14:24 2002
+@@ -16,8 +16,8 @@
+ # Which sources should be compiled for popmail_conduit
+ libpopmailconduit_la_SOURCES = popmail-factory.cc setupDialog.cc \
+ 	passworddialog.cc popmail-conduit.cc parsedate.c
+-libpopmailconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib
+-libpopmailconduit_la_LIBADD   =  -lkpilot
++libpopmailconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libpopmailconduit_la_LIBADD  = ../../lib/libkpilot.la
+ 
+ # this option you can leave out. Just, if you use "make dist", you need it
+ noinst_HEADERS = popmail-conduit.h passworddialog.h setupDialog.h
+--- kdepim-3.0.3/kpilot/conduits/vcalconduit/Makefile.in~	Sat Oct 12 18:17:24 2002
++++ kdepim-3.0.3/kpilot/conduits/vcalconduit/Makefile.in	Sat Oct 12 18:17:24 2002
+@@ -254,8 +254,8 @@
+ libvcalconduit_la_SOURCES= vcal-factorybase.cc vcal-factory.cc  \
+ 	vcal-setup.cc vcal-conduitbase.cc vcal-conduit.cc korganizerConduit.cc
+ 
+-libvcalconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib -L../../../libkcal
+-libvcalconduit_la_LIBADD = -lkpilot -lkcal
++libvcalconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libvcalconduit_la_LIBADD = ../../lib/libkpilot.la ../../../libkcal/libkcal.la
+ 
+ #>- libtodoconduit_la_SOURCES = korganizertodoConduit.ui vcal-factorybase.cc todo-factory.cc  \
+ #>- todo-setup.cc vcal-conduitbase.cc todo-conduit.cc
+--- kdepim-3.0.3/kpilot/conduits/vcalconduit/Makefile.am~	Sat Oct 12 18:16:18 2002
++++ kdepim-3.0.3/kpilot/conduits/vcalconduit/Makefile.am	Sat Oct 12 18:16:18 2002
+@@ -16,11 +16,11 @@
+ 
+ libvcalconduit_la_SOURCES = korganizerConduit.ui vcal-factorybase.cc vcal-factory.cc  \
+ 	vcal-setup.cc vcal-conduitbase.cc vcal-conduit.cc
+-libvcalconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib -L../../../libkcal
+-libvcalconduit_la_LIBADD = -lkpilot -lkcal
++libvcalconduit_la_LDFLAGS = -module -no-undefined -avoid-version
++libvcalconduit_la_LIBADD = ../../lib/libkpilot.la ../../../libkcal/libkcal.la
+ 
+ libtodoconduit_la_SOURCES = korganizertodoConduit.ui vcal-factorybase.cc todo-factory.cc  \
+ 	todo-setup.cc vcal-conduitbase.cc todo-conduit.cc
+-libtodoconduit_la_LDFLAGS = $(KDE_RPATH) -L../../lib -L../../../libkcal
+-libtodoconduit_la_LIBADD = -lkpilot -lkcal
++libtodoconduit_la_LDFLAGS =  -L../../../libkcal
++libtodoconduit_la_LIBADD = ../../lib/libkpilot.la ../../../libkcal/libkcal.la
+ 
