@@ -547,6 +547,7 @@ cat kwatchgnupg.lang >> kmail.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
 cat kalarmd.lang	>> %{name}.lang
+cat ktnef.lang		>> kmail.lang
 
 # Omit apidocs entries
 sed -i 's/.*apidocs.*//' *.lang
