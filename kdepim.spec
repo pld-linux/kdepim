@@ -535,7 +535,7 @@ Summary:	Internationalization and localization files for kaddressbook
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kaddressbook
 Group:		X11/Applications
 Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description kaddressbook-i18n
 Internationalization and localization files for kaddressbook.
@@ -548,7 +548,7 @@ Summary:	Internationalization and localization files for kandy
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kandy
 Group:		X11/Applications
 Requires:	%{name}-kandy = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core-i18n >= 9:%{version}
 
@@ -563,7 +563,7 @@ Summary:	Internationalization and localization files for karm
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla karm
 Group:		X11/Applications
 Requires:	%{name}-karm = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 
@@ -579,7 +579,7 @@ Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kmaila
 Group:		X11/Applications
 Requires:	%{name}-kmail = %{epoch}:%{version}-%{release}
 Requires:	%{name}-ktnef-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
@@ -693,7 +693,7 @@ Summary:	Internationalization and localization files for libkdepim
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdepim
 Group:		X11/Applications
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkdepim-i18n
 Internationalization and localization files for libkdepim.
@@ -706,7 +706,7 @@ Summary:	Internationalization and localization files for libkdenetwork
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdenetwork
 Group:		X11/Applications
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkdenetwork-i18n
 Internationalization and localization files for libkdenetwork.
@@ -719,7 +719,7 @@ Summary:	Internationalization and localization files for libksieve
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libksieve
 Group:		X11/Applications
 Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libksieve-i18n
 Internationalization and localization files for libksieve.
@@ -732,7 +732,7 @@ Summary:	Internationalization and localization files for korganizer-libs
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korganizer-libs
 Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdgantt-i18n = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kgantt-i18n
 
@@ -747,7 +747,7 @@ Summary:	Internationalization and localization files for libkcal
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkcal
 Group:		X11/Applications
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkcal-i18n
 Internationalization and localization files for libkcal.
@@ -760,7 +760,7 @@ Summary:	Internationalization and localization files for ktnef
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla ktnef
 Group:		X11/Applications
 Requires:	%{name}-ktnef = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description ktnef-i18n
 Internationalization and localization files for ktnef.
@@ -773,7 +773,7 @@ Summary:	Internationalization and localization files for libkdgantt
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdgantt
 Group:		X11/Applications
 Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkdgantt-i18n
 Internationalization and localization files for libkdgantt.
