@@ -1,14 +1,22 @@
+# TODO:
+# - make separate subpackages
+
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Menad¿er informacji osobistej (PIM) dla KDE
 Name:		kdepim
-Version:	2.2.2
-Release:	2
+Version:	3.0.3
+Release:	1
+Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
+# generated from kde-i18n
+Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
+BuildRequires:	pilot-link-devel
+BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
@@ -70,7 +78,8 @@ Pliki nag³ówkowe do KDE pim.
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-%configure2_13
+%configure \
+	--enable-final
 
 %{__make}
 
@@ -79,29 +88,67 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
-install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
+install -d $RPM_BUILD_ROOT%{_applnkdir}{/Office/PIMs,/Settings/KDE}
 
-mv -f $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs}/korganizer.desktop
+mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
+mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs/}
 
-gzip -9nf README*
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+
+programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot ksync libkcal twister"
+> kdepim.lang
+for i in $programs; do
+	%find_lang $i --with-kde
+	cat $i.lang >> kdepim.lang
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f kdepim.lang
 %defattr(644,root,root,755)
-%doc *.gz
+%doc README*
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*
-%{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Utilities/*
-%{_datadir}/autostart/alarmd.desktop
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
+
+%{_libdir}/kde3/libabbrowserconduit.la
+%{_libdir}/kde3/libabbrowserconduit.so.*.*.*
+%{_libdir}/kde3/libexpenseconduit.la
+%{_libdir}/kde3/libexpenseconduit.so.*.*.*
+%{_libdir}/kde3/libknotesconduit.la
+%{_libdir}/kde3/libknotesconduit.so.*.*.*
+%{_libdir}/kde3/libnullconduit.la
+%{_libdir}/kde3/libnullconduit.so.*.*.*
+%{_libdir}/kde3/libpopmailconduit.la
+%{_libdir}/kde3/libpopmailconduit.so.*.*.*
+%{_libdir}/kde3/libtodoconduit.la
+%{_libdir}/kde3/libtodoconduit.so.*.*.*
+%{_libdir}/kde3/libvcalconduit.la
+%{_libdir}/kde3/libvcalconduit.so.*.*.*
+
+%{_libdir}/kde3/libkcm_alarmdaemonctrl.??
+%{_libdir}/kde3/libkorg_datenums.??
+%{_libdir}/kde3/libkorg_holidays.??
+%{_libdir}/kde3/libkorg_projectview.??
+%{_libdir}/kde3/libkorg_webexport.??
+
 %{_datadir}/apps/*
+%{_datadir}/autostart/*
+%{_datadir}/services/*
+%{_datadir}/servicetypes/*
 %{_datadir}/config/*
-%{_pixmapsdir}/*/*/apps/*
+%{_applnkdir}/Office/PIMs/*
+%{_applnkdir}/Settings/KDE/System/*
+%{_applnkdir}/Utilities/*
+%{_pixmapsdir}/*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
-%attr(755,root,root) %{_libdir}/*.la
-%attr(755,root,root) %{_libdir}/*.so
+%{_libdir}/*.??
+%{_libdir}/kde3/libabbrowserconduit.so
+%{_libdir}/kde3/libexpenseconduit.so
+%{_libdir}/kde3/libknotesconduit.so
+%{_libdir}/kde3/libnullconduit.so
+%{_libdir}/kde3/libpopmailconduit.so
+%{_libdir}/kde3/libvcalconduit.so
