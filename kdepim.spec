@@ -9,7 +9,7 @@
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
-Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
+Summary(pl):	Program zarz╠dzaj╠cy informacjami osobistymi (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
@@ -67,7 +67,7 @@ applications based on kdepim.
 
 %description devel -l pl
 Pakiet ten zawiera pliki nagЁСwkowe potrzebne do budowy aplikacji
-bazuj╠cych na kdepim.
+opartych na kdepim.
 
 %description devel -l uk
 Цей пакет м╕стить файли заголовк╕в необх╕дн╕ для побудови програм,
