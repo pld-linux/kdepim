@@ -104,7 +104,7 @@ Nastawianie przypominania o zdarzeniach.
 Summary:        A communication program between mobile phone and PC
 Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym
 Group:          X11/Applications
-Obsoletes:	%{name}-cellphone
+Obsoletes:	kdepim-cellphone
 
 %description kandy
 Kandy provides access to your mobile phone and allows to sync the data
