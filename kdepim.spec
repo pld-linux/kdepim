@@ -253,7 +253,7 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 for plik in `find ./ -name *.desktop` ; do
 	echo $plik
-	sed -ie 's/\[nb\]/\[no\]/g' $plik
+	sed -i -e 's/\[nb\]/\[no\]/g' $plik
 done
 
 %configure \
