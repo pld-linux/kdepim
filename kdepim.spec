@@ -41,16 +41,16 @@ kdepim is a collection of Personal Information Management (PIM) tools
 for the K Desktop Environment (KDE).
 
 %description -l pl
-kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
 (KDE). 
 
 %description -l ru
 kdepim - это набор утилит для управления персональной информацией для
-K Desktop Enviromnent (KDE).
+K Desktop Environment (KDE).
 
 %description -l uk
 kdepim - це наб╕р утил╕т для керування персональною информац╕╓ю для K
-Desktop Enviromnent (KDE).
+Desktop Environment (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
