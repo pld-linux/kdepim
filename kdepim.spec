@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	2
+Release:	3
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -407,15 +407,15 @@ install -d $RPM_BUILD_ROOT%{_desktopdir}
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 
-install -d $ALD/KDE-Settings/Components
-mv $ALD/{PIM/*,KDE-Settings/Components}
-
 mv $ALD/Applications/[Kk]o*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
 mv $ALD/Internet/K[!O]*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
 mv $ALD/Internet/More/KOrn.desktop	$RPM_BUILD_ROOT%{_desktopdir}
 mv $ALD/Utilities/kaddressbook*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
 mv $ALD/Utilities/k[!am]*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
 mv $ALD/Utilities/More/*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
+
+echo "[Desktop Entry]\nType=Directory\nNoDisplay=true" \
+	> $ALD/PIM/.directory
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -519,8 +519,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
-%{_applnkdir}/KDE-Settings/Components/kabconfig.desktop
-%{_applnkdir}/KDE-Settings/Components/kabldapconfig.desktop
+#%{_applnkdir}/KDE-Settings/Components/kabconfig.desktop
+#%{_applnkdir}/KDE-Settings/Components/kabldapconfig.desktop
+%dir %{_applnkdir}/PIM
+%{_applnkdir}/PIM/.directory
+%{_applnkdir}/PIM/kabconfig.desktop
+%{_applnkdir}/PIM/kabldapconfig.desktop
 %{_desktopdir}/kaddressbook.desktop
 %{_icondir}/*/*/*/kaddressbook.png
 
@@ -592,7 +596,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/summaryviewpart
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/servicetypes/kontactplugin.desktop
-%{_applnkdir}/KDE-Settings/Components/kontactconfig.desktop
+#%{_applnkdir}/KDE-Settings/Components/kontactconfig.desktop
+%{_applnkdir}/PIM/kontactconfig.desktop
 %{_desktopdir}/Kontact.desktop
 %{_icondir}/crystalsvg/*/apps/kontact.png
 
@@ -609,6 +614,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
 %{_libdir}/libdummykonnector.la
 %attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
+#%{_libdir}/liblocalkonnector.la
+#%attr(755,root,root) %{_libdir}/liblocalkonnector.so.*.*.*
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
 %{_libdir}/libkdgantt.la
