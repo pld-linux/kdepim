@@ -112,15 +112,15 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}{/Office/PIMs,/Settings/KDE}
+install -d $RPM_BUILD_ROOT%{_applnkdir}/{Office/PIMs,Settings/KDE}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
 mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications/*,Office/PIMs/}
-install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}/
-install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}/
+install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}
+install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
@@ -131,8 +131,8 @@ for i in $programs; do
 	cat $i.lang >> kdepim.lang
 done
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
