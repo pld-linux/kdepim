@@ -19,7 +19,7 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
+Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
 # Source0-md5:	e4244c1d1a461954c6fdde30bb094b70
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
