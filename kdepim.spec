@@ -15,7 +15,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	3
+Release:	4
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -580,12 +580,12 @@ Summary:	Internationalization and localization files for kmail
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kmaila
 Group:		X11/Applications
 Requires:	%{name}-kmail = %{epoch}:%{version}-%{release}
+Requires:	%{name}-ktnef-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libksieve-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libktnef-i18n = %{epoch}:%{version}-%{release}
 Requires:	kdebase-mailnews-i18n >= 9:%{version}
 
 %description kmail-i18n
