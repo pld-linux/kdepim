@@ -24,8 +24,8 @@ Source0:	http://download.kde.org/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	362bec23869328a85845e0501020c938
 #Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
 %if %{with i18n}
-Source1:        http://ep09.pld-linux.org/~djurban/kde/i18n/kde-i18n-%{name}-%{version}.tar.bz2
-# Source1-md5:  2fdecd2aa0f0a125800e0071f36f6277
+Source1:	kde-i18n-%{name}-%{version}.tar.bz2
+# Source1-md5:  b82c6ebb46f20df4f5415de05dfd5a9c
 %endif
 Patch0:		%{name}-3.2branch.diff
 Patch1:		%{name}-kmail_toolbars.patch
