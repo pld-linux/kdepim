@@ -25,7 +25,18 @@
    static const char * richHeaders[] = {
      "subject", "date", "from", "cc", "bcc", "to",
 -    "organization", "organisation", "reply-to", "status" /*, "statuspic" */
-+    "organization", "organisation", "reply-to", "status" , "statuspic"
++    "organization", "organisation", "reply-to" /*, "status" */ , "statuspic"
    };
    static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
  
+--- kdepim-040524/kmail/headerstyle.cpp.orig	2004-05-25 01:27:16.624535848 +0200
++++ kdepim-040524/kmail/headerstyle.cpp	2004-05-25 01:27:44.850244888 +0200
+@@ -432,7 +432,7 @@
+               }
+               else
+                 userHTML = QString( "<div class=\"senderpic\">"
+-                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
++                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\">%3</div></a>"
+                                       "</div>" ).arg( kabcUid )
+                                                 .arg( userHTML )
+                                                 .arg( presence );
