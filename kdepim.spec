@@ -668,6 +668,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbookimprotocol.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
+%{_iconsdir}/crystalsvg/*/actions/kontact_*.png
 # korganizer part
 #%attr(755,root,root) %{_bindir}/ghns
 #%attr(755,root,root) %{_bindir}/khotnewstuff
