@@ -871,7 +871,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
-%{_kdedocdir}/en/kaddressbook
 %{_mandir}/man1/kaddressbook*.1*
 %{_mandir}/man1/kabc2mutt*.1*
 
@@ -899,7 +898,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
-%{_kdedocdir}/en/karm
 %{_mandir}/man1/karm*.1*
 
 %files kmail -f kmail.lang
@@ -993,7 +991,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
-%{_kdedocdir}/en/knode
 %{_mandir}/man1/knode*.1*
 
 %files knotes -f knotes.lang
@@ -1014,7 +1011,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/knotes/knotes_xmlrpc.desktop
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
-%{_kdedocdir}/en/knotes
 %{_mandir}/man1/knotes*.1*
 
 %files konsolekalendar -f konsolekalendar.lang
@@ -1022,7 +1018,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
-%{_kdedocdir}/en/konsolekalendar
 %{_mandir}/man1/konsolekalendar*.1*
 
 %files korn -f korn.lang
@@ -1030,7 +1025,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/korn
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
-%{_kdedocdir}/en/korn
 %{_mandir}/man1/korn*.1*
 
 %files kpilot -f kpilot.lang
