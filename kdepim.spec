@@ -6,6 +6,7 @@
 # Conditional build:
 # _with_pixmapsubdirs - leave different depth/resolution icons
 #
+%define		_with_pixmapsubdirs	1
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
 Summary(pl):	Zarz╠dca informacji osobistych (PIM) dla KDE
@@ -13,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.5a
-Release:	0.1
+Release:	0.2
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
