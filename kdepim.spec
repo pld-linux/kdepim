@@ -143,7 +143,7 @@ Obsoletes:	kdepim-ktnef
 
 %description kmail
 This is electronic mail client for KDE with a huge amount of features:
-- SMTP/maildir/POP3/IMAP support with ssl/tls and pipelining
+- SMTP/maildir/POP3/IMAP support with SSL/TLS and pipelining
 - address book
 - automatic encryption using OpenPGP (PGP or GnuPG)
 - powerful mail filters
@@ -159,11 +159,22 @@ This is electronic mail client for KDE with a huge amount of features:
 - and more...
 
 %description kmail -l pl
-Program pocztowy dla KDE. Potrafi odczytywaæ pocztê z kont POP3, IMAP
-jak i lokalnych skrzynek.
-
-Ten pakiet zawiera wersj± programu z poprawion± obs³ug± zestawów
-znaków.
+Program pocztowy dla KDE o olbrzymich mo¿liwo¶ciach, obejmuj±cych:
+- obs³ugê SMTP/maildir/POP3/IMAP z SSL/TLS i pipeliningiem
+- ksi±¿kê adresow±
+- automatyczne szyfrowanie przy u¿yciu OpenPGP (PGP lub GnuPG)
+- potê¿ne filtry pocztowe
+- zagnie¿d¿one skrzynki pocztowe z obs³ug± list pocztowych
+- ¶ci±ganie na ¿±danie lub usuwanie bez ¶ci±gania du¿ych listów z
+  serwera POP3
+- pe³n± obs³ugê listów we wszystkich jêzykach i zestawach znaków
+  obs³ugiwanych przez Qt
+- przeszukiwanie wiadomo¶ci z prezentacj± w wirtualnych folderach
+- usuwanie powtórzonych listów
+- w±tkowanie wiadomo¶ci
+- kontrolê pisowni w locie
+- import poczty z innych klientów
+- wiele wiêcej...
 
 %description kmail -l pt_BR
 Poderoso cliente / leitor de e-mails para o KDE.
@@ -180,9 +191,6 @@ Requires:	kdebase-mailnews >= 9:%{version}
 Obsoletes:	kdenetwork-knode
 
 %description knode
-This is a news reader for KDE. It has threading and everything else
-you need to be happy reading your news.
-
 KNode is an online newsreader (GKNSA compliant) for the K Desktop
 Environment. It features:
 - all basic features of a newsreader (read articles, post articles,
@@ -196,7 +204,16 @@ Environment. It features:
 - and more...
 
 %description knode -l pl
-Czytnik newsów dla KDE. Obs³uguje w±tki oraz killfile.
+KNode to czytnik newsów zgodny ze specyfikacj± GKNSA przeznaczony dla
+¶rodowiska KDE. Jego mo¿liwo¶ci obejmuj±:
+- wszystkie podstawowe cechy czytnika newsów (czytanie i wysy³anie
+  artyku³ów, w±tkowanie...)
+- obs³ugê wielu serwerów news
+- czytanie i tworzenie wieloczê¶ciowych wiadomo¶ci MIME
+- wy¶wietlanie za³±czników w tek¶cie (tekstowych i obrazków)
+- konfigurowalne filtry, fonty i kolory
+- pe³ny scoring
+- wiele wiêcej...
 
 %description knode -l pt_BR
 Leitor de notícias (news) do KDE.
@@ -237,6 +254,17 @@ Main features of KonsoleKalendar:
 - export calendar entries to other file formats
 
 %description konsolekalendar -l pl
+KonsoleKalendar to dzia³aj±cy z linii poleceñ interfejs do kalendarzy
+KDE. Pozwala ogl±daæ, wstawiaæ, usuwaæ i modyfikowaæ zdarzenia w
+kalendarzu z linii poleceñ lub jêzyka skryptowego. Ponadto
+KonsoleKalendar potrafi wyeksportowaæ kalendarz KDE do wielu innych
+formatów.
+
+G³ówne mo¿liwo¶ci programu KonsoleKalendar:
+- wypisywanie wpisów kalendarza od daty pocz±tkowej do koñcowej
+- wstawianie/usuwanie/modyfikowanie wpisów
+- eksportowanie wpisów kalendarza do innych formatów plików.
+
 Narzêdzie dostêpu do plików kalendarza z linii poleceñ.
 
 %package kontact
@@ -337,8 +365,23 @@ It supports:
 - others might work, but have not been tested
 
 %description kpilot -l pl
-Narzêdzie do synchronizacji z 3Com Palm Pilotem i zgodnymi
-urz±dzeniami.
+KPilot to odpowiednik oprogramowania Palm Desktop firmy Palm Inc,
+umo¿liwiaj±cy wymianê informacji miêdzy urz±dzeniami Palm, Palm Pilot
+i Visor a komputerem z KDE. KPilot jako taki nie zastêpuje Palm
+Desktop - ³±czy i integruje wiele aplikacji KDE 3.x w pakiet, którym
+mo¿na zrobiæ tyle samo, a nawet wiêcej, co przy u¿yciu Palm Desktop.
+
+KPilot ma wtyczki do wymiany informacji miêdzy Palmem a innymi
+aplikacjami, takimi jak KOrganizer albo serwery POP3/SMTP. W KPilocie
+mo¿na wy¶wietlaæ i modyfikowaæ kontakty, pisaæ notatki lub instalowaæ
+nowe programy na Palmie.
+
+Obs³uguje urz±dzenia serii:
+- Palm Pilot, m100, m500, Zire, Tungsten
+- Handspring Visor i Treo
+- Sony Clié (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c, T675c, 665c)
+- Garmin iQue 3600
+- mog± dzia³aæ tak¿e inne, ale nie by³y testowane.
 
 %description kpilot -l ru
 ÕÔÉÌÉÔÁ ÄÌÑ ÓÉÎÈÒÏÎÉÚÁÃÉÉ Ó 3com Palm Pilots É ÓÏ×ÍÅÓÔÉÍÙÍÉ Ó ÎÉÍÉ
@@ -349,8 +392,8 @@ urz±dzeniami.
 ÐÒÉÓÔÒÏÑÍÉ.
 
 %package libkdenetwork
-Summary:	A network library
-Summary(pl):	Biblioteka sieciowa
+Summary:	Network libraries
+Summary(pl):	Biblioteki sieciowa
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
 Obsoletes:	kdenetwork
@@ -359,14 +402,16 @@ Obsoletes:	kdepim-libmimelib
 %description libkdenetwork
 Libraries shared between applications that were moved to the KDE PIM
 suite from the Kdenetwork module. It contains support for mail reading
-and mime attachments.
+and MIME attachments.
 
 %description libkdenetwork -l pl
-Biblioteka sieciowa.
+Biblioteki dzielone miêdzy aplikacjami, które zosta³y przeniesione do
+zestawu KDE PIM z modulu Kdenetwork. Zawieraj± obs³ugê czytania poczty
+i za³±czników MIME.
 
 %package libkdepim
-Summary:	kdepim library
-Summary(pl):	Biblioteka kdepim
+Summary:	kdepim libraries
+Summary(pl):	Biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
 Obsoletes:	kdepim
@@ -380,18 +425,23 @@ Obsoletes:	kdepim-kresources
 
 %description libkdepim
 Libraries shared between applications in kdepim that provide:
-- embedding of adressbook and imap support for it
+- embedding of adressbook and IMAP support for it
 - support for reading and writing the iCalendar and vCalendar formats
-- korganizer and kontact embedding/accessing
-- allows displaying and managing Gantt diagrams used by the project
-  view plugin of KOrganizer
+- KOrganizer and kontact embedding/accessing
+- displaying and managing Gantt diagrams used by the project view
+  plugin of KOrganizer.
 
 %description libkdepim -l pl
-Biblioteka kdepim.
+Biblioteki dzielone miêdzy aplikacjami w kdepim zapewniaj±ce:
+- osadzanie ksi±¿ki adresowej i obs³ugê IMAP dla niej
+- obs³ugê czytania i pisania w formatach iCalendar i vCalendar
+- osadzanie i dostêp do KOrganizera i kontacta
+- wy¶wietlanie i zarz±dzanie diagramami Gantta u¿ywanymi we wtyczce do
+  ogl±dania projektów KOrganizera.
 
 %package libkmailprivate
-Summary:	kmailprivate library
-Summary(pl):	Biblioteka kmailprivate
+Summary:	kmailprivate libraries
+Summary(pl):	Biblioteki kmailprivate
 Group:		X11/Libraries
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
@@ -403,7 +453,8 @@ Libraries providing mail reading and writing engine, Microsoft TNEF
 attachements support and sieve protocol.
 
 %description libkmailprivate -l pl
-Biblioteka kmailprivate.
+Biblioteki dostarczaj±ce silnik do czytania i pisania poczty oraz
+obs³ugê za³±czników Microsoft TNEF i protoko³u sieve.
 
 %package libkpilot
 Summary:	kpilot library
@@ -413,11 +464,11 @@ Requires:	kdelibs >= 9:%{version}
 Obsoletes:	kdepim
 
 %description libkpilot
-Libraries for KPilot - the KDE application for exchanging data with
+Library for KPilot - the KDE application for exchanging data with
 palmtops.
 
 %description libkpilot -l pl
-Biblioteka kpilot.
+Biblioteka dla KPilota - aplikacji KDE do wymiany danych z palmtopami.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -460,14 +511,9 @@ for f in *.sgml ; do
 	db2man $f
 	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
 done
-cd ../..
-
-
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
 
 %post	libkdenetwork		-p /sbin/ldconfig
 %postun	libkdenetwork		-p /sbin/ldconfig
@@ -480,7 +526,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libkpilot		-p /sbin/ldconfig
 %postun	libkpilot		-p /sbin/ldconfig
-
 
 %files devel
 %defattr(644,root,root,755)
@@ -780,7 +825,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
-
 
 %files libkdepim
 %defattr(644,root,root,755)
