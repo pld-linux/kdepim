@@ -15,7 +15,7 @@ Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
 Release:	0.1
-Epoch:		3
+Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
@@ -135,6 +135,7 @@ Summary:	IMAP4 protocol service
 Summary(pl):	ObsЁuga protokoЁu IMAP4
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Obsoletes:	kde-kio-newimap4 < 9:3.4.0
 
 %description -n kde-kio-imap4
 IMAP4 protocol service.
