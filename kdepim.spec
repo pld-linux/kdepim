@@ -11,7 +11,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040424
+%define		_snap		040503
 %define		_packager	adgor
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -54,11 +54,11 @@ BuildRequires:	pcre-devel
 Requires:	%{name}-libs
 Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs 
-Obsoletes:	kdepim-libkcal
+#Obsoletes:	kdepim-libkcal
 Obsoletes:	kdepim-kontact
 # Will be replaced by kdeaddons-pim
-Obsoletes:	kdeaddons-kontact 
-Obsoletes:	kdepim-kresources
+#Obsoletes:	kdeaddons-kontact 
+#Obsoletes:	kdepim-kresources
 BuildConflicts: kdepim-kontact-libs
 BuildConflicts: kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -381,7 +381,7 @@ Summary:	kcal library
 Summary(pl):	Biblioteka kcal
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	kdepim
+#Obsoletes:	kdepim
 
 %description libkcal
 kcal library.
@@ -407,7 +407,7 @@ Summary:	kdepim library
 Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	kdepim
+#Obsoletes:	kdepim
 
 %description libkdepim
 kdepim library.
@@ -420,7 +420,7 @@ Summary:	kpilot library
 Summary(pl):	Biblioteka kpilot
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	kdepim
+#Obsoletes:	kdepim
 
 %description libkpilot
 kpilot library.
@@ -445,7 +445,7 @@ Summary:	ktnef library
 Summary(pl):	Biblioteka ktnef
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	%{name}-ktnef < 3:3.1.92.031012
+Obsoletes:	kdepim-ktnef < 3:3.1.92.031012
 
 %description libktnef
 ksieve ktnef.
@@ -458,7 +458,7 @@ Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	kdepim
+#Obsoletes:	kdepim
 
 %description libmimelib
 mimelib library, based on mimepp library.
@@ -471,7 +471,7 @@ Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	kdepim
+#Obsoletes:	kdepim
 
 %description libs
 TODO.
@@ -1290,6 +1290,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
 %{_libdir}/kde3/kcm_kleopatra.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kleopatra.so
+%{_libdir}/kde3/libkmail_bodypartformatter_application_octetstream.la
+%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_application_octetstream.so
+%{_libdir}/kde3/libkmail_bodypartformatter_text_calendar.la
+%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_calendar.so
+%{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.la
+%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.so
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
@@ -1319,6 +1325,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
+%{_desktopdir}/kde/kmail_view.desktop
 %{_iconsdir}/*/*/apps/kmail.png
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
