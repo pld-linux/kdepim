@@ -39,7 +39,7 @@ BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
-BuildRequires:	gpgme-devel >= 0.4.5
+BuildRequires:	gpgme-devel >= 1.0.0
 BuildRequires:	gnupg >= 1.2.2
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
@@ -452,7 +452,7 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
-%setup -q -D
+%setup -q
 #%patch100 -p1
 %patch0 -p1
 %patch1 -p1
