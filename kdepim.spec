@@ -1,5 +1,5 @@
 #
-# TODO: - Separating the naw apps
+# Todo
 #	- Deps verifying	
 #
 
@@ -113,22 +113,22 @@ on the phone with the data on your desktop computer.
 Kandy umo¿liwia dostêp do telefonu komórkowego i pozwala na
 synchronizacjê danych z telefonu z danymi na PC.
 
-%package kaplan
-Summary:        An integrated PIM application
-Summary(pl):    Zintegrowany PIM
-Group:          X11/Applications
-Requires:	%{name}-kmail >= %{version}
-Requires:       %{name}-knotes = %{version}-%{release}
-Requires:	%{name}-kaddressbook = %{version}-%{release}
-Requires:       %{name}-korganizer = %{version}-%{release}
+#package kaplan
+#Summary:        An integrated PIM application
+#Summary(pl):    Zintegrowany PIM
+#Group:          X11/Applications
+#Requires:	%{name}-kmail >= %{version}
+#Requires:       %{name}-knotes = %{version}-%{release}
+#Requires:	%{name}-kaddressbook = %{version}-%{release}
+#Requires:       %{name}-korganizer = %{version}-%{release}
 
-%description kaplan
-Kaplan is a PIM application, whcih integrates the knotes, kmail,
-korganizer, kaddressbook parts.
+##%description kaplan
+#Kaplan is a PIM application, whcih integrates the knotes, kmail,
+#korganizer, kaddressbook parts.
 
-%description kaplan -l pl
-Kaplan jest aplikacj± PIM integruj±c± funkcjonalno¶æ knotes, kmail,
-korganizer i kaddressbook.
+#%description kaplan -l pl
+#Kaplan jest aplikacj± PIM integruj±c± funkcjonalno¶æ knotes, kmail,
+#korganizer i kaddressbook.
 
 %package karm
 Summary:	Personal timetracker
@@ -229,6 +229,22 @@ Command line tool for accessing calendar files.
 
 %description konsolekalendar -l pl
 Narzêdzie dostêpu do plików kalendarza z linii poleceñ.
+
+%package kontact
+Summary:	An integrated shell for the PIM apps
+Summary(pl):	Zintegrowany system aplikacji PIM
+Group:          X11/Applications
+Requires:	%{name}-kmail
+#Requires:       %{name}-knode
+Requires:       %{name}-korganizer
+Requires:       %{name}-knotes
+Requires:       %{name}-kaddressbook
+
+%description kontact
+An integrated shell for the PIM apps.
+
+%description kontact -l pl
+Zintegrowany system aplikacji PIM.
 
 %package korganizer
 Summary:        A complete calendar and scheduling progra
@@ -378,7 +394,6 @@ rm -rf $RPM_BUILD_ROOT
 %files 
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/ktnef
 %attr(755,root,root) %{_bindir}/simplealarmdaemon
@@ -408,7 +423,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libktnef.so*
 %{_libdir}/libmimelib.la
 %attr(755,root,root) %{_libdir}/libmimelib.so*
-%{_datadir}/apps/kontact
 %{_datadir}/apps/kresources
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
@@ -418,18 +432,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
-%{_applnkdir}/Office/PIMs/Kontact.desktop
 %{_applnkdir}/Settings/KDE/Components/kcalendars.desktop
 %{_desktopdir}/kpalmdoc.desktop
 %{_desktopdir}/ktnef.desktop
-%{_pixmapsdir}/crystalsvg/16x16/apps/kontact.png
-%{_pixmapsdir}/crystalsvg/16x16/apps/kpalmdoc.png
-%{_pixmapsdir}/crystalsvg/22x22/apps/kpalmdoc.png
-%{_pixmapsdir}/crystalsvg/32x32/apps/kontact.png
-%{_pixmapsdir}/crystalsvg/32x32/apps/kpalmdoc.png
-%{_pixmapsdir}/crystalsvg/48x48/apps/kontact.png
-%{_pixmapsdir}/crystalsvg/48x48/apps/kpalmdoc.png
-%{_pixmapsdir}/hicolor/48x48/apps/ktnef.png
+%{_pixmapsdir}/crystalsvg/*/apps/kpalmdoc.png
+%{_pixmapsdir}/hicolor/*/apps/ktnef.png
 
 %files devel
 %defattr(644,root,root,755)
@@ -492,16 +499,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/karm.desktop
 %{_pixmapsdir}/*/*/*/karm.png
 
-%files kaplan
-%defattr(644,root,root,755)
-##%attr(755,root,root) %{_bindir}/kaplan
-%{_libdir}/kde3/libkp*plugin.la
-%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
-%{_libdir}/libkpinterfaces*.la
-%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
-#%{_datadir}/apps/kaplan
-%{_datadir}/apps/kp*plugin
-%{_datadir}/services/kp*plugin.*
+##%files kaplan
 #%{_datadir}/servicetypes/kaplanplugin.desktop
 #%{_applnkdir}/Office/PIMs/Kaplan.desktop
 #%{_pixmapsdir}/*/*/*/kaplan.png
@@ -553,6 +551,20 @@ rm -rf $RPM_BUILD_ROOT
 %files konsolekalendar
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
+
+%files kontact
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kontact
+%{_libdir}/kde3/libkp*plugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
+%{_libdir}/libkpinterfaces*.la
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
+%{_datadir}/apps/kp*plugin
+%{_datadir}/services/kp*plugin.*
+%{_datadir}/apps/kontact
+%{_pixmapsdir}/crystalsvg/*/apps/kontact.png
+%{_applnkdir}/Office/PIMs/Kontact.desktop
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
