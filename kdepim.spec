@@ -8,7 +8,7 @@
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
-Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
+Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
@@ -38,7 +38,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
-for the K Desktop Enviromnent (KDE).
+for the K Desktop Environment (KDE).
 
 %description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
@@ -65,7 +65,7 @@ This package contains header files needed if you wish to build
 applications based on kdepim.
 
 %description devel -l pl
-Pakiet ten zawiera pliki nag³ówkowe potzrebne do budowy aplikacji
+Pakiet ten zawiera pliki nag³ówkowe potrzebne do budowy aplikacji
 bazuj±cych na kdepim.
 
 %description devel -l uk
@@ -83,10 +83,10 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description kaddressbook
-Address Book
+Address Book.
 
 %description kaddressbook -l pl
-Ksi±¿ka adresowa
+Ksi±¿ka adresowa.
 
 %package kalarm
 Summary:	Alarm
@@ -95,14 +95,14 @@ Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description kalarm
-Reminder Message Scheduler
+Reminder Message Scheduler.
 
 %description kalarm -l pl
-Nastawianie przypominania o zdarzeniach
+Nastawianie przypominania o zdarzeniach.
 
 %package kandy
 Summary:        A communication program between mobile phone and PC
-Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym.
+Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym
 Group:          X11/Applications
 Obsoletes:	%{name}-cellphone
 
@@ -124,7 +124,7 @@ synchronizacjê danych z telefonu z danymi na PC.
 #Requires:       %{name}-korganizer = %{version}-%{release}
 
 ##%description kaplan
-#Kaplan is a PIM application, whcih integrates the knotes, kmail,
+#Kaplan is a PIM application, which integrates the knotes, kmail,
 #korganizer, kaddressbook parts.
 
 #%description kaplan -l pl
@@ -168,7 +168,7 @@ Requires:	%{name}-libkdenetwork >= %{version}
 Obsoletes:	kdenetwork-kmail
 
 %description kmail
-This is electronic mail client for KDE. It is able to retrievie mail
+This is electronic mail client for KDE. It is able to retrieve mail
 from POP3 accounts and from local mailboxes.
 
 This package contains version patched for better charset support.
@@ -202,7 +202,6 @@ Czytnik newsów dla KDE. Obs³uguje w±tki oraz killfile.
 
 %description knode -l pt_BR
 Leitor de notícias (news) do KDE.
-
 
 %package knotes
 Summary:	Yellow cards
@@ -327,14 +326,16 @@ libksync jest standardow± bibliotek± do synchronizacji zbiorów danych
 jak np. kalendarze, zak³adki, kontakty, foldery pocztowe itp.
 
 %package libkdenetwork
-Summary:        A network library
-Summary(pl):    Biblioteka sieciowa
-Group:          X11/Libraries
+Summary:	A network library
+Summary(pl):	Biblioteka sieciowa
+Group:		X11/Libraries
 Obsoletes:	kdenetwork
 
 %description libkdenetwork
+A network library.
 
 %description libkdenetwork -l pl
+Biblioteka sieciowa.
 
 %prep
 %setup -q -n %{name}-%{_snap}
