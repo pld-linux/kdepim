@@ -64,9 +64,8 @@ Summary(uk):	Файли розробки для kdepim
 Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
 Requires:	kdelibs-devel >= 9:%{version}
-Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
-Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
-Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+Requires:       %{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-devel < 10:3.1.90
