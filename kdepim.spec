@@ -42,7 +42,7 @@ BuildRequires:	bluez-libs-devel
 BuildRequires:	gpgme-devel
 BuildRequires:	gnupg >= 1.9.5
 BuildRequires:	lockdev-devel
-BuildRequires:  libgnokii-devel
+BuildRequires:	libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	qt-designer-libs
 BuildRequires:	rpmbuild(macros) >= 1.129
@@ -136,10 +136,10 @@ KDE SIEVE protocol service.
 Obs³uga protoko³u SIEVE.
 
 %package -n kde-kio-newimap4
-Summary:        New IMAP4 protocol service 
-Summary(pl):    Nowa obs³uga protoko³u IMAP4
-Group:          X11/Libraries
-#Requires:      %{name}-libksieve = %{epoch}:%{version}-%{release}
+Summary:	New IMAP4 protocol service 
+Summary(pl):	Nowa obs³uga protoko³u IMAP4
+Group:		X11/Libraries
+#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
 
 %description -n kde-kio-newimap4
 New IMAP4 protocol service.
