@@ -2,10 +2,10 @@
 %bcond_without	apidocs		# prepare API documentation
 
 %define		_state		stable
-%define		_ver		3.3.1
+%define		_ver		3.3.2
 
-%define		_minlibsevr	9:3.3.1
-%define		_minbaseevr	9:3.3.1
+%define		_minlibsevr	9:3.3.2
+%define		_minbaseevr	9:3.3.2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,16 +14,14 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	5
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	5aed63aed6b7c1ad9232cb30aa124a40
-# Source0-size:	10007944
+# Source0-md5:	73852792762c4f229e870314c51c081a
 Icon:		kde-pim.xpm
-Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail_senderpic.patch
@@ -119,7 +117,6 @@ Dokumentacja interfejsСw programowania libkdepim, libkdenetwork,
 libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
 - listy klas i ich skЁadnikСw
 - listЙ przestrzeni nazw (namespace)
-
 
 %package -n kde-kio-newimap4
 Summary:	New IMAP4 protocol service
@@ -452,7 +449,6 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1112,8 +1108,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot*.1*
 %{_mandir}/man1/kpalm*.1*
-
-
 
 %files libs
 %defattr(644,root,root,755)
