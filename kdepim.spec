@@ -483,7 +483,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*
 %{_datadir}/apps/kalarm*
-%{_datadir}/autostart
+%{_datadir}/autostart/kalarm*.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
 %{_desktopdir}/kalarm.desktop
 %{_pixmapsdir}/[!l]*/*/*/kalarm.png
@@ -579,6 +579,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %{_datadir}/apps/korganizer
+%{_datadir}/autostart/korgac.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
