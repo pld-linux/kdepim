@@ -521,16 +521,6 @@ diff -u -5 -d -p -r1.754 kmreaderwin.cpp
  }
  
  
-@@ -910,8 +912,7 @@
-   I18N_NOOP( "Antispam wizard" ),
-   I18N_NOOP( "Filter log" ),
-   I18N_NOOP( "Quick search" ),
--  I18N_NOOP( "Automatic mailing-list detection" ),
--  I18N_NOOP( "View/open message files" )
-+  I18N_NOOP( "Automatic mailing-list detection" )
- };
- static const int numKMailNewFeatures =
-   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 @@ -1759,95 +1760,43 @@
      return;
    }
