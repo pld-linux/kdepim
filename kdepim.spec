@@ -14,7 +14,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.1
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -681,7 +681,7 @@ Pliki umiêdzynarodawiaj±ce dla kpilot.
 Summary:	Internationalization and localization files for kdepim
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kdepim
 Group:	X11/Applications
-Requires:	kdelibs-i18n
+Requires:	kdelibs-i18n >= 9:%{version}
 
 %description i18n
 Common internationalization and localization files for kdepim.
