@@ -14,6 +14,9 @@
 %define		_snap		040506
 %define		_packager	adgor
 
+%define		_minlibsevr	9:3.2.90.040505
+%define		_minbaseevr	9:3.2.90.040505
+
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
 Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
@@ -33,12 +36,14 @@ Source0:	%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
+Patch3:		%{name}-kimproxy-kmail.patch
+Patch4:		%{name}-kimproxy-libkdepim.patch
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
 %{?with_apidocs:BuildRequires:	graphviz}
-BuildRequires:	kdelibs-devel >= 9:%{version}
+BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
@@ -87,7 +92,7 @@ Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Summary(ru):	æÁÊÌÙ ÒÁÚÒÁÂÏÔËÉ ÄÌÑ kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 10:3.1.90
-Requires:	kdelibs-devel >= 9:%{version}
+Requires:	kdelibs-devel >= %{_minlibsevr}
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
@@ -155,7 +160,7 @@ Nowa obs³uga protoko³u IMAP4.
 Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
@@ -193,7 +198,7 @@ TODO.
 Summary:	A communication program between mobile phone and PC
 Summary(pl):	Program do komunikacji miêdzy PC a tel. komórkowym
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
+Requires:	kdebase-core >= %{_minlibsevr}
 #Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-cellphone
 
@@ -227,10 +232,10 @@ Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
-Requires:	kde-kio-imap4 >= 9:%{version}
-Requires:	kde-kio-pop3 >= 9:%{version}
-Requires:	kde-kio-smtp >= 9:%{version}
+Requires:	kdebase-core >= %{_minbaseevr}
+Requires:	kde-kio-imap4 >= %{_minbaseevr}
+Requires:	kde-kio-pop3 >= %{_minbaseevr}
+Requires:	kde-kio-smtp >= %{_minbaseevr}
 #Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-kmail
 
@@ -271,8 +276,8 @@ Summary:	KDE News Reader
 Summary(pl):	Czytnik newsów dla KDE
 Summary(pt_BR):	Leitor de notícias (news) do KDE
 Group:		X11/Applications
-Requires:	kde-kio-nntp >= 9:%{version}
-Requires:	kdebase-core >= 9:%{version}
+Requires:	kde-kio-nntp >= %{_minbaseevr}
+Requires:	kdebase-core >= %{_minbaseevr}
 #Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
@@ -322,7 +327,7 @@ Summary:	KDE 'biff' application
 Summary(pl):	Wska¼nik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
-Requires:	kdebase-kicker >= 9:%{version}
+Requires:	kdebase-kicker >= %{_minbaseevr}
 #Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
@@ -367,7 +372,7 @@ urz±dzeniami.
 Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Przegl±darka/ekstraktor plików TNEF
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
+Requires:	kdebase-core >= %{_minbaseevr}
 #Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
 
@@ -381,7 +386,7 @@ Przegl±darka/ekstraktor plików TNEF.
 Summary:	kcal library
 Summary(pl):	Biblioteka kcal
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Obsoletes:	kdepim
 
 %description libkcal
@@ -394,7 +399,7 @@ Biblioteka kcal.
 Summary:	A network library
 Summary(pl):	Biblioteka sieciowa
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 Obsoletes:	kdenetwork
 
 %description libkdenetwork
@@ -407,7 +412,7 @@ Biblioteka sieciowa.
 Summary:	kdepim library
 Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Obsoletes:	kdepim
 
 %description libkdepim
@@ -420,7 +425,7 @@ Biblioteka kdepim.
 Summary:	kpilot library
 Summary(pl):	Biblioteka kpilot
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Obsoletes:	kdepim
 
 %description libkpilot
@@ -433,7 +438,7 @@ Biblioteka kpilot.
 Summary:	ksieve library
 Summary(pl):	Biblioteka ksieve
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 
 %description libksieve
 ksieve library.
@@ -445,7 +450,7 @@ Biblioteka ksieve.
 Summary:	ktnef library
 Summary(pl):	Biblioteka ktnef
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 Obsoletes:	kdepim-ktnef < 3:3.1.92.031012
 
 %description libktnef
@@ -458,7 +463,7 @@ Biblioteka ktnef.
 Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Obsoletes:	kdepim
 
 %description libmimelib
@@ -471,7 +476,7 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
-Requires:	kdelibs >= 9:%{version}
+Requires:	kdelibs >= %{_minlibsevr}
 #Obsoletes:	kdepim
 
 %description libs
@@ -752,6 +757,11 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+cd kmail
+%patch3 -p0
+cd ../libkdepim
+%patch4 -p0
+cd ..
 
 %build
 cp /usr/share/automake/config.sub admin
