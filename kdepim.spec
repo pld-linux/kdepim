@@ -1,9 +1,9 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
 
-%define		_state		snapshots
-%define		_ver		3.1.94
-%define		_snap		040110
+%define		_state		unstable
+%define		_ver		3.1.95
+%define		_snap		031114
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -11,15 +11,15 @@ Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
-Version:	%{_ver}.%{_snap}
-Release:	3
+Version:	%{_ver}
+Release:	0.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	e4244c1d1a461954c6fdde30bb094b70
+Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
+# Source0-md5:	c828edf403a4d1b9199caea7fc7649e7
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	automake
@@ -511,7 +511,7 @@ mimelib library, based on mimepp library.
 Biblioteka mimelib oparta na bibliotece mimepp.
 
 %prep
-%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
 
@@ -560,8 +560,8 @@ cat kalarmd.lang >> korganizer.lang
 cat kgpgcertmanager.lang >> kmail.lang
 
 for f in *.lang; do
-	if grep -q %{name}-%{_snap}-apidocs $f; then
-		grep -v %{name}-%{_snap}-apidocs $f > $f.tmp
+	if grep -q %{name}-%{version}-apidocs $f; then
+		grep -v %{name}-%{version}-apidocs $f > $f.tmp
 		mv $f.tmp $f
 	fi
 done
@@ -607,7 +607,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-%{_snap}-apidocs
+%lang(en) %{_kdedocdir}/en/%{name}-%{version}-apidocs
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
