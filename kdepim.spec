@@ -27,6 +27,7 @@ Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/%{version}/kde-i18n-%{n
 Source2:	%{name}-kandy.png
 BuildRequires:	bison
 BuildRequires:	ed
+BuildRequires:	flex
 BuildRequires:	kdelibs-devel >= 8:%{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-devel >= 3.0.5
