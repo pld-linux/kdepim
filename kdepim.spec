@@ -518,9 +518,6 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 %build
 cp /usr/share/automake/config.sub admin
 
-for f in `find . -name \*.desktop | xargs grep -l '\[nb\]'` ; do
-	echo -e ',s/\[nb\]=/[no]=/\n,w' | ed $f 2>/dev/null
-done
 z=kpilot/conduits/configure.in.in
 grep -v KPILOT_CHECK_PISOCK $z > $z.1
 mv $z.1 $z
