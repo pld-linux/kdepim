@@ -342,7 +342,7 @@ Summary:	KDE 'biff' application
 Summary(pl):	Wska¼nik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
-Requires:	kdebase-kicker >= %{_minbaseevr}
+Requires:	kdebase-desktop >= %{_minbaseevr}
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
 
