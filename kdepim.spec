@@ -39,7 +39,7 @@ BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
-BuildRequires:	gpgme-devel
+BuildRequires:	gpgme-devel >= 0.4.5
 BuildRequires:	gnupg >= 1.2.2
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
