@@ -1,11 +1,12 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
 # Conditional build:
-%bcond_with  i18n    # build i18n subpackages - not used in this branch
+%bcond_without	apidocs	# prepare API documentation
+%bcond_with  i18n	# build i18n subpackages - not used in this branch
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040225
+%define		_snap		040312
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -24,6 +25,7 @@ Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
 ##%% Source0-md5:	657a61e0f3d90d2afec3820e77f81306
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
+Patch2:		kde-common-QTDOCDIR.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	ed
@@ -83,12 +85,25 @@ bazuj±cych na kdepim.
 ¸‘œ‘ –¡À≈‘ ”œƒ≈“÷…‘ ∆¡ ÃŸ ⁄¡«œÃœ◊Àœ◊ Œ≈œ¬»œƒ…ÕŸ≈ ƒÃ— –œ”‘“œ≈Œ…—
 –“œ«“¡ÕÕ, œ”Œœ◊¡ŒŒŸ» Œ¡ kdepim.
 
+%package apidocs
+Summary:	API documentation
+Summary(pl):	Dokumentacja API
+Group:		Development/Docs
+#Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	%{name}
+
+%description apidocs
+API documentation.
+
+%description apidocs -l pl
+Dokumentacja API.
+
 %package -n kde-kio-sieve
 Summary:	KDE SIEVE protocol service
 Summary(pl):	Obs≥uga protoko≥u SIEVE
 Group:		X11/Libraries
 #Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-Conflicts:	KDEPIM-KMAIL < 3:3.2.90.040210
+Conflicts:	kdepim-kmail < 3:3.2.90.040210
 
 %description -n kde-kio-sieve
 KDE SIEVE protocol service.
@@ -859,6 +874,7 @@ Pliki umiÍdzynarodawiaj±ce dla libkdgantt.
 %setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp /usr/share/automake/config.sub admin
@@ -877,6 +893,8 @@ export UNSERMAKE=/usr/share/unsermake/unsermake
 
 %{__make}
 
+%{?with_apidocs:%{__make} apidox}
+
 %install
 rm -rf $RPM_BUILD_ROOT
 
@@ -886,7 +904,7 @@ rm -rf $RPM_BUILD_ROOT
 
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-cd debian
+cd debian/man
 if [ -f alarmd.sgml ]; then
 	%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
 	mv -f alarmd.sgml kalarmd.sgml
@@ -897,7 +915,14 @@ for f in *.sgml ; do
 	db2man $f
 	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
 done
-cd ..
+cd -
+
+# Workaround for doc caches (unsermake bug?)
+cd doc
+for i in `find . -name index.cache.bz2`; do
+	install -c -p -m 644 $i $RPM_BUILD_ROOT%{_kdedocdir}/en/$i
+done
+cd -	 
 
 %if %{with i18n}
 if [ -f "%{SOURCE1}" ] ; then
@@ -929,6 +954,7 @@ cat kalarmd.lang >> kalarm.lang
 %find_lang	kgpgcertmanager	--with-kde
 cat kgpgcertmanager.lang >> kmail.lang
 %find_lang	kpilot		--with-kde
+%find_lang	ktnef		--with-kde
 
 > %{name}.lang
 cat kontact.lang	>> %{name}.lang
@@ -990,7 +1016,8 @@ files="\
 	knotes \
 	konsolekalendar \
 	korn \
-	kpilot"
+	kpilot \
+	ktnef"
 
 for i in $files; do
 	> ${i}_en.lang
@@ -1079,8 +1106,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
 %attr(755,root,root) %{_libdir}/libdummykonnector.so
-%{_libdir}/liblocalkonnector.la
-%attr(755,root,root) %{_libdir}/liblocalkonnector.so
+#%{_libdir}/liblocalkonnector.la
+#%attr(755,root,root) %{_libdir}/liblocalkonnector.so
 %{_libdir}/libqtopiakonnector.la
 %attr(755,root,root) %{_libdir}/libqtopiakonnector.so
 %{_libdir}/kde3/libkded_ksharedfile.la
@@ -1105,7 +1132,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kitchensync/syncerpart.desktop
 %dir %{_datadir}/services/kresources/konnector
 %{_datadir}/services/kresources/konnector/dummykonnector.desktop
-%{_datadir}/services/kresources/konnector/localkonnector.desktop
+#%{_datadir}/services/kresources/konnector/localkonnector.desktop
 %{_datadir}/services/kresources/konnector/qtopia.desktop
 %{_datadir}/services/overview.desktop
 %{_datadir}/servicetypes/kitchensync.desktop
@@ -1219,11 +1246,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-apidocs
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
+%{_includedir}/kabc/kcal_resourcexmlrpc.h
 %{_includedir}/calendar
 %{_includedir}/gpgmepp
 %{_includedir}/kaddressbook
@@ -1270,9 +1297,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kabc/kabc_resourcexmlrpc.h
 %{_libdir}/libkabc_xmlrpc.so
 # libkcal-devel part
-%{_libdir}/libkcal_imap.so
 %{_includedir}/libkcal
 %{_libdir}/libkcal.so
+%{_libdir}/libkcal_imap.so
+%{_libdir}/libkcal_xmlrpc.so
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%lang(en) %{_kdedocdir}/en/%{name}-apidocs
+%endif
 
 %files -n kde-kio-sieve
 %defattr(644,root,root,755)
@@ -1296,14 +1330,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
 %{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
+%{_libdir}/kde3/libkaddrbk_cryptosettings.la
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cryptosettings.so
 %{_libdir}/kde3/libkaddrbk_distributionlist.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
 %{_libdir}/kde3/libkaddrbk_iconview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
 %{_libdir}/kde3/libkaddrbk_location.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
-%{_libdir}/kde3/libkaddrbk_merge.la
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_merge.so
+#%{_libdir}/kde3/libkaddrbk_merge.la
+#%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_merge.so
 %{_libdir}/kde3/libkaddrbk_tableview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_tableview.so
 %{_libdir}/kde3/libkaddrbk_*_xxport.la
@@ -1365,8 +1401,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kgpgcertmanager
+%attr(755,root,root) %{_bindir}/kwatchgnupg
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
+%{_libdir}/kde3/kcm_kgpgcertmanager.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kgpgcertmanager.so
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
 %{_datadir}/apps/kconf_update/k[!n]*
@@ -1383,6 +1422,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kmail_config_misc.desktop
 %{_datadir}/services/kmail_config_network.desktop
 %{_datadir}/services/kmail_config_security.desktop
+%{_datadir}/services/kgpgcertmanager_config_dirserv.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
@@ -1500,7 +1540,7 @@ rm -rf $RPM_BUILD_ROOT
 #%files libkcal-devel
 #%defattr(644,root,root,755)
 
-%files ktnef
+%files ktnef -f ktnef_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ktnef
 %{_datadir}/apps/ktnef
@@ -1607,5 +1647,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkabc_xmlrpc.so.*.*.*
 %{_libdir}/libkcal_imap.la
 %attr(755,root,root) %{_libdir}/libkcal_imap.so.*.*.*
+%{_libdir}/libkcal_xmlrpc.la
+%attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
 
 ### </libs section>
