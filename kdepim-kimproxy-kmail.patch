@@ -1,0 +1,746 @@
+? headerstyle_khtml_crasher.cpp
+? kmmsgham.png
+Index: Makefile.am
+===================================================================
+RCS file: /home/kde/kdepim/kmail/Makefile.am,v
+retrieving revision 1.261
+diff -u -5 -d -p -r1.261 Makefile.am
+--- Makefile.am	2 May 2004 21:09:38 -0000	1.261
++++ Makefile.am	4 May 2004 11:07:47 -0000
+@@ -16,11 +16,12 @@ lib_LTLIBRARIES = libkmailprivate.la
+ libkmailprivate_la_LDFLAGS = $(all_libraries) -version-info 0:0:0 -no-undefined
+ libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
+ 	../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
+ 	../mimelib/libmimelib.la \
+ 	../libksieve/libksieve.la \
+-	../certmanager/lib/libkleopatra.la
++	../certmanager/lib/libkleopatra.la \
++	-lkimproxy
+ 
+ kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
+ libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
+ libkmailpart_la_LIBADD	= libkmailprivate.la
+ 
+Index: csshelper.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/csshelper.cpp,v
+retrieving revision 1.11
+diff -u -5 -d -p -r1.11 csshelper.cpp
+--- csshelper.cpp	13 Oct 2003 18:38:55 -0000	1.11
++++ csshelper.cpp	4 May 2004 11:07:47 -0000
+@@ -384,11 +384,11 @@ namespace KMail {
+ 	       "  border: solid %3 1px ! important;\n"
+ 	       "}\n\n"
+ 
+ 	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
+ 
+-	       "div.fancy.header table {\n"
++	       "div.fancy.header > table {\n"
+ 	       "  background-color: %2 ! important;\n"
+ 	       "  color: %3 ! important;\n"
+ 	       "  border-bottom: solid %3 1px ! important;\n"
+ 	       "  border-left: solid %3 1px ! important;\n"
+ 	       "  border-right: solid %3 1px ! important;\n"
+Index: headerstrategy.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/headerstrategy.cpp,v
+retrieving revision 1.9
+diff -u -5 -d -p -r1.9 headerstrategy.cpp
+--- headerstrategy.cpp	11 Jan 2004 21:57:07 -0000	1.9
++++ headerstrategy.cpp	4 May 2004 11:07:47 -0000
+@@ -51,18 +51,18 @@ namespace KMail {
+   };
+   static const int numBriefHeaders = sizeof briefHeaders / sizeof *briefHeaders;
+ 
+ 
+   static const char * standardHeaders[] = {
+-    "subject", "from", "cc", "bcc", "to",
++    "subject", "from", "cc", "bcc", "to", "status",
+   };
+   static const int numStandardHeaders = sizeof standardHeaders / sizeof *standardHeaders;
+ 
+ 
+   static const char * richHeaders[] = {
+     "subject", "date", "from", "cc", "bcc", "to",
+-    "organization", "organisation", "reply-to"
++    "organization", "organisation", "reply-to", "status"
+   };
+   static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
+ 
+   //
+   // Convenience function
+Index: headerstyle.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/headerstyle.cpp,v
+retrieving revision 1.10
+diff -u -5 -d -p -r1.10 headerstyle.cpp
+--- headerstyle.cpp	11 Jan 2004 21:57:07 -0000	1.10
++++ headerstyle.cpp	4 May 2004 11:07:47 -0000
+@@ -36,21 +36,26 @@
+ #include "headerstyle.h"
+ 
+ #include "headerstrategy.h"
+ #include "linklocator.h"
+ #include "kmmessage.h"
+-
++#include "kmkernel.h"
+ 
+ #include <mimelib/string.h>
+ #include <mimelib/field.h>
+ #include <mimelib/headers.h>
+ 
+ #include <kdebug.h>
+ #include <klocale.h>
+ #include <kglobal.h>
+-
++#include <kimproxy.h>
++#include <kabc/stdaddressbook.h>
++#include <kabc/addresseelist.h>
++#include <kmdcodec.h>
+ #include <qdatetime.h>
++#include <qbuffer.h>
++#include <qimage.h>
+ #include <qapplication.h>
+ #include <qregexp.h>
+ 
+ namespace KMail {
+ 
+@@ -352,20 +357,83 @@ namespace KMail {
+     }
+     else {
+       dateString = message->dateStr();
+     }
+ 
++    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
++    KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( message->from() ) );
++
++    // Get KABC picture and IM status
++    QString userHTML;
++    QString onlineStatus;
++
++    if( addresses.count() == 1 )
++    {
++      // picture
++      QString photoURL;
++      if ( addresses[0].photo().isIntern() )
++      {
++        // get photo data and convert to data: url
++        kdDebug( 5006 ) << "INTERNAL photo found" << endl;
++        QImage photo = addresses[0].photo().data();
++        QByteArray ba;
++        QBuffer buffer( ba );
++        buffer.open( IO_WriteOnly );
++        photo.save( &buffer, "PNG" );
++        //photoURL = "data:image/png;base64,";
++        photoURL = QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
++        kdDebug( 0 ) << "ENCODED IMAGE LENGTH IS: " << photoURL.length() << endl;
++      }
++      else
++      {
++        // see if this cures the 'Tom Crash'
++        kdDebug( 5006 ) << "URL found" << endl;
++        photoURL = addresses[0].photo().url();
++        if ( photoURL.startsWith("/") )
++          photoURL.prepend( "file:" );
++      }
++      if( !photoURL.isEmpty() )
++      {
++        //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
++	    // userHTML = QString("<img style=\"border:1px solid black;\" src=\"picture\" width=\"60\" height=\"60\">")
++                          ;//.arg( photoURL );
++        userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
++        kdDebug( 0 ) << "PHOTO TAG IS " << userHTML << endl;
++        kdDebug( 0 ) << endl;
++      }
++      // im status
++      ::KIMProxy *imProxy = KMKernel::self()->imProxy();
++      onlineStatus = imProxy->statusString( addresses[0].uid() );
++      
++      if( !userHTML.isEmpty() )
++      {
++//          userHTML = QString("<div style=\"font-size:0.8em;border:1px solid black;"
++//              "background-color:InfoBackground;\">") + userHTML +
++//              "<div style=\"text-align:center;\">" + onlineStatus + "</div></div>";
++          userHTML = QString("<div>") + userHTML +
++              onlineStatus + "</div>";
++          kdDebug( 0 ) << "IM TAG IS " << userHTML << endl;  
++          kdDebug( 0 ) << endl;
++           
++      }    
++    }
++    else
++    {
++      kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
++      userHTML = "&nbsp;";
++    }
++
+     //case HdrFancy:
+     // the subject line and box below for details
+     if ( strategy->showHeader( "subject" ) )
+       headerStr += QString("<div dir=\"%1\">%2</div>\n")
+                         .arg(subjectDir)
+ 		        .arg(message->subject().isEmpty()?
+ 			     i18n("No Subject") :
+ 			     strToHtml(message->subject()));
+-    headerStr += "<table>\n";
+-
++    headerStr += "<table><tr><td width=\"100%\"><table>\n";
++    //headerStr += "<table>\n";
+     // from line
+     // the mailto: URLs can contain %3 etc., therefore usage of multiple
+     // QString::arg is not possible
+     if ( strategy->showHeader( "from" ) )
+       headerStr += QString("<tr><th>%1</th>\n"
+@@ -406,14 +474,27 @@ namespace KMail {
+       headerStr.append(QString("<tr><th>%1</th>\n"
+ 			       "<td dir=\"%2\">%3</td></tr>\n")
+                             .arg(i18n("Date: "))
+ 		            .arg( directionOf( message->dateStr() ) )
+                             .arg(strToHtml(dateString)));
+-    headerStr.append("</table>\n");
+ 
++    //headerStr.append("</table>\n");
++    if( strategy->showHeader( "status" ) )
++      headerStr.append( QString( "<tr><th>%1</th>\n"
++                                 "<td dir=\"%2\">%3</td></tr>\n")
++                                    .arg(i18n("Status: "))
++                                    .arg( directionOf( onlineStatus ) )
++                                    .arg(onlineStatus));
++    headerStr.append(
++          QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
++                     );
++    
+     headerStr += "</div>\n\n";
+-
++    kdDebug( 0 ) << "HEADER IS: " << headerStr.left( headerStr.length() / 2 ) << endl;
++    kdDebug( 0 ) << "HEADER IS: " << headerStr.right( headerStr.length() / 2 ) << endl;
++    
++    kdDebug( 0 ) << "END HEADER. " << endl;
+     return headerStr;
+   }
+ 
+   //
+   // HeaderStyle abstract base:
+Index: kmcommands.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmcommands.cpp,v
+retrieving revision 1.124
+diff -u -5 -d -p -r1.124 kmcommands.cpp
+--- kmcommands.cpp	2 May 2004 20:42:43 -0000	1.124
++++ kmcommands.cpp	4 May 2004 11:07:48 -0000
+@@ -41,10 +41,13 @@
+ #include <qtextcodec.h>
+ 
+ #include <kdebug.h>
+ #include <kfiledialog.h>
+ #include <kio/netaccess.h>
++#include <kimproxy.h>
++#include <kabc/stdaddressbook.h>
++#include <kabc/addresseelist.h>
+ #include <klocale.h>
+ #include <kmessagebox.h>
+ #include <kparts/browserextension.h>
+ #include <kprogress.h>
+ #include <krun.h>
+@@ -2161,5 +2164,41 @@ KMMailingListHelpCommand::KMMailingListH
+ }
+ KURL::List KMMailingListHelpCommand::urls() const
+ {
+   return mFolder->mailingList().helpURLS();
+ }
++
++KMIMChatCommand::KMIMChatCommand( const KURL &url,
++                                                KMMessage *msg )
++  :mUrl( url ), mMessage( msg )
++{
++}
++
++void KMIMChatCommand::execute()
++{
++  kdDebug( 0 ) << k_funcinfo << " URL is: " << mUrl << endl;
++  // find UID for mail address
++  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
++  KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( mMessage->from() ) );
++
++  // start chant
++  if( addresses.count() == 1 )
++    kmkernel->imProxy()->chatContactById( addresses[0].uid() );
++  else
++    kdDebug( 0 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;  
++}
++//   KMComposeWin *win;
++//   KMMessage *msg = new KMMessage;
++//   uint id = 0;
++// 
++//   if ( mMessage && mMessage->parent() )
++//     id = mMessage->parent()->identity();
++// 
++//   msg->initHeader(id);
++//   msg->setCharset("utf-8");
++//   msg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
++// 
++//   win = new KMComposeWin(msg, id);
++//   win->setCharset("", TRUE);
++//   win->setFocusToSubject();
++//   win->show();
++
+Index: kmcommands.h
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmcommands.h,v
+retrieving revision 1.30
+diff -u -5 -d -p -r1.30 kmcommands.h
+--- kmcommands.h	21 Mar 2004 22:06:22 -0000	1.30
++++ kmcommands.h	4 May 2004 11:07:48 -0000
+@@ -721,6 +721,21 @@ public:
+   KMMailingListHelpCommand( QWidget *parent, KMFolder *parent );
+ protected:
+   virtual KURL::List urls() const;
+ };
+ 
++class KMIMChatCommand : public KMCommand
++{
++  Q_OBJECT
++
++public:
++  KMIMChatCommand( const KURL &url, KMMessage *msg=0 );
++
++private:
++  virtual void execute();
++
++  KURL mUrl;
++  KMMessage *mMessage;
++};
++
++
+ #endif /*KMCommands_h*/
+Index: kmkernel.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmkernel.cpp,v
+retrieving revision 1.268
+diff -u -5 -d -p -r1.268 kmkernel.cpp
+--- kmkernel.cpp	2 May 2004 21:49:49 -0000	1.268
++++ kmkernel.cpp	4 May 2004 11:07:49 -0000
+@@ -116,11 +116,11 @@ KMKernel::KMKernel (QObject *parent, con
+ 
+   mGroupware = new KMGroupware( this );
+ 
+   // Set up DCOP interface
+   mICalIface = new KMailICalIfaceImpl();
+-
++  
+   mXmlGuiInstance = 0;
+   mDeadLetterTimer = 0;
+   mDeadLetterInterval = 1000*120; // 2 minutes
+   allowedToExpire = false;
+ 
+@@ -144,11 +144,13 @@ KMKernel::KMKernel (QObject *parent, con
+     // KGlobal::locale()->setEncoding(cdc->mibEnum());
+   } else {
+     netCodec = QTextCodec::codecForLocale();
+   }
+   mMailService =  new MailServiceImpl();
+-
++  
++  mKIMProxy = new KIMProxy( kapp->dcopClient() );
++  
+   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
+                      "selectFolder(QString)", false );
+ }
+ 
+ KMKernel::~KMKernel ()
+@@ -164,11 +166,13 @@ KMKernel::~KMKernel ()
+ 
+   delete mICalIface;
+   mICalIface = 0;
+   delete mMailService;
+   mMailService = 0;
+-
++  delete mKIMProxy;
++  mKIMProxy = 0;
++  
+   GlobalSettings::writeConfig();
+   mySelf = 0;
+   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
+ }
+ 
+@@ -1823,6 +1827,11 @@ KMMainWidget *KMKernel::getKMMainWidget(
+ void KMKernel::slotFolderRemoved( KMFolder * aFolder )
+ {
+   if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
+ }
+ 
++::KIMProxy* KMKernel::imProxy()
++{
++  return mKIMProxy;
++}
++
+ #include "kmkernel.moc"
+Index: kmkernel.h
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmkernel.h,v
+retrieving revision 1.97
+diff -u -5 -d -p -r1.97 kmkernel.h
+--- kmkernel.h	2 May 2004 20:42:43 -0000	1.97
++++ kmkernel.h	4 May 2004 11:07:49 -0000
+@@ -8,10 +8,11 @@
+ #include <weaver.h>
+ #include <weaverlogger.h>
+ 
+ #include <kconfig.h>
+ #include <kdeversion.h>
++#include <kimproxy.h>
+ 
+ #include "kmailIface.h"
+ 
+ #define kmkernel KMKernel::self()
+ #define kmconfig KMKernel::config()
+@@ -211,10 +212,16 @@ public:
+   // ### (kmail freeze with the complete desktop while pinentry-qt appears)
+   // ### FIXME: Once the encryption support is asynchron this can be removed
+   // ### again.
+   void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
+   bool contextMenuShown() const { return mContextMenuShown; }
++  
++  /**
++   * Get a reference to KMail's KIMProxy instance
++   * @return a pointer to a valid KIMProxy 
++   */
++  ::KIMProxy* imProxy();
+ 
+ public slots:
+ 
+   //Save contents of all open composer widnows to ~/dead.letter
+   void dumpDeadLetters();
+@@ -318,11 +325,13 @@ private:
+   KMGroupware * mGroupware;
+   KMailICalIfaceImpl* mICalIface;
+   // temporary mainwin
+   KMMainWin *mWin;
+   MailServiceImpl *mMailService;
+-
++  
++  // KIMProxy provides access to up to date instant messaging presence data
++  ::KIMProxy *mKIMProxy;
+   // true if the context menu of KMFolderTree or KMHeaders is shown
+   // this is necessary to know in order to prevent a dead lock between the
+   // context menus and the pinentry program
+   bool mContextMenuShown;
+ 
+Index: kmmainwidget.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmmainwidget.cpp,v
+retrieving revision 1.191
+diff -u -5 -d -p -r1.191 kmmainwidget.cpp
+--- kmmainwidget.cpp	2 May 2004 11:29:42 -0000	1.191
++++ kmmainwidget.cpp	4 May 2004 11:07:50 -0000
+@@ -1980,17 +1980,24 @@ void KMMainWidget::slotMsgPopup(KMMessag
+         menu->insertSeparator();
+       }
+       mMsgView->addAddrBookAction()->plug( menu );
+       mMsgView->openAddrBookAction()->plug( menu );
+       mMsgView->copyAction()->plug( menu );
++      mMsgView->startImChatAction()->plug( menu );
+     } else {
+       // popup on a not-mailto URL
+       mMsgView->urlOpenAction()->plug( menu );
+       mMsgView->urlSaveAsAction()->plug( menu );
+       mMsgView->copyURLAction()->plug( menu );
+       mMsgView->addBookmarksAction()->plug( menu );
+     }
++    if ( aUrl.protocol() == "im" )
++    {
++      // popup on an IM address
++      mMsgView->startImChatAction()->plug( menu );
++    }
++    kdDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
+   }
+   else
+   {
+     // popup somewhere else (i.e., not a URL) on the message
+ 
+Index: kmreaderwin.h
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmreaderwin.h,v
+retrieving revision 1.192
+diff -u -5 -d -p -r1.192 kmreaderwin.h
+--- kmreaderwin.h	2 May 2004 15:43:00 -0000	1.192
++++ kmreaderwin.h	4 May 2004 11:07:50 -0000
+@@ -201,10 +201,11 @@ public:
+   KAction *copyAction() { return mCopyAction; }
+   KAction *copyURLAction() { return mCopyURLAction; }
+   KAction *urlOpenAction() { return mUrlOpenAction; }
+   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
+   KAction *addBookmarksAction() { return mAddBookmarksAction;}
++  KAction *startImChatAction() { return mStartIMChatAction; }
+   // This function returns the complete data that were in this
+   // message parts - *after* all encryption has been removed that
+   // could be removed.
+   // - This is used to store the message in decrypted form.
+   void objectTreeToDecryptedMsg( partNode* node,
+@@ -321,11 +322,13 @@ public slots:
+   void slotShowMsgSrc();
+   void slotSaveMsg();
+   void slotSaveAttachments();
+ 
+   void slotMessageArrived( KMMessage *msg );
+-
++  /** start IM Chat with addressee */
++  void slotIMChat();
++  
+ protected slots:
+   /** Some attachment operations. */
+   void slotAtmOpen();
+   void slotDoAtmOpen();
+   void slotAtmOpenWith();
+@@ -428,11 +431,11 @@ private:
+   partNode* mRootNode;
+   QString mIdOfLastViewedMessage;
+   QWidget *mMainWindow;
+   KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
+-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
++      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
+ 
+   KToggleAction *mToggleFixFontAction;
+   KURL mUrlClicked;
+   KMail::HtmlWriter * mHtmlWriter;
+   // an attachment should be updated
+Index: kmreaderwin.cpp
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmreaderwin.cpp,v
+retrieving revision 1.754
+diff -u -5 -d -p -r1.754 kmreaderwin.cpp
+--- kmreaderwin.cpp.pld	2004-05-06 04:25:00.847666216 +0200
++++ kmreaderwin.cpp	2004-05-06 04:30:54.106962640 +0200
+@@ -555,6 +555,8 @@
+  			Key_X, this, SLOT(slotToggleFixedFont()),
+  			ac, "toggle_fixedfont" );
+ 
++  mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
++				    SLOT(slotIMChat()), ac, "start_im_chat" );
+ }
+ 
+ 
+@@ -1759,95 +1760,43 @@
+     return;
+   }
+ 
+-  const QString contentTypeStr =
+-    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).lower();
+-
+-  if ( contentTypeStr == "text/x-vcard"  ) {
+-    showVCard( &msgPart );
+-    return;
+-  }
+-
+-  KMimeType::Ptr mimetype;
+-  if ( msgPart.isComplete() ) {
+-    mimetype = KMimeType::findByFileContent( name );
+-    mMimeTypeGuessedFrom = Content; // for slotDoAtmOpen; FIXME, this is ugly
+-    kdDebug(5006) << "KMimeType::findByFileContent( " << name << " ) returned "
+-                  << mimetype->name() << endl;
+-  }
+-  else {
+-    mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
+-    mMimeTypeGuessedFrom = Filename;
+-    // if the name of the file doesn't give us a clue about the MIME type
+-    // then use the content-type of the attachment.
+-    if ( mimetype->name() == "application/octet-stream" ) {
+-      mimetype = KMimeType::mimeType( contentTypeStr );
+-      mMimeTypeGuessedFrom = ContentType;
++  if (qstricmp(msgPart.typeStr(), "text") == 0)
++  {
++    if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
++     showVCard( &msgPart );
++     return;
+     }
+-    kdDebug(5006) << "KMimeType::findByPath( " << name << " ) returned "
+-                  << mimetype->name() << endl;
+   }
+-  KService::Ptr offer =
+-    KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+ 
+-  // remember for slotDoAtmOpen; FIXME, this is ugly
++  // What to do when user clicks on an attachment --dnaber, 2000-06-01
++  // TODO: show full path for Service, not only name
++  QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(name)))->name();
++  KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
++  // remember for slotDoAtmOpen
+   mOffer = offer;
++  QString question;
+   QString open_text;
+   QString filenameText = msgPart.fileName();
+-  if ( filenameText.isEmpty() )
+-    filenameText = msgPart.name();
++  if (filenameText.isEmpty()) filenameText = msgPart.name();
+   if ( offer ) {
+-    open_text = i18n("&Open With '%1'").arg( offer->name() );
++    open_text = i18n("&Open with '%1'").arg(offer->name());
+   } else {
+     open_text = i18n("&Open With...");
+   }
+-  int choice;
+-  if ( contentTypeStr == mimetype->name() ||
+-       contentTypeStr == "application/octet-stream" ) {
+-    const QString text = i18n("Open attachment '%1'?\n"
+-                              "Note that opening an attachment may compromise "
+-                              "your system's security.")
+-                         .arg( filenameText );
+-    choice = KMessageBox::questionYesNoCancel( this, text,
++  question = i18n("Open attachment '%1'?\n"
++                  "Note that opening an attachment may compromise your "
++                  "system's security.").arg(filenameText);
++  int choice = KMessageBox::questionYesNoCancel(this, question,
+       i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
+-      QString::fromLatin1("askSave") + mimetype->name() ); // dontAskAgainName
+-  }
+-  else {
+-    QString text;
+-    if ( mMimeTypeGuessedFrom == Content )
+-      text = i18n("%1 and %3 are descriptions of the MIME type, "
+-                  "%2 and %4 is the MIME type, %5 is the file name.",
+-                  "<qt><p>Open attachment '%5'?</p>"
+-                  "<p><b>Warning:</b> The message suggests that this "
+-                  "attachment is of type '%1' (%2), but according to the "
+-                  "file's contents it seems to be of type '%3' (%4).</p>"
+-                  "<p>Note that opening an attachment may compromise your "
+-                  "system's security.</p></qt>")
+-             .arg( KMimeType::mimeType( contentTypeStr )->comment(),
+-                   contentTypeStr, mimetype->comment(), mimetype->name() )
+-             .arg( filenameText );
+-    else
+-      text = i18n("%1 and %3 are descriptions of the MIME type, "
+-                  "%2 and %4 is the MIME type, %5 is the file name.",
+-                  "<qt><p>Open attachment '%5'?</p>"
+-                  "<p><b>Warning:</b> The message suggests that this "
+-                  "attachment is of type '%1' (%2), but according to the "
+-                  "filename it seems to be of type '%3' (%4).</p>"
+-                  "<p>Note that opening an attachment may compromise your "
+-                  "system's security.</p></qt>")
+-             .arg( KMimeType::mimeType( contentTypeStr )->comment(),
+-                   contentTypeStr, mimetype->comment(), mimetype->name() )
+-             .arg( filenameText );
+-    choice = KMessageBox::warningYesNoCancel( this, text,
+-      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text );
+-  }
+-
++      QString::fromLatin1("askSave")+ mimetype ); // dontAskAgainName
+   if( choice == KMessageBox::Yes ) {		// Save
+     slotAtmLoadPart( 4 );
+-  }
+-  else if( choice == KMessageBox::No ) {	// Open
++  } else if( choice == KMessageBox::No ) {	// Open
++
+     // this load-part is duplicated from slotAtmLoadPart but is needed here
+     // to first display the choice before the attachment is actually downloaded
+-    if ( !msgPart.isComplete() ) {
++    if ( node && !node->msgPart().isComplete() )
++    {
+       // load the part
+       mAtmUpdate = true;
+       KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
+@@ -1857,81 +1806,26 @@
+     } else {
+       slotDoAtmOpen();
+     }
++
+   } else {					// Cancel
+     kdDebug(5006) << "Canceled opening attachment" << endl;
+   }
++
+ }
+ 
+ //-----------------------------------------------------------------------------
+ void KMReaderWin::slotDoAtmOpen()
+ {
+-  if ( !mOffer ) {
++  if ( mOffer ) {
++    // There's a default service for this kind of file - use it
++    KURL::List lst;
++    KURL url;
++    url.setPath(mAtmCurrentName);
++    lst.append(url);
++    KRun::run(*mOffer, lst);
++  } else {
+     slotAtmOpenWith();
+-    return;
+   }
+-
+-  KURL url;
+-  url.setPath( mAtmCurrentName );
+-  if ( mMimeTypeGuessedFrom != Content ) {
+-    // determine the real mime type of the file by its contents
+-    KMimeType::Ptr mimetype = KMimeType::findByFileContent( mAtmCurrentName );
+-    kdDebug(5006) << "KMimeType::findByFileContent( " << mAtmCurrentName
+-                  << " ) returned " << mimetype->name() << endl;
+-    KService::Ptr offer =
+-      KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
+-    if ( !offer ) {
+-      QString text;
+-      if ( mMimeTypeGuessedFrom == ContentType )
+-        text = i18n( "<qt><p><b>Warning:</b> The message suggested a wrong "
+-                     "file type for this attachment.</p>"
+-                     "<p>After looking at the file's contents the file seems "
+-                     "to be of type '%1' (%2). No application which can "
+-                     "handle files of this type is known.</p></qt>")
+-               .arg( mimetype->comment(), mimetype->name() );
+-      else
+-        text = i18n( "<qt><p><b>Warning:</b> The attachment's name suggested "
+-                     "a wrong file type.</p>"
+-                     "<p>After looking at the file's contents the file seems "
+-                     "to be of type '%1' (%2). No application which can "
+-                     "handle files of this type is known.</p></qt>")
+-               .arg( mimetype->comment(), mimetype->name() );
+-      const int choice =
+-        KMessageBox::warningContinueCancel( this, text, QString::null,
+-                                            i18n("&Open With...") );
+-      if( choice == KMessageBox::Continue ) {
+-        slotAtmOpenWith();
+-      }
+-      return;
+-    }
+-    if ( offer->name() != mOffer->name() ) {
+-      QString text;
+-      if ( mMimeTypeGuessedFrom == ContentType )
+-        text = i18n( "<qt><p><b>Warning:</b> The message suggested a wrong "
+-                     "file type for this attachment.</p>"
+-                     "<p>After looking at the file's contents the file seems "
+-                     "to be of type '%1' (%2) and should be opened with '%3'."
+-                     "</p></qt>" )
+-               .arg( mimetype->comment(), mimetype->name(), offer->name() );
+-      else
+-        text = i18n( "<qt><p><b>Warning:</b> The attachment's name suggested "
+-                     "a wrong file type.</p>"
+-                     "<p>After looking at the file's contents the file seems "
+-                     "to be of type '%1' (%2) and should be opened with '%3'."
+-                     "</p></qt>" )
+-               .arg( mimetype->comment(), mimetype->name(), offer->name() );
+-      const int choice =
+-        KMessageBox::warningContinueCancel( this, text, QString::null,
+-                                            i18n("&Open With '%1'")
+-                                            .arg( offer->name() ) );
+-      if( choice == KMessageBox::Cancel )
+-        return;
+-    }
+-    mOffer = offer;
+-  }
+-
+-  KURL::List lst;
+-  lst.append( url );
+-  KRun::run( *mOffer, lst );
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -2237,6 +2131,12 @@
+   else
+     saveCommand->start();
+ }
++//-----------------------------------------------------------------------------
++void KMReaderWin::slotIMChat()
++{
++  KMCommand *command = new KMIMChatCommand( mUrlClicked, message() );
++  command->start();
++}
+ 
+ //-----------------------------------------------------------------------------
+ #include "kmreaderwin.moc"

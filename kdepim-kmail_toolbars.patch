@@ -1,0 +1,50 @@
+--- kdepim-031024/kmail/kmcomposewin.cpp.orig	2003-10-19 23:36:21.000000000 +0200
++++ kdepim-031024/kmail/kmcomposewin.cpp	2003-10-24 13:20:53.000000000 +0200
+@@ -892,7 +892,7 @@
+   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
+                       actionCollection(), "clean_spaces");
+ 
+-  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
++  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text", 0, this,
+                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
+ 
+   //these are checkable!!!
+--- kdepim-031006/kmail/kmmainwidget.cpp.orig	2003-10-06 02:19:39.000000000 +0200
++++ kdepim-031006/kmail/kmmainwidget.cpp	2003-10-07 00:19:52.000000000 +0200
+@@ -2013,7 +2013,7 @@
+   mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
+ 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
+ 
+-  (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
++  (void) new KAction( i18n("Select &All Messages"), "ok", KStdAccel::selectAll(), this,
+ 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
+ 
+   (void) new KAction( i18n("Select Message &Text"),
+@@ -2046,10 +2046,10 @@
+   mRemoveFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
+ 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
+ 
+-  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
++  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), "html", 0, this,
+ 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+ 
+-  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
++  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), "view_tree", 0, this,
+ 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
+ 
+   mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
+--- kdepim-030911/kmail/kmreaderwin.cpp~	2003-09-09 23:22:40.000000000 +0200
++++ kdepim-030911/kmail/kmreaderwin.cpp	2003-09-11 20:15:02.000000000 +0200
+@@ -537,10 +537,10 @@
+                                      ac, "add_bookmarks" );
+   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
+ 			     SLOT(slotUrlSave()), ac, "saveas_url" );
+-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
++  mViewSourceAction = new KAction( i18n("&View Source"), "source", Key_V, this,
+ 		      SLOT(slotShowMsgSrc()), ac, "view_source" );
+ 
+-  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
++  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text",
+  			Key_X, this, SLOT(slotToggleFixedFont()),
+  			ac, "toggle_fixedfont" );
+ 
