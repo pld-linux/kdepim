@@ -16,7 +16,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1.1
+Release:	1.9
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
@@ -24,9 +24,11 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
 Icon:		kde-pim.xpm
+Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-fwd-inline.patch
+Patch2:		%{name}-iconsidepane-showtext.diff
+Patch3:		%{name}-fwd-inline.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -52,6 +54,8 @@ BuildRequires:	zlib-devel
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+# subpackage akregator
+Obsoletes:	akregator
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
 Obsoletes:	kdepim-korganizer
@@ -469,9 +473,11 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
+%patch100 -p1
 %patch0 -p1
-#%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
