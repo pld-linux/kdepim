@@ -58,7 +58,7 @@ Summary(uk):	Файли розробки для kdepim
 Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 3.2
-Requires:	%{name}-kadderssbook = %{version}-%{release}
+Requires:	%{name}-kaddressbook = %{version}-%{release}
 Requires:	%{name}-korganizer = %{version}-%{release}
 Requires:	%{name}-libmimelib = %{version}-%{release}
 
