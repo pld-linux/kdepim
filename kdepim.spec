@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030518
+%define		_snap		030527
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
@@ -21,8 +21,8 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	475531735d00af925eb479bdc8efbd37
 Source0:	http://team.pld.org.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	53828db5b24280a029ead72a7e216446
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -123,6 +123,18 @@ clients.
 KArm (nazwa pochodzi od s³owa "praca" w jêzyku punjambi) ¶ledzi czas
 spêdzony na ró¿nych zajêciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunków wielu klientom.
+
+%package kitchensync
+Summary:	TODO
+Summary(pl):	TODO
+Group:		X11/Applications
+#Requires:	%{name}-korganizer = %{version}-%{release}
+
+%description kitchensync
+TODO.
+
+%description kitchensync -l pl
+TODO.
 
 %package kmail
 Summary:	KDE Mail client
@@ -374,8 +386,7 @@ for plik in `find ./ -name *.desktop` ; do
 	fi
 done
 
-%configure \
-	--enable-final
+%configure
 
 %{__make}
 
@@ -388,7 +399,7 @@ install -d $RPM_BUILD_ROOT%{_desktopdir}
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 
-mv $ALD/{Settings,KDE-Settings}
+install -d $ALD/KDE-Settings/Components
 mv $ALD/{PIM/*,KDE-Settings/Components}
 
 mv $ALD/Applications/[Kk]o*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
@@ -420,6 +431,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	kontact		-p /sbin/ldconfig
 %postun	kontact		-p /sbin/ldconfig
+
+%post	kitchensync	-p /sbin/ldconfig
+%postun	kitchensync	-p /sbin/ldconfig
 
 %post	korganizer	-p /sbin/ldconfig
 %postun	korganizer	-p /sbin/ldconfig
@@ -461,6 +475,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
 %{_libdir}/kde3/ldifvcardthumbnail.la
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
+%{_libdir}/kde3/libaddressbookpart.la
+%attr(755,root,root) %{_libdir}/kde3/libaddressbookpart.so
 %{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %{_libdir}/kde3/libkaddrbk_distributionlist.la
@@ -478,6 +494,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libkaddressbookpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
+%{_datadir}/services/addressbook.desktop
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/ldifvcardthumbnail.desktop
@@ -502,6 +519,36 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_desktopdir}/karm.desktop
 %{_pixmapsdir}/*/*/*/karm.png
+
+%files kitchensync
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kitchensync
+%{_libdir}/libagendakonnector.la
+%attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
+%{_libdir}/libdummykonnector.la
+%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
+%{_libdir}/libkitchensyncui.la
+%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
+%{_libdir}/libkonnector.la
+%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
+%{_libdir}/libksharedfile.la
+%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
+%{_libdir}/libqtopiakonnector.la
+%attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
+%{_libdir}/kde3/libkded_ksharedfile.la
+%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+%{_libdir}/kde3/libksync_debugger.la
+%attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
+%{_libdir}/kde3/liboverviewpart.la
+%attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
+%{_datadir}/apps/kitchensync
+%{_datadir}/mimelnk/kdedevice/cellphone.desktop
+%{_datadir}/mimelnk/kdedevice/pda.desktop
+%{_datadir}/services/kded/ksharedfile.desktop
+%{_datadir}/services/kitchensync
+%{_datadir}/services/overview.desktop
+%{_datadir}/servicetypes/kitchensync.desktop
+%{_datadir}/servicetypes/konnector.desktop
 
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
@@ -585,10 +632,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
 %{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
-%{_libdir}/kde3/libkcm_kcalendars.la
-%attr(755,root,root) %{_libdir}/kde3/libkcm_kcalendars.so
+#%{_libdir}/kde3/libkcm_kcalendars.la
+#%attr(755,root,root) %{_libdir}/kde3/libkcm_kcalendars.so
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%{_libdir}/kde3/liborganizerpart.la
+%attr(755,root,root) %{_libdir}/kde3/liborganizerpart.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
@@ -603,13 +652,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kcal/local.desktop
 %{_datadir}/services/kresources/kcal/localdir.desktop
 %{_datadir}/services/kresources/kcal/remote.desktop
+%{_datadir}/services/organizer.desktop
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
-%{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
+#%{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
 %{_desktopdir}/kalarm.desktop
 %{_desktopdir}/korganizer.desktop
 %{_pixmapsdir}/[!l]*/*/*/kalarm.png
