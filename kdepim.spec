@@ -2,9 +2,8 @@
 # - find out why cant this app find gtk+.h
 
 %define         _state          snapshots
-%define         _ver		3.1.92
-%define		_snap		031024
-
+%define         _ver		3.1.93
+%define		_snap		031103
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -20,7 +19,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	255e4a75a8d240c42c88f8f899e038ad
+# Source0-md5:	24088cdec4ffaff715f6872bfc7c4b22
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -30,8 +29,6 @@ BuildRequires:	pilot-link-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         no_install_post_chrpath         1
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
@@ -56,13 +53,12 @@ Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Summary(ru):	æÁÊÌÙ ÒÁÚÒÁÂÏÔËÉ ÄÌÑ kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 10:3.1.90
+Requires:	kdelibs-devel >= 9:%{version}
 Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
-
-
 
 %description devel
 This package contains header files needed if you wish to build
@@ -249,6 +245,7 @@ Group:          X11/Applications
 Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kalarm
 Obsoletes:	kdepim-kgantt
 Obsoletes:	kdepim-kitchensync
@@ -389,6 +386,32 @@ kdepim library.
 %description libkdepim -l pl
 Biblioteka kdepim.
 
+%package libkdgantt
+Summary:	A kdgantt library
+Summary(pl):	Biblioteka kdgantt
+Group:		X11/Libraries
+Requires:	kdelibs >= 9:%{version}
+Obsoletes:	%{name}-korganizer-libs < 3.1.92.031029
+
+%description libkdgantt
+A kdgantt library.
+
+%description libkdgantt -l pl
+Biblioteka kdgantt.
+
+%package libkdgantt-devel
+Summary:	A kdgantt library - header files
+Summary(pl):	Biblioteka kdgantt - pliki nag³ówkowe
+Group:		X11/Development/Libraries
+Requires:	kdelibs-devel >= 9:%{version}
+Obsoletes:	%{name}-devel < 3.1.92.031029
+
+%description libkdgantt-devel
+A kdgantt library - header files.
+
+%description libkdgantt-devel -l pl
+Biblioteka kdgantt - pliki nag³ówkowe.
+
 %package libkmailprivate
 Summary:	kmailprivate library
 Summary(pl):	Biblioteka kmailprivate
@@ -472,9 +495,8 @@ done
 %{__make} -f admin/Makefile.common cvs
 
 %configure \
-	--enable-final	
-
-#%%configure
+	--disable-rpath \
+	--enable-final
 
 %{__make}
 
@@ -525,6 +547,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	libkdepim		-p /sbin/ldconfig
 %postun	libkdepim		-p /sbin/ldconfig
 
+%post	libkdgantt		-p /sbin/ldconfig
+%postun	libkdgantt		-p /sbin/ldconfig
+
 %post	libkmailprivate		-p /sbin/ldconfig
 %postun	libkmailprivate		-p /sbin/ldconfig
 
@@ -542,7 +567,23 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
+%{_includedir}/KNotesIface.h
+%{_includedir}/kmailIface.h
+%{_includedir}/kmailicalIface.h
+%{_includedir}/kmailpartIface.h
+%{_includedir}/ksharedfile.h
+%{_includedir}/calendar
+%{_includedir}/kaddressbook
+%{_includedir}/kdepim
+%{_includedir}/kgantt
+%{_includedir}/kitchensync
+%{_includedir}/knewstuff
+%{_includedir}/kontact
+%{_includedir}/korganizer
+%{_includedir}/kpilot
+%{_includedir}/ksieve
+%{_includedir}/ktnef
+%{_includedir}/mimelib
 %{_libdir}/*.so
 
 %files kaddressbook -f kaddressbook.lang
@@ -624,7 +665,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
-%{_iconsdir}/*/*/*/kmail*.png
+%{_iconsdir}/*/*/actions/mark_as_spam.png
+%{_iconsdir}/*/*/apps/kmail.png
+%{_iconsdir}/*/*/apps/kmailcvt.png
+%{_iconsdir}/*/*/apps/kmaillight.png
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -733,6 +777,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/configcolors.desktop
 %{_datadir}/services/configfonts.desktop
+%{_datadir}/services/configfreebusy.desktop
 %{_datadir}/services/configgroupautomation.desktop
 %{_datadir}/services/configgroupscheduling.desktop
 %{_datadir}/services/configmain.desktop
@@ -765,8 +810,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libkdgantt.la
 %attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
-%{_libdir}/libkgantt.la
-%attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
 %{_libdir}/libkonnector.la
@@ -855,6 +898,22 @@ rm -rf $RPM_BUILD_ROOT
 %doc README*
 %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
+
+%files libkdgantt
+%defattr(644,root,root,755)
+%{_libdir}/libkgantt.la
+%attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
+
+%files libkdgantt-devel
+%defattr(644,root,root,755)
+%{_includedir}/KDGanttView.h
+%{_includedir}/KDGanttViewEventItem.h
+%{_includedir}/KDGanttViewItem.h
+%{_includedir}/KDGanttViewSummaryItem.h
+%{_includedir}/KDGanttViewTaskItem.h
+%{_includedir}/KDGanttViewTaskLink.h
+%{_includedir}/KDGanttViewTaskLinkGroup.h
+%{_includedir}/KDXMLTools.h
 
 %files libkmailprivate
 %defattr(644,root,root,755)
