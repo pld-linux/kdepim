@@ -31,12 +31,11 @@ Group:		X11/Applications
 %if ! %{with cvs}
 Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
 %else
-Source0:        kdesource.tar.gz
+Source0:	kdesource.tar.gz
 %endif
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-vcategories.patch
-Patch3:		%{name}-kmail_senderpic.patch
+Patch2:		%{name}-kmail_senderpic.patch
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -58,14 +57,14 @@ BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-korganizer
-Obsoletes:	kdepim-korganizer-libs 
+Obsoletes:	kdepim-korganizer-libs
 #Obsoletes:	kdepim-libkcal
 Obsoletes:	kdepim-kontact
 # Will be replaced by kdeaddons-pim
-#Obsoletes:	kdeaddons-kontact 
+#Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kresources
-BuildConflicts: kdepim-kontact-libs
-BuildConflicts: kdepim-libkmailprivate
+BuildConflicts:	kdepim-kontact-libs
+BuildConflicts:	kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -115,6 +114,7 @@ bazuj╠cych na kdepim.
 Summary:	API documentation
 Summary(pl):	Dokumentacja API
 Group:		Development/Docs
+######		Unknown group!
 Requires:	kdelibs >= 9:3.2.90
 
 %description apidocs
@@ -124,7 +124,7 @@ API documentation.
 Dokumentacja API.
 
 %package -n kde-kio-newimap4
-Summary:	New IMAP4 protocol service 
+Summary:	New IMAP4 protocol service
 Summary(pl):	Nowa obsЁuga protokoЁu IMAP4
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -308,12 +308,12 @@ NarzЙdzie do synchronizacji z 3Com Palm Pilotem i zgodnymi
 urz╠dzeniami.
 
 %description kpilot -l ru
-утилита для синхронизации с 3com Palm Pilots и совместимыми
-с ними устройствами,
+утилита для синхронизации с 3com Palm Pilots и совместимыми с ними
+устройствами,
 
 %description kpilot -l uk
-утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
-ними пристроями.
+утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з ними
+пристроями.
 
 %package ktnef
 Summary:	A viewer/extractor for TNEF files
@@ -359,22 +359,53 @@ TODO.
 
 %prep
 %if ! %{with cvs}
-%setup -q -n %{name}-%{_snap} 
+%setup -q -n %{name}-%{_snap}
 %else
 %setup -q -n %{name} -D
 %endif
+%if ! %{with cvs}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+
 
 echo "KDE_OPTIONS = nofinal" >> kitchensync/kitchensync/backup/Makefile.am
 echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 
-%build
-cp /usr/share/automake/config.sub admin
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
+	korganizer/korganizer.desktop
 
-export UNSERMAKE=/usr/share/unsermake/unsermake
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	kpilot/kpilot/kpilotdaemon.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	kpilot/kpilot/kpilot.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	kpilot/conduits/docconduit/kpalmdoc.desktop
+%endif
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;ContactManagement;/' \
+	kaddressbook/kaddressbook.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM/' \
+	kontact/src/Kontact.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Email;/' \
+	kmail/KMail.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Network;News;/' \
+	knode/KNode.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	kmobile/kmobile.desktop
+
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	kandy/src/kandy.desktop
+
+%build
+cp %{_datadir}/automake/config.sub admin
+
+export UNSERMAKE=%{_datadir}/unsermake/unsermake
 
 %{__make} -f admin/Makefile.common cvs
 
@@ -400,7 +431,7 @@ cd debian/man
 if [ -f alarmd.sgml ]; then
 	%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
 	mv -f alarmd.sgml kalarmd.sgml
-fi	
+fi
 for f in *.sgml ; do
 	base="$(basename $f .sgml)"
 	upper="$(echo ${base} | tr a-z A-Z)"
