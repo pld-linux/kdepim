@@ -1447,6 +1447,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	libmimelib		-p /sbin/ldconfig
 %postun	libmimelib		-p /sbin/ldconfig
 
+%if %{with i18n}
 %files kaddressbook-i18n -f kaddressbook.lang
 %files kandy-i18n -f kandy.lang
 %files karm-i18n -f karm.lang
@@ -1458,6 +1459,7 @@ rm -rf $RPM_BUILD_ROOT
 %files korganizer-i18n -f korganizer.lang
 %files korn-i18n -f korn.lang
 %files kpilot-i18n -f kpilot.lang
+%endif
 
 %files devel
 %defattr(644,root,root,755)
