@@ -27,9 +27,9 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{version}.tar.bz2
 Source1:        http://ep09.pld-linux.org/~djurban/kde/i18n/kde-i18n-%{name}-%{version}.tar.bz2
 # Source1-md5:  2fdecd2aa0f0a125800e0071f36f6277
 %endif
-Patch0:		%{name}-kmail_toolbars.patch
-Patch1:		%{name}-vcategories.patch
-Patch2:         %{name}-kmail_critical.patch
+Patch0:		%{name}-3.2branch.diff
+Patch1:		%{name}-kmail_toolbars.patch
+Patch2:		%{name}-vcategories.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	docbook-dtd41-sgml
