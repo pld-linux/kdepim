@@ -5,7 +5,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040209
+%define		_snap		040210
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -82,6 +82,19 @@ bazuj±cych na kdepim.
 ¸‘œ‘ –¡À≈‘ ”œƒ≈“÷…‘ ∆¡ ÃŸ ⁄¡«œÃœ◊Àœ◊ Œ≈œ¬»œƒ…ÕŸ≈ ƒÃ— –œ”‘“œ≈Œ…—
 –“œ«“¡ÕÕ, œ”Œœ◊¡ŒŒŸ» Œ¡ kdepim.
 
+%package -n kde-kio-sieve
+Summary:	KDE SIEVE protocol service
+Summary(pl):	Obs≥uga protoko≥u SIEVE
+Group:		X11/Libraries
+Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
+Conflicts:	KDEPIM-KMAIL < 3:3.2.90.040210
+
+%description -n kde-kio-sieve
+KDE SIEVE protocol service.
+
+%description -n kde-kio-sieve -l pl
+Obs≥uga protoko≥u SIEVE.
+
 %package kaddressbook
 Summary:	Address Book
 Summary(pl):	Ksi±øka adresowa
@@ -146,7 +159,10 @@ Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
-Requires:	kdebase-mailnews >= 9:%{version}
+Requires:	kdebase-core >= 9:%{version}
+Requires:	kde-kio-imap4 >= 9:%{version}
+Requires:	kde-kio-pop3 >= 9:%{version}
+Requires:	kde-kio-smtp >= 9:%{version}
 Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-kmail
 
@@ -171,8 +187,8 @@ Summary:	KDE News Reader
 Summary(pl):	Czytnik newsÛw dla KDE
 Summary(pt_BR):	Leitor de notÌcias (news) do KDE
 Group:		X11/Applications
+Requires:	kde-kio-nntp >= 9:%{version}
 Requires:	kdebase-core >= 9:%{version}
-Requires:	kdebase-mailnews >= 9:%{version}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
@@ -251,7 +267,6 @@ Group:		X11/Applications
 Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kalarm
 Obsoletes:	kdepim-kgantt
 Obsoletes:	kdepim-kitchensync
@@ -657,7 +672,6 @@ Summary:	Internationalization and localization files for korganizer
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korganizera
 Group:		X11/Applications
 Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
-Requires:	%{name}-kgantt-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer-libs-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
@@ -738,6 +752,7 @@ Summary:	Internationalization and localization files for korganizer-libs
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korganizer-libs
 Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdgantti18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kgantt-i18n
 
@@ -804,6 +819,8 @@ export UNSERMAKE=/usr/share/unsermake/unsermake
 
 %{__make} -C kpilot/conduits/vcalconduit korganizerConduit.h
 
+%{__make} -C kpilot/kpilot kpilotSettings.h
+
 %{__make}
 
 %install
@@ -816,8 +833,10 @@ rm -rf $RPM_BUILD_ROOT
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian
-%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
-mv -f alarmd.sgml kalarmd.sgml
+if [ -f alarmd.sgml ]; then
+	%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+	mv -f alarmd.sgml kalarmd.sgml
+fi	
 for f in *.sgml ; do
 	base="$(basename $f .sgml)"
 	upper="$(echo ${base} | tr a-z A-Z)"
@@ -1011,9 +1030,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
 %{_includedir}/calendar
+%{_includedir}/gpgmepp
 %{_includedir}/kaddressbook
 %{_includedir}/kdepim
 %{_includedir}/kgantt
+%{_includedir}/kleo
 %{_includedir}/knewstuff
 %{_includedir}/kontact
 %{_includedir}/korganizer
@@ -1021,12 +1042,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ksieve
 %{_includedir}/ktnef
 %{_includedir}/mimelib
+%{_includedir}/qgpgme
+%{_libdir}/libgpgmepp.so
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkalarmd.so
 %{_libdir}/libkdenetwork.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
+%{_libdir}/libkleopatra.so
 %{_libdir}/libkmailprivate.so
 %{_libdir}/libknewstuff.so
 %{_libdir}/libkontact.so
@@ -1039,6 +1063,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libksync.so
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
+%{_libdir}/libqgpgme.so
 # kitchensync part
 #%{_includedir}/kitchensync
 #%{_includedir}/ksharedfile.h
@@ -1049,6 +1074,12 @@ rm -rf $RPM_BUILD_ROOT
 #%{_libdir}/libksync2.so
 #%{_libdir}/liblocalkonnector.so
 #%{_libdir}/libqtopiakonnector.so
+
+%files -n kde-kio-sieve
+%defattr(644,root,root,755)
+%{_libdir}/kde3/kio_sieve.la
+%attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
+%{_datadir}/services/sieve.protocol
 
 %files kaddressbook -f kaddressbook_en.lang
 %defattr(644,root,root,755)
@@ -1124,9 +1155,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kgpgcertmanager
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
-# TODO
-%{_libdir}/kde3/kio_sieve.la
-%attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
 %{_datadir}/apps/kconf_update/k[!n]*
@@ -1140,7 +1168,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kmail_config_misc.desktop
 %{_datadir}/services/kmail_config_network.desktop
 %{_datadir}/services/kmail_config_security.desktop
-%{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
 #%{_iconsdir}/*/*/actions/mark_as_spam.png
@@ -1460,6 +1487,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libkmailprivate
 %defattr(644,root,root,755)
+# Temporary location - fon't know what to do
+# at this moment
+%{_libdir}/libgpgmepp.la
+%attr(755,root,root) %{_libdir}/libgpgmepp.so.*.*.*
+%{_libdir}/libkleopatra.la
+%attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
+%{_libdir}/libqgpgme.la
+%attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
+#
 %{_libdir}/libkmailprivate.la
 %attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
 
