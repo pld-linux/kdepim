@@ -57,7 +57,7 @@ Summary(pl):	Pliki nagЁСwkowe do KDE pim
 Summary(uk):	Файли розробки для kdepim
 Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
-Obsoletes:	kdenetwork-devel < 3.2
+Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
 Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
 Requires:	%{name}-kontact = %{epoch}:%{version}-%{release}
