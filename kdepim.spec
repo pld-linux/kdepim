@@ -39,6 +39,7 @@ BuildConflicts:	kdepim-kaddressbook-libs
 BuildConflicts:	kdepim-libksieve
 BuildConflicts:	kdepim-libktnef
 BuildConflicts:	kdepim-ktnef
+BuildConflicts:	kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -66,7 +67,7 @@ Group:		X11/Development/Libraries
 Requires:	kdelibs-devel >= 9:%{version}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:       %{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
+Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-devel < 10:3.1.90
 
@@ -136,7 +137,7 @@ Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
-Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
+Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-mailnews >= 9:%{version}
 Obsoletes:	kdenetwork-kmail
 Obsoletes:	kdepim-ktnef
@@ -439,7 +440,7 @@ Biblioteki dzielone miêdzy aplikacjami w kdepim zapewniaj±ce:
 - wy¶wietlanie i zarz±dzanie diagramami Gantta u¿ywanymi we wtyczce do
   ogl±dania projektów KOrganizera.
 
-%package libkmailprivate
+%package kmail-libs
 Summary:	kmailprivate libraries
 Summary(pl):	Biblioteki kmailprivate
 Group:		X11/Libraries
@@ -447,12 +448,13 @@ Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-libksieve
 Obsoletes:	kdepim-libktnef
+Obsoletes:	kdepim-libkmailprivate
 
-%description libkmailprivate
+%description kmail-libs
 Libraries providing mail reading and writing engine, Microsoft TNEF
 attachements support and sieve protocol.
 
-%description libkmailprivate -l pl
+%description kmail-libs -l pl
 Biblioteki dostarczaj±ce silnik do czytania i pisania poczty oraz
 obs³ugê za³±czników Microsoft TNEF i protoko³u sieve.
 
@@ -525,8 +527,8 @@ rm -rf $RPM_BUILD_ROOT
 %post	libkdepim		-p /sbin/ldconfig
 %postun	libkdepim		-p /sbin/ldconfig
 
-%post	libkmailprivate		-p /sbin/ldconfig
-%postun	libkmailprivate		-p /sbin/ldconfig
+%post	kmail-libs		-p /sbin/ldconfig
+%postun	kmail-libs		-p /sbin/ldconfig
 
 %post	libkpilot		-p /sbin/ldconfig
 %postun	libkpilot		-p /sbin/ldconfig
@@ -901,7 +903,7 @@ rm -rf $RPM_BUILD_ROOT
 #%{_libdir}/libksync2.la
 #%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
 
-%files libkmailprivate
+%files kmail-libs
 %defattr(644,root,root,755)
 %{_libdir}/libkmailprivate.la
 %attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
