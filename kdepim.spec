@@ -543,7 +543,7 @@ install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian/man
 if [ -f alarmd.sgml ]; then
 	%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
-	cp -f alarmd.sgml kalarmd.sgml
+	mv -f alarmd.sgml kalarmd.sgml
 fi	
 for f in *.sgml ; do
 	base="$(basename $f .sgml)"
