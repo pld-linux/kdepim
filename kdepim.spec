@@ -4,7 +4,7 @@
 
 %define		_state		snapshots
 %define		_ver		3.1.94
-%define		_snap		031204
+%define		_snap		040110
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -20,7 +20,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	381a6d9bbb4c00d4f32d40f0471e1a9b
+# Source0-md5:	e4244c1d1a461954c6fdde30bb094b70
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -337,6 +337,18 @@ urz±dzeniami.
 ÕÔÉÌ¦ÔÁ ÄÌÑ ÓÉÎÈÒÏÎ¦ÚÁÃ¦§ Ú 3com Palm Pilots ÔÁ ÓÕÍ¦ÓÎÉÍÉ Ú
 ÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ.
 
+%package kresources
+Summary:        Additional kresources definitions
+Summary(pl):    Dodatkowe definicje kresources
+Group:          X11/Applications
+Requires:       kdelibs >= 9:%{version}
+
+%description kresources
+Additional kresources definitions.
+
+%description kresources -l pl
+Dodatkowe definicje kresources.
+
 %package ktnef
 Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Konwerter/ekstraktor plików TNEF
@@ -363,6 +375,20 @@ kcal library.
 
 %description libkcal -l pl
 Biblioteka kcal.
+
+%package libkcal-devel
+Summary:        libkcal header files
+Summary(pl):    Naglowki libkcal
+Group:          X11/Libraries
+Requires:       kdelibs-devel >= 9:%{version}
+Requires:       %{name}-libkcal = %{epoch}:%{version}-%{release}
+Obsoletes:      kdepim
+
+%description libkcal-devel
+libkcal header files.
+
+%description libkcal-devel -l pl
+Naglowki libkcal.
 
 %package libkdenetwork
 Summary:	A network library
@@ -493,7 +519,9 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 for f in `find . -name \*.desktop | xargs grep -l '\[nb\]'` ; do
 	echo -e ',s/\[nb\]=/[no]=/\n,w' | ed $f 2>/dev/null
 done
-
+z=kpilot/conduits/configure.in.in
+grep -v KPILOT_CHECK_PISOCK $z > $z.1
+mv $z.1 $z
 %{__make} -f admin/Makefile.common cvs
 
 %configure \
@@ -518,6 +546,7 @@ rm -rf $RPM_BUILD_ROOT
 %find_lang	knode		--with-kde
 %find_lang	knotes		--with-kde
 %find_lang	konsolekalendar	--with-kde
+%find_lang	kontact		--with-kde
 %find_lang	korganizer	--with-kde
 %find_lang	korn		--with-kde
 %find_lang	kgpgcertmanager	--with-kde
@@ -594,7 +623,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkalarmd.so
-%{_libdir}/libkcal.so
 %{_libdir}/libkdenetwork.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
@@ -727,6 +755,8 @@ rm -rf $RPM_BUILD_ROOT
 %files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
+%{_desktopdir}/kde/konsolekalendar.desktop
+%{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
 
 %files kontact
 %defattr(644,root,root,755)
@@ -881,6 +911,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_doc.so
 %{_libdir}/kde3/conduit_knotes.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_knotes.so
+%{_libdir}/kde3/conduit_popmail.la
+%attr(755,root,root) %{_libdir}/kde3/conduit_popmail.so
 %{_libdir}/kde3/conduit_mal.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_mal.so
 %{_libdir}/kde3/conduit_sysinfo.la
@@ -898,6 +930,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
+
+%files kresources
+%defattr(644,root,root,755)
+%{_libdir}/kde3/kabc_imap.la
+%attr(755,root,root) %{_libdir}/kde3/kabc_imap.so
+%{_datadir}/services/kresources/kabc/imap.desktop
 
 %files ktnef
 %defattr(644,root,root,755)
@@ -924,6 +962,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
 %{_datadir}/services/kresources/kcal
+
+%files libkcal-devel
+%defattr(644,root,root,755)
+%{_includedir}/libkcal
+%{_libdir}/libkcal.so
 
 %files libkdenetwork
 %defattr(644,root,root,755)
