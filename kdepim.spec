@@ -29,11 +29,13 @@ Patch1:		%{name}-kmail_toolbars.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
-BuildRequires:	flex
+BuildRequires:	cyrus-sasl-devel
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
+BuildRequires:	flex
 BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	gnupg >= 1.2.2
+BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
@@ -46,8 +48,8 @@ BuildRequires:	qt-designer-libs
 BuildRequires:	rpmbuild(macros) >= 1.129
 #BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
-BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gnupg-agent
+BuildConflicts:	kdepim-kontact-libs
+BuildConflicts:	kdepim-libkmailprivate
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
@@ -56,8 +58,6 @@ Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kresources
 Obsoletes:	kdepim-ksync
 #Obsoletes:	kdepim-libkcal
-BuildConflicts:	kdepim-kontact-libs
-BuildConflicts:	kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
