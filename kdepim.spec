@@ -1,3 +1,7 @@
+# TODO:
+# - find out what's with libmal>=0.20 from http://jasonday.home.att.net/code/libmal/
+# - find out why cant this app find gtk+.h
+
 %define         _state          snapshots
 %define         _ver		3.2
 %define		_snap		030317
