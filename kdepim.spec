@@ -3,8 +3,8 @@
 # - find out why cant this app find gtk+.h
 
 %define		_state		snapshots
-%define		_ver		3.1.93
-%define		_snap		031126
+%define		_ver		3.1.94
+%define		_snap		031204
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -20,7 +20,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	ea1342e0dbf060002e9ef65efcf3c1f1
+# Source0-md5:	381a6d9bbb4c00d4f32d40f0471e1a9b
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -280,6 +280,7 @@ Summary(pl):	korganizer - biblioteki wsp車dzielone
 Group:		X11/Libraries
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-korganizer < 3:3.1.92.031012
 Obsoletes:	%{name}-commonlibs
 
@@ -504,8 +505,7 @@ done
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT\
-	kde_appsdir=%{_applnkdir} \
+	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
 %find_lang	kaddressbook	--with-kde
@@ -807,7 +807,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
-%{_applnkdir}/.hidden/kalarmd.desktop
+%{_datadir}/applnk/.hidden/kalarmd.desktop
 %{_desktopdir}/kde/kalarm.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_iconsdir}/[!l]*/*/*/kalarm.png
