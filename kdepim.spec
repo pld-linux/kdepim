@@ -3,7 +3,7 @@
 # - bluetooth, gnokii, lockdev, system gpg-me support (more libs in BR)
 # Conditional build:
 %bcond_without	apidocs	# prepare API documentation
-%bcond_with  i18n	# build i18n subpackages - not used in this branch
+%bcond_with	i18n	# build i18n subpackages - not used in this branch
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
@@ -23,7 +23,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 #Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
-Source0:       http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
+Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{_snap}.tar.bz2
 # Source0-md5:	2d327cb847e44280abe6244bf8f89188
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
@@ -34,19 +34,19 @@ BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
-%{?with_apidocs:BuildRequires:  qt-doc}
+%{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
 BuildRequires:	zlib-devel
 BuildRequires:	pcre-devel
 Requires:	%{name}-libs
 Obsoletes:	kdepim-korganizer
-Obsoletes:      kdepim-korganizer-libs 
-Obsoletes:      kdepim-libkcal
-Obsoletes:      kdepim-kontact
+Obsoletes:	kdepim-korganizer-libs 
+Obsoletes:	kdepim-libkcal
+Obsoletes:	kdepim-kontact
 # Will be replaced by kdeaddons-pim
 Obsoletes:	kdeaddons-kontact 
-Obsoletes:      kdepim-kresources
+Obsoletes:	kdepim-kresources
 BuildConflicts: kdepim-kontact-libs
 BuildConflicts: kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -75,7 +75,6 @@ Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= 9:%{version}
-Obsoletes:      kdepim-libkcal-devel
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
@@ -83,6 +82,7 @@ Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
+Obsoletes:	kdepim-libkcal-devel
 
 %description devel
 This package contains header files needed if you wish to build
@@ -437,10 +437,10 @@ urz±dzeniami.
 Œ…Õ… –“…”‘“œ—Õ….
 
 #%package wizards-egroupware
-#Summary:        eGroupware configuration wizard 
-#Summary(pl):    Kreator konfiguracji eGroupware
-#Group:          X11/Applications
-#Requires:       kdelibs >= 9:%{version}
+#Summary:	Groupware configuration wizard 
+#Summary(pl):	Kreator konfiguracji eGroupware
+#Group:		X11/Applications
+#Requires:	kdelibs >= 9:%{version}
 
 #%description wizards-egroupware
 #eGroupware configuration wizard.
@@ -449,10 +449,10 @@ urz±dzeniami.
 #Kreator konfiguracji eGroupware.
 
 ##%package kresources
-#Summary:        Additional kresources definitions
-#Summary(pl):    Dodatkowe definicje kresources
-#Group:          X11/Applications
-#Requires:       kdelibs >= 9:%{version}
+#Summary:	Additional kresources definitions
+#Summary(pl):	Dodatkowe definicje kresources
+#Group:		X11/Applications
+#Requires:	kdelibs >= 9:%{version}
 #
 ##%description kresources
 #Additional kresources definitions.
@@ -461,8 +461,8 @@ urz±dzeniami.
 #Dodatkowe definicje kresources.
 #
 #%package kresources-devel
-#Summary:        Additional kresources definitions
-#Summary(pl):    Dodatkowe definicje kresources
+#Summary:	Additional kresources definitions
+#Summary(pl):	Dodatkowe definicje kresources
 #Group:		X11/Development/Libraries
 #Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
@@ -500,12 +500,12 @@ kcal library.
 Biblioteka kcal.
 
 #%package libkcal-devel
-#Summary:        libkcal header files
-#Summary(pl):    Naglowki libkcal
-#Group:          X11/Libraries
-#Requires:       kdelibs-devel >= 9:%{version}
-#Requires:       %{name}-libkcal = %{epoch}:%{version}-%{release}
-#Obsoletes:      kdepim
+#Summary:	libkcal header files
+#Summary(pl):	Naglowki libkcal
+#Group:		X11/Libraries
+#Requires:	kdelibs-devel >= 9:%{version}
+#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+#Obsoletes:	kdepim
 
 #%description libkcal-devel
 #libkcal header files.
@@ -1048,14 +1048,14 @@ files="\
 
 for i in $files; do
 	> ${i}_en.lang
-        echo "%defattr(644,root,root,755)" > ${i}_en.lang
+	echo "%defattr(644,root,root,755)" > ${i}_en.lang
 	grep en\/ ${i}.lang|grep -v apidocs >> ${i}_en.lang
 	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
 	mv ${i}.lang.1 ${i}.lang
 done
 
 # Workaround for empty en docdirs. They are empty because all en docs are
-# in the  base non-i18n package
+# in the base non-i18n package
 # Grep them out
 durne=`ls -1 *.lang|grep -v _en`
 for i in $durne; do
