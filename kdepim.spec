@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030403
+%define		_snap		030406
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
