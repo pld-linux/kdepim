@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	4
+Release:	5
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -1001,7 +1001,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-apidocs
+##%lang(en) %{_kdedocdir}/en/%{name}-apidocs
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so
 %attr(755,root,root) %{_libdir}/libkaddressbook.so
 %attr(755,root,root) %{_libdir}/libkalarmd.so
