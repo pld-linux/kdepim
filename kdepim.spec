@@ -1,12 +1,13 @@
 # TODO:
 # - make separate subpackages
 Summary:	Personal Information Management (PIM) for KDE
+Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.3
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
