@@ -548,6 +548,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kontact
 %{_datadir}/services/kontactconfig.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
+%{_datadir}/servicetypes/kaddressbookimprotocol.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
 # korganizer part
