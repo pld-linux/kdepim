@@ -193,19 +193,19 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
 
 %{_libdir}/kde3/libabbrowserconduit.la
-%{_libdir}/kde3/libabbrowserconduit.so.*.*.*
+%{_libdir}/kde3/libabbrowserconduit.so
 %{_libdir}/kde3/libexpenseconduit.la
-%{_libdir}/kde3/libexpenseconduit.so.*.*.*
+%{_libdir}/kde3/libexpenseconduit.so
 %{_libdir}/kde3/libknotesconduit.la
-%{_libdir}/kde3/libknotesconduit.so.*.*.*
+%{_libdir}/kde3/libknotesconduit.so
 %{_libdir}/kde3/libnullconduit.la
-%{_libdir}/kde3/libnullconduit.so.*.*.*
+%{_libdir}/kde3/libnullconduit.so
 %{_libdir}/kde3/libpopmailconduit.la
-%{_libdir}/kde3/libpopmailconduit.so.*.*.*
+%{_libdir}/kde3/libpopmailconduit.so
 %{_libdir}/kde3/libtodoconduit.la
-%{_libdir}/kde3/libtodoconduit.so.*.*.*
+%{_libdir}/kde3/libtodoconduit.so
 %{_libdir}/kde3/libvcalconduit.la
-%{_libdir}/kde3/libvcalconduit.so.*.*.*
+%{_libdir}/kde3/libvcalconduit.so
 
 %{_libdir}/kde3/libkcm_alarmdaemonctrl.??
 %{_libdir}/kde3/libkorg_datenums.??
