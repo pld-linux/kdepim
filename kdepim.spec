@@ -584,7 +584,32 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ksieve
 %{_includedir}/ktnef
 %{_includedir}/mimelib
-%{_libdir}/*.so
+%{_libdir}/libdummykonnector.so
+%{_libdir}/libkabinterfaces.so
+%{_libdir}/libkaddressbook.so
+%{_libdir}/libkalarmd.so
+%{_libdir}/libkcal.so
+%{_libdir}/libkdenetwork.so
+%{_libdir}/libkdepim.so
+%{_libdir}/libkgantt.so
+%{_libdir}/libkitchensyncui.so
+%{_libdir}/libkmailprivate.so
+%{_libdir}/libknewstuff.so
+%{_libdir}/libkonnector.so
+%{_libdir}/libkontact.so
+%{_libdir}/libkorganizer.so
+%{_libdir}/libkorganizer_eventviewer.so
+%{_libdir}/libkpilot.so
+%{_libdir}/libkpimexchange.so
+%{_libdir}/libkpinterfaces.so
+%{_libdir}/libksharedfile.so
+%{_libdir}/libksieve.so
+%{_libdir}/libksync.so
+%{_libdir}/libksync2.so
+%{_libdir}/libktnef.so
+%{_libdir}/liblocalkonnector.so
+%{_libdir}/libmimelib.so
+%{_libdir}/libqtopiakonnector.so
 
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
@@ -808,8 +833,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
 %{_libdir}/libkitchensyncui.la
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
-%{_libdir}/libkdgantt.la
-%attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
+%{_libdir}/libkgantt.la
+%attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
 %{_libdir}/libkonnector.la
@@ -901,8 +926,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libkdgantt
 %defattr(644,root,root,755)
-%{_libdir}/libkgantt.la
-%attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
+%{_libdir}/libkdgantt.la
+%attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
 
 %files libkdgantt-devel
 %defattr(644,root,root,755)
@@ -914,6 +939,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/KDGanttViewTaskLink.h
 %{_includedir}/KDGanttViewTaskLinkGroup.h
 %{_includedir}/KDXMLTools.h
+%{_libdir}/libkdgantt.so
 
 %files libkmailprivate
 %defattr(644,root,root,755)
