@@ -11,11 +11,11 @@
 
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040524
+%define		_snap		040613
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040524
-%define		_minbaseevr	9:3.2.90.040524
+%define		_minlibsevr	9:3.2.90.040613
+%define		_minbaseevr	9:3.2.90.040613
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -30,15 +30,14 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 %if ! %{with cvs}
-#Source0:        ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
 ##%% Source0-md5:  53b213398dc488af5de57b74c6b3bbf5
 %else
 Source0:        kdesource.tar.gz
 %endif
-Patch0:		%{name}-kmail_toolbars.patch
-Patch1:		%{name}-vcategories.patch
-Patch2:		kde-common-QTDOCDIR.patch
+Patch0:		kde-common-PLD.patch
+Patch1:		%{name}-kmail_toolbars.patch
+Patch2:		%{name}-vcategories.patch
 Patch3:		%{name}-kmail_senderpic.patch
 BuildRequires:	automake
 BuildRequires:	bison
@@ -244,6 +243,7 @@ Requires:	kde-kio-imap4 >= %{_minbaseevr}
 Requires:	kde-kio-pop3 >= %{_minbaseevr}
 Requires:	kde-kio-smtp >= %{_minbaseevr}
 #Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
+Obsoletes:	kde-kio-sieve
 Obsoletes:	kdenetwork-kmail
 
 %description kmail
@@ -271,6 +271,7 @@ Group:		X11/Libraries
 #Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-libkmailprivate
+Obsoletes:	kdepim-libksieve
 
 %description kmail-libs
 kdmailprivate library.
@@ -576,8 +577,8 @@ cat kalarmd.lang >> kalarm.lang
 %find_lang	kontact		--with-kde
 %find_lang	korganizer	--with-kde
 %find_lang	korn		--with-kde
-%find_lang	kgpgcertmanager	--with-kde
-cat kgpgcertmanager.lang >> kmail.lang
+%find_lang	kleopatra	--with-kde
+cat kleopatra.lang >> kmail.lang
 %find_lang	kpilot		--with-kde
 %find_lang	ktnef		--with-kde
 %find_lang	kwatchgnupg	--with-kde
@@ -641,6 +642,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
 %attr(755,root,root) %{_libdir}/libdummykonnector.so
+%{_libdir}/libkabckonnector.la
+%attr(755,root,root) %{_libdir}/libkabckonnector.so
+%{_libdir}/libkcalkonnector.la
+%attr(755,root,root) %{_libdir}/libkcalkonnector.so
 %{_libdir}/liblocalkonnector.la
 %attr(755,root,root) %{_libdir}/liblocalkonnector.so
 %{_libdir}/libqtopiakonnector.la
@@ -663,6 +668,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libksync_viewer.so
 %{_libdir}/kde3/liboverviewpart.la
 %attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
+%{_libdir}/kde3/libegroupwarewizard.la
+%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
+%{_libdir}/kde3/libkolabwizard.la
+%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
+%{_libdir}/kde3/libsloxwizard.la
+%attr(755,root,root) %{_libdir}/kde3/libsloxwizard.so*
 %{_datadir}/apps/kitchensync/ksyncgui.rc
 %{_datadir}/apps/kitchensync/pics/opie.png
 %{_datadir}/services/kded/ksharedfile.desktop
@@ -675,6 +686,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kitchensync/viewer.desktop
 %dir %{_datadir}/services/kresources/konnector
 %{_datadir}/services/kresources/konnector/dummykonnector.desktop
+%{_datadir}/services/kresources/konnector/kabckonnector.desktop
+%{_datadir}/services/kresources/konnector/kcalkonnector.desktop
 %{_datadir}/services/kresources/konnector/localkonnector.desktop
 %{_datadir}/services/kresources/konnector/qtopia.desktop
 %{_datadir}/services/kresources/konnector/remotekonnector.desktop
@@ -743,6 +756,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/ksync
 %{_datadir}/autostart/korgac.desktop
 ##%{_datadir}/config/khotnewstuffrc
+%{_datadir}/config.kcfg/egroupware.kcfg
 %{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/services/korganizer_configcolors.desktop
@@ -807,6 +821,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kdepim
 %{_includedir}/kgantt
 %{_includedir}/kleo
+%{_includedir}/kmail
 #%{_includedir}/knewstuff
 %{_includedir}/kontact
 %{_includedir}/korganizer
@@ -832,6 +847,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkorganizer_eventviewer.so
 %{_libdir}/libkpilot.so
 %{_libdir}/libkpimexchange.so
+%{_libdir}/libkpimidentities.so
 %{_libdir}/libkpinterfaces.so
 %{_libdir}/libksieve.so
 %{_libdir}/libksync.so
@@ -853,6 +869,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libkcal
 %{_libdir}/libkcal.so
 %{_libdir}/libkcal_imap.so
+%{_libdir}/libkcal_resourceremote.so
 %{_libdir}/libkcal_slox.so
 %{_libdir}/libkcal_xmlrpc.so
 
@@ -861,12 +878,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_kdedocdir}/en/%{name}%{!?with_cvs:-%{_snap}}-apidocs
 %endif
-
-%files -n kde-kio-sieve
-%defattr(644,root,root,755)
-%{_libdir}/kde3/kio_sieve.la
-%attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
-%{_datadir}/services/sieve.protocol
 
 %files -n kde-kio-newimap4
 %defattr(644,root,root,755)
@@ -959,6 +970,7 @@ rm -rf $RPM_BUILD_ROOT
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
+%attr(755,root,root) %{_bindir}/kmail_antivir.sh
 %attr(755,root,root) %{_bindir}/kmail_clamav.sh
 %attr(755,root,root) %{_bindir}/kmail_fprot.sh
 %attr(755,root,root) %{_bindir}/kmail_sav.sh
@@ -1005,12 +1017,18 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
 %{_desktopdir}/kde/kmail_view.desktop
+# hidden (todo)
+%{_desktopdir}/kde/kleopatra_import.desktop
 %{_iconsdir}/*/*/apps/kmail.png
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
 # TODO
 %{_iconsdir}/*/*/apps/gpg.png
 %{_iconsdir}/*/*/apps/gpgsm.png
+# kio-sieve
+%{_libdir}/kde3/kio_sieve.la
+%attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
+%{_datadir}/services/sieve.protocol
 
 %files kmail-libs
 %defattr(644,root,root,755)
@@ -1020,6 +1038,9 @@ rm -rf $RPM_BUILD_ROOT
 #
 %{_libdir}/libkmailprivate.la
 %attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
+# libksieve
+%{_libdir}/libksieve.la
+%attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -1167,11 +1188,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpilot.la
 %attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
 
-%files libksieve
-%defattr(644,root,root,755)
-%{_libdir}/libksieve.la
-%attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
-
 %files libktnef
 %defattr(644,root,root,755)
 %{_libdir}/libktnef.la
@@ -1185,10 +1201,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%{_libdir}/kde3/libegroupwarewizard.la
-%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so.*.*.*
-%{_libdir}/kde3/libkolabwizard.la
-%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so.*.*.*
 # kitchensync part
 %{_libdir}/libkitchensyncui.la
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.0.0.0
@@ -1216,6 +1228,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
 %{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
+%{_libdir}/libkpimidentities.la
+%attr(755,root,root) %{_libdir}/libkpimidentities.so.*.*.*
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
 # kresources part
@@ -1225,7 +1239,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkabc_xmlrpc.so.*.*.*
 %{_libdir}/libkcal_imap.la
 %attr(755,root,root) %{_libdir}/libkcal_imap.so.*.*.*
+%{_libdir}/libkcal_resourceremote.la
+%attr(755,root,root) %{_libdir}/libkcal_resourceremote.so.*.*.*
 %{_libdir}/libkcal_slox.la
 %attr(755,root,root) %{_libdir}/libkcal_slox.so.*.*.*
 %{_libdir}/libkcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
+%{_libdir}/libkslox.la
+%attr(755,root,root) %{_libdir}/libkslox.so.*.*.*
