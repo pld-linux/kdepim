@@ -2,7 +2,7 @@
 # - find out why cant this app find gtk+.h
 #
 # Conditional build:
-%bcond_without  i18n    # dont build i18n subpackage
+%bcond_without	i18n	# dont build i18n subpackage
 #
 %define		_state		stable
 %define		_ver		3.2.1
@@ -347,10 +347,10 @@ urz±dzeniami.
 ÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ.
 
 %package kresources
-Summary:        Additional kresources definitions
-Summary(pl):    Dodatkowe definicje kresources
-Group:          X11/Applications
-Requires:       kdelibs >= 9:%{version}
+Summary:	Additional kresources definitions
+Summary(pl):	Dodatkowe definicje kresources
+Group:		X11/Applications
+Requires:	kdelibs >= 9:%{version}
 
 %description kresources
 Additional kresources definitions.
@@ -387,11 +387,11 @@ Biblioteka kcal.
 
 %package libkcal-devel
 Summary:	Header files for libkcal library
-Summary(pl):    Pliki nag³ówkowe biblioteki libkcal
-Group:          X11/Libraries
-Requires:       %{name}-libkcal = %{epoch}:%{version}-%{release}
-Requires:       kdelibs-devel >= 9:%{version}
-Obsoletes:      kdepim
+Summary(pl):	Pliki nag³ówkowe biblioteki libkcal
+Group:		X11/Libraries
+Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+Requires:	kdelibs-devel >= 9:%{version}
+Obsoletes:	kdepim
 
 %description libkcal-devel
 Header files for libkcal library.
@@ -864,43 +864,43 @@ cat kgpgcertmanager.lang >> kmail.lang
 cat alarmdaemonctrl.lang >> korganizer.lang
 %find_lang kalarmdgui		--with-kde
 cat kalarmdgui.lang >> korganizer.lang
-%find_lang ksync           --with-kde
+%find_lang ksync		--with-kde
 cat ksync.lang >> korganizer.lang
 %find_lang libcalendarresources --with-kde
 cat libcalendarresources.lang >> korganizer.lang
 
-%find_lang kmailcvt      --with-kde
+%find_lang kmailcvt		--with-kde
 cat kmailcvt.lang >> kmail.lang
-%find_lang kfile_rfc822 --with-kde
+%find_lang kfile_rfc822		--with-kde
 cat kfile_rfc822.lang >> kmail.lang
-%find_lang kio_sieve --with-kde
+%find_lang kio_sieve		--with-kde
 cat kio_sieve.lang >> kmail.lang
 
-%find_lang kabc2mutt      --with-kde
+%find_lang kabc2mutt		--with-kde
 cat kabc2mutt.lang >> kaddressbook.lang
-%find_lang kcmkabconfig   --with-kde
+%find_lang kcmkabconfig		--with-kde
 cat kcmkabconfig.lang >> kaddressbook.lang
-%find_lang kfile_vcf      --with-kde
+%find_lang kfile_vcf		--with-kde
 cat kfile_vcf.lang >> kaddressbook.lang
 
 # Not packaging kmobile, it was disabled by coolo
-%find_lang kdgantt --with-kde
-%find_lang ktnef --with-kde
+%find_lang kdgantt		--with-kde
+%find_lang ktnef		--with-kde
 
-%find_lang libkcal --with-kde
-%find_lang libkcalsystem --with-kde
+%find_lang libkcal		--with-kde
+%find_lang libkcalsystem	--with-kde
 cat libkcalsystem.lang >> libkcal.lang
 
-%find_lang libkdenetwork --with-kde
-%find_lang libkdepim --with-kde
-%find_lang libksieve --with-kde
-%find_lang libksync --with-kde
+%find_lang libkdenetwork	--with-kde
+%find_lang libkdepim		--with-kde
+%find_lang libksieve		--with-kde
+%find_lang libksync		--with-kde
 mv {libksync,korganizer-libs}.lang
-%find_lang kgantt --with-kde
+%find_lang kgantt		--with-kde
 cat kgantt.lang >> korganizer-libs.lang
-%find_lang libkpimexchange --with-kde
+%find_lang libkpimexchange	--with-kde
 cat libkpimexchange.lang >> korganizer-libs.lang
-%find_lang desktop_kdepim --with-kde
+%find_lang desktop_kdepim	--with-kde
 %endif
 
 files="kaddressbook \
@@ -917,13 +917,13 @@ kpilot"
 
 for i in $files; do
 	> ${i}_en.lang
-        echo "%defattr(644,root,root,755)" > ${i}_en.lang
+	echo "%defattr(644,root,root,755)" > ${i}_en.lang
 	grep en\/ ${i}.lang|grep -v apidocs >> ${i}_en.lang
 	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
 	mv ${i}.lang.1 ${i}.lang
 done
 
-# Workaround for empty en docdirs. They are empty because all en docs are in the  base non-i18n package
+# Workaround for empty en docdirs. They are empty because all en docs are in the base non-i18n package
 # Grep them out
 
 durne=`ls -1 *.lang|grep -v _en`
