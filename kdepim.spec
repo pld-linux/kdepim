@@ -758,7 +758,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
 
-%files kontact
+%files kontact -f kontact.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
