@@ -1,12 +1,11 @@
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
 
-%define		_state		unstable
-%define		_ver		3.3.92
-%define		_snap		050217
+%define		_state		stable
+%define		_ver		3.4.0
 
-%define		_minlibsevr	9:3.3.92.020517
-%define		_minbaseevr	9:3.3.92.020517
+%define		_minlibsevr	9:3.4.0
+%define		_minbaseevr	9:3.4.0
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,21 +13,20 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	%{_ver}.%{_snap}
-#Version:	%{_ver}
-Release:	1
+Version:	%{_ver}
+Release:	0.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	http://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
-#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
-#%% Source0-md5:	bf99a73889c00597c0e2303ed4b3befc
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
+# Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
 Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 BuildRequires:	automake
 BuildRequires:	bison
+BuildRequires:	flex
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
 %{?with_apidocs:BuildRequires:	graphviz}
@@ -462,8 +460,7 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
-%setup -q -n %{name}-%{_snap}
-#%setup -q
+%setup -q
 %patch0 -p1
 #%patch1 -p1
 
