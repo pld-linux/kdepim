@@ -6,7 +6,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.3
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -118,7 +118,9 @@ install -d $RPM_BUILD_ROOT%{_applnkdir}{/Office/PIMs,/Settings/KDE}
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
-mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs/}
+mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications/*,Office/PIMs/}
+install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}/
+install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}/
 
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
@@ -128,6 +130,9 @@ for i in $programs; do
 	%find_lang $i --with-kde
 	cat $i.lang >> kdepim.lang
 done
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
