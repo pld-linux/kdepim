@@ -47,12 +47,13 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Obsoletes:	kdeaddons-kontact
+Obsoletes:	kdepim-kontact
 Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs
-#Obsoletes:	kdepim-libkcal
-Obsoletes:	kdepim-kontact
-Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kresources
+Obsoletes:	kdepim-ksync
+#Obsoletes:	kdepim-libkcal
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
