@@ -82,7 +82,6 @@ bazuj±cych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
-Requires:	kdebase-core >= %{version}
 Requires:	kdelibs-kabc >= %{version}
 Requires:	%{name}-libkdepim = %{version}-%{release}
 
