@@ -58,7 +58,7 @@ BuildRequires:	qt-designer-libs
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
-Requires:	%{name}-libs
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs 
 #Obsoletes:	kdepim-libkcal
@@ -93,18 +93,7 @@ Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Summary(ru):	æÁÊÌÙ ÒÁÚÒÁÂÏÔËÉ ÄÌÑ kdepim
 Group:		X11/Development/Libraries
 Requires:	kdelibs-devel >= %{_minlibsevr}
-#Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libknodecommon = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libknotes_xmlrpc = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Conflicts:	kdenetwork-devel < 10:3.1.90
 Obsoletes:	kdepim-libkcal-devel
 
@@ -136,24 +125,11 @@ API documentation.
 %description apidocs -l pl
 Dokumentacja API.
 
-%package -n kde-kio-sieve
-Summary:	KDE SIEVE protocol service
-Summary(pl):	Obs³uga protoko³u SIEVE
-Group:		X11/Libraries
-#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-Conflicts:	kdepim-kmail < 3:3.2.90.040210
-
-%description -n kde-kio-sieve
-KDE SIEVE protocol service.
-
-%description -n kde-kio-sieve -l pl
-Obs³uga protoko³u SIEVE.
-
 %package -n kde-kio-newimap4
 Summary:	New IMAP4 protocol service 
 Summary(pl):	Nowa obs³uga protoko³u IMAP4
 Group:		X11/Libraries
-#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description -n kde-kio-newimap4
 New IMAP4 protocol service.
@@ -167,7 +143,7 @@ Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
 Requires:	kdelibs >= %{_minlibsevr}
-#Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
 Address Book.
@@ -175,24 +151,11 @@ Address Book.
 %description kaddressbook -l pl
 Ksi±¿ka adresowa.
 
-%package kaddressbook-libs
-Summary:	Address Book - shared libs
-Summary(pl):	Ksi±¿ka adresowa - biblioteki wspó³dzielone
-Group:		X11/Libraries
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-Obsoletes:	%{name}-kaddressbook < 3:3.1.92.031012
-
-%description kaddressbook-libs
-Address Book - shared libs.
-
-%description kaddressbook-libs -l pl
-Ksi±¿ka adresowa - biblioteki wspó³dzielone.
-
 %package kalarm
 Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description kalarm
 TODO.
@@ -205,7 +168,7 @@ Summary:	A communication program between mobile phone and PC
 Summary(pl):	Program do komunikacji miêdzy PC a tel. komórkowym
 Group:		X11/Applications
 Requires:	kdebase-core >= %{_minlibsevr}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-cellphone
 
 %description kandy
@@ -220,8 +183,7 @@ synchronizacjê danych z telefonu z danymi na PC.
 Summary:	Personal timetracker
 Summary(pl):	Osobisty czasomierz
 Group:		X11/Applications
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
@@ -242,7 +204,7 @@ Requires:	kdebase-core >= %{_minbaseevr}
 Requires:	kde-kio-imap4 >= %{_minbaseevr}
 Requires:	kde-kio-pop3 >= %{_minbaseevr}
 Requires:	kde-kio-smtp >= %{_minbaseevr}
-#Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-sieve
 Obsoletes:	kdenetwork-kmail
 
@@ -269,9 +231,7 @@ Summary(pt_BR):	Leitor de notícias (news) do KDE
 Group:		X11/Applications
 Requires:	kde-kio-nntp >= %{_minbaseevr}
 Requires:	kdebase-core >= %{_minbaseevr}
-#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-knode
 
 %description knode
@@ -288,7 +248,7 @@ Leitor de notícias (news) do KDE.
 Summary:	Yellow cards
 Summary(pl):	¯ó³te karteczki
 Group:		X11/Applications
-Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
@@ -305,7 +265,7 @@ komputerów.
 Summary:	A command line ICard tool
 Summary(pl):	Narzêdzie dostêpu do plików kalendarza z linii poleceñ
 Group:		Applications
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description konsolekalendar
 Command line tool for accessing calendar files.
@@ -319,8 +279,7 @@ Summary(pl):	Wska¼nik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
 Requires:	kdebase-kicker >= %{_minbaseevr}
-#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
 
 %description korn
@@ -337,8 +296,7 @@ Miniaplicativo de monitoração da caixa de correio.
 Summary:	A sync tool for palmtops
 Summary(pl):	Narzêdzie do synchronizacji z palmtopami
 Group:		X11/Applications
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
 Obsoletes:	kdepim-kpalmdoc
 Obsoletes:	kdepim-pilot
@@ -364,7 +322,7 @@ Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Przegl±darka/ekstraktor plików TNEF
 Group:		X11/Applications
 Requires:	kdebase-core >= %{_minbaseevr}
-#Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
 
 %description ktnef
@@ -372,92 +330,6 @@ A viewer/extractor for TNEF files.
 
 %description ktnef -l pl
 Przegl±darka/ekstraktor plików TNEF.
-
-%package libkcal
-Summary:	kcal library
-Summary(pl):	Biblioteka kcal
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libkcal
-kcal library.
-
-%description libkcal -l pl
-Biblioteka kcal.
-
-%package libkdenetwork
-Summary:	A network library
-Summary(pl):	Biblioteka sieciowa
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-Obsoletes:	kdenetwork
-
-%description libkdenetwork
-A network library.
-
-%description libkdenetwork -l pl
-Biblioteka sieciowa.
-
-%package libkdepim
-Summary:	kdepim library
-Summary(pl):	Biblioteka kdepim
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libkdepim
-kdepim library.
-
-%description libkdepim -l pl
-Biblioteka kdepim.
-
-%package libknodecommon
-Summary:	knodecommon library
-Summary(pl):	Biblioteka knodecommon
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libknodecommon
-knodecommon library.
-
-%description libknodecommon -l pl
-Biblioteka knodecommon.
-
-%package libkpilot
-Summary:	kpilot library
-Summary(pl):	Biblioteka kpilot
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libkpilot
-kpilot library.
-
-%description libkpilot -l pl
-Biblioteka kpilot.
-
-%package libktnef
-Summary:	ktnef library
-Summary(pl):	Biblioteka ktnef
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-Obsoletes:	kdepim-ktnef < 3:3.1.92.031012
-
-%description libktnef
-ksieve ktnef.
-
-%description libktnef -l pl
-Biblioteka ktnef.
-
-%package libmimelib
-Summary:	mimelib library, based on mimepp library
-Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
-Group:		X11/Libraries
-Requires:	kdelibs >= %{_minlibsevr}
-
-%description libmimelib
-mimelib library, based on mimepp library.
-
-%description libmimelib -l pl
-Biblioteka mimelib oparta na bibliotece mimepp.
 
 %package libs
 Summary:	TODO
