@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	2.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -26,13 +26,13 @@ Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/kde-i18n-%{name}-%{vers
 # Source1-md5:	3a7e3defa86c10d9764a22079b9a247e
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
+BuildRequires:	perl
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
-BuildRequires:	perl
 Requires:	kdelibs >= %{version}
-Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	korganizer
 
 %define		_prefix		/usr/X11R6
 %define         _htmldir        /usr/share/doc/kde/HTML
@@ -283,12 +283,13 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 mv $ALD/{Applications/*,Office/PIMs}
 mv $ALD/Utilities/{More/*,.}
 
-# bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kalarmd		--with-kde
 cat kalarmd.lang >> kalarm.lang
+
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
 %find_lang	knotes		--with-kde
