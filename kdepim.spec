@@ -495,7 +495,7 @@ libksieve, libmimelib.
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
 	-e 's/Terminal=0/Terminal=false/' \
 	kandy/src/kandy.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Utility;/' \
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Utility;Applet;/' \
 	knotes/knotes.desktop
 %{__sed} -i -e 's/Terminal=0/Terminal=false/' \
 	karm/support/karm.desktop \
