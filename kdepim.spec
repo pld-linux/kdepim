@@ -5,14 +5,14 @@
 #	- Recheck dependencies
 
 %define         _state          unstable
-%define         _kdever         kde-3.1-rc2
+%define         _kdever         kde-3.1-rc3
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.0.98
+Version:	3.0.99
 Release:	1
 Epoch:		2
 License:	GPL
