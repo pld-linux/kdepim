@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	3
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -29,6 +29,7 @@ Source1:        http://ep09.pld-linux.org/~djurban/kde/i18n/kde-i18n-%{name}-%{v
 %endif
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
+Patch2:         %{name}-kmail_critical.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	docbook-dtd41-sgml
@@ -785,6 +786,7 @@ Pliki umiЙdzynarodawiaj╠ce dla kgantt.
 %setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cp /usr/share/automake/config.sub admin
