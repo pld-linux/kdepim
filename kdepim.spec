@@ -14,7 +14,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -28,7 +28,7 @@ BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	perl
 BuildRequires:	pilot-link-devel
-BuildRequires:	qt-devel >= 3.0.5
+BuildRequires:	qt-devel >= 3.1.2
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -82,7 +82,7 @@ bazuj±cych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
 Address Book
@@ -94,7 +94,7 @@ Ksi±¿ka adresowa
 Summary:	Alarm
 Summary(pl):	Alarm
 Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kalarm
 Reminder Message Scheduler
