@@ -113,8 +113,7 @@ bazuj±cych na kdepim.
 %package apidocs
 Summary:	API documentation
 Summary(pl):	Dokumentacja API
-Group:		Development/Docs
-######		Unknown group!
+Group:		Documentation
 Requires:	kdelibs >= 9:3.2.90
 
 %description apidocs
