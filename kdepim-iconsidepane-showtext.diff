@@ -1,11 +1,11 @@
---- kdepim-3.4.0/kontact/src/iconsidepane.cpp.orig	2005-03-19 23:26:33.000000000 +0100
-+++ kdepim-3.4.0/kontact/src/iconsidepane.cpp	2005-03-24 01:00:06.000000000 +0100
-@@ -124,12 +125,24 @@
+--- kdepim-3.4.0/kontact/src/iconsidepane.cpp.orig	20 Feb 2005 19:21:29 -0000	1.40
++++ kdepim-3.4.0/kontact/src/iconsidepane.cpp	28 Mar 2005 21:37:10 -0000
+@@ -124,12 +124,24 @@
  int EntryItem::width( const QListBox *listbox ) const
  {
    int w;
 -  if ( text().isEmpty() )
-+  if ( text().isEmpty() && !showText() )
++  if ( text().isEmpty() && !navigator()->showText() )
 +    // dont show text or text empty: only icon's width
      w = mPixmap.width();
    else if (navigator()->viewMode() > SmallIcons)
@@ -13,7 +13,7 @@
 +  {
 +    // icon above text, take max of text's and icon's widths
 +    // we actually dont wnat the text's width when we dont show it
-+    if (showText())
++    if (navigator()->showText())
 +      w = QMAX( (int)navigator()->viewMode(), listbox->fontMetrics().width( text() ) );
 +    else
 +      w = (int)navigator()->viewMode();
@@ -23,17 +23,17 @@
 +  {
 +    // text next to icon: sum their widhts 
 +    w = (int)navigator()->viewMode() + 4;
-+    if (showText()) w += listbox->fontMetrics().width( text() );
++    if (navigator()->showText()) w += listbox->fontMetrics().width( text() );
 +  }
  
    return w + ( KDialog::marginHint() * 2 );
  }
-@@ -137,14 +150,28 @@
+@@ -137,14 +149,28 @@
  int EntryItem::height( const QListBox *listbox ) const
  {
    int h;
 -  if ( text().isEmpty() )
-+  if ( text().isEmpty() && !showText() )
++  if ( text().isEmpty() && !navigator()->showText() )
 +    // text is empty or we dont show text - only height of pixmap (+4 margin)
      h = mPixmap.height() + 4;
    else if (navigator()->viewMode() > SmallIcons)
@@ -43,7 +43,7 @@
 +    // returns height of icon + distance ebtween baselines + 4 margin
 +    // we dont want the distance when we dont show text
 +    h = (int)navigator()->viewMode() + 4;
-+    if (showText()) h+=listbox->fontMetrics().lineSpacing();
++    if (navigator()->showText()) h+=listbox->fontMetrics().lineSpacing();
 +  }
    else
 -    h = QMAX( (int)navigator()->viewMode(),
@@ -52,7 +52,7 @@
 +  {
 +    // icon next to text, height is (max of icon height and 
 +    // baseline distance) + 
-+    if (showText)
++    if (navigator()->showText())
 +      h = QMAX( (int)navigator()->viewMode(),
 +                listbox->fontMetrics().lineSpacing() ) +
 +                KDialog::spacingHint() * 2;
@@ -62,65 +62,81 @@
  
    return h;
  }
-@@ -192,7 +219,7 @@
+@@ -192,7 +218,7 @@
      p->setPen( box->colorGroup().highlightedText() );
    }
  
 -  if ( !text().isEmpty() ) {
-+  if ( !text().isEmpty() && showText() ) {
++  if ( !text().isEmpty() /*&& navigator()->showText()*/ ) {
      QFontMetrics fm = p->fontMetrics();
  
      int x = 0;
-@@ -218,6 +245,7 @@
+@@ -218,6 +244,7 @@
      else
        p->setPen( box->colorGroup().text() );
  
-+  if (showText())
++  if ( navigator()->showText() )
      p->drawText( x, y, text() );
    }
  
-@@ -241,6 +269,7 @@
+@@ -241,6 +268,7 @@
    mMouseOn = 0;
    mHighlightItem = 0;
    mViewMode = sizeIntToEnum( Prefs::self()->sidePaneIconSize() );
-+  mHaveText=Prefs::self()->SidePaneShowText();
++  mHaveText=Prefs::self()->sidePaneShowText();
    setSelectionMode( KListBox::Single );
    viewport()->setBackgroundMode( PaletteBackground );
    setFrameStyle( QFrame::NoFrame );
-@@ -438,13 +467,39 @@
-   menu.insertItem( i18n( "Small" ), (int)SmallIcons );
-   menu.insertItem( i18n( "Text Only" ), (int)TextOnly );
+@@ -433,18 +461,52 @@
+ {
+   KPopupMenu menu;
+   menu.insertTitle( i18n( "Icon Size" ) );
+-  menu.insertItem( i18n( "Large" ), (int)LargeIcons );
+-  menu.insertItem( i18n( "Normal" ), (int)NormalIcons );
+-  menu.insertItem( i18n( "Small" ), (int)SmallIcons );
+-  menu.insertItem( i18n( "Text Only" ), (int)TextOnly );
++  int i=1;
++  menu.insertItem( i18n( "Large" ), (int)LargeIcons, i++ );
++  menu.insertItem( i18n( "Normal" ), (int)NormalIcons,i++ );
++  menu.insertItem( i18n( "Small" ), (int)SmallIcons,i++ );
++  menu.insertItem( i18n( "Text Only" ), (int)TextOnly,i );
    menu.setItemChecked( (int)mViewMode, true );
 + 
 +  // needed to check if we show any icons at all, we cant disable
 +  // both icons and text right?
 +  mViewMode = sizeIntToEnum( Prefs::self()->sidePaneIconSize() );
 +  // needed to know whether to ask user for showing or hiding the text
-+  mHaveText=Prefs::self()->SidePaneShowText();
++  mHaveText=Prefs::self()->sidePaneShowText();
 +  
-+  if (mViewMode != (int)TextOnly)
++  if (mViewMode != TextOnly)
 +  {
-+      menu.insertSeparator();
++      menu.insertSeparator(i+1);
 +      // the current seting is no-text
++      kdWarning(5600)<< "IconShowText=" << IconShowText - 1 << "\n";
 +      if (mHaveText != IconShowText)
-+          menu.insertItem( i18n( "Show Text" ), IconShowText);
++          menu.insertItem( i18n( "Show Text" ), IconShowText,i+2);
 +      else
-+          menu.insertItem( i18n( "Hide Text" ), IconShowText-1);
++          menu.insertItem( i18n( "Hide Text" ), IconShowText-1,i+2);
 +  }
 +      
    int choice = menu.exec( pos );
  
    if ( choice == -1 )
      return;
--
--  mViewMode = sizeIntToEnum( choice );
--  Prefs::self()->setSidePaneIconSize( choice );
 +// choice is not from an icon size menu part and it is either
 +// IconShowText=showtext or the IconShowText-1 = dont show text
-+  if ( choice < 0 ) 
++  kdWarning(5600) << "Index: " <<  menu.indexOf(choice) << "\n"; 
++   kdWarning(5600) << "Wybor: " << choice << "\n";
+ 
+-  mViewMode = sizeIntToEnum( choice );
+-  Prefs::self()->setSidePaneIconSize( choice );
++  if ( menu.indexOf(choice) == i+2 ) 
 +  {
 +      if (choice==IconShowText || choice==IconShowText-1) 
++      {
++         mHaveText=choice;
 +         Prefs::self()->setSidePaneShowText(choice) ;
++      }
 +  }
 +  else
 +  {
@@ -130,25 +146,35 @@
  
    int maxWidth = 0;
    QListBoxItem* it = 0;
---- kdepim-3.4.0/kontact/src/iconsidepane.h.orig	2005-03-19 23:54:23.000000000 +0100
-+++ kdepim-3.4.0/kontact/src/iconsidepane.h	2005-03-24 01:01:55.000000000 +0100
-@@ -37,6 +37,7 @@
+--- kdepim-3.4.0/kontact/src/iconsidepane.h.orig	20 Feb 2005 15:33:47 -0000	1.16
++++ kdepim-3.4.0/kontact/src/iconsidepane.h	28 Mar 2005 21:37:11 -0000
+@@ -22,7 +22,7 @@
+ #define KONTACT_ICONSIDEPANEBASE_H
+ 
+ #include "sidepanebase.h"
+-
++#include "prefs.h"
+ #include <klistbox.h>
+ 
+ class QSignalMapper;
+@@ -37,6 +37,8 @@
  class Navigator;
  
  enum IconViewMode { LargeIcons = 48, NormalIcons = 32, SmallIcons = 22, TextOnly = 0 };
-+const int IconShowText = -2;
++// always set greater by 2 then max (IconViewMode) and sync kontact.kcfg with it
++const int IconShowText = 50;
  
  /**
    A @see QListBoxPixmap Square Box with an optional icon and a text
-@@ -96,6 +97,7 @@
+@@ -96,6 +98,7 @@
      void highlightItem( EntryItem* item );
  
      IconViewMode viewMode() { return mViewMode; }
-+    bool showText() { return mHaveText==IconShowText && viewMode() != TextOnly  ;  }
++    bool showText() { return mHaveText==IconShowText && mViewMode != TextOnly || mViewMode == TextOnly  ;  }
      IconViewMode sizeIntToEnum(int size) const;
      const QPtrList<KAction> & actions() { return mActions; }
    signals:
-@@ -123,6 +125,7 @@
+@@ -123,6 +126,7 @@
    private:
      SidePaneBase *mSidePane;
      IconViewMode mViewMode;
@@ -156,15 +182,16 @@
  
      QListBoxItem* mMouseOn;
  
---- kdepim-3.4.0/kontact/src/kontact.kcfg.orig	2005-03-19 23:49:52.000000000 +0100
-+++ kdepim-3.4.0/kontact/src/kontact.kcfg	2005-03-24 01:03:18.000000000 +0100
-@@ -20,7 +20,9 @@
+--- kdepim-3.4.0/kontact/src/kontact.kcfg.orig	24 Feb 2005 21:14:52 -0000	1.10
++++ kdepim-3.4.0/kontact/src/kontact.kcfg	28 Mar 2005 21:37:12 -0000
+@@ -20,7 +20,10 @@
      <entry type="IntList" name="SidePaneSplitter">
        <default>1</default>
      </entry>
 -
++    <!-- Make it always max(IconSize) + 2 -->
 +    <entry type="Int" name="SidePaneShowText">
-+      <default>-2</default>
++      <default>50</default>
 +    </entry>
      <entry type="Int" name="SidePaneIconSize">
        <default>32</default>
