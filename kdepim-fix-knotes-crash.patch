@@ -1,0 +1,11 @@
+--- kdepim-3.0.3/knotes/knotesapp.cpp--	2002-09-13 15:22:50.000000000 +0200
++++ kdepim-3.0.3/knotes/knotesapp.cpp	2002-09-13 15:23:06.000000000 +0200
+@@ -132,7 +132,7 @@ KNotesApp::KNotesApp()
+ KNotesApp::~KNotesApp()
+ {
+     saveNotes();
+-    disconnect();
++    //disconnect();
+     m_noteList.clear();
+ 
+     delete factory;
