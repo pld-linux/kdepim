@@ -6,11 +6,6 @@ Release:	1
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Group(de):	X11/Applikationen
-Group(es):	X11/Aplicaciones
-Group(pl):	X11/Aplikacje
-Group(pt_BR):	X11/AplicaГУes
-Group(pt):	X11/AplicaГУes
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	zlib-devel
@@ -60,13 +55,6 @@ twister: klient PIM.
 Summary:	Development files for KDE pim
 Summary:	Pliki nagЁowkowe do KDE pim
 Group:		X11/Development/Libraries
-Group(de):	X11/Entwicklung/Libraries
-Group(es):	X11/Desarrollo/Bibliotecas
-Group(fr):	X11/Development/Librairies
-Group(pl):	X11/Programowanie/Biblioteki
-Group(pt_BR):	X11/Desenvolvimento/Bibliotecas
-Group(ru):	X11/Разработка/Библиотеки
-Group(uk):	X11/Розробка/Б╕бл╕отеки
 
 %description devel
 Development files for KDE pim.
