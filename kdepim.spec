@@ -38,7 +38,7 @@ BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gpgme-devel
-BuildRequires:	gnupg >= 1.9.5
+BuildRequires:	gnupg >= 1.2.2
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
