@@ -349,6 +349,18 @@ Additional kresources definitions.
 %description kresources -l pl
 Dodatkowe definicje kresources.
 
+%package kresources-devel
+Summary:        Additional kresources definitions
+Summary(pl):    Dodatkowe definicje kresources
+Group:		X11/Development/Libraries
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+
+%description kresources-devel
+Additional kresources definitions.
+
+%description kresources-devel -l pl
+Dodatkowe definicje kresources.
+
 %package ktnef
 Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Konwerter/ekstraktor plików TNEF
@@ -446,11 +458,9 @@ Biblioteka kdgantt - pliki nag³ówkowe.
 Summary:	kmailprivate library
 Summary(pl):	Biblioteka kmailprivate
 Group:		X11/Libraries
-Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
 
 %description libkmailprivate
@@ -567,7 +577,7 @@ korn \
 kpilot"
 
 for f in *.lang; do
-	if grep -q %{name}--apidocs $f; then
+	if grep -q %{name}-%{_snap}-apidocs $f; then
 		grep -v %{name}-apidocs $f > $f.tmp
 		mv $f.tmp $f
 	fi
@@ -588,6 +598,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	korganizer-libs		-p /sbin/ldconfig
 %postun	korganizer-libs		-p /sbin/ldconfig
+
+%post	kresources		-p /sbin/ldconfig
+%postun	kresources		-p /sbin/ldconfig
 
 %post	libkcal			-p /sbin/ldconfig
 %postun	libkcal			-p /sbin/ldconfig
@@ -618,7 +631,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-apidocs
+%lang(en) %{_kdedocdir}/en/%{name}-%{_snap}-apidocs
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
@@ -669,6 +682,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kaddressbook
 %{_libdir}/kde3/kcm_kabconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
+%{_libdir}/kde3/kcm_kabcustomfields.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kabcustomfields.so
 %{_libdir}/kde3/kcm_kabldapconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabldapconfig.so
 %{_libdir}/kde3/kfile_vcf.la
@@ -693,11 +708,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
 %{_datadir}/services/kabconfig.desktop
+%{_datadir}/services/kabcustomfields.desktop
 %{_datadir}/services/kabldapconfig.desktop
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/ldifvcardthumbnail.desktop
 %{_datadir}/servicetypes/dcopaddressbook.desktop
+%{_datadir}/servicetypes/kaddressbook_contacteditorwidget.desktop
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
@@ -775,6 +792,8 @@ rm -rf $RPM_BUILD_ROOT
 %files kontact -f kontact_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
+%{_libdir}/kde3/kcm_kontactsummary.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kontactsummary.so
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
 # kitchensync kontact plugin
@@ -786,6 +805,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
 %{_libdir}/kde3/libkontact_knotesplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_knotesplugin.so
+%{_libdir}/kde3/libkontact_kpilotplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_kpilotplugin.so
 %{_libdir}/kde3/libkontact_summaryplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
 %{_libdir}/kde3/libkontact_weatherplugin.la
@@ -799,6 +820,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
 %{_datadir}/config.kcfg/kontact.kcfg
+%{_datadir}/services/kcmkontactsummary.desktop
 %{_datadir}/services/kontact
 %{_datadir}/services/kontactconfig.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
@@ -838,14 +860,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/korganizer.kcfg
-%{_datadir}/services/configcolors.desktop
-%{_datadir}/services/configfonts.desktop
-%{_datadir}/services/configfreebusy.desktop
-%{_datadir}/services/configgroupautomation.desktop
-%{_datadir}/services/configgroupscheduling.desktop
-%{_datadir}/services/configmain.desktop
-%{_datadir}/services/configtime.desktop
-%{_datadir}/services/configviews.desktop
+%{_datadir}/services/korganizer_configcolors.desktop
+%{_datadir}/services/korganizer_configfonts.desktop
+%{_datadir}/services/korganizer_configfreebusy.desktop
+%{_datadir}/services/korganizer_configgroupautomation.desktop
+%{_datadir}/services/korganizer_configgroupscheduling.desktop
+%{_datadir}/services/korganizer_configmain.desktop
+%{_datadir}/services/korganizer_configtime.desktop
+%{_datadir}/services/korganizer_configviews.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
@@ -937,7 +959,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_todo.so
 %{_libdir}/kde3/conduit_vcal.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_vcal.so
+%{_libdir}/kde3/kcm_kpilot.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kpilot.so
 %{_datadir}/apps/kpilot
+%{_datadir}/config.kcfg/abbrowserconduit.kcfg
+%{_datadir}/config.kcfg/docconduit.kcfg
+%{_datadir}/config.kcfg/knotesconduit.kcfg
+%{_datadir}/config.kcfg/kpalmdoc.kcfg
+%{_datadir}/config.kcfg/kpilot.kcfg
+%{_datadir}/config.kcfg/kpilotlib.kcfg
+%{_datadir}/config.kcfg/malconduit.kcfg
+%{_datadir}/config.kcfg/popmail.kcfg
+%{_datadir}/config.kcfg/sysinfoconduit.kcfg
+%{_datadir}/config.kcfg/timeconduit.kcfg
+%{_datadir}/config.kcfg/vcalconduitbase.kcfg
+%{_datadir}/services/kpilot_config.desktop
 %{_datadir}/services/*conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
 %{_desktopdir}/kde/kpalmdoc.desktop
@@ -945,11 +981,32 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 
+# TODO
 %files kresources
 %defattr(644,root,root,755)
+%{_libdir}/libkabc_xmlrpc.la
+%%attr(755,root,root) %{_libdir}/libkabc_xmlrpc.so.*.*.*
 %{_libdir}/kde3/kabc_imap.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_imap.so
+%{_libdir}/kde3/kabc_xmlrpc.la
+%attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
+%{_libdir}/kde3/kcal_xmlrpc.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
+%{_libdir}/kde3/knotes_imap.la
+%attr(755,root,root) %{_libdir}/kde3/knotes_imap.so
+%{_libdir}/kde3/knotes_local.la
+%attr(755,root,root) %{_libdir}/kde3/knotes_local.so
+%{_libdir}/kde3/resourcecalendarexchange.la
+%attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/services/kresources/kabc/imap.desktop
+%{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
+%{_datadir}/services/kresources/knotes/imap.desktop
+%{_datadir}/services/kresources/knotes/local.desktop
+
+%files kresources-devel
+%defattr(644,root,root,755)
+%{_includedir}/kabc/kabc_resourcexmlrpc.h
+%{_libdir}/libkabc_xmlrpc.so
 
 %files ktnef
 %defattr(644,root,root,755)
