@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030512
+%define		_snap		030516
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
@@ -458,6 +458,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabldapconfig.so
 %{_libdir}/kde3/kfile_vcf.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
+%{_libdir}/kde3/ldifvcardthumbnail.la
+%attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
 %{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %{_libdir}/kde3/libkaddrbk_distributionlist.la
@@ -477,6 +479,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kaddressbook
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
+%{_datadir}/services/ldifvcardthumbnail.desktop
 %{_datadir}/servicetypes/dcopaddressbook.desktop
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
