@@ -282,7 +282,7 @@ Group:		X11/Libraries
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	%{name}-korganizer < 3:3.1.92.031012
-Obsoletes:	%{name}-commonlibs < 3:3.1.92.031012
+Obsoletes:	%{name}-commonlibs
 
 %description korganizer-libs
 korganizer - shared libs.
