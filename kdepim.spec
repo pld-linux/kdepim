@@ -806,39 +806,39 @@ cp -f /usr/share/automake/config.sub admin
 %{__make}
 
 %install
-##rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
 
-##%{__make} install \
-#	DESTDIR=$RPM_BUILD_ROOT \
-#	kde_htmldir=%{_kdedocdir}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	kde_htmldir=%{_kdedocdir}
 
 # Debian manpages
-##install -d $RPM_BUILD_ROOT%{_mandir}/man1
-#cd debian
-##%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
-#mv -f alarmd.sgml kalarmd.sgml
-#for f in *.sgml ; do
-#	base="$(basename $f .sgml)"
-#	upper="$(echo ${base} | tr a-z A-Z)"
-#	db2man $f
-#	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
-#done
-#cd ..
+install -d $RPM_BUILD_ROOT%{_mandir}/man1
+cd debian
+%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+mv -f alarmd.sgml kalarmd.sgml
+for f in *.sgml ; do
+	base="$(basename $f .sgml)"
+	upper="$(echo ${base} | tr a-z A-Z)"
+	db2man $f
+	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
+done
+cd ..
 
-##%if %{with i18n}
-#if [ -f "%{SOURCE1}" ] ; then
-#	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
-#	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
-#		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
-#			rm -f $f
-#		fi
-#	done
-#else
-#	echo "No i18n sources found and building --with i18n. FIXIT!"
-#	exit 1
-#fi
+%if %{with i18n}
+if [ -f "%{SOURCE1}" ] ; then
+	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
+		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
+			rm -f $f
+		fi
+	done
+else
+	echo "No i18n sources found and building --with i18n. FIXIT!"
+	exit 1
+fi
 
-##%endif
+%endif
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
