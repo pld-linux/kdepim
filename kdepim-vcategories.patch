@@ -13,7 +13,7 @@
  X-KDE-StartupNotify=true
  X-DCOP-ServiceType=Unique
 -Categories=Qt;KDE;Network
-+Categories=Qt;KDE;Network;News
++Categories=Qt;KDE;Network;X-News
 +
 --- kdepim-030329/kontact/src/Kontact.desktop~	Wed Mar 26 00:48:02 2003
 +++ kdepim-030329/kontact/src/Kontact.desktop	Mon Mar 31 10:20:38 2003
@@ -21,11 +21,11 @@
  GenericName[zh_CN]=个人信息管理器
  Terminal=0
  X-KDE-StartupNotify=true
-+Categories=Qt;KDE;Office;PIM
++Categories=Qt;KDE;Office;X-PIM
 --- kdepim-030329/korganizer/korganizer.desktop~	Fri Jan 24 00:56:15 2003
 +++ kdepim-030329/korganizer/korganizer.desktop	Mon Mar 31 10:21:23 2003
 @@ -70,3 +70,4 @@
  X-KDE-StartupNotify=true
  X-DCOP-ServiceType=Unique
  X-DCOP-ServiceName=korganizer
-+Categories=Qt;KDE;Office;PIM
++Categories=Qt;KDE;Office;X-PIM
