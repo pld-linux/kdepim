@@ -26,7 +26,7 @@ Group:		X11/Applications
 #Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
 #Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
 Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	d41d8cd98f00b204e9800998ecf8427e
+# Source0-md5:	c7f69b24b21a8d9853e9d9906b48c624
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -38,11 +38,11 @@ BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
-BuildRequires:	bluez-libs-devel
+#BuildRequires:	bluez-libs-devel
 BuildRequires:	gpgme-devel
 BuildRequires:	gnupg >= 1.9.5
 BuildRequires:	lockdev-devel
-BuildRequires:  libgnokii-devel
+#BuildRequires:  libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
