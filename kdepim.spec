@@ -80,6 +80,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
+install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
+
+mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs}/korganizer.desktop
+
 gzip -9nf README*
 
 %clean
@@ -90,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc *.gz
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/*.so.*
-%{_applnkdir}/Applications/*
+%{_applnkdir}/Office/PIMs/*
 %{_applnkdir}/Utilities/*
 %{_datadir}/autostart/alarmd.desktop
 %{_datadir}/apps/*
