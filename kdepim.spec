@@ -7,15 +7,15 @@
 #
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
-%bcond_without	kimproxy	# without kimproxy
+%bcond_without	kimproxy	# without kimproxy support (for botstrap)
 
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040513
+%define		_snap		040516
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040513
-%define		_minbaseevr	9:3.2.90.040513
+%define		_minlibsevr	9:3.2.90.040515
+%define		_minbaseevr	9:3.2.90.040515
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -92,15 +92,20 @@ Summary(pl):	Pliki nag≥Ûwkowe do KDE pim
 Summary(uk):	Ê¡ Ã… “œ⁄“œ¬À… ƒÃ— kdepim
 Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
 Group:		X11/Development/Libraries
-Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= %{_minlibsevr}
-Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libknodecommon = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libknotes_xmlrpc = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Conflicts:	kdenetwork-devel < 10:3.1.90
 Obsoletes:	kdepim-libkcal-devel
 
 %description devel
@@ -388,7 +393,6 @@ Summary:	kcal library
 Summary(pl):	Biblioteka kcal
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-#Obsoletes:	kdepim
 
 %description libkcal
 kcal library.
@@ -414,7 +418,6 @@ Summary:	kdepim library
 Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-#Obsoletes:	kdepim
 
 %description libkdepim
 kdepim library.
@@ -422,12 +425,35 @@ kdepim library.
 %description libkdepim -l pl
 Biblioteka kdepim.
 
+%package libknodecommon
+Summary:	knodecommon library
+Summary(pl):	Biblioteka knodecommon
+Group:		X11/Libraries
+Requires:	kdelibs >= %{_minlibsevr}
+
+%description libknodecommon
+knodecommon library.
+
+%description libknodecommon -l pl
+Biblioteka knodecommon.
+
+%package libknotes_xmlrpc
+Summary:	knotes_xmlrpc library
+Summary(pl):	Biblioteka knotes_xmlrpc
+Group:		X11/Libraries
+Requires:	kdelibs >= %{_minlibsevr}
+
+%description libknotes_xmlrpc
+knotes_xmlrpc library.
+
+%description libknotes_xmlrpc -l pl
+Biblioteka knotes_xmlrpc.
+
 %package libkpilot
 Summary:	kpilot library
 Summary(pl):	Biblioteka kpilot
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-#Obsoletes:	kdepim
 
 %description libkpilot
 kpilot library.
@@ -465,7 +491,6 @@ Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-#Obsoletes:	kdepim
 
 %description libmimelib
 mimelib library, based on mimepp library.
@@ -478,7 +503,6 @@ Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-#Obsoletes:	kdepim
 
 %description libs
 TODO.
@@ -499,6 +523,9 @@ cd ../libkdepim
 cd ..
 %endif
 
+echo "KDE_OPTIONS = nofinal" >> kitchensync/kitchensync/backup/Makefile.am
+echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
+
 %build
 cp /usr/share/automake/config.sub admin
 
@@ -508,11 +535,8 @@ export UNSERMAKE=/usr/share/unsermake/unsermake
 
 %configure \
 	--disable-rpath \
+	--enable-final \
 	--with-qt-libraries=%{_libdir}
-
-#%{__make} -C kpilot/conduits/vcalconduit korganizerConduit.h
-
-%{__make} -C kpilot/kpilot kpilotSettings.h
 
 %{__make}
 
@@ -524,13 +548,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
-
-# Workaround for doc caches (unsermake bug?)
-cd doc
-for i in `find . -name index.cache.bz2`; do
-	install -c -p -m 644 $i $RPM_BUILD_ROOT%{_kdedocdir}/en/$i
-done
-cd -	 
 
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
@@ -584,12 +601,6 @@ rm -rf $RPM_BUILD_ROOT
 %post	kmail-libs		-p /sbin/ldconfig
 %postun	kmail-libs		-p /sbin/ldconfig
 
-%post	knode			-p /sbin/ldconfig
-%postun	knode			-p /sbin/ldconfig
-
-%post	knotes			-p /sbin/ldconfig
-%postun	knotes			-p /sbin/ldconfig
-
 %post	libkcal			-p /sbin/ldconfig
 %postun	libkcal			-p /sbin/ldconfig
 
@@ -598,6 +609,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libkdepim		-p /sbin/ldconfig
 %postun	libkdepim		-p /sbin/ldconfig
+
+%post	libknodecommon		-p /sbin/ldconfig
+%postun	libknodecommon		-p /sbin/ldconfig
+
+%post	libknotes_xmlrpc	-p /sbin/ldconfig
+%postun	libknotes_xmlrpc	-p /sbin/ldconfig
 
 %post	libkpilot		-p /sbin/ldconfig
 %postun	libkpilot		-p /sbin/ldconfig
@@ -995,8 +1012,6 @@ rm -rf $RPM_BUILD_ROOT
 %files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
-%{_libdir}/libknodecommon.la
-%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
 %{_libdir}/kde3/kcm_knode.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
 %{_libdir}/kde3/libknodepart.la
@@ -1017,8 +1032,6 @@ rm -rf $RPM_BUILD_ROOT
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
-%{_libdir}/libknotes_xmlrpc.la
-%attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %{_libdir}/kde3/knotes_imap.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_imap.so
 %{_libdir}/kde3/knotes_local.la
@@ -1071,6 +1084,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_vcal.so
 %{_libdir}/kde3/kcm_kpilot.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kpilot.so
+%{_libdir}/kde3/kfile_palm.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_palm.so
 %{_datadir}/apps/kconf_update/kpalmdoc.upd
 %{_datadir}/apps/kconf_update/kpilot.upd
 %{_datadir}/apps/kpilot
@@ -1085,6 +1100,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/sysinfoconduit.kcfg
 %{_datadir}/config.kcfg/timeconduit.kcfg
 %{_datadir}/config.kcfg/vcalconduitbase.kcfg
+%{_datadir}/services/kfile_palm.desktop
 %{_datadir}/services/kpilot_config.desktop
 %{_datadir}/services/*conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
@@ -1093,10 +1109,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot.1*
-# TODO
-%{_libdir}/kde3/kfile_palm.la
-%attr(755,root,root) %{_libdir}/kde3/kfile_palm.so
-%{_datadir}/services/kfile_palm.desktop
 
 %files ktnef -f ktnef.lang
 %defattr(644,root,root,755)
@@ -1106,7 +1118,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
 
-### <libs section>
+%files libkcal
+%defattr(644,root,root,755)
+%doc libkcal/{HACKING,README}
+%{_libdir}/libkcal.la
+%attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
 
 %files libkdenetwork
 %defattr(644,root,root,755)
@@ -1124,11 +1140,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
 
-%files libkcal
+%files libknodecommon
 %defattr(644,root,root,755)
-%doc libkcal/{HACKING,README}
-%{_libdir}/libkcal.la
-%attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
+%{_libdir}/libknodecommon.la
+%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+
+%files libknotes_xmlrpc
+%defattr(644,root,root,755)
+%{_libdir}/libknotes_xmlrpc.la
+%attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 
 %files libkpilot
 %defattr(644,root,root,755)
@@ -1193,5 +1213,3 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkcal_imap.so.*.*.*
 %{_libdir}/libkcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
-
-### </libs section>
