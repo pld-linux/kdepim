@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030509
+%define		_snap		030511
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
@@ -83,6 +83,7 @@ Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
 Requires:	kdebase-core >= %{version}
+Requires:	kdelibs-kabc >= %{version}
 Requires:	%{name}-libkdepim = %{version}-%{release}
 
 %description kaddressbook
