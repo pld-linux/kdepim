@@ -1,8 +1,9 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
-
+#
+# Conditional build:
 %bcond_without  i18n    # dont build i18n subpackage
-
+#
 %define		_state		stable
 %define		_ver		3.2.0
 #%%define		_snap		031114
@@ -34,9 +35,9 @@ BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
+BuildRequires:	pcre-devel
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	zlib-devel
-BuildRequires:	pcre-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -61,13 +62,13 @@ Summary(pl):	Pliki nag≥Ûwkowe do KDE pim
 Summary(uk):	Ê¡ Ã… “œ⁄“œ¬À… ƒÃ— kdepim
 Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
 Group:		X11/Development/Libraries
-Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= 9:%{version}
 Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
+Obsoletes:	kdenetwork-devel < 10:3.1.90
 
 %description devel
 This package contains header files needed if you wish to build
@@ -103,7 +104,7 @@ Summary:	Address Book - shared libs
 Summary(pl):	Ksi±øka adresowa - biblioteki wspÛ≥dzielone
 Group:		X11/Libraries
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-Obsoletes:	%{name}-kaddressbook < 3:3.1.92.031012
+Obsoletes:	kdepim-kaddressbook < 3:3.1.92.031012
 
 %description kaddressbook-libs
 Address Book - shared libs.
@@ -149,8 +150,8 @@ Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
-Requires:	kdebase-mailnews >= 9:%{version}
 Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
+Requires:	kdebase-mailnews >= 9:%{version}
 Obsoletes:	kdenetwork-kmail
 
 %description kmail
@@ -174,11 +175,11 @@ Summary:	KDE News Reader
 Summary(pl):	Czytnik newsÛw dla KDE
 Summary(pt_BR):	Leitor de notÌcias (news) do KDE
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
-Requires:	kdebase-mailnews >= 9:%{version}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core >= 9:%{version}
+Requires:	kdebase-mailnews >= 9:%{version}
 Obsoletes:	kdenetwork-knode
 
 %description knode
@@ -251,10 +252,10 @@ kontact - biblioteki wspÛ≥dzielone.
 Summary:	A complete calendar and scheduling progra
 Summary(pl):	Kalendarz wraz z harmonogramem zadaÒ
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core >= 9:%{version}
 Obsoletes:	kdepim-kalarm
 Obsoletes:	kdepim-kgantt
 Obsoletes:	kdepim-kitchensync
@@ -288,8 +289,8 @@ Group:		X11/Libraries
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
-Obsoletes:	%{name}-korganizer < 3:3.1.92.031012
-Obsoletes:	%{name}-commonlibs
+Obsoletes:	kdepim-commonlibs
+Obsoletes:	kdepim-korganizer < 3:3.1.92.031012
 
 %description korganizer-libs
 korganizer - shared libs.
@@ -359,8 +360,8 @@ Dodatkowe definicje kresources.
 Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Konwerter/ekstraktor plikÛw TNEF
 Group:		X11/Applications
-Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core >= 9:%{version}
 Obsoletes:	kdenetwork-korn
 
 %description ktnef
@@ -383,18 +384,18 @@ kcal library.
 Biblioteka kcal.
 
 %package libkcal-devel
-Summary:        libkcal header files
-Summary(pl):    Naglowki libkcal
+Summary:	Header files for libkcal library
+Summary(pl):    Pliki nag≥Ûwkowe biblioteki libkcal
 Group:          X11/Libraries
-Requires:       kdelibs-devel >= 9:%{version}
 Requires:       %{name}-libkcal = %{epoch}:%{version}-%{release}
+Requires:       kdelibs-devel >= 9:%{version}
 Obsoletes:      kdepim
 
 %description libkcal-devel
-libkcal header files.
+Header files for libkcal library.
 
 %description libkcal-devel -l pl
-Naglowki libkcal.
+Pliki nag≥Ûwkowe biblioteki libkcal.
 
 %package libkdenetwork
 Summary:	A network library
@@ -423,30 +424,30 @@ kdepim library.
 Biblioteka kdepim.
 
 %package libkdgantt
-Summary:	A kdgantt library
+Summary:	kdgantt library
 Summary(pl):	Biblioteka kdgantt
 Group:		X11/Libraries
 Requires:	kdelibs >= 9:%{version}
-Obsoletes:	%{name}-korganizer-libs < 3.1.92.031029
+Obsoletes:	kdepim-korganizer-libs < 3.1.92.031029
 
 %description libkdgantt
-A kdgantt library.
+kdgantt library.
 
 %description libkdgantt -l pl
 Biblioteka kdgantt.
 
 %package libkdgantt-devel
-Summary:	A kdgantt library - header files
-Summary(pl):	Biblioteka kdgantt - pliki nag≥Ûwkowe
+Summary:	Header files for kdgantt library
+Summary(pl):	Pliki nag≥Ûwkowe biblioteki kdgantt
 Group:		X11/Development/Libraries
 Requires:	kdelibs-devel >= 9:%{version}
-Obsoletes:	%{name}-devel < 3.1.92.031029
+Obsoletes:	kdepim-devel < 3.1.92.031029
 
 %description libkdgantt-devel
-A kdgantt library - header files.
+Header files for kdgantt library.
 
 %description libkdgantt-devel -l pl
-Biblioteka kdgantt - pliki nag≥Ûwkowe.
+Pliki nag≥Ûwkowe biblioteki kdgantt.
 
 %package libkmailprivate
 Summary:	kmailprivate library
@@ -516,24 +517,35 @@ mimelib library, based on mimepp library.
 %description libmimelib -l pl
 Biblioteka mimelib oparta na bibliotece mimepp.
 
+%package i18n
+Summary:	Internationalization and localization files for kdepim
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla pakietÛw kdepim
+Group:		X11/Applications
+Requires:	kdelibs-i18n >= 9:%{version}
+
+%description i18n
+Common internationalization and localization files for kdepim.
+
+%description i18n -l pl
+WspÛ≥dzielone pliki umiÍdzynarodawiaj±ce dla pakietÛw kdepim.
 
 %package kaddressbook-i18n
 Summary:	Internationalization and localization files for kaddressbook
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kaddressbook
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description kaddressbook-i18n
 Internationalization and localization files for kaddressbook.
 
-%description -l pl kaddressbook-i18n
+%description kaddressbook-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla kaddressbook.
 
 %package kandy-i18n
 Summary:	Internationalization and localization files for kandy
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kandy
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-kandy = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
@@ -542,77 +554,76 @@ Requires:	kdebase-core-i18n >= 9:%{version}
 %description kandy-i18n
 Internationalization and localization files for kandy.
 
-%description -l pl kandy-i18n
+%description kandy-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla kandy.
 
 %package karm-i18n
 Summary:	Internationalization and localization files for karm
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla karm
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-karm = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 
 %description karm-i18n
 Internationalization and localization files for karm.
 
-%description -l pl karm-i18n
+%description karm-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla karm.
 
 %package kmail-i18n
 Summary:	Internationalization and localization files for kmail
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kmail
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kmaila
+Group:		X11/Applications
+Requires:	%{name}-kmail = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libksieve-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libktnef-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-kmail = %{epoch}:%{version}-%{release}
-Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 Requires:	kdebase-mailnews-i18n >= 9:%{version}
-
 
 %description kmail-i18n
 Internationalization and localization files for kmail.
 
-%description -l pl kmail-i18n
-Pliki umiÍdzynarodawiaj±ce dla kmail.
+%description kmail-i18n -l pl
+Pliki umiÍdzynarodawiaj±ce dla kmaila.
 
 %package knode-i18n
 Summary:	Internationalization and localization files for knode
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla knode
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core-i18n >= 9:%{version}
 Requires:	kdebase-mailnews-i18n >= 9:%{version}
-Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
 
 %description knode-i18n
 Internationalization and localization files for knode.
 
-%description -l pl knode-i18n
+%description knode-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla knode.
 
 %package knotes-i18n
 Summary:	Internationalization and localization files for knotes
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla knotes
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
 %description knotes-i18n
 Internationalization and localization files for knotes.
 
-%description -l pl knotes-i18n
+%description knotes-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla knotes.
 
 %package konsolekalendar-i18n
 Summary:	Internationalization and localization files for konsolekalendar
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla konsolekalendar
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla konsolekalendara
+Group:		X11/Applications
 Requires:	%{name}-konsolekalendar = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
@@ -620,40 +631,40 @@ Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 Internationalization and localization files for konsolekalendar.
 
 %description -l pl konsolekalendar-i18n
-Pliki umiÍdzynarodawiaj±ce dla konsolekalendar.
+Pliki umiÍdzynarodawiaj±ce dla konsolekalendara.
 
 %package kontact-i18n
 Summary:	Internationalization and localization files for kontact
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kontact
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kontacta
+Group:		X11/Applications
 Requires:	%{name}-kontact = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
 %description kontact-i18n
 Internationalization and localization files for kontact.
 
-%description -l pl kontact-i18n
-Pliki umiÍdzynarodawiaj±ce dla kontact.
+%description kontact-i18n -l pl
+Pliki umiÍdzynarodawiaj±ce dla kontacta.
 
 %package korganizer-i18n
 Summary:	Internationalization and localization files for korganizer
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korganizer
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korganizera
+Group:		X11/Applications
 Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
+Requires:	%{name}-kgantt-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer-libs-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
-Requires:	%{name}-kgantt-i18n = %{epoch}:%{version}-%{release}
 
 %description korganizer-i18n
 Internationalization and localization files for korganizer.
 
-%description -l pl korganizer-i18n
-Pliki umiÍdzynarodawiaj±ce dla korganizer.
+%description korganizer-i18n -l pl
+Pliki umiÍdzynarodawiaj±ce dla korganizera.
 
 %package korn-i18n
 Summary:	Internationalization and localization files for korn
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korn
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korna
+Group:		X11/Applications
 Requires:	%{name}-korn = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
 Requires:	kdebase-kicker-i18n >= 9:%{version}
@@ -661,123 +672,111 @@ Requires:	kdebase-kicker-i18n >= 9:%{version}
 %description korn-i18n
 Internationalization and localization files for korn.
 
-%description -l pl korn-i18n
-Pliki umiÍdzynarodawiaj±ce dla korn.
+%description korn-i18n -l pl
+Pliki umiÍdzynarodawiaj±ce dla korna.
 
 %package kpilot-i18n
 Summary:	Internationalization and localization files for kpilot
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kpilot
-Group:	X11/Applications
+Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kpilota
+Group:		X11/Applications
 Requires:	%{name}-kpilot = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
 %description kpilot-i18n
 Internationalization and localization files for kpilot.
 
-%description -l pl kpilot-i18n
-Pliki umiÍdzynarodawiaj±ce dla kpilot.
-
-%package i18n
-Summary:	Internationalization and localization files for kdepim
-Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kdepim
-Group:	X11/Applications
-Requires:	kdelibs-i18n >= 9:%{version}
-
-%description i18n
-Common internationalization and localization files for kdepim.
-
-%description -l pl i18n
-WspÛ≥dzielone pliki umiÍdzynarodawiaj±ce dla kdepim.
+%description kpilot-i18n -l pl
+Pliki umiÍdzynarodawiaj±ce dla kpilota.
 
 %package libkdepim-i18n
 Summary:	Internationalization and localization files for libkdepim
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla libkdepim
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkdepim-i18n
 Internationalization and localization files for libkdepim.
 
-%description -l pl libkdepim-i18n
+%description libkdepim-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla libkdepim.
 
 %package libkdenetwork-i18n
 Summary:	Internationalization and localization files for libkdenetwork
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla libkdenetwork
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkdenetwork-i18n
 Internationalization and localization files for libkdenetwork.
 
-%description -l pl libkdenetwork-i18n
+%description libkdenetwork-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla libkdenetwork.
 
 %package libksieve-i18n
 Summary:	Internationalization and localization files for libksieve
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla libksieve
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libksieve-i18n
 Internationalization and localization files for libksieve.
 
-%description -l pl libksieve-i18n
+%description libksieve-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla libksieve.
 
 %package korganizer-libs-i18n
 Summary:	Internationalization and localization files for korganizer-libs
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla korganizer-libs
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description korganizer-libs-i18n
 Internationalization and localization files for korganizer-libs.
 
-%description -l pl korganizer-libs-i18n
+%description korganizer-libs-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla korganizer-libs.
 
 %package libkcal-i18n
 Summary:	Internationalization and localization files for libkcal
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla libkcal
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description libkcal-i18n
 Internationalization and localization files for libkcal.
 
-%description -l pl libkcal-i18n
+%description libkcal-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla libkcal.
 
 %package ktnef-i18n
 Summary:	Internationalization and localization files for ktnef
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla ktnef
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-ktnef = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description ktnef-i18n
 Internationalization and localization files for ktnef.
 
-%description -l pl ktnef-i18n
+%description ktnef-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla ktnef.
 
 %package kgantt-i18n
 Summary:	Internationalization and localization files for kgantt
 Summary(pl):	Pliki umiÍdzynarodawiaj±ce dla kgantt
-Group:	X11/Applications
+Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
 %description kgantt-i18n
 Internationalization and localization files for kgantt.
 
-%description -l pl kgantt-i18n
+%description kgantt-i18n -l pl
 Pliki umiÍdzynarodawiaj±ce dla kgantt.
 
 %prep
@@ -823,7 +822,6 @@ else
 fi
 
 %endif
-	
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -861,7 +859,6 @@ cat kfile_rfc822.lang >> kmail.lang
 %find_lang kio_sieve --with-kde
 cat kio_sieve.lang >> kmail.lang
 
-
 %find_lang kabc2mutt      --with-kde
 cat kabc2mutt.lang >> kaddressbook.lang
 %find_lang kcmkabconfig   --with-kde
@@ -869,8 +866,7 @@ cat kcmkabconfig.lang >> kaddressbook.lang
 %find_lang kfile_vcf      --with-kde
 cat kfile_vcf.lang >> kaddressbook.lang
 
-# Not packagin kmobile, it was disabled by coolo
-
+# Not packaging kmobile, it was disabled by coolo
 
 %find_lang kgantt --with-kde
 %find_lang ktnef --with-kde
@@ -888,7 +884,6 @@ mv {libksync,korganizer-libs}.lang
 cat libkpimexchange.lang >> korganizer-libs.lang
 %find_lang desktop_kdepim --with-kde
 %endif
-
 
 files="kaddressbook \
 kandy \
@@ -909,7 +904,6 @@ for i in $files; do
 	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
 	mv ${i}.lang.1 ${i}.lang
 done
-				
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -951,6 +945,7 @@ rm -rf $RPM_BUILD_ROOT
 %postun	libmimelib		-p /sbin/ldconfig
 
 %if %{with i18n}
+%files i18n -f desktop_kdepim.lang
 %files kaddressbook-i18n -f kaddressbook.lang
 %files kandy-i18n -f kandy.lang
 %files karm-i18n -f karm.lang
@@ -962,7 +957,6 @@ rm -rf $RPM_BUILD_ROOT
 %files korganizer-i18n -f korganizer.lang
 %files korn-i18n -f korn.lang
 %files kpilot-i18n -f kpilot.lang
-%files i18n -f desktop_kdepim.lang
 %files libkdepim-i18n -f libkdepim.lang
 %files libkdenetwork-i18n -f libkdenetwork.lang
 %files libksieve-i18n -f libksieve.lang
@@ -975,6 +969,24 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %lang(en) %{_kdedocdir}/en/%{name}-apidocs
+%attr(755,root,root) %{_libdir}/libkabinterfaces.so
+%attr(755,root,root) %{_libdir}/libkaddressbook.so
+%attr(755,root,root) %{_libdir}/libkalarmd.so
+%attr(755,root,root) %{_libdir}/libkdenetwork.so
+%attr(755,root,root) %{_libdir}/libkdepim.so
+%attr(755,root,root) %{_libdir}/libkgantt.so
+%attr(755,root,root) %{_libdir}/libkmailprivate.so
+%attr(755,root,root) %{_libdir}/libknewstuff.so
+%attr(755,root,root) %{_libdir}/libkontact.so
+%attr(755,root,root) %{_libdir}/libkorganizer.so
+%attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so
+%attr(755,root,root) %{_libdir}/libkpilot.so
+%attr(755,root,root) %{_libdir}/libkpimexchange.so
+%attr(755,root,root) %{_libdir}/libkpinterfaces.so
+%attr(755,root,root) %{_libdir}/libksieve.so
+%attr(755,root,root) %{_libdir}/libksync.so
+%attr(755,root,root) %{_libdir}/libktnef.so
+%attr(755,root,root) %{_libdir}/libmimelib.so
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
@@ -990,34 +1002,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ksieve
 %{_includedir}/ktnef
 %{_includedir}/mimelib
-%{_libdir}/libkabinterfaces.so
-%{_libdir}/libkaddressbook.so
-%{_libdir}/libkalarmd.so
-%{_libdir}/libkdenetwork.so
-%{_libdir}/libkdepim.so
-%{_libdir}/libkgantt.so
-%{_libdir}/libkmailprivate.so
-%{_libdir}/libknewstuff.so
-%{_libdir}/libkontact.so
-%{_libdir}/libkorganizer.so
-%{_libdir}/libkorganizer_eventviewer.so
-%{_libdir}/libkpilot.so
-%{_libdir}/libkpimexchange.so
-%{_libdir}/libkpinterfaces.so
-%{_libdir}/libksieve.so
-%{_libdir}/libksync.so
-%{_libdir}/libktnef.so
-%{_libdir}/libmimelib.so
 # kitchensync part
+#%attr(755,root,root) %{_libdir}/libdummykonnector.so
+#%attr(755,root,root) %{_libdir}/libkitchensyncui.so
+#%attr(755,root,root) %{_libdir}/libkonnector.so
+#%attr(755,root,root) %{_libdir}/libksharedfile.so
+#%attr(755,root,root) %{_libdir}/libksync2.so
+#%attr(755,root,root) %{_libdir}/liblocalkonnector.so
+#%attr(755,root,root) %{_libdir}/libqtopiakonnector.so
 #%{_includedir}/kitchensync
 #%{_includedir}/ksharedfile.h
-#%{_libdir}/libdummykonnector.so
-#%{_libdir}/libkitchensyncui.so
-#%{_libdir}/libkonnector.so
-#%{_libdir}/libksharedfile.so
-#%{_libdir}/libksync2.so
-#%{_libdir}/liblocalkonnector.so
-#%{_libdir}/libqtopiakonnector.so
 
 %files kaddressbook -f kaddressbook_en.lang
 %defattr(644,root,root,755)
@@ -1338,8 +1332,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libkcal-devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libkcal.so
 %{_includedir}/libkcal
-%{_libdir}/libkcal.so
 
 %files libkdenetwork
 %defattr(644,root,root,755)
@@ -1360,6 +1354,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libkdgantt-devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libkdgantt.so
 %{_includedir}/KDGanttView.h
 %{_includedir}/KDGanttViewEventItem.h
 %{_includedir}/KDGanttViewItem.h
@@ -1368,7 +1363,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/KDGanttViewTaskLink.h
 %{_includedir}/KDGanttViewTaskLinkGroup.h
 %{_includedir}/KDXMLTools.h
-%{_libdir}/libkdgantt.so
 
 %files libkmailprivate
 %defattr(644,root,root,755)
