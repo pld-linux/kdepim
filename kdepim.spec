@@ -1,7 +1,9 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
-
-%define		_state		stable
+# Conditional build:
+%bcond_with  i18n    # build i18n subpackages - not used in this branch
+#
+%define		_state		snapshots
 %define		_ver		3.2.90
 %define		_snap		040206
 
@@ -520,6 +522,269 @@ mimelib library, based on mimepp library.
 %description libmimelib -l pl
 Biblioteka mimelib oparta na bibliotece mimepp.
 
+%package i18n
+Summary:	Internationalization and localization files for kdepim
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla pakietów kdepim
+Group:		X11/Applications
+Requires:	kdelibs-i18n >= 9:%{version}
+
+%description i18n
+Common internationalization and localization files for kdepim.
+
+%description i18n -l pl
+Wspó³dzielone pliki umiêdzynarodawiaj±ce dla pakietów kdepim.
+
+%package kaddressbook-i18n
+Summary:	Internationalization and localization files for kaddressbook
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kaddressbook
+Group:		X11/Applications
+Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description kaddressbook-i18n
+Internationalization and localization files for kaddressbook.
+
+%description kaddressbook-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla kaddressbook.
+
+%package kandy-i18n
+Summary:	Internationalization and localization files for kandy
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kandy
+Group:		X11/Applications
+Requires:	%{name}-kandy = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core-i18n >= 9:%{version}
+
+%description kandy-i18n
+Internationalization and localization files for kandy.
+
+%description kandy-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla kandy.
+
+%package karm-i18n
+Summary:	Internationalization and localization files for karm
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla karm
+Group:		X11/Applications
+Requires:	%{name}-karm = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
+
+%description karm-i18n
+Internationalization and localization files for karm.
+
+%description karm-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla karm.
+
+%package kmail-i18n
+Summary:	Internationalization and localization files for kmail
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kmaila
+Group:		X11/Applications
+Requires:	%{name}-kmail = %{epoch}:%{version}-%{release}
+Requires:	%{name}-ktnef-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libksieve-i18n = %{epoch}:%{version}-%{release}
+Requires:	kdebase-mailnews-i18n >= 9:%{version}
+
+%description kmail-i18n
+Internationalization and localization files for kmail.
+
+%description kmail-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla kmaila.
+
+%package knode-i18n
+Summary:	Internationalization and localization files for knode
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla knode
+Group:		X11/Applications
+Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim-i18n = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core-i18n >= 9:%{version}
+Requires:	kdebase-mailnews-i18n >= 9:%{version}
+
+%description knode-i18n
+Internationalization and localization files for knode.
+
+%description knode-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla knode.
+
+%package knotes-i18n
+Summary:	Internationalization and localization files for knotes
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla knotes
+Group:		X11/Applications
+Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+
+%description knotes-i18n
+Internationalization and localization files for knotes.
+
+%description knotes-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla knotes.
+
+%package konsolekalendar-i18n
+Summary:	Internationalization and localization files for konsolekalendar
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla konsolekalendara
+Group:		X11/Applications
+Requires:	%{name}-konsolekalendar = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+
+%description konsolekalendar-i18n
+Internationalization and localization files for konsolekalendar.
+
+%description -l pl konsolekalendar-i18n
+Pliki umiêdzynarodawiaj±ce dla konsolekalendara.
+
+%package kontact-i18n
+Summary:	Internationalization and localization files for kontact
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kontacta
+Group:		X11/Applications
+Requires:	%{name}-kontact = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+
+%description kontact-i18n
+Internationalization and localization files for kontact.
+
+%description kontact-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla kontacta.
+
+%package korganizer-i18n
+Summary:	Internationalization and localization files for korganizer
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korganizera
+Group:		X11/Applications
+Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
+Requires:	%{name}-kgantt-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-korganizer-libs-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+
+%description korganizer-i18n
+Internationalization and localization files for korganizer.
+
+%description korganizer-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla korganizera.
+
+%package korn-i18n
+Summary:	Internationalization and localization files for korn
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korna
+Group:		X11/Applications
+Requires:	%{name}-korn = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
+Requires:	kdebase-kicker-i18n >= 9:%{version}
+
+%description korn-i18n
+Internationalization and localization files for korn.
+
+%description korn-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla korna.
+
+%package kpilot-i18n
+Summary:	Internationalization and localization files for kpilot
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kpilota
+Group:		X11/Applications
+Requires:	%{name}-kpilot = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
+
+%description kpilot-i18n
+Internationalization and localization files for kpilot.
+
+%description kpilot-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla kpilota.
+
+%package libkdepim-i18n
+Summary:	Internationalization and localization files for libkdepim
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdepim
+Group:		X11/Applications
+Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description libkdepim-i18n
+Internationalization and localization files for libkdepim.
+
+%description libkdepim-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libkdepim.
+
+%package libkdenetwork-i18n
+Summary:	Internationalization and localization files for libkdenetwork
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdenetwork
+Group:		X11/Applications
+Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description libkdenetwork-i18n
+Internationalization and localization files for libkdenetwork.
+
+%description libkdenetwork-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libkdenetwork.
+
+%package libksieve-i18n
+Summary:	Internationalization and localization files for libksieve
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libksieve
+Group:		X11/Applications
+Requires:	%{name}-libksieve = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description libksieve-i18n
+Internationalization and localization files for libksieve.
+
+%description libksieve-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libksieve.
+
+%package korganizer-libs-i18n
+Summary:	Internationalization and localization files for korganizer-libs
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korganizer-libs
+Group:		X11/Applications
+Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Obsoletes:	kdepim-kgantt-i18n
+
+%description korganizer-libs-i18n
+Internationalization and localization files for korganizer-libs.
+
+%description korganizer-libs-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla korganizer-libs.
+
+%package libkcal-i18n
+Summary:	Internationalization and localization files for libkcal
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkcal
+Group:		X11/Applications
+Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description libkcal-i18n
+Internationalization and localization files for libkcal.
+
+%description libkcal-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libkcal.
+
+%package ktnef-i18n
+Summary:	Internationalization and localization files for ktnef
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla ktnef
+Group:		X11/Applications
+Requires:	%{name}-ktnef = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description ktnef-i18n
+Internationalization and localization files for ktnef.
+
+%description ktnef-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla ktnef.
+
+%package libkdgantt-i18n
+Summary:	Internationalization and localization files for libkdgantt
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdgantt
+Group:		X11/Applications
+Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
+Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+
+%description libkdgantt-i18n
+Internationalization and localization files for libkdgantt.
+
+%description libkdgantt-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libkdgantt.
+
 %prep
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
@@ -545,6 +810,33 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
+# Debian manpages
+install -d $RPM_BUILD_ROOT%{_mandir}/man1
+cd debian
+%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+mv -f alarmd.sgml kalarmd.sgml
+for f in *.sgml ; do
+	base="$(basename $f .sgml)"
+	upper="$(echo ${base} | tr a-z A-Z)"
+	db2man $f
+	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
+done
+cd ..
+
+%if %{with i18n}
+if [ -f "%{SOURCE1}" ] ; then
+	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
+		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
+			rm -f $f
+		fi
+	done
+else
+	echo "No i18n sources found and building --with i18n. FIXIT!"
+	exit 1
+fi
+%endif
+
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kalarmd		--with-kde
@@ -564,28 +856,84 @@ cat kalarm.lang >> korganizer.lang
 cat kalarmd.lang >> korganizer.lang
 cat kgpgcertmanager.lang >> kmail.lang
 
-programs="\
+%if %{with i18n}
+%find_lang alarmdaemonctrl	--with-kde
+cat alarmdaemonctrl.lang >> korganizer.lang
+%find_lang kalarmdgui		--with-kde
+cat kalarmdgui.lang >> korganizer.lang
+%find_lang ksync           --with-kde
+cat ksync.lang >> korganizer.lang
+%find_lang libcalendarresources --with-kde
+cat libcalendarresources.lang >> korganizer.lang
+
+%find_lang kmailcvt      --with-kde
+cat kmailcvt.lang >> kmail.lang
+%find_lang kfile_rfc822 --with-kde
+cat kfile_rfc822.lang >> kmail.lang
+%find_lang kio_sieve --with-kde
+cat kio_sieve.lang >> kmail.lang
+
+%find_lang kabc2mutt      --with-kde
+cat kabc2mutt.lang >> kaddressbook.lang
+%find_lang kcmkabconfig   --with-kde
+cat kcmkabconfig.lang >> kaddressbook.lang
+%find_lang kfile_vcf      --with-kde
+cat kfile_vcf.lang >> kaddressbook.lang
+
+# Not packaging kmobile, it was disabled by coolo
+%find_lang kdgantt --with-kde
+%find_lang ktnef --with-kde
+
+%find_lang libkcal --with-kde
+%find_lang libkcalsystem --with-kde
+cat libkcalsystem.lang >> libkcal.lang
+
+%find_lang libkdenetwork --with-kde
+%find_lang libkdepim --with-kde
+%find_lang libksieve --with-kde
+%find_lang libksync --with-kde
+mv {libksync,korganizer-libs}.lang
+%find_lang kgantt --with-kde
+cat kgantt.lang >> korganizer-libs.lang
+%find_lang libkpimexchange --with-kde
+cat libkpimexchange.lang >> korganizer-libs.lang
+%find_lang desktop_kdepim --with-kde
+%endif
+
+files="\
 	kaddressbook \
 	kandy \
-	korganizer \
 	karm \
 	kmail \
 	knode \
 	knotes \
 	konsolekalendar \
 	kontact \
+	korganizer \
 	korn \
 	kpilot"
 
-for f in *.lang; do
-	if grep -q %{name}-%{_snap}-apidocs $f; then
-		grep -v %{name}-%{_snap}-apidocs $f > $f.tmp
-		mv $f.tmp $f
-	fi
+for i in $files; do
+	> ${i}_en.lang
+        echo "%defattr(644,root,root,755)" > ${i}_en.lang
+	grep en\/ ${i}.lang|grep -v apidocs >> ${i}_en.lang
+	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
+	mv ${i}.lang.1 ${i}.lang
 done
 
-for i in $programs; do
-	mv $i.lang $i\_en.lang
+# Workaround for empty en docdirs. They are empty because all en docs are
+# in the  base non-i18n package
+# Grep them out
+
+durne=`ls -1 *.lang|grep -v _en`
+
+for i in $durne; 
+do
+	echo $i >> control
+	grep -v en\/ $i|grep -v apidocs >> ${i}.1
+	if [ -f ${i}.1 ] ; then
+		mv ${i}.1 ${i}
+	fi
 done
 
 %clean
@@ -629,6 +977,28 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libmimelib		-p /sbin/ldconfig
 %postun	libmimelib		-p /sbin/ldconfig
+
+%if %{with i18n}
+%files i18n -f desktop_kdepim.lang
+%files kaddressbook-i18n -f kaddressbook.lang
+%files kandy-i18n -f kandy.lang
+%files karm-i18n -f karm.lang
+%files kmail-i18n -f kmail.lang
+%files knode-i18n -f knode.lang
+%files knotes-i18n -f knotes.lang
+%files konsolekalendar-i18n -f konsolekalendar.lang
+%files kontact-i18n -f kontact.lang
+%files korganizer-i18n -f korganizer.lang
+%files korn-i18n -f korn.lang
+%files kpilot-i18n -f kpilot.lang
+%files libkdepim-i18n -f libkdepim.lang
+%files libkdenetwork-i18n -f libkdenetwork.lang
+%files libksieve-i18n -f libksieve.lang
+%files korganizer-libs-i18n -f korganizer-libs.lang
+%files libkcal-i18n -f libkcal.lang
+%files ktnef-i18n -f ktnef.lang
+%files libkdgantt-i18n -f kdgantt.lang
+%endif
 
 %files devel
 %defattr(644,root,root,755)
