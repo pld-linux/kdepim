@@ -868,7 +868,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/mimelib
 %{_includedir}/qgpgme
 %{_libdir}/libgpgme++.so
-%{_libdir}/libakregatorprivate.so
 %{_libdir}/libkabc_groupdav.so
 %{_libdir}/libkabc_groupwise.so
 %{_libdir}/libkabc_newexchange.so
@@ -894,9 +893,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkholidays.so
 %{_libdir}/libkitchensyncui.so
 %{_libdir}/libkleopatra.so
-%{_libdir}/libkmailprivate.so
 %{_libdir}/libkmime.so
-%{_libdir}/libknodecommon.so
 %{_libdir}/libknotes_xmlrpc.so
 %{_libdir}/libknoteskolab.so
 %{_libdir}/libkocorehelper.so
@@ -1208,8 +1205,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-#%{_libdir}/libakregatorprivate.la
-#%attr(755,root,root) %{_libdir}/libakregatorprivate.so.*.*.*
+%{_libdir}/libakregatorprivate.la
+%attr(755,root,root) %{_libdir}/libakregatorprivate.so
 %{_libdir}/libgpgme++.la
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
 %{_libdir}/libkaddressbook.la
@@ -1262,12 +1259,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libkleopatra.la
 %attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
-#%{_libdir}/libkmailprivate.la
-#%attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
+%{_libdir}/libkmailprivate.la
+%attr(755,root,root) %{_libdir}/libkmailprivate.so
 %{_libdir}/libkmime.la
 %attr(755,root,root) %{_libdir}/libkmime.so.*.*.*
-#%{_libdir}/libknodecommon.la
-#%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+%{_libdir}/libknodecommon.la
+%attr(755,root,root) %{_libdir}/libknodecommon.so
 %{_libdir}/libknotes_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %{_libdir}/libknoteskolab.la
