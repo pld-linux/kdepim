@@ -6,7 +6,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040312
+%define		_snap		040325
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -32,6 +32,7 @@ BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
+%{?with_apidocs:BuildRequires:  qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
 BuildRequires:	zlib-devel
@@ -64,6 +65,7 @@ Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= 9:%{version}
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
@@ -89,8 +91,7 @@ bazuj켧ych na kdepim.
 Summary:	API documentation
 Summary(pl):	Dokumentacja API
 Group:		Development/Docs
-#Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	%{name}
+Requires:	kdelibs >= 9:3.2.90
 
 %description apidocs
 API documentation.
@@ -902,6 +903,13 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
+# Workaround for doc caches (unsermake bug?)
+cd doc
+for i in `find . -name index.cache.bz2`; do
+	install -c -p -m 644 $i $RPM_BUILD_ROOT%{_kdedocdir}/en/$i
+done
+cd -	 
+
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian/man
@@ -917,18 +925,11 @@ for f in *.sgml ; do
 done
 cd -
 
-# Workaround for doc caches (unsermake bug?)
-cd doc
-for i in `find . -name index.cache.bz2`; do
-	install -c -p -m 644 $i $RPM_BUILD_ROOT%{_kdedocdir}/en/$i
-done
-cd -	 
-
 %if %{with i18n}
 if [ -f "%{SOURCE1}" ] ; then
 	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
-		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
+		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ]; then
 			rm -f $f
 		fi
 	done
@@ -1030,9 +1031,7 @@ done
 # Workaround for empty en docdirs. They are empty because all en docs are
 # in the  base non-i18n package
 # Grep them out
-
 durne=`ls -1 *.lang|grep -v _en`
-
 for i in $durne; do
 	echo $i >> control
 	grep -v en\/ $i|grep -v apidocs >> ${i}.1
@@ -1106,8 +1105,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
 %attr(755,root,root) %{_libdir}/libdummykonnector.so
-#%{_libdir}/liblocalkonnector.la
-#%attr(755,root,root) %{_libdir}/liblocalkonnector.so
+%{_libdir}/liblocalkonnector.la
+%attr(755,root,root) %{_libdir}/liblocalkonnector.so
 %{_libdir}/libqtopiakonnector.la
 %attr(755,root,root) %{_libdir}/libqtopiakonnector.so
 %{_libdir}/kde3/libkded_ksharedfile.la
@@ -1132,7 +1131,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kitchensync/syncerpart.desktop
 %dir %{_datadir}/services/kresources/konnector
 %{_datadir}/services/kresources/konnector/dummykonnector.desktop
-#%{_datadir}/services/kresources/konnector/localkonnector.desktop
+%{_datadir}/services/kresources/konnector/localkonnector.desktop
 %{_datadir}/services/kresources/konnector/qtopia.desktop
 %{_datadir}/services/overview.desktop
 %{_datadir}/servicetypes/kitchensync.desktop
@@ -1275,6 +1274,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkleopatra.so
 %{_libdir}/libkmailprivate.so
 %{_libdir}/libknewstuff.so
+%{_libdir}/libknotes_xmlrpc.so
 %{_libdir}/libkontact.so
 %{_libdir}/libkorganizer.so
 %{_libdir}/libkorganizer_eventviewer.so
@@ -1408,11 +1408,17 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_kgpgcertmanager.so
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
-%{_datadir}/apps/kconf_update/k[!n]*
-%{_datadir}/apps/kconf_update/u*
-%{_datadir}/apps/kgpgcertmanager/kgpgcertmanagerui.rc
+%attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
+%attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.sh
+%{_datadir}/apps/kconf_update/kmail.upd
+%attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp-3.1-upgrade-address-data.pl
+%attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp.upd
+%attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-signature.pl
+%attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-transport.pl
+%{_datadir}/apps/kgpgcertmanager
 %{_datadir}/apps/kmail
 %{_datadir}/apps/kmailcvt
+%{_datadir}/apps/kwatchgnupg
 %{_datadir}/apps/libkleopatra
 %{_datadir}/config/kmail.antispamrc
 %{_datadir}/config.kcfg/kmail.kcfg
@@ -1453,15 +1459,20 @@ rm -rf $RPM_BUILD_ROOT
 %files knotes -f knotes_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
+%{_libdir}/libknotes_xmlrpc.la
+%attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %{_libdir}/kde3/knotes_imap.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_imap.so
 %{_libdir}/kde3/knotes_local.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_local.so
+%{_libdir}/kde3/knotes_xmlrpc.la
+%attr(755,root,root) %{_libdir}/kde3/knotes_xmlrpc.so
 %{_datadir}/apps/knotes
-%{_datadir}/config/knotesrc
+%{_datadir}/config.kcfg/knotes.kcfg
 %dir %{_datadir}/services/kresources/knotes
 %{_datadir}/services/kresources/knotes/imap.desktop
 %{_datadir}/services/kresources/knotes/local.desktop
+%{_datadir}/services/kresources/knotes/knotes_xmlrpc.desktop
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 
@@ -1510,6 +1521,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_vcal.so
 %{_libdir}/kde3/kcm_kpilot.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kpilot.so
+%{_datadir}/apps/kconf_update/kpalmdoc.upd
+%{_datadir}/apps/kconf_update/kpilot.upd
 %{_datadir}/apps/kpilot
 %{_datadir}/config.kcfg/abbrowserconduit.kcfg
 %{_datadir}/config.kcfg/docconduit.kcfg
