@@ -1,13 +1,11 @@
 Index: Makefile.am
 ===================================================================
 RCS file: /home/kde/kdepim/libkdepim/Makefile.am,v
-retrieving revision 1.39
-diff -u -5 -d -p -r1.39 Makefile.am
---- Makefile.am	11 Apr 2004 18:11:29 -0000	1.39
-+++ Makefile.am	9 May 2004 16:12:41 -0000
-@@ -27,11 +27,11 @@ MailTransportServiceIface_DCOPIDLNG = tr
- MailTransportServiceIface_DIR = $(srcdir)/interfaces
- 
+retrieving revision 1.41
+diff -u -5 -d -p -r1.41 Makefile.am
+--- Makefile.am	2004-05-15 19:33:07.000000000 +0200	1.41
++++ Makefile.am	2004-05-16 03:49:51.634805184 +0200
+@@ -33,7 +33,7 @@
  AddressBookServiceIface_DIR = $(srcdir)/interfaces
  
  libkdepim_la_LDFLAGS = $(all_libraries) -no-undefined -version-info 1:0:0
@@ -15,9 +13,7 @@ diff -u -5 -d -p -r1.39 Makefile.am
 +libkdepim_la_LIBADD  = $(LIB_KIO) $(LIB_KABC) $(LIB_KDEUI) -lkimproxy
  #               $top_builddir)/libkdepim/resources/libkpimresources.la
  
- METASOURCES = AUTO
- 
- messages: rc.cpp
+ identitymanager_DCOPIDLNG = true
 Index: addresseeview.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/libkdepim/addresseeview.cpp,v

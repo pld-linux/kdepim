@@ -70,7 +70,7 @@ diff -u -5 -d -p -r1.11 csshelper.cpp
  	       "}\n\n"
  
 +		   "div.fancy.header > div.sender-pic{\n"
-+		   "  font-size:0.8em;\n"
++		   "  font-size:0.9em;\n"
 +		   "  border:1px solid black;\n"
 +		   "  background-color:InfoBackground;\n"
 +		   "}\n\n"
@@ -108,7 +108,7 @@ diff -u -5 -d -p -r1.11 csshelper.cpp
 +	       "}\n\n"
 +
 +		   "div.senderpic{\n"
-+		   "  font-size:0.8em;\n"
++		   "  font-size:0.9em;\n"
 +		   "  border:1px solid black;\n"
 +		   //"  background-color:InfoBackground;\n"
 +		   "  background-color:yellow;\n"
@@ -156,21 +156,19 @@ Index: headerstyle.cpp
 RCS file: /home/kde/kdepim/kmail/headerstyle.cpp,v
 retrieving revision 1.10
 diff -u -5 -d -p -r1.10 headerstyle.cpp
---- headerstyle.cpp	11 Jan 2004 21:57:07 -0000	1.10
-+++ headerstyle.cpp	9 May 2004 16:12:52 -0000
-@@ -36,21 +36,26 @@
- #include "headerstyle.h"
- 
+--- headerstyle.cpp	2004-05-16 10:13:12.297173016 +0200	1.10
++++ headerstyle.cpp	2004-05-16 10:10:41.566087624 +0200
+@@ -38,7 +38,9 @@
  #include "headerstrategy.h"
  #include "linklocator.h"
  #include "kmmessage.h"
--
 +#include "kmkernel.h"
+ 
++#include <libkdepim/email.h>
  
  #include <mimelib/string.h>
  #include <mimelib/field.h>
- #include <mimelib/headers.h>
- 
+@@ -47,8 +49,13 @@
  #include <kdebug.h>
  #include <klocale.h>
  #include <kglobal.h>
@@ -185,11 +183,7 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
  #include <qapplication.h>
  #include <qregexp.h>
  
- namespace KMail {
- 
-@@ -246,21 +251,29 @@ namespace KMail {
- 			   strToHtml(message->subject()) + "</b></div>\n")
-                         .arg(subjectDir);
+@@ -248,17 +255,25 @@
  
      if ( strategy->showHeader( "date" ) )
        headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
@@ -197,7 +191,7 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 +    
 +    // Get Instant Messaging presence
 +    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-+    KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( message->from() ) );
++    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
 +    ::KIMProxy *imProxy = KMKernel::self()->imProxy();
 +    QString presence = imProxy->presenceString( addresses[0].uid() );
 + 
@@ -221,16 +215,12 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
        headerStr.append("<br>\n");
      }
  
-     if ( strategy->showHeader( "to" ) )
-       headerStr.append(i18n("To: ")+
-@@ -352,20 +365,83 @@ namespace KMail {
-     }
-     else {
+@@ -354,6 +369,69 @@
        dateString = message->dateStr();
      }
  
 +    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-+    KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( message->from() ) );
++    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
 +
 +    // Get KABC picture and IM status
 +    QString userHTML;
@@ -295,8 +285,7 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
      //case HdrFancy:
      // the subject line and box below for details
      if ( strategy->showHeader( "subject" ) )
-       headerStr += QString("<div dir=\"%1\">%2</div>\n")
-                         .arg(subjectDir)
+@@ -362,8 +440,8 @@
  		        .arg(message->subject().isEmpty()?
  			     i18n("No Subject") :
  			     strToHtml(message->subject()));
@@ -307,11 +296,7 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
      // from line
      // the mailto: URLs can contain %3 etc., therefore usage of multiple
      // QString::arg is not possible
-     if ( strategy->showHeader( "from" ) )
-       headerStr += QString("<tr><th>%1</th>\n"
-@@ -373,10 +449,12 @@ namespace KMail {
-                          .arg(i18n("From: "))
-                  + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
+@@ -375,6 +453,8 @@
                   + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                  + i18n("[vCard]") + "</a>"
                                : QString("") )
@@ -320,11 +305,7 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
                   + ( message->headerField("Organization").isEmpty()
                                ? QString("")
                                : "&nbsp;&nbsp;("
-                                 + strToHtml(message->headerField("Organization"))
-                                 + ")")
-@@ -406,14 +484,27 @@ namespace KMail {
-       headerStr.append(QString("<tr><th>%1</th>\n"
- 			       "<td dir=\"%2\">%3</td></tr>\n")
+@@ -408,10 +488,23 @@
                              .arg(i18n("Date: "))
  		            .arg( directionOf( message->dateStr() ) )
                              .arg(strToHtml(dateString)));
@@ -350,18 +331,15 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
      return headerStr;
    }
  
-   //
-   // HeaderStyle abstract base:
+
 Index: kmcommands.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmcommands.cpp,v
-retrieving revision 1.127
-diff -u -5 -d -p -r1.127 kmcommands.cpp
---- kmcommands.cpp	7 May 2004 23:19:20 -0000	1.127
-+++ kmcommands.cpp	9 May 2004 16:12:53 -0000
-@@ -43,10 +43,13 @@
- #include <qtextcodec.h>
- 
+retrieving revision 1.129
+diff -u -5 -d -p -r1.129 kmcommands.cpp
+--- kmcommands.cpp	2004-05-15 16:50:27.000000000 +0200	1.129
++++ kmcommands.cpp	2004-05-16 10:15:38.350969464 +0200
+@@ -46,6 +46,9 @@
  #include <kdebug.h>
  #include <kfiledialog.h>
  #include <kio/netaccess.h>
@@ -371,11 +349,7 @@ diff -u -5 -d -p -r1.127 kmcommands.cpp
  #include <klocale.h>
  #include <kmessagebox.h>
  #include <kparts/browserextension.h>
- #include <kprogress.h>
- #include <krun.h>
-@@ -1789,10 +1792,14 @@ void KMUrlClickedCommand::execute()
- 
-     win = new KMComposeWin(msg, mIdentity);
+@@ -1793,6 +1796,10 @@
      win->setCharset("", TRUE);
      win->show();
    }
@@ -386,11 +360,7 @@ diff -u -5 -d -p -r1.127 kmcommands.cpp
    else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
             (mUrl.protocol() == "ftp") || (mUrl.protocol() == "file") ||
             (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
-            (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
-            (mUrl.protocol() == "smb"))
-@@ -2164,5 +2171,43 @@ KMMailingListHelpCommand::KMMailingListH
- }
- KURL::List KMMailingListHelpCommand::urls() const
+@@ -2201,3 +2208,41 @@
  {
    return mFolder->mailingList().helpURLS();
  }
@@ -405,7 +375,7 @@ diff -u -5 -d -p -r1.127 kmcommands.cpp
 +  kdDebug( 0 ) << k_funcinfo << " URL is: " << mUrl << endl;
 +  // find UID for mail address
 +  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-+  KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( mUrl.path() ) ) ;
++  KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( mUrl.path() ) ) ;
 +
 +  // start chat
 +  if( addresses.count() == 1 )
@@ -464,7 +434,7 @@ diff -u -5 -d -p -r1.32 kmcommands.h
 Index: kmkernel.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmkernel.cpp,v
-retrieving revision 1.269
+retrieving revision 1.270
 diff -u -5 -d -p -r1.270 kmkernel.cpp
 --- kmkernel.cpp	2004-05-12 19:18:01.000000000 +0200	1.270
 +++ kmkernel.cpp	2004-05-12 22:27:21.689372480 +0200
