@@ -7,6 +7,7 @@
 #
 # Conditional build:
 %bcond_without	apidocs	# prepare API documentation
+%bcond_without	kimproxy	# without kimproxy
 %bcond_with	i18n	# build i18n subpackages - not used in this branch
 #
 %define		_state		snapshots
@@ -49,7 +50,7 @@ BuildRequires:	pilot-link-devel
 BuildRequires:	bluez-libs-devel
 BuildRequires:	gpgme-devel
 BuildRequires:	gnupg >= 1.2.2
-BuildRequires:	kimproxy-devel
+%{?with_kimproxy:BuildRequires:	kimproxy-devel}
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
 %{?with_apidocs:BuildRequires:	qt-doc}
@@ -758,11 +759,13 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%if %{with kimproxy}
 cd kmail
 %patch3 -p0
 cd ../libkdepim
 %patch4 -p0
 cd ..
+%endif
 
 %build
 cp /usr/share/automake/config.sub admin
