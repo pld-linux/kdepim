@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -79,6 +79,20 @@ bazuj╠cych na kdepim.
 %description devel -l ru
 Этот пакет содержит файлы заголовков необходимые для построения
 программ, основанных на kdepim.
+
+%package commonlibs
+Summary:	TODO
+Summary(pl):	TODO
+Group:		X11/Libraries
+Requires:	kdelibs >= %{version}
+Obsoletes:	%{name}
+Obsoletes:	%{name}-korganizer < 3:3.1.90.030618-1
+
+%description commonlibs
+TODO.
+
+%description commonlibs -l pl
+TODO.
 
 %package kaddressbook
 Summary:	Address Book
@@ -418,6 +432,9 @@ cat kalarmd.lang >> korganizer.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
+%post	commonlibs	-p /sbin/ldconfig
+%postun	commonlibs	-p /sbin/ldconfig
+
 %post	kaddressbook	-p /sbin/ldconfig
 %postun	kaddressbook	-p /sbin/ldconfig
 
@@ -449,6 +466,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_includedir}/*
 %{_libdir}/*.so
+
+%files commonlibs
+%defattr(644,root,root,755)
+%{_libdir}/libkitchensyncui.la
+%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
+%{_libdir}/libkonnector.la
+%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
+%{_libdir}/libksync2.la
+%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
 
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
@@ -587,12 +613,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
-%{_libdir}/libkitchensyncui.la
-%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
-%{_libdir}/libkonnector.la
-%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
 %{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %{_libdir}/libkpimexchange.la
@@ -601,8 +623,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
-%{_libdir}/libksync2.la
-%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
 %{_libdir}/libqtopiakonnector.la
 %attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
 %{_libdir}/kde3/libkded_ksharedfile.la
@@ -706,6 +726,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README*
 %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
+
 
 %files libmimelib
 %doc mimelib/{Changes,README*,Tutorial}
