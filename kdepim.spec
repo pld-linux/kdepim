@@ -16,7 +16,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1
+Release:	1.1
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
@@ -26,6 +26,7 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.
 Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
+Patch2:		%{name}-fwd-inline.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -57,6 +58,8 @@ Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kresources
 Obsoletes:	kdepim-ksync
+#Obsoletes:	akregator
+#Obsoletes:	kdeaddons-konqueror
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -468,6 +471,7 @@ libksieve, libmimelib.
 %setup -q
 %patch0 -p1
 #%patch1 -p1
+%patch2 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
