@@ -1,19 +1,23 @@
 # TODO:
 # - make separate subpackages
+
+%define         _state          unstable                                        
+%define         _kdever         kde-3.1-beta1      
+
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.0.3
-Release:	4
+Version:	3.0.8
+Release:	1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.%{_snapshot}.tar.bz2
 # generated from kde-i18n
-Source1:	kde-i18n-%{name}-%{version}.tar.bz2
+#Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -112,75 +116,53 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/{Office/PIMs,Settings/KDE}
+install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
-mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications/*,Office/PIMs/}
-install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}
-install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}
+ALD=$RPM_BUILD_ROOT%{_applnkdir}
+mv $ALD/{Applications/*,Office/PIMs}
+mv $ALD/Utilities/{More/*,.}
 
-bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+#bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
-programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot ksync libkcal twister"
+#programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes \
+#korganizer kpilot ksync libkcal twister"
+programs="kaddressbook kalarm kalarmd kandy karm knotes korganizer kpilot"
+
 > kdepim.lang
 for i in $programs; do
 	%find_lang $i --with-kde
 	cat $i.lang >> kdepim.lang
 done
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
-rm -rf $RPM_BUILD_ROOT
+%{!?_without_clean:rm -rf $RPM_BUILD_ROOT}
 
 %files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
-
-%{_libdir}/kde3/libabbrowserconduit.la
-%{_libdir}/kde3/libabbrowserconduit.so.*.*.*
-%{_libdir}/kde3/libexpenseconduit.la
-%{_libdir}/kde3/libexpenseconduit.so.*.*.*
-%{_libdir}/kde3/libknotesconduit.la
-%{_libdir}/kde3/libknotesconduit.so.*.*.*
-%{_libdir}/kde3/libnullconduit.la
-%{_libdir}/kde3/libnullconduit.so.*.*.*
-%{_libdir}/kde3/libpopmailconduit.la
-%{_libdir}/kde3/libpopmailconduit.so.*.*.*
-%{_libdir}/kde3/libtodoconduit.la
-%{_libdir}/kde3/libtodoconduit.so.*.*.*
-%{_libdir}/kde3/libvcalconduit.la
-%{_libdir}/kde3/libvcalconduit.so.*.*.*
-
-%{_libdir}/kde3/libkcm_alarmdaemonctrl.??
-%{_libdir}/kde3/libkorg_datenums.??
-%{_libdir}/kde3/libkorg_holidays.??
-%{_libdir}/kde3/libkorg_projectview.??
-%{_libdir}/kde3/libkorg_webexport.??
-
+%attr(755,root,root) %{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/*.so.*
+%attr(755,root,root) %{_libdir}/kde3/kfile*
+%attr(755,root,root) %{_libdir}/kde3/*conduit.la
+%attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
+%attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart*
+%attr(755,root,root) %{_libdir}/kde3/libkorg*
 %{_datadir}/apps/*
 %{_datadir}/autostart/*
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
 %{_datadir}/config/*
-%{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Settings/KDE/System/*
-%{_applnkdir}/Utilities/*
 %{_pixmapsdir}/*/*/*/*.png
+%{_applnkdir}/.hidden/kalarmd.desktop
+%{_applnkdir}/Office/PIMs/*
+%{_applnkdir}/Utilities/*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
-%{_libdir}/*.??
-%{_libdir}/kde3/libabbrowserconduit.so
-%{_libdir}/kde3/libexpenseconduit.so
-%{_libdir}/kde3/libknotesconduit.so
-%{_libdir}/kde3/libnullconduit.so
-%{_libdir}/kde3/libpopmailconduit.so
-%{_libdir}/kde3/libvcalconduit.so
+%{_libdir}/*.so
+%{_libdir}/kde3/*conduit.so
