@@ -82,6 +82,10 @@ Pliki nag³owkowe do KDE pim.
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
+if [ -f %{_pkgconfigdir}/libpng12.pc ] ; then
+        CPPFLAGS="`pkg-config libpng12 --cflags`"
+fi
+
 %configure
 
 %{__make}
