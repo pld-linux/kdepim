@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.1.90
-%define		_snap		030618
+%define		_snap		030623
 
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -21,7 +21,8 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	944480075d555a3d3e085ba6905d9df4
+# Source0-md5:	ccbdc32cc0a61b26c4a403d78278383f
+#Source0:        http://team.pld.org.pl/~djurban/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
