@@ -5,7 +5,7 @@
 #	- Recheck dependencies
 
 %define         _state          stable
-%define         _ver		3.1
+%define         _ver		3.1.1
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	6.1
+Release:	0.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
