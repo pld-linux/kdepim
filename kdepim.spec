@@ -39,6 +39,16 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	unsermake
 BuildRequires:	zlib-devel
 BuildRequires:	pcre-devel
+Requires:	%{name}-libs
+Obsoletes:	kdepim-korganizer
+Obsoletes:      kdepim-korganizer-libs 
+Obsoletes:      kdepim-libkcal
+Obsoletes:      kdepim-kontact
+# Will be replaced by kdeaddons-pim
+Obsoletes:	kdeaddons-kontact 
+Obsoletes:      kdepim-kresources
+BuildConflicts: kdepim-kontact-libs
+BuildConflicts: kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -65,7 +75,8 @@ Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= 9:%{version}
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Obsoletes:      kdepim-libkcal-devel
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
@@ -425,18 +436,31 @@ urz╠dzeniami.
 утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
 ними пристроями.
 
-#%package kresources
+%package wizards-egroupware
+Summary:        eGroupware configuration wizard 
+Summary(pl):    Kreator konfiguracji eGroupware
+Group:          X11/Applications
+Requires:       kdelibs >= 9:%{version}
+
+%description wizards-egroupware
+eGroupware configuration wizard.
+
+%description wizards-egroupware -l pl
+Kreator konfiguracji eGroupware.
+
+
+##%package kresources
 #Summary:        Additional kresources definitions
 #Summary(pl):    Dodatkowe definicje kresources
 #Group:          X11/Applications
 #Requires:       kdelibs >= 9:%{version}
-
-#%description kresources
+#
+##%description kresources
 #Additional kresources definitions.
-
-#%description kresources -l pl
+#
+##%description kresources -l pl
 #Dodatkowe definicje kresources.
-
+#
 #%package kresources-devel
 #Summary:        Additional kresources definitions
 #Summary(pl):    Dodatkowe definicje kresources
@@ -1104,6 +1128,9 @@ rm -rf $RPM_BUILD_ROOT
 # kolabwizard
 %doc README.Kolab
 %attr(755,root,root) %{_bindir}/kolabwizard
+%attr(755,root,root) %{_bindir}/groupwarewizard
+%{_libdir}/kde3/libegroupwarewizard.la
+%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so.*.*.*
 # kitchensync part
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
@@ -1182,8 +1209,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
 # korganizer part
-%attr(755,root,root) %{_bindir}/ghns
-%attr(755,root,root) %{_bindir}/khotnewstuff
+##%attr(755,root,root) %{_bindir}/ghns
+##%attr(755,root,root) %{_bindir}/khotnewstuff
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
@@ -1195,12 +1222,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
 %{_datadir}/apps/kgantt
-%{_datadir}/apps/knewstuff
+##%{_datadir}/apps/knewstuff
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
 %{_datadir}/autostart/korgac.desktop
-%{_datadir}/config/khotnewstuffrc
+##%{_datadir}/config/khotnewstuffrc
 %{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/services/korganizer_configcolors.desktop
@@ -1218,7 +1245,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_desktopdir}/kde/korganizer.desktop
-%{_iconsdir}/crystalsvg/*/actions/knewstuff.png
+##%{_iconsdir}/crystalsvg/*/actions/knewstuff.png
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_mandir}/man1/ical2vcal.1*
 %{_mandir}/man1/korganizer.1*
@@ -1259,7 +1286,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kdepim
 %{_includedir}/kgantt
 %{_includedir}/kleo
-%{_includedir}/knewstuff
+##%{_includedir}/knewstuff
 %{_includedir}/kontact
 %{_includedir}/korganizer
 %{_includedir}/kpilot
@@ -1276,7 +1303,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkgantt.so
 %{_libdir}/libkleopatra.so
 %{_libdir}/libkmailprivate.so
-%{_libdir}/libknewstuff.so
+##%{_libdir}/libknewstuff.so
 %{_libdir}/libknotes_xmlrpc.so
 %{_libdir}/libkontact.so
 %{_libdir}/libkorganizer.so
@@ -1404,12 +1431,12 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
-%attr(755,root,root) %{_bindir}/kgpgcertmanager
+%attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
-%{_libdir}/kde3/kcm_kgpgcertmanager.la
-%attr(755,root,root) %{_libdir}/kde3/kcm_kgpgcertmanager.so
+%{_libdir}/kde3/kcm_kleopatra.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kleopatra.so
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
@@ -1419,7 +1446,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-signature.pl
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-transport.pl
-%{_datadir}/apps/kgpgcertmanager
+%{_datadir}/apps/kleopatra
 %{_datadir}/apps/kmail
 %{_datadir}/apps/kmailcvt
 %{_datadir}/apps/kwatchgnupg
@@ -1432,7 +1459,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kmail_config_misc.desktop
 %{_datadir}/services/kmail_config_network.desktop
 %{_datadir}/services/kmail_config_security.desktop
-%{_datadir}/services/kgpgcertmanager_config_dirserv.desktop
+%{_datadir}/services/kleopatra_config_dirserv.desktop
+%{_datadir}/services/kleopatra_config_appear.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
@@ -1548,11 +1576,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot.1*
 
-#%files kresources
-#%defattr(644,root,root,755)
+##%files kresources
+##%defattr(644,root,root,755)
 
-#%files kresources-devel
-#%defattr(644,root,root,755)
+##%files kresources-devel
+##%defattr(644,root,root,755)
 
 #%files libkcal-devel
 #%defattr(644,root,root,755)
@@ -1649,8 +1677,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
-%{_libdir}/libknewstuff.la
-%attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
+##%{_libdir}/libknewstuff.la
+##%attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
 %{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %{_libdir}/libkorganizer_eventviewer.la
