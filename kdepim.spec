@@ -410,10 +410,10 @@ done
 
 %{__make} -f admin/Makefile.common cvs
 
-#%%configure \
-#	--enable-final	
+%configure \
+	--enable-final	
 
-%configure
+#%%configure
 
 %{__make}
 
