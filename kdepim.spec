@@ -5,8 +5,7 @@
 %bcond_without	i18n	# dont build i18n subpackage
 #
 %define		_state		stable
-%define		_ver		3.2.1
-#%%define		_snap		031114
+%define		_ver		3.2.2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -15,17 +14,17 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	http://download.kde.org/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	362bec23869328a85845e0501020c938
+# Source0-md5:	10249b56cbc4c67dc4093b9f968604b9
 #Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
 %if %{with i18n}
 Source1:	kde-i18n-%{name}-%{version}.tar.bz2
-# Source1-md5:	bfc8d7e1fcb03e9713d012ab9ee3c3c5
+# Source1-md5:	f47856645b9f7d53b72d683cf63bcc07
 %endif
 Patch0:		%{name}-3.2branch.diff
 Patch1:		%{name}-kmail_toolbars.patch
