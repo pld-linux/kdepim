@@ -8,7 +8,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.1
+Release:	0.2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -746,6 +746,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/korganizer.kcfg
+%{_datadir}/config/khotnewstuffrc
 %{_datadir}/services/configcolors.desktop
 %{_datadir}/services/configfonts.desktop
 %{_datadir}/services/configfreebusy.desktop
