@@ -100,5 +100,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/rmm/*.h
+%dir %{_includedir}/rmm/*.h
 %{_libdir}/*.la
