@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	7
+Release:	8
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -462,34 +462,42 @@ echo "KDE_OPTIONS = nofinal" >> kitchensync/kitchensync/backup/Makefile.am
 echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	korganizer/korganizer.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/kpilot/kpilotdaemon.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/kpilot/kpilot.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/conduits/docconduit/kpalmdoc.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;ContactManagement;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kaddressbook/kaddressbook.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kontact/src/Kontact.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Email;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kmail/KMail.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Network;News;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	knode/KNode.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
 	kmobile/kmobile.desktop
-
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
+	-e 's/Terminal=0/Terminal=false/' \
 	kandy/src/kandy.desktop
+%{__sed} -i -e 's/Terminal=0/Terminal=false/' \
+	karm/support/karm.desktop \
+	knotes/knotes.desktop \
+	konsolekalendar/konsolekalendar.desktop \
+	korn/KOrn.desktop
+%{__sed} -i -e '/\[Desktop Entry\]/aEncoding=UTF-8' \
+	-e 's/Terminal=0/Terminal=false/' \
+	ktnef/gui/ktnef.desktop
 
 %build
 cp %{_datadir}/automake/config.sub admin
