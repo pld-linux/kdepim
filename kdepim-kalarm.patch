@@ -1,0 +1,9 @@
+--- kdepim/kalarm/Makefile.am~	Mon Sep 16 16:54:06 2002
++++ kdepim/kalarm/Makefile.am	Fri Oct 11 17:01:20 2002
+@@ -1,5 +1,5 @@
+ # set the include path for X, qt and KDE and calendar library
+-INCLUDES= -I$(top_srcdir) -I$(top_builddir)/libical/src $(all_includes)
++INCLUDES= -I$(top_srcdir) -I$(top_builddir)/libical/src -I$(top_builddir)/libkdepim  $(all_includes)
+ 
+ bin_PROGRAMS = kalarm
+ kalarm_SOURCES = main.cpp kalarmapp.cpp editdlg.cpp mainwindowbase.cpp mainwindow.cpp \
