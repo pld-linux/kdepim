@@ -791,8 +791,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_icondir}/hicolor/*/apps/ktnef.png
 
 %files libkcal
-%doc libkcal/{HACKING,README}
 %defattr(644,root,root,755)
+%doc libkcal/{HACKING,README}
 %{_libdir}/libkcal.la
 %attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
 %{_libdir}/kde3/kcal_imap.la
@@ -806,8 +806,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kcal
 
 %files libkdenetwork
-%doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
 %defattr(644,root,root,755)
+%doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
 
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
@@ -824,7 +824,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
 
 %files libmimelib
-%doc mimelib/{Changes,README*,Tutorial}
 %defattr(644,root,root,755)
+%doc mimelib/{Changes,README*,Tutorial}
 %{_libdir}/libmimelib.la
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
