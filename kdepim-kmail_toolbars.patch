@@ -9,10 +9,10 @@
                        SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
  
    //these are checkable!!!
---- kdepim-030908/kmail/kmmainwidget.cpp~	2003-09-07 19:41:22.000000000 +0200
-+++ kdepim-030908/kmail/kmmainwidget.cpp	2003-09-08 14:34:53.000000000 +0200
-@@ -1828,7 +1828,7 @@
-   findInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
+--- kdepim-031006/kmail/kmmainwidget.cpp.orig	2003-10-06 02:19:39.000000000 +0200
++++ kdepim-031006/kmail/kmmainwidget.cpp	2003-10-07 00:19:52.000000000 +0200
+@@ -2013,7 +2013,7 @@
+   mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
  		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
  
 -  (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
@@ -20,19 +20,19 @@
  		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
  
    (void) new KAction( i18n("Select Message &Text"),
-@@ -1861,10 +1861,10 @@
-   removeFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
+@@ -2046,10 +2046,10 @@
+   mRemoveFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
  		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
  
--  preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
-+  preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), "html", 0, this,
+-  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
++  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), "html", 0, this,
  		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
  
--  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
-+  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), "view_tree", 0, this,
+-  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
++  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), "view_tree", 0, this,
  		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
  
-   threadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
+   mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
 --- kdepim-030911/kmail/kmreaderwin.cpp~	2003-09-09 23:22:40.000000000 +0200
 +++ kdepim-030911/kmail/kmreaderwin.cpp	2003-09-11 20:15:02.000000000 +0200
 @@ -537,10 +537,10 @@
