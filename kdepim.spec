@@ -769,18 +769,18 @@ Internationalization and localization files for ktnef.
 %description ktnef-i18n -l pl
 Pliki umiêdzynarodawiaj±ce dla ktnef.
 
-%package kgantt-i18n
-Summary:	Internationalization and localization files for kgantt
-Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kgantt
+%package libkdgantt-i18n
+Summary:	Internationalization and localization files for libkdgantt
+Summary(pl):	Pliki umiêdzynarodawiaj±ce dla libkdgantt
 Group:		X11/Applications
-Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
 
-%description kgantt-i18n
-Internationalization and localization files for kgantt.
+%description libkdgantt-i18n
+Internationalization and localization files for libkdgantt.
 
-%description kgantt-i18n -l pl
-Pliki umiêdzynarodawiaj±ce dla kgantt.
+%description libkdgantt-i18n -l pl
+Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -806,39 +806,39 @@ cp -f /usr/share/automake/config.sub admin
 %{__make}
 
 %install
-rm -rf $RPM_BUILD_ROOT
+##rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	kde_htmldir=%{_kdedocdir}
+##%{__make} install \
+#	DESTDIR=$RPM_BUILD_ROOT \
+#	kde_htmldir=%{_kdedocdir}
 
 # Debian manpages
-install -d $RPM_BUILD_ROOT%{_mandir}/man1
-cd debian
-%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
-mv -f alarmd.sgml kalarmd.sgml
-for f in *.sgml ; do
-	base="$(basename $f .sgml)"
-	upper="$(echo ${base} | tr a-z A-Z)"
-	db2man $f
-	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
-done
-cd ..
+##install -d $RPM_BUILD_ROOT%{_mandir}/man1
+#cd debian
+##%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+#mv -f alarmd.sgml kalarmd.sgml
+#for f in *.sgml ; do
+#	base="$(basename $f .sgml)"
+#	upper="$(echo ${base} | tr a-z A-Z)"
+#	db2man $f
+#	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
+#done
+#cd ..
 
-%if %{with i18n}
-if [ -f "%{SOURCE1}" ] ; then
-	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
-	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
-		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
-			rm -f $f
-		fi
-	done
-else
-	echo "No i18n sources found and building --with i18n. FIXIT!"
-	exit 1
-fi
+##%if %{with i18n}
+#if [ -f "%{SOURCE1}" ] ; then
+#	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
+#	for f in $RPM_BUILD_ROOT%{_datadir}/locale/*/LC_MESSAGES/*.mo; do
+#		if [ "`file $f | sed -e 's/.*,//' -e 's/message.*//'`" -le 1 ] ; then
+#			rm -f $f
+#		fi
+#	done
+#else
+#	echo "No i18n sources found and building --with i18n. FIXIT!"
+#	exit 1
+#fi
 
-%endif
+##%endif
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -884,8 +884,7 @@ cat kcmkabconfig.lang >> kaddressbook.lang
 cat kfile_vcf.lang >> kaddressbook.lang
 
 # Not packaging kmobile, it was disabled by coolo
-
-%find_lang kgantt --with-kde
+%find_lang kdgantt --with-kde
 %find_lang ktnef --with-kde
 
 %find_lang libkcal --with-kde
@@ -897,6 +896,8 @@ cat libkcalsystem.lang >> libkcal.lang
 %find_lang libksieve --with-kde
 %find_lang libksync --with-kde
 mv {libksync,korganizer-libs}.lang
+%find_lang kgantt --with-kde
+cat kgantt.lang >> korganizer-libs.lang
 %find_lang libkpimexchange --with-kde
 cat libkpimexchange.lang >> korganizer-libs.lang
 %find_lang desktop_kdepim --with-kde
@@ -920,6 +921,20 @@ for i in $files; do
 	grep en\/ ${i}.lang|grep -v apidocs >> ${i}_en.lang
 	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
 	mv ${i}.lang.1 ${i}.lang
+done
+
+# Workaround for empty en docdirs. They are empty because all en docs are in the  base non-i18n package
+# Grep them out
+
+durne=`ls -1 *.lang|grep -v _en`
+
+for i in $durne; 
+do
+	echo $i >> control
+	grep -v en\/ $i|grep -v apidocs >> ${i}.1
+	if [ -f ${i}.1 ] ; then
+		mv ${i}.1 ${i}
+	fi
 done
 
 %clean
@@ -980,7 +995,7 @@ rm -rf $RPM_BUILD_ROOT
 %files korganizer-libs-i18n -f korganizer-libs.lang
 %files libkcal-i18n -f libkcal.lang
 %files ktnef-i18n -f ktnef.lang
-%files kgantt-i18n -f kgantt.lang
+%files libkdgantt-i18n -f kdgantt.lang
 %endif
 
 %files devel
