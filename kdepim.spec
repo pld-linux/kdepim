@@ -1,6 +1,7 @@
+#
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-
+#
 %define		_state		stable
 %define		_kdever		3.4
 %define		_ver		3.4.0
@@ -121,7 +122,7 @@ libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
 
 %package -n kde-kio-groupwise
 Summary:	Groupwise protocol service
-Summary(pl):	Obs³uga protoko³u IMAP4
+Summary(pl):	Obs³uga protoko³u Groupwise
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -129,7 +130,7 @@ Group:		X11/Libraries
 Groupwise protocol service.
 
 %description -n kde-kio-groupwise -l pl
-Obs³uga protoko³u groupwise.
+Obs³uga protoko³u Groupwise.
 
 %package -n kde-kio-imap4
 Summary:	IMAP4 protocol service
