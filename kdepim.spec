@@ -30,7 +30,9 @@ Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
 BuildRequires:	automake
 BuildRequires:	bison
+%{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
+%{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
