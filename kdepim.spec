@@ -8,18 +8,19 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	0.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	http://download.kde.org/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
 Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
-# Source0-md5:	06d3e5d1ee0cd7f2a55bd26d05ee4987
-Patch0:		%{name}-3.2branch.diff
-Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-vcategories.patch
+# Source0-md5:	10249b56cbc4c67dc4093b9f968604b9
+Patch100:	%{name}-branch.diff
+Patch0:		%{name}-kmail_toolbars.patch
+Patch1:		%{name}-vcategories.patch
 BuildRequires:	automake
+BuildRequires:	unsermake >= 040511
 BuildRequires:	bison
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	docbook-utils
@@ -472,20 +473,22 @@ Biblioteka dla KPilota - aplikacji KDE do wymiany danych z palmtopami.
 
 %prep
 %setup -q -n %{name}-%{version}
-#%patch0 -p1
+%patch100 -p1
+%patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
-cp %{_datadir}/automake/config.sub admin
-
 z=kpilot/conduits/configure.in.in
 grep -v KPILOT_CHECK_PISOCK $z > $z.1
 mv $z.1 $z
 sed -i -e "s,SUBDIRS=vcf,SUBDIRS=vcf rfc822," kfile-plugins/Makefile.am
 
+cp %{_datadir}/automake/config.sub admin
+export kde_htmldir=%{_kdedocdir}
+export kde_libs_htmldir=%{_kdedocdir}
+export UNSERMAKE=%{_datadir}/unsermake/unsermake
 %{__make} -f admin/Makefile.common cvs
-cp -f %{_datadir}/automake/config.sub admin
+
 %configure \
 	--with-qt-libraries=%{_libdir} \
 	--disable-rpath \
@@ -511,6 +514,7 @@ for f in *.sgml ; do
 	db2man $f
 	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
 done
+cd ../..
 
 %clean
 rm -rf $RPM_BUILD_ROOT
