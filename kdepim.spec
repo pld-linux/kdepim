@@ -19,8 +19,8 @@ Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+#Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
 # Source0-md5:	657a61e0f3d90d2afec3820e77f81306
 %if %{with i18n}
 Source1:        http://ep09.pld-linux.org/~djurban/kde/i18n/kde-i18n-%{name}-%{version}.tar.bz2
