@@ -15,7 +15,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	5
+Release:	6
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -412,20 +412,6 @@ Obs³uguje urz±dzenia serii:
 %description kpilot -l uk
 ÕÔÉÌ¦ÔÁ ÄÌÑ ÓÉÎÈÒÏÎ¦ÚÁÃ¦§ Ú 3com Palm Pilots ÔÁ ÓÕÍ¦ÓÎÉÍÉ Ú ÎÉÍÉ
 ÐÒÉÓÔÒÏÑÍÉ.
-
-%package ktnef
-Summary:	A viewer/extractor for TNEF files
-Summary(pl):	Przegl±darka/ekstraktor plików TNEF
-Group:		X11/Applications
-Requires:	kdebase-core >= %{_minbaseevr}
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Obsoletes:	kdenetwork-korn
-
-%description ktnef
-A viewer/extractor for TNEF files.
-
-%description ktnef -l pl
-Przegl±darka/ekstraktor plików TNEF.
 
 %package libs
 Summary:	Shared kdepim libraries.
@@ -926,6 +912,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
+%{_mandir}/man1/ktnef*.1*
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmail_antivir.sh
 %attr(755,root,root) %{_bindir}/kmail_clamav.sh
@@ -1097,14 +1084,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/kpilot*.1*
 %{_mandir}/man1/kpalm*.1*
 
-%files ktnef -f ktnef.lang
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ktnef
-%{_datadir}/apps/ktnef
-%{_datadir}/mimelnk/application/ms-tnef.desktop
-%{_desktopdir}/kde/ktnef.desktop
-%{_iconsdir}/hicolor/*/apps/ktnef.png
-%{_mandir}/man1/ktnef*.1*
+
 
 %files libs
 %defattr(644,root,root,755)
