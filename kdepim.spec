@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	4
+Release:	5
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -52,8 +52,7 @@ Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs
 #Obsoletes:	kdepim-libkcal
 Obsoletes:	kdepim-kontact
-# Will be replaced by kdeaddons-pim
-#Obsoletes:	kdeaddons-kontact
+Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kresources
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
