@@ -4,7 +4,7 @@
 
 %define		_state		snapshots
 %define		_ver		3.1.93
-%define		_snap		031114
+%define		_snap		031126
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -20,7 +20,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	b30dc8fd2e84fb5cb78cbd81f95dfa28
+# Source0-md5:	ea1342e0dbf060002e9ef65efcf3c1f1
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -82,7 +82,7 @@ bazuj켧ych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi굻ka adresowa
 Group:		X11/Applications
-Requires:	kdelibs-kabc >= 9:%{version}
+Requires:	kdelibs >= 9:%{version}
 Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
@@ -699,7 +699,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
-%{_iconsdir}/*/*/actions/mark_as_spam.png
+#%{_iconsdir}/*/*/actions/mark_as_spam.png
 %{_iconsdir}/*/*/apps/kmail.png
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
@@ -782,8 +782,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
-%{_libdir}/kde3/resourcecalendarexchange.la
-%attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
+#%{_libdir}/kde3/resourcecalendarexchange.la
+#%attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
 %{_datadir}/apps/kgantt
 %{_datadir}/apps/knewstuff
