@@ -2,8 +2,8 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
 
-%define         _state          snapshots
-%define         _ver		3.1.93
+%define		_state		snapshots
+%define		_ver		3.1.93
 %define		_snap		031114
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -24,11 +24,11 @@ Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
+BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	rpmbuild(macros) >= 1.129
-BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -105,9 +105,9 @@ Address Book - shared libs.
 Ksi±¿ka adresowa - biblioteki wspó³dzielone.
 
 %package kandy
-Summary:        A communication program between mobile phone and PC
-Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym
-Group:          X11/Applications
+Summary:	A communication program between mobile phone and PC
+Summary(pl):	Program do komunikacji miêdzy PC a tel. komórkowym
+Group:		X11/Applications
 Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-cellphone
@@ -202,9 +202,9 @@ i drukowaæ notatki, a tak¿e przyjmowaæ przeci±ganie nawet ze zdalnych
 komputerów.
 
 %package konsolekalendar
-Summary:        A command line ICard tool
-Summary(pl):    Narzêdzie dostêpu do plików kalendarza z linii poleceñ
-Group:          Applications
+Summary:	A command line ICard tool
+Summary(pl):	Narzêdzie dostêpu do plików kalendarza z linii poleceñ
+Group:		Applications
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 
 %description konsolekalendar
@@ -216,9 +216,9 @@ Narzêdzie dostêpu do plików kalendarza z linii poleceñ.
 %package kontact
 Summary:	An integrated shell for the PIM apps
 Summary(pl):	Zintegrowany system aplikacji PIM
-Group:          X11/Applications
-Requires:       %{name}-kontact-libs = %{epoch}:%{version}-%{release}
-Requires:       %{name}-libkcal = %{epoch}:%{version}-%{release}
+Group:		X11/Applications
+Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kaplan
 
 %description kontact
@@ -231,7 +231,7 @@ Zintegrowany system aplikacji PIM.
 Summary:	kontact - shared libs
 Summary(pl):	kontact - biblioteki wspó³dzielone
 Group:		X11/Libraries
-Requires:       %{name}-libkdepim = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kontact < 3:3.1.92.031012
 
 %description kontact-libs
@@ -241,9 +241,9 @@ kontact - shared libs.
 kontact - biblioteki wspó³dzielone.
 
 %package korganizer
-Summary:        A complete calendar and scheduling progra
-Summary(pl):    Kalendarz wraz z harmonogramem zadañ
-Group:          X11/Applications
+Summary:	A complete calendar and scheduling progra
+Summary(pl):	Kalendarz wraz z harmonogramem zadañ
+Group:		X11/Applications
 Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
@@ -310,9 +310,9 @@ pocztowych.
 Miniaplicativo de monitoração da caixa de correio.
 
 %package kpilot
-Summary:        A sync tool for palmtops
-Summary(pl):    Narzêdzie do synchronizacji z palmtopami
-Group:          X11/Applications
+Summary:	A sync tool for palmtops
+Summary(pl):	Narzêdzie do synchronizacji z palmtopami
+Group:		X11/Applications
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
@@ -336,9 +336,9 @@ urz±dzeniami.
 ÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ.
 
 %package ktnef
-Summary:        A viewer/extractor for TNEF files
-Summary(pl):    Konwerter/ekstraktor plików TNEF
-Group:          X11/Applications
+Summary:	A viewer/extractor for TNEF files
+Summary(pl):	Konwerter/ekstraktor plików TNEF
+Group:		X11/Applications
 Requires:	kdebase-core >= 9:%{version}
 Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
@@ -488,9 +488,8 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 %patch1 -p1
 
 %build
-
-for f in `find . -name *.desktop` ; do
-	sed -i 's/\[nb\]/\[no\]/g' $f
+for f in `find . -name \*.desktop | xargs grep -l '\[nb\]'` ; do
+	echo -e ',s/\[nb\]=/[no]=/\n,w' | ed $f 2>/dev/null
 done
 
 %{__make} -f admin/Makefile.common cvs
@@ -531,8 +530,8 @@ for f in *.lang; do
 	if grep -q %{name}-%{_snap}-apidocs $f; then
 		grep -v %{name}-%{_snap}-apidocs $f > $f.tmp
 		mv $f.tmp $f
-	fi	
-done	
+	fi
+done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
