@@ -456,7 +456,7 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib and more
 
 %description libs -l pl
-Biblioteki wspó³dzielone pomiêdzy aplikacjimi PIM w KDE, m.in.
+Biblioteki wspó³dzielone pomiêdzy aplikacjami PIM w KDE, m.in.
 libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
