@@ -22,7 +22,7 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/3.3/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	a68e0f9b55aa40a68e1c351f6982f0f7
+# Source0-md5:	94520aeae0db2fac5da7d1ece7b575a5
 #Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{version}-%{_snap}.tar.bz2
 Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
