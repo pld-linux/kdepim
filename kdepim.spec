@@ -1,6 +1,3 @@
-# TODO:
-# - changed knotes Category to X-Docklet
-#
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
 
@@ -490,6 +487,8 @@ echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
 	-e 's/Terminal=0/Terminal=false/' \
 	kandy/src/kandy.desktop
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Applet;/' \
+	knotes/knotes.desktop
 %{__sed} -i -e 's/Terminal=0/Terminal=false/' \
 	karm/support/karm.desktop \
 	knotes/knotes.desktop \
@@ -769,6 +768,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/KNotesIface.h
+%{_includedir}/KNotesAppIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
