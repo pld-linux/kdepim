@@ -27,7 +27,7 @@ Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		%{name}-fix-libkontact_korganizerplugin_ldflags.patch
 BuildRequires:	bison
-BuildRequires:	kdelibs-devel >= %{version}
+BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
