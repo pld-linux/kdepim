@@ -15,7 +15,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	http://download.kde.org/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
 Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
-# Source0-md5:	10249b56cbc4c67dc4093b9f968604b9
+# Source0-md5:	06d3e5d1ee0cd7f2a55bd26d05ee4987
 Patch0:		%{name}-3.2branch.diff
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-vcategories.patch
