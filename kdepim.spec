@@ -12,8 +12,8 @@ Summary(pl):	Zarz╠dca informacji osobistych (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.0.4
-Release:	3
+Version:	3.0.5a
+Release:	0.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
