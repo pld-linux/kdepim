@@ -5,7 +5,7 @@
 #	- Recheck dependencies
 
 %define		_state		stable
-%define		_ver		3.1.3
+%define		_ver		3.1.4
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,22 +14,22 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1.2
+Release:	0.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	7a556df5e5ae4c00c8bea4cd8f9c1f3e
+# Source0-md5:	2a3e97a2cd5de688294cb39001282048
 # generated from kde-i18n
 Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/%{version}/kde-i18n-%{name}-%{version}.tar.bz2
-# Source1-md5:	e09b722408d74ccb0b832205507e98c9
+# Source1-md5:	d2da1a770c8623b31e465ba7c0268885
 BuildRequires:	bison
+BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 8:%{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	readline-devel
-BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= 8:%{version}
 Obsoletes:	korganizer
@@ -255,9 +255,9 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-for plik in `find ./ -name *.desktop` ; do
+for plik in `find ./ -name *.desktop | grep -l '\[nb\]'` ; do
 	echo $plik
-	sed -i -e 's/\[nb\]/\[no\]/g' $plik
+	echo -e ',s/\[nb\]/[no]/\n,w' | ed $plik
 done
 
 %configure \
