@@ -239,6 +239,7 @@ Requires:	%{name}-kmail
 Requires:       %{name}-korganizer
 Requires:       %{name}-knotes
 Requires:       %{name}-kaddressbook
+Obsoletes:	%{name}-kaplan
 
 %description kontact
 An integrated shell for the PIM apps.
@@ -329,6 +330,7 @@ Summary:        A network library
 Summary(pl):    Biblioteka sieciowa
 Group:          X11/Libraries
 Obsoletes:	kdenetwork
+Provides:	kdenetwork = 3.2
 
 %description libkdenetwork
 
