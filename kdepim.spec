@@ -44,7 +44,7 @@ BuildRequires:	pcre-devel
 BuildRequires:	qt-designer-libs
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
-BuildRequires:	unsermake >= 040511
+#BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdeaddons-kontact
