@@ -1,19 +1,16 @@
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Name:		kdepim
-Version:	2.1.1
+Version:	2.2.1
 Release:	1
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Group(de):	X11/Applikationen
 Group(pl):	X11/Aplikacje
-Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/distribution/generic/tar/src/%{name}-%{version}.tar.bz2
-BuildRequires:	XFree86-devel
+Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
 BuildRequires:	kdelibs-devel >= %{version}
-BuildRequires:	qt-devel >= 2.2
 BuildRequires:	zlib-devel
-Requires:	qt >= 2.2
 Requires:	kdelibs >= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
