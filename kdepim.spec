@@ -10,7 +10,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	3.0.4
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -82,23 +82,32 @@ Desktop Enviromnent (KDE). kdepim Í¦ÓÔÉÔØ ÔÁË¦ ÐÒÏÇÒÁÍÉ:
 
 %package pilot
 Summary:	KDE support for synchronizing data with a Palm(tm) or compatible PDA
+Summary(pl):	KDE - obs³uga synchronizacji danych z Palmem(tm) lub kompatybilnym PDA
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 
 %description pilot
 KDE support for synchronizing data with a Palm(tm) or compatible PDA.
 
+%description pilot -l pl
+KDE - obs³uga synchronizacji danych z Palmem(tm) lub kompatybilnym
+PDA.
+
 %package cellphone
 Summary:	KDE support for synchronizing data with cellphones
+Summary(pl):	KDE - obs³uga synchronizacji danych z telefonami komórkowymi.
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 
 %description cellphone
-KDE support for synchronizing data with cellphones. Install
-%{name}-cellphone if you want to use %{name} and have a cellphone.
+KDE support for synchronizing data with cellphones.
+
+%description cellphone -l pl
+KDE - obs³uga synchronizacji danych z telefonami komórkowymi.
 
 %package karm
 Summary:	Time tracking tool
+Summary(pl):	Narzêdzie do ¶ledzenia czasu
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 Obsoletes:	karm
@@ -108,8 +117,14 @@ KArm - Punjambi language for "work" - tracks time spent on various
 tasks. It is useful for tracking hours to be billed to different
 clients.
 
+%description karm -l pl
+KArm (nazwa pochodzi od s³owa "praca" w jêzyku punjambi) ¶ledzi czas
+spêdzony na ró¿nych zajêciach. Jest przydatny przy obliczaniu godzin
+do wystawiania rachunków ró¿nym klientom.
+
 %package knotes
 Summary:	Post-It notes on the desktop
+Summary(pl):	Notatki na desktopie, które mo¿na wysy³aæ
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 Obsoletes:	knotes
@@ -118,6 +133,12 @@ Obsoletes:	knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
 to serving as a reminder, KNotes can mail and print your notes, and
 accept drag and drop even from remote sites.
+
+%description knotes -l pl
+KNotes pozwala umieszczaæ na desktopie notatki z opcj± wysy³ania.
+Dodatkowo, aby móc s³u¿yæ za przypominajkê, KNotes mo¿e wysy³aæ pocztê
+i drukowaæ notatki, a tak¿e przyjmowaæ przeci±ganie nawet ze zdalnych
+komputerów.
 
 %package devel
 Summary:	Development files for KDE pim
@@ -131,7 +152,7 @@ This package contains header files needed if you wish to build
 applications based on kdepim.
 
 %description devel -l pl
-Pakiet ten zawiera pliki nag³ówkowe potzrebne do budoway aplikacji
+Pakiet ten zawiera pliki nag³ówkowe potrzebne do budowy aplikacji
 bazuj±cych na kdepim.
 
 %description devel -l uk
@@ -178,11 +199,11 @@ for i in $programs; do
 	cat $i.lang >> kdepim.lang
 done
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f kdepim.lang
 %defattr(644,root,root,755)
@@ -201,7 +222,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libpopmailconduit.la
 %{_libdir}/kde3/libpopmailconduit.so
 %{_libdir}/kde3/libtodoconduit.la
-%{_libdir}/kde3/libtodoconduit.so
+%{_libdir}/kde3/libtodoconduit.so*
 %{_libdir}/kde3/libvcalconduit.la
 %{_libdir}/kde3/libvcalconduit.so
 
@@ -225,9 +246,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_includedir}/*
 %{_libdir}/*.??
-%{_libdir}/kde3/libabbrowserconduit.so
-%{_libdir}/kde3/libexpenseconduit.so
-%{_libdir}/kde3/libknotesconduit.so
-%{_libdir}/kde3/libnullconduit.so
-%{_libdir}/kde3/libpopmailconduit.so
-%{_libdir}/kde3/libvcalconduit.so
