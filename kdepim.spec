@@ -21,16 +21,15 @@ Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Icon:		kde-pim.xpm
 BuildRequires:	automake
-BuildRequires:	unsermake >= 040511
 BuildRequires:	bison
 BuildRequires:	docbook-dtd41-sgml
 BuildRequires:	docbook-utils
-BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	pcre-devel
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
 BuildConflicts:	kdepim-mimelib
 BuildConflicts:	kdepim-libkdgantt
