@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030602
+%define		_snap		030613
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
@@ -21,8 +21,8 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	469bd2d644f1c0fc89aee51e65ca5d20
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
+# Source0-md5:	3f5c723d13552bc3a694ddee14ca423b
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -33,6 +33,7 @@ BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        %{_docdir}/kde/HTML
+%define         _icondir        %{_datadir}/icons
 
 %define         no_install_post_chrpath         1
 
@@ -375,9 +376,6 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 %patch1 -p1
 
 %build
-kde_appsdir="%{_applnkdir}"; export kde_appsdir
-kde_htmldir="%{_htmldir}"; export kde_htmldir
-kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 for plik in `find ./ -name *.desktop` ; do
 	if [ -d $plik ]; then
@@ -393,7 +391,10 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT\
+	kde_appsdir=%{_applnkdir} \
+	kde_htmldir=%{_htmldir}
 
 install -d $RPM_BUILD_ROOT%{_desktopdir}
 
@@ -505,7 +506,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/KDE-Settings/Components/kabconfig.desktop
 %{_applnkdir}/KDE-Settings/Components/kabldapconfig.desktop
 %{_desktopdir}/kaddressbook.desktop
-%{_pixmapsdir}/*/*/*/kaddressbook.png
+%{_icondir}/*/*/*/kaddressbook.png
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
@@ -518,7 +519,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/karm
 %{_datadir}/apps/karm
 %{_desktopdir}/karm.desktop
-%{_pixmapsdir}/*/*/*/karm.png
+%{_icondir}/*/*/*/karm.png
 
 %files kitchensync
 %defattr(644,root,root,755)
@@ -567,7 +568,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/KMail.desktop
-%{_pixmapsdir}/*/*/*/kmail*.png
+%{_icondir}/*/*/*/kmail*.png
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -575,7 +576,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
 %{_desktopdir}/KNode.desktop
-%{_pixmapsdir}/*/*/*/knode.png
+%{_icondir}/*/*/*/knode.png
 
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
@@ -583,7 +584,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/knotes
 %{_datadir}/config/*
 %{_desktopdir}/knotes.desktop
-%{_pixmapsdir}/*/*/*/knotes.png
+%{_icondir}/*/*/*/knotes.png
 
 %files konsolekalendar
 %defattr(644,root,root,755)
@@ -592,16 +593,22 @@ rm -rf $RPM_BUILD_ROOT
 %files kontact
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
+%{_libdir}/libkontact.la
+%attr(755,root,root) %{_libdir}/libkontact.so.*.*.*
 %{_libdir}/libkpinterfaces.la
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
 %{_libdir}/kde3/libkp*plugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
+%{_libdir}/kde3/kcm_kontact.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kontact.so
 %{_datadir}/apps/kp*plugin
 %{_datadir}/apps/kontact
+%{_datadir}/apps/summaryviewpart
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/servicetypes/kontactplugin.desktop
-%{_pixmapsdir}/crystalsvg/*/apps/kontact.png
+%{_applnkdir}/KDE-Settings/Components/kontactconfig.desktop
 %{_desktopdir}/Kontact.desktop
+%{_icondir}/crystalsvg/*/apps/kontact.png
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
@@ -662,14 +669,14 @@ rm -rf $RPM_BUILD_ROOT
 #%{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
 %{_desktopdir}/kalarm.desktop
 %{_desktopdir}/korganizer.desktop
-%{_pixmapsdir}/[!l]*/*/*/kalarm.png
-%{_pixmapsdir}/*/*/*/korganizer*.png
+%{_icondir}/[!l]*/*/*/kalarm.png
+%{_icondir}/*/*/*/korganizer*.png
 
 %files korn
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
 %{_desktopdir}/KOrn.desktop
-%{_pixmapsdir}/*/*/*/korn.png
+%{_icondir}/*/*/*/korn.png
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
@@ -684,8 +691,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kpilotconduit.desktop
 %{_desktopdir}/kpalmdoc.desktop
 %{_desktopdir}/kpilot*.desktop
-%{_pixmapsdir}/*/*/apps/kpalmdoc.png
-%{_pixmapsdir}/[!l]*/*/*/kpilot*.png
+%{_icondir}/*/*/apps/kpalmdoc.png
+%{_icondir}/[!l]*/*/*/kpilot*.png
 
 %files ksync
 %defattr(644,root,root,755)
@@ -702,7 +709,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/ktnef.desktop
-%{_pixmapsdir}/hicolor/*/apps/ktnef.png
+%{_icondir}/hicolor/*/apps/ktnef.png
 
 %files libkdenetwork
 %doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
