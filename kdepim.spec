@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030502
+%define		_snap		030504
 %define		_kdelibsminrel	0.%{_snap}.1
 
 
