@@ -6,16 +6,16 @@
 #   build crypto stuff anyway
 #
 # Conditional build:
-%bcond_without	apidocs	# prepare API documentation
+%bcond_without	apidocs		# prepare API documentation
 %bcond_without	kimproxy	# without kimproxy
 
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040508
+%define		_snap		040513
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040508
-%define		_minbaseevr	9:3.2.90.040508
+%define		_minlibsevr	9:3.2.90.040513
+%define		_minbaseevr	9:3.2.90.040513
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -52,12 +52,12 @@ BuildRequires:	gnupg >= 1.2.2
 %{?with_kimproxy:BuildRequires:	kimproxy-devel}
 BuildRequires:	lockdev-devel
 BuildRequires:	libgnokii-devel
-%{?with_apidocs:BuildRequires:	qt-doc}
-BuildRequires:	qt-designer-libs
-BuildRequires:	rpmbuild(macros) >= 1.129
-BuildRequires:	unsermake
-BuildRequires:	zlib-devel
 BuildRequires:	pcre-devel
+BuildRequires:	qt-designer-libs
+%{?with_apidocs:BuildRequires:	qt-doc}
+BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	unsermake >= 040511
+BuildRequires:	zlib-devel
 Requires:	%{name}-libs
 Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs 
@@ -65,7 +65,7 @@ Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kontact
 # Will be replaced by kdeaddons-pim
 #Obsoletes:	kdeaddons-kontact 
-#Obsoletes:	kdepim-kresources
+Obsoletes:	kdepim-kresources
 BuildConflicts: kdepim-kontact-libs
 BuildConflicts: kdepim-libkmailprivate
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -96,9 +96,9 @@ Obsoletes:	kdenetwork-devel < 10:3.1.90
 Requires:	kdelibs-devel >= %{_minlibsevr}
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-kaddressbook-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-kmail-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkmailprivate = %{epoch}:%{version}-%{release}
 #Requires:	%{name}-libkpilot = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-libkcal-devel
@@ -564,45 +564,16 @@ cat kalarmd.lang >> kalarm.lang
 cat kgpgcertmanager.lang >> kmail.lang
 %find_lang	kpilot		--with-kde
 %find_lang	ktnef		--with-kde
+%find_lang	kwatchgnupg	--with-kde
+cat kwatchgnupg.lang >> kmail.lang
 
 > %{name}.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
 cat kalarmd.lang	>> %{name}.lang
 
-files="\
-	%{name} \
-	kaddressbook \
-	kalarm \
-	kandy \
-	karm \
-	kmail \
-	knode \
-	knotes \
-	konsolekalendar \
-	korn \
-	kpilot \
-	ktnef"
-
-for i in $files; do
-	> ${i}_en.lang
-	echo "%defattr(644,root,root,755)" > ${i}_en.lang
-	grep en\/ ${i}.lang|grep -v apidocs >> ${i}_en.lang
-	grep -v apidocs $i.lang|grep -v en\/ > ${i}.lang.1
-	mv ${i}.lang.1 ${i}.lang
-done
-
-# Workaround for empty en docdirs. They are empty because all en docs are
-# in the base non-i18n package
-# Grep them out
-durne=`ls -1 *.lang|grep -v _en`
-for i in $durne; do
-	echo $i >> control
-	grep -v en\/ $i|grep -v apidocs >> ${i}.1
-	if [ -f ${i}.1 ] ; then
-		mv ${i}.1 ${i}
-	fi
-done
+# Omit apidocs entries
+sed -i 's/.*apidocs.*//' *.lang
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -612,6 +583,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	kmail-libs		-p /sbin/ldconfig
 %postun	kmail-libs		-p /sbin/ldconfig
+
+%post	knode			-p /sbin/ldconfig
+%postun	knode			-p /sbin/ldconfig
 
 %post	knotes			-p /sbin/ldconfig
 %postun	knotes			-p /sbin/ldconfig
@@ -640,8 +614,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs			-p /sbin/ldconfig
 %postun	libs			-p /sbin/ldconfig
 
-#%files kontact -f kontact_en.lang
-%files -f %{name}_en.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 # kolabwizard
 %doc README.Kolab
@@ -655,6 +628,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liblocalkonnector.so
 %{_libdir}/libqtopiakonnector.la
 %attr(755,root,root) %{_libdir}/libqtopiakonnector.so
+%{_libdir}/libremotekonnector.la
+%attr(755,root,root) %{_libdir}/libremotekonnector.so
 %{_libdir}/kde3/libkded_ksharedfile.la
 %attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
 %{_libdir}/kde3/libkitchensyncpart.la
@@ -663,8 +638,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
 %{_libdir}/kde3/libksync_debugger.la
 %attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
+%{_libdir}/kde3/libksync_restore.la
+%attr(755,root,root) %{_libdir}/kde3/libksync_restore.so
 %{_libdir}/kde3/libksync_syncerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libksync_syncerpart.so
+%{_libdir}/kde3/libksync_viewer.la
+%attr(755,root,root) %{_libdir}/kde3/libksync_viewer.so
 %{_libdir}/kde3/liboverviewpart.la
 %attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
 %{_datadir}/apps/kitchensync/ksyncgui.rc
@@ -674,11 +653,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/kitchensync/backup.desktop
 %{_datadir}/services/kitchensync/debugger.desktop
+%{_datadir}/services/kitchensync/restore.desktop
 %{_datadir}/services/kitchensync/syncerpart.desktop
+%{_datadir}/services/kitchensync/viewer.desktop
 %dir %{_datadir}/services/kresources/konnector
 %{_datadir}/services/kresources/konnector/dummykonnector.desktop
 %{_datadir}/services/kresources/konnector/localkonnector.desktop
 %{_datadir}/services/kresources/konnector/qtopia.desktop
+%{_datadir}/services/kresources/konnector/remotekonnector.desktop
 %{_datadir}/services/overview.desktop
 %{_datadir}/servicetypes/kitchensync.desktop
 %{_datadir}/servicetypes/konnector.desktop
@@ -725,8 +707,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
 # korganizer part
-##%attr(755,root,root) %{_bindir}/ghns
-##%attr(755,root,root) %{_bindir}/khotnewstuff
+#%attr(755,root,root) %{_bindir}/ghns
+#%attr(755,root,root) %{_bindir}/khotnewstuff
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
@@ -802,7 +784,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kdepim
 %{_includedir}/kgantt
 %{_includedir}/kleo
-##%{_includedir}/knewstuff
+#%{_includedir}/knewstuff
 %{_includedir}/kontact
 %{_includedir}/korganizer
 %{_includedir}/kpilot
@@ -819,7 +801,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkgantt.so
 %{_libdir}/libkleopatra.so
 %{_libdir}/libkmailprivate.so
-##%{_libdir}/libknewstuff.so
+#%{_libdir}/libknewstuff.so
+%{_libdir}/libknodecommon.so
 %{_libdir}/libknotes_xmlrpc.so
 %{_libdir}/libkontact.so
 %{_libdir}/libkorganizer.so
@@ -868,7 +851,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/newimap4.protocol
 %{_datadir}/services/newimaps.protocol
 
-%files kaddressbook -f kaddressbook_en.lang
+%files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
@@ -922,7 +905,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkabinterfaces.la
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
 
-%files kalarm -f kalarm_en.lang
+%files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
 %{_datadir}/applnk/.hidden/kalarmd.desktop
@@ -932,7 +915,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kalarm.png
 %{_mandir}/man1/kalarmd.1*
 
-%files kandy -f kandy_en.lang
+%files kandy -f kandy.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
 %{_datadir}/apps/kandy
@@ -940,14 +923,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kandy.desktop
 %{_mandir}/man1/kandy.1*
 
-%files karm -f karm_en.lang
+%files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
 %{_datadir}/apps/karm
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 
-%files kmail -f kmail_en.lang
+%files kmail -f kmail.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
@@ -1009,18 +992,29 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkmailprivate.la
 %attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
 
-%files knode -f knode_en.lang
+%files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
+%{_libdir}/libknodecommon.la
+%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+%{_libdir}/kde3/kcm_knode.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
 %{_libdir}/kde3/libknodepart.la
 %attr(755,root,root) %{_libdir}/kde3/libknodepart.so*
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
+%{_datadir}/services/knode_config_accounts.desktop
+%{_datadir}/services/knode_config_appearance.desktop
+%{_datadir}/services/knode_config_cleanup.desktop
+%{_datadir}/services/knode_config_identity.desktop
+%{_datadir}/services/knode_config_post_news.desktop
+%{_datadir}/services/knode_config_privacy.desktop
+%{_datadir}/services/knode_config_read_news.desktop
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
 
-%files knotes -f knotes_en.lang
+%files knotes -f knotes.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
 %{_libdir}/libknotes_xmlrpc.la
@@ -1041,19 +1035,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 
-%files konsolekalendar -f konsolekalendar_en.lang
+%files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
 
-%files korn -f korn_en.lang
+%files korn -f korn.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
 
-%files kpilot -f kpilot_en.lang
+%files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
@@ -1099,8 +1093,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot.1*
+# TODO
+%{_libdir}/kde3/kfile_palm.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_palm.so
+%{_datadir}/services/kfile_palm.desktop
 
-%files ktnef -f ktnef_en.lang
+%files ktnef -f ktnef.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ktnef
 %{_datadir}/apps/ktnef
