@@ -10,12 +10,12 @@
 %bcond_with     cvs             # use cvs checkouts instead of tarballs
 
 %define		_state		snapshots
-%define		_ver		3.2.90
-%define		_snap		040613
+%define		_ver		3.2.91
+%define		_snap		040630
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040613
-%define		_minbaseevr	9:3.2.90.040613
+%define		_minlibsevr	9:3.2.90.040629
+%define		_minbaseevr	9:3.2.90.040629
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -24,7 +24,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1.1
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -449,7 +449,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 # kolabwizard
 %doc README.Kolab
-%attr(755,root,root) %{_bindir}/kolabwizard
+#%attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/sloxwizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 # kitchensync part
@@ -484,8 +484,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
 %{_libdir}/kde3/libegroupwarewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
-%{_libdir}/kde3/libkolabwizard.la
-%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
+#%{_libdir}/kde3/libkolabwizard.la
+#%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
 %{_libdir}/kde3/libsloxwizard.la
 %attr(755,root,root) %{_libdir}/kde3/libsloxwizard.so*
 %{_datadir}/apps/kitchensync/ksyncgui.rc
@@ -572,7 +572,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/korgac.desktop
 ##%{_datadir}/config/khotnewstuffrc
 %{_datadir}/config.kcfg/egroupware.kcfg
-%{_datadir}/config.kcfg/kolab.kcfg
+#%{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/services/korganizer_configcolors.desktop
 %{_datadir}/services/korganizer_configfonts.desktop
