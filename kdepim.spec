@@ -1346,7 +1346,6 @@ Pliki umiêdzynarodawiaj±ce dla kpilot.
 Summary:	Internationalization and localization files for kdepim
 Summary(pl):	Pliki umiêdzynarodawiaj±ce dla kdepim
 Group:	X11/Applications
-Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-i18n-Affrikaans
 Obsoletes:	kde-i18n-Afrikaans
 Obsoletes:	kde-i18n-Arabic
