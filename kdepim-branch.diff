@@ -1,3 +1,29 @@
+diff -urN -x CVS kdepim.orig/certmanager/certificateinfowidget.ui kdepim/certmanager/certificateinfowidget.ui
+--- kdepim.orig/certmanager/certificateinfowidget.ui	Tue Nov 25 21:41:28 2003
++++ kdepim/certmanager/certificateinfowidget.ui	Wed Jun 16 22:55:00 2004
+@@ -18,9 +18,6 @@
+             <height>0</height>
+         </size>
+     </property>
+-    <property name="caption">
+-        <string>CertificateInfoWidget</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kaddressbook/ldapoptionswidget.ui kdepim/kaddressbook/ldapoptionswidget.ui
+--- kdepim.orig/kaddressbook/ldapoptionswidget.ui	Tue Sep 17 22:50:24 2002
++++ kdepim/kaddressbook/ldapoptionswidget.ui	Wed Jun 16 22:55:00 2004
+@@ -31,9 +31,6 @@
+             <height>302</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>LDAPOptionsWidget</string>
+-    </property>
+     <vbox>
+         <property name="name">
+             <cstring>unnamed</cstring>
 diff -urN -x CVS kdepim.orig/kdgantt/KDGanttView.cpp kdepim/kdgantt/KDGanttView.cpp
 --- kdepim.orig/kdgantt/KDGanttView.cpp	Fri Oct 24 16:26:38 2003
 +++ kdepim/kdgantt/KDGanttView.cpp	Sat Jun  5 09:38:53 2004
@@ -50,6 +76,178 @@ diff -urN -x CVS kdepim.orig/kdgantt/KDGanttViewSubwidgets.cpp kdepim/kdgantt/KD
  }
  
  
+diff -urN -x CVS kdepim.orig/kgantt/kgantt/itemedit.ui kdepim/kgantt/kgantt/itemedit.ui
+--- kdepim.orig/kgantt/kgantt/itemedit.ui	Sat Sep 13 23:11:09 2003
++++ kdepim/kgantt/kgantt/itemedit.ui	Wed Jun 16 22:55:00 2004
+@@ -12,9 +12,6 @@
+             <height>431</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <property name="layoutMargin" stdset="0">
+     </property>
+     <property name="layoutSpacing" stdset="0">
+diff -urN -x CVS kdepim.orig/kgantt/kgantt/itemedit2.ui kdepim/kgantt/kgantt/itemedit2.ui
+--- kdepim.orig/kgantt/kgantt/itemedit2.ui	Sat Sep 13 23:11:09 2003
++++ kdepim/kgantt/kgantt/itemedit2.ui	Wed Jun 16 22:55:00 2004
+@@ -12,9 +12,6 @@
+             <height>345</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <property name="layoutMargin" stdset="0">
+     </property>
+     <property name="layoutSpacing" stdset="0">
+diff -urN -x CVS kdepim.orig/kmail/kmcommands.cpp kdepim/kmail/kmcommands.cpp
+--- kdepim.orig/kmail/kmcommands.cpp	Wed Feb 25 00:29:28 2004
++++ kdepim/kmail/kmcommands.cpp	Sat Jun 12 15:46:48 2004
+@@ -688,10 +688,7 @@
+ 
+ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
+ {
+-  QCString str( msg->fromEmail() );
+-  if ( str.isEmpty() )
+-    str = "unknown@unknown.invalid";
+-  str = "From " + str + " " + msg->dateShortStr() + "\n";
++  QCString str( msg->mboxMessageSeparator() );
+   str += KMFolderMbox::escapeFrom( msg->asString() );
+   str += "\n";
+   msg->setTransferInProgress(false);
+diff -urN -x CVS kdepim.orig/kmail/kmcomposewin.cpp kdepim/kmail/kmcomposewin.cpp
+--- kdepim.orig/kmail/kmcomposewin.cpp	Wed Apr 14 18:25:31 2004
++++ kdepim/kmail/kmcomposewin.cpp	Sat Jun 12 15:46:48 2004
+@@ -611,7 +611,7 @@
+   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
+   if (fd != -1)
+   {
+-    QCString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
++    QCString startStr( mMsg->mboxMessageSeparator() );
+     ::write(fd, startStr, startStr.length());
+     ::write(fd, msgStr, msgStr.length());
+     ::write(fd, "\n", 1);
+diff -urN -x CVS kdepim.orig/kmail/kmfoldermaildir.cpp kdepim/kmail/kmfoldermaildir.cpp
+--- kdepim.orig/kmail/kmfoldermaildir.cpp	Thu Apr 29 08:47:27 2004
++++ kdepim/kmail/kmfoldermaildir.cpp	Fri Jun 11 23:52:02 2004
+@@ -106,9 +106,10 @@
+       emit statusMsg(str);
+     } else {
+       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+-      if ( mIndexStream )
++      if ( mIndexStream ) {
+         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
+-      updateIndexStreamPtr();
++        updateIndexStreamPtr();
++      }
+     }
+ 
+     if (!mIndexStream)
+diff -urN -x CVS kdepim.orig/kmail/kmfoldermbox.cpp kdepim/kmail/kmfoldermbox.cpp
+--- kdepim.orig/kmail/kmfoldermbox.cpp	Thu Apr 29 08:47:27 2004
++++ kdepim/kmail/kmfoldermbox.cpp	Sat Jun 12 15:46:48 2004
+@@ -137,7 +137,8 @@
+        emit statusMsg(str);
+      } else {
+        mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
+-       updateIndexStreamPtr();
++       if ( mIndexStream )
++         updateIndexStreamPtr();
+      }
+ 
+      if (!mIndexStream)
+@@ -978,11 +979,8 @@
+     return error;
+   }
+ 
+-  QCString address( aMsg->fromEmail() );
+-  if ( address.isEmpty() )
+-    address = "unknown@unknown.invalid";
+-  fprintf(mStream, "From %s %s\n", address.data(),
+-          (const char *)aMsg->dateShortStr());
++  QCString messageSeparator( aMsg->mboxMessageSeparator() );
++  fwrite( messageSeparator.data(), messageSeparator.length(), 1, mStream );
+   off_t offs = ftell(mStream);
+   fwrite(msgText, len, 1, mStream);
+   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
+diff -urN -x CVS kdepim.orig/kmail/kmmessage.cpp kdepim/kmail/kmmessage.cpp
+--- kdepim.orig/kmail/kmmessage.cpp	Wed Apr 14 18:25:32 2004
++++ kdepim/kmail/kmmessage.cpp	Sat Jun 12 15:46:48 2004
+@@ -4193,3 +4193,19 @@
+   return codec->toUnicode( bodyDecoded() );
+ }
+ 
++//-----------------------------------------------------------------------------
++QCString KMMessage::mboxMessageSeparator()
++{
++  QCString str( fromEmail() );
++  if ( str.isEmpty() )
++    str = "unknown@unknown.invalid";
++  QCString dateStr( dateShortStr() );
++  if ( dateStr.isEmpty() ) {
++    time_t t = ::time( 0 );
++    dateStr = ctime( &t );
++    const int len = dateStr.length();
++    if ( dateStr[len-1] == '\n' )
++      dateStr.truncate( len - 1 );
++  }
++  return "From " + str + " " + dateStr + "\n";
++}
+diff -urN -x CVS kdepim.orig/kmail/kmmessage.h kdepim/kmail/kmmessage.h
+--- kdepim.orig/kmail/kmmessage.h	Sun Dec 14 17:46:46 2003
++++ kdepim/kmail/kmmessage.h	Sat Jun 12 15:46:48 2004
+@@ -296,6 +296,8 @@
+ 
+   /** Get or set the 'Date' header field */
+   QString dateStr() const;
++  /** Returns the message date in asctime format or an empty string if the
++      message lacks a Date header. */
+   QCString dateShortStr() const;
+   QString dateIsoStr() const;
+   time_t date() const;
+@@ -794,6 +796,12 @@
+   /** Returns the last DwBodyPart that was updated */
+   DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
+ 
++  /** Returns an mbox message separator line for this message, i.e. a
++      string of the form
++      "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".
++  */
++  QCString mboxMessageSeparator();
++
+ private:
+   /** Returns message body with quoting header and indented by the
+     given indentation string. This is suitable for including the message
+diff -urN -x CVS kdepim.orig/kmail/kmmsgbase.cpp kdepim/kmail/kmmsgbase.cpp
+--- kdepim.orig/kmail/kmmsgbase.cpp	Sat Jan  3 12:40:09 2004
++++ kdepim/kmail/kmmsgbase.cpp	Mon Jun 21 22:56:05 2004
+@@ -132,7 +132,11 @@
+       mStatus &= ~KMMsgStatusIgnored;
+     if (aStatus == KMMsgStatusIgnored) {
+       mStatus &= ~KMMsgStatusWatched;
+-      setStatus(KMMsgStatusRead, idx);
++      // Set to read. Don't use setStatus, that emits msgStatusChanged
++      // and we only want to do that once.
++      mStatus &= ~KMMsgStatusUnread;
++      mStatus &= ~KMMsgStatusNew;
++      mStatus |= KMMsgStatusRead;
+     }
+     if (aStatus == KMMsgStatusSpam)
+       mStatus &= ~KMMsgStatusHam;
+diff -urN -x CVS kdepim.orig/kontact/src/main.cpp kdepim/kontact/src/main.cpp
+--- kdepim.orig/kontact/src/main.cpp	Sat Feb 28 11:40:03 2004
++++ kdepim/kontact/src/main.cpp	Tue Jun 15 11:15:54 2004
+@@ -41,7 +41,7 @@
+ static const char description[] =
+     I18N_NOOP( "A KDE Personal Information Manager" );
+ 
+-static const char version[] = "0.8.1";
++static const char version[] = "0.8.3";
+ 
+ class KontactApp : public KUniqueApplication {
+   public:
 diff -urN -x CVS kdepim.orig/korganizer/koagenda.cpp kdepim/korganizer/koagenda.cpp
 --- kdepim.orig/korganizer/koagenda.cpp	Mon Apr 19 12:58:54 2004
 +++ kdepim/korganizer/koagenda.cpp	Thu Jun 10 17:57:56 2004
@@ -103,3 +301,107 @@ diff -urN -x CVS kdepim.orig/korganizer/koagenda.cpp kdepim/korganizer/koagenda.
        }
        break;
  
+diff -urN -x CVS kdepim.orig/korganizer/kogroupwareprefspage.ui kdepim/korganizer/kogroupwareprefspage.ui
+--- kdepim.orig/korganizer/kogroupwareprefspage.ui	Fri Oct 31 22:50:11 2003
++++ kdepim/korganizer/kogroupwareprefspage.ui	Wed Jun 16 22:55:01 2004
+@@ -12,9 +12,6 @@
+             <height>531</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <vbox>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/korganizer/publishdialog_base.ui kdepim/korganizer/publishdialog_base.ui
+--- kdepim.orig/korganizer/publishdialog_base.ui	Sat Nov  8 14:12:44 2003
++++ kdepim/korganizer/publishdialog_base.ui	Wed Jun 16 22:55:01 2004
+@@ -12,9 +12,6 @@
+             <height>379</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>PublishDialog_base</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui kdepim/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui
+--- kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui	Fri Oct 24 01:42:05 2003
++++ kdepim/kpilot/conduits/JPilotPluginProxy/ConduitDialog.ui	Wed Jun 16 22:55:01 2004
+@@ -12,9 +12,6 @@
+             <height>348</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui kdepim/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui
+--- kdepim.orig/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui	Sat Jul 20 19:34:44 2002
++++ kdepim/kpilot/conduits/JPilotPluginProxy/ConfigurePlugin.ui	Wed Jun 16 22:55:01 2004
+@@ -12,9 +12,6 @@
+             <height>480</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kpilot/conduits/expense/expenseConduit.ui kdepim/kpilot/conduits/expense/expenseConduit.ui
+--- kdepim.orig/kpilot/conduits/expense/expenseConduit.ui	Sat Mar 29 07:17:32 2003
++++ kdepim/kpilot/conduits/expense/expenseConduit.ui	Wed Jun 16 22:55:01 2004
+@@ -13,9 +13,6 @@
+             <height>307</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form2</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kpilot/conduits/malconduit/mal-setup_dialog.ui kdepim/kpilot/conduits/malconduit/mal-setup_dialog.ui
+--- kdepim.orig/kpilot/conduits/malconduit/mal-setup_dialog.ui	Tue Mar 11 08:22:13 2003
++++ kdepim/kpilot/conduits/malconduit/mal-setup_dialog.ui	Wed Jun 16 22:55:01 2004
+@@ -13,9 +13,6 @@
+             <height>503</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form2</string>
+-    </property>
+     <grid>
+         <property name="name">
+             <cstring>unnamed</cstring>
+diff -urN -x CVS kdepim.orig/kpilot/conduits/popmail/setup-dialog.ui kdepim/kpilot/conduits/popmail/setup-dialog.ui
+--- kdepim.orig/kpilot/conduits/popmail/setup-dialog.ui	Mon Dec 29 15:24:23 2003
++++ kdepim/kpilot/conduits/popmail/setup-dialog.ui	Wed Jun 16 22:55:02 2004
+@@ -12,9 +12,6 @@
+             <height>298</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <widget class="QTabWidget">
+         <property name="name">
+             <cstring>fTabWidget</cstring>
+diff -urN -x CVS kdepim.orig/libkdepim/cfgc/myoptions_base.ui kdepim/libkdepim/cfgc/myoptions_base.ui
+--- kdepim.orig/libkdepim/cfgc/myoptions_base.ui	Fri Aug 22 22:08:12 2003
++++ kdepim/libkdepim/cfgc/myoptions_base.ui	Wed Jun 16 22:55:02 2004
+@@ -12,9 +12,6 @@
+             <height>480</height>
+         </rect>
+     </property>
+-    <property name="caption">
+-        <string>Form1</string>
+-    </property>
+     <widget class="QLabel">
+         <property name="name">
+             <cstring>textLabel1</cstring>
