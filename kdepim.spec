@@ -100,7 +100,7 @@ PDA.
 
 %package cellphone
 Summary:	KDE support for synchronizing data with cellphones
-Summary(pl):	KDE - obs³uga synchronizacji danych z telefonami komórkowymi.
+Summary(pl):	KDE - obs³uga synchronizacji danych z telefonami komórkowymi
 Group:		X11/Applications
 Requires:	%{name} = %{version}
 
