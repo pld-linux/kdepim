@@ -1,0 +1,51 @@
+--- kdepim-030317/kmail/kmcomposewin.cpp~	Mon Mar 10 01:20:13 2003
++++ kdepim-030317/kmail/kmcomposewin.cpp	Thu Mar 20 08:36:27 2003
+@@ -871,7 +871,7 @@
+   (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
+                       actionCollection(), "clean_spaces");
+ 
+-  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
++  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text", 0, this,
+                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
+ 
+   //these are checkable!!!
+--- kdepim-030317/kmail/kmmainwidget.cpp~	Thu Mar 13 00:53:13 2003
++++ kdepim-030317/kmail/kmmainwidget.cpp	Thu Mar 20 08:41:38 2003
+@@ -1961,7 +1961,7 @@
+   (void) new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
+ 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
+ 
+-  (void) new KAction( i18n("Select &All Messages"), Key_K, this,
++  (void) new KAction( i18n("Select &All Messages"), "ok", Key_K, this,
+ 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
+ 
+   (void) new KAction( i18n("Select Message &Text"),
+@@ -1994,10 +1994,10 @@
+   removeFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
+ 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
+ 
+-  preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
++  preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), "html", 0, this,
+ 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+ 
+-  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
++  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), "view_tree", 0, this,
+ 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
+ 
+   //----- Message Menu
+--- kdepim-030317/kmail/kmreaderwin.cpp~	Sat Mar 15 01:00:36 2003
++++ kdepim-030317/kmail/kmreaderwin.cpp	Thu Mar 20 08:34:34 2003
+@@ -595,11 +595,11 @@
+                                    "mlist_filter");
+   mFilterMenu->insert( mListFilterAction );
+ 
+-  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
++  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text",
+ 			Key_X, this, SLOT(slotToggleFixedFont()),
+ 			ac, "toggle_fixedfont" );
+ 
+-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
++  mViewSourceAction = new KAction( i18n("&View Source"), "source", Key_V, this,
+ 		      SLOT(slotShowMsgSrc()), ac, "view_source" );
+ 
+   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), ac);
