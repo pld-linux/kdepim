@@ -11,11 +11,11 @@
 
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040523
+%define		_snap		040524
 %define		_packager	adgor
 
-%define		_minlibsevr	9:3.2.90.040519
-%define		_minbaseevr	9:3.2.90.040519
+%define		_minlibsevr	9:3.2.90.040524
+%define		_minbaseevr	9:3.2.90.040524
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -30,8 +30,8 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 %if ! %{with cvs}
-Source0:        ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-#Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
+#Source0:        ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
 ##%% Source0-md5:  53b213398dc488af5de57b74c6b3bbf5
 %else
 Source0:        kdesource.tar.gz
@@ -39,6 +39,7 @@ Source0:        kdesource.tar.gz
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
+Patch3:		%{name}-kmail_senderpic.patch
 BuildRequires:	automake
 BuildRequires:	bison
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -519,6 +520,7 @@ TODO.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 echo "KDE_OPTIONS = nofinal" >> kitchensync/kitchensync/backup/Makefile.am
 echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
@@ -633,6 +635,7 @@ rm -rf $RPM_BUILD_ROOT
 # kolabwizard
 %doc README.Kolab
 %attr(755,root,root) %{_bindir}/kolabwizard
+%attr(755,root,root) %{_bindir}/sloxwizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 # kitchensync part
 %attr(755,root,root) %{_bindir}/kitchensync
@@ -764,14 +767,20 @@ rm -rf $RPM_BUILD_ROOT
 # kresources part
 %{_libdir}/kde3/kabc_imap.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_imap.so
+%{_libdir}/kde3/kabc_slox.la
+%attr(755,root,root) %{_libdir}/kde3/kabc_slox.so
 %{_libdir}/kde3/kabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
+%{_libdir}/kde3/kcal_slox.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_slox.so
 %{_libdir}/kde3/kcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
+%{_datadir}/config.kcfg/slox.kcfg
 %{_datadir}/services/kresources/kabc/imap.desktop
 %{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
+%{_datadir}/services/kresources/kabc/kabc_slox.desktop
 # libkcal part
 %{_libdir}/kde3/kcal_imap.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_imap.so
@@ -838,11 +847,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libksync2.so
 # kresources-devel part
 %{_includedir}/kabc/kabc_resourcexmlrpc.h
+%{_libdir}/libkabc_slox.so
 %{_libdir}/libkabc_xmlrpc.so
 # libkcal-devel part
 %{_includedir}/libkcal
 %{_libdir}/libkcal.so
 %{_libdir}/libkcal_imap.so
+%{_libdir}/libkcal_slox.so
 %{_libdir}/libkcal_xmlrpc.so
 
 %if %{with apidocs}
@@ -948,6 +959,9 @@ rm -rf $RPM_BUILD_ROOT
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
+%attr(755,root,root) %{_bindir}/kmail_clamav.sh
+%attr(755,root,root) %{_bindir}/kmail_fprot.sh
+%attr(755,root,root) %{_bindir}/kmail_sav.sh
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
@@ -1205,9 +1219,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
 # kresources part
+%{_libdir}/libkabc_slox.la
+%attr(755,root,root) %{_libdir}/libkabc_slox.so.*.*.*
 %{_libdir}/libkabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkabc_xmlrpc.so.*.*.*
 %{_libdir}/libkcal_imap.la
 %attr(755,root,root) %{_libdir}/libkcal_imap.so.*.*.*
+%{_libdir}/libkcal_slox.la
+%attr(755,root,root) %{_libdir}/libkcal_slox.so.*.*.*
 %{_libdir}/libkcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
