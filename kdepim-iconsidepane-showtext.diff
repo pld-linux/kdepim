@@ -1,5 +1,5 @@
---- kdepim-3.4.0/kontact/src/iconsidepane.cpp.orig	20 Feb 2005 19:21:29 -0000	1.40
-+++ kdepim-3.4.0/kontact/src/iconsidepane.cpp	28 Mar 2005 21:37:10 -0000
+--- kdepim-3.4.0/kontact/src/iconsidepane.cpp~	20 Feb 2005 19:21:29 -0000	1.40
++++ kdepim-3.4.0/kontact/src/iconsidepane.cpp	28 Mar 2005 23:37:08 -0000
 @@ -124,12 +124,24 @@
  int EntryItem::width( const QListBox *listbox ) const
  {
@@ -22,8 +22,8 @@
 -    w = (int)navigator()->viewMode() + 4 + listbox->fontMetrics().width( text() );
 +  {
 +    // text next to icon: sum their widhts 
-+    w = (int)navigator()->viewMode() + 4;
-+    if (navigator()->showText()) w += listbox->fontMetrics().width( text() );
++    w = (int)navigator()->viewMode();
++    if (navigator()->showText()) w += listbox->fontMetrics().width( text() ) + 4;
 +  }
  
    return w + ( KDialog::marginHint() * 2 );
@@ -71,6 +71,17 @@
      QFontMetrics fm = p->fontMetrics();
  
      int x = 0;
+@@ -209,8 +235,8 @@
+         y += mPixmap.height()/2 - fm.height()/2 + fm.ascent();
+     }
+ 
+-    if ( isCurrent() || isSelected() || mHasHover ) {
+-      p->setPen( box->colorGroup().highlight().dark(115) );
++    if ( navigator()->showText() && ( isCurrent() || isSelected() || mHasHover ) ) {
++      p->setPen( box->colorGroup().highlight().dark(115) );      
+       p->drawText( x + ( QApplication::reverseLayout() ? -1 : 1),
+                    y + 1, text() );
+       p->setPen( box->colorGroup().highlightedText() );
 @@ -218,6 +244,7 @@
      else
        p->setPen( box->colorGroup().text() );
@@ -87,7 +98,7 @@
    setSelectionMode( KListBox::Single );
    viewport()->setBackgroundMode( PaletteBackground );
    setFrameStyle( QFrame::NoFrame );
-@@ -433,18 +461,52 @@
+@@ -433,18 +461,53 @@
  {
    KPopupMenu menu;
    menu.insertTitle( i18n( "Icon Size" ) );
@@ -112,7 +123,7 @@
 +  {
 +      menu.insertSeparator(i+1);
 +      // the current seting is no-text
-+      kdWarning(5600)<< "IconShowText=" << IconShowText - 1 << "\n";
++      kdDebug(5600)<< "IconShowText=" << IconShowText - 1 << "\n";
 +      if (mHaveText != IconShowText)
 +          menu.insertItem( i18n( "Show Text" ), IconShowText,i+2);
 +      else
@@ -125,8 +136,9 @@
      return;
 +// choice is not from an icon size menu part and it is either
 +// IconShowText=showtext or the IconShowText-1 = dont show text
-+  kdWarning(5600) << "Index: " <<  menu.indexOf(choice) << "\n"; 
-+   kdWarning(5600) << "Wybor: " << choice << "\n";
++
++  kdDebug(5600) << "Index: " <<  menu.indexOf(choice) << "\n"; 
++  kdDebug(5600) << "Choice: " << choice << "\n";
  
 -  mViewMode = sizeIntToEnum( choice );
 -  Prefs::self()->setSidePaneIconSize( choice );
@@ -146,8 +158,8 @@
  
    int maxWidth = 0;
    QListBoxItem* it = 0;
---- kdepim-3.4.0/kontact/src/iconsidepane.h.orig	20 Feb 2005 15:33:47 -0000	1.16
-+++ kdepim-3.4.0/kontact/src/iconsidepane.h	28 Mar 2005 21:37:11 -0000
+--- kdepim-3.4.0/kontact/src/iconsidepane.h~	20 Feb 2005 15:33:47 -0000	1.16
++++ kdepim-3.4.0/kontact/src/iconsidepane.h	28 Mar 2005 23:37:11 -0000
 @@ -22,7 +22,7 @@
  #define KONTACT_ICONSIDEPANEBASE_H
  
@@ -182,8 +194,8 @@
  
      QListBoxItem* mMouseOn;
  
---- kdepim-3.4.0/kontact/src/kontact.kcfg.orig	24 Feb 2005 21:14:52 -0000	1.10
-+++ kdepim-3.4.0/kontact/src/kontact.kcfg	28 Mar 2005 21:37:12 -0000
+--- kdepim-3.4.0/kontact/src/kontact.kcfg~	24 Feb 2005 21:14:52 -0000	1.10
++++ kdepim-3.4.0/kontact/src/kontact.kcfg	28 Mar 2005 23:37:13 -0000
 @@ -20,7 +20,10 @@
      <entry type="IntList" name="SidePaneSplitter">
        <default>1</default>
