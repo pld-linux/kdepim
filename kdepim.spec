@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	5
+Release:	6
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -654,7 +654,6 @@ Summary:	Internationalization and localization files for korganizer
 Summary(pl):	Pliki umiЙdzynarodawiaj╠ce dla korganizera
 Group:		X11/Applications
 Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
-Requires:	%{name}-kgantt-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer-libs-i18n = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal-i18n = %{epoch}:%{version}-%{release}
 
