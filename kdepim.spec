@@ -257,7 +257,6 @@ Summary(pl):	Kalendarz wraz z harmonogramem zadañ
 Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= 9:%{version}
 Obsoletes:	kdepim-kalarm
 Obsoletes:	kdepim-kgantt
@@ -735,6 +734,7 @@ Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korganizer-libs
 Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libkdgantt-i18n = %{epoch}:%{version}-%{release}
 Obsoletes:	kdepim-kgantt-i18n
 
 %description korganizer-libs-i18n
