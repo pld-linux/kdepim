@@ -4,21 +4,21 @@
 #	  clear that H (N) is written in lowercase instead uppercase
 #	- Recheck dependencies
 
-%define         _state          unstable
-%define         _kdever         kde-3.1-rc7
+%define         _state          stable
+%define         _ver		3.1
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.1
+Version:	%{_ver}
 Release:	6
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 #Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
