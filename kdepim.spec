@@ -13,7 +13,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.1
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -246,9 +246,9 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 %{__make}
 
-cd kaplan
-%{__make}
-cd .. 
+#cd kaplan
+#%{__make}
+#cd .. 
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -327,16 +327,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/*/*/*/karm.png
 %{_applnkdir}/Utilities/karm.desktop
 
-%files kaplan
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/kaplan
-%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.*
-%attr(755,root,root) %{_libdir}/libkpinterfaces*.*
-%{_datadir}/apps/kaplan
-%{_datadir}/apps/kp*plugin
-%{_datadir}/services/kp*plugin.*
-%{_datadir}/servicetypes/kaplanplugin.desktop
-%{_applnkdir}/Utilities/kandy.desktop
+#%files kaplan
+#%defattr(644,root,root,755)
+#%attr(755,root,root) %{_bindir}/kaplan
+#%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.*
+#%attr(755,root,root) %{_libdir}/libkpinterfaces*.*
+#%{_datadir}/apps/kaplan
+#%{_datadir}/apps/kp*plugin
+#%{_datadir}/services/kp*plugin.*
+#%{_datadir}/servicetypes/kaplanplugin.desktop
 
 %files kgantt
 %defattr(644,root,root,755)
