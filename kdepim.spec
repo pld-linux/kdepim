@@ -15,7 +15,7 @@ Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	%{name}-%{version}.%{_snapshot}.tar.bz2
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 #Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 BuildRequires:	bison
@@ -28,7 +28,7 @@ Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
-%define         _htmldir        %{_datadir}/doc/kde/HTML
+%define         _htmldir        /usr/share/doc/kde/HTML
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
@@ -102,6 +102,29 @@ bazuj±cych na kdepim.
 üÔÏÔ ÐÁËÅÔ ÓÏÄÅÒÖÉÔ ÆÁÊÌÙ ÚÁÇÏÌÏ×ËÏ× ÎÅÏÂÈÏÄÉÍÙÅ ÄÌÑ ÐÏÓÔÒÏÅÎÉÑ
 ÐÒÏÇÒÁÍÍ, ÏÓÎÏ×ÁÎÎÙÈ ÎÁ kdepim.
 
+%package common
+Summary:	Common files
+Summary(pl):	Pliki wspólne
+Group:		X11/Applications
+
+%description common
+Common files
+
+%description common
+Pliki wspólne
+
+%package kaddressbook
+Summary:	Address Book
+Summary(pl):	Ksi±¿ka adresowa
+Group:		X11/Applications
+Requires:	%{name}-common = %{version}
+
+%description kaddressbook
+Address Book
+
+%description kaddressbook
+Ksi±¿ka adresowa
+
 %prep
 %setup -q
 
@@ -129,7 +152,7 @@ mv $ALD/Utilities/{More/*,.}
 
 #programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes \
 #korganizer kpilot ksync libkcal twister"
-programs="kaddressbook kalarm kalarmd kandy karm knotes korganizer kpilot"
+programs="kalarm kalarmd kandy karm knotes korganizer kpilot"
 
 > kdepim.lang
 for i in $programs; do
@@ -137,29 +160,43 @@ for i in $programs; do
 	cat $i.lang >> kdepim.lang
 done
 
+%find_lang kaddressbook		--with-kde
+
 %clean
 %{!?_without_clean:rm -rf $RPM_BUILD_ROOT}
 
 %files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.la
-%attr(755,root,root) %{_libdir}/*.so.*
+%attr(755,root,root) %{_bindir}/?[!a]*
+%attr(755,root,root) %{_bindir}/?a[!bd]*
+%attr(755,root,root) %{_libdir}/????[!d]*.la
+%attr(755,root,root) %{_libdir}/????[!d]*.so.*
 %attr(755,root,root) %{_libdir}/kde3/kfile*
 %attr(755,root,root) %{_libdir}/kde3/*conduit.la
 %attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
-%attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart*
 %attr(755,root,root) %{_libdir}/kde3/libkorg*
-%{_datadir}/apps/*
+%{_datadir}/apps/??[!d]*
 %{_datadir}/autostart/*
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
 %{_datadir}/config/*
-%{_pixmapsdir}/*/*/*/*.png
-%{_applnkdir}/.hidden/kalarmd.desktop
+%{_pixmapsdir}/*/*/*/??[!d]*
+%{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Utilities/*
+%{_applnkdir}/Utilities/??[!d]*
+
+%files common
+%attr(755,root,root) %{_libdir}/libkdepim.la
+%attr(755,root,root) %{_libdir}/libkdepim.so.*
+
+%files kaddressbook -f kaddressbook.lang
+%attr(755,root,root) %{_bindir}/kabc2mutt
+%attr(755,root,root) %{_bindir}/kaddressbook
+%attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart*
+%{_datadir}/apps/kaddressbook
+%{_pixmapsdir}/*/*/*/kaddressbook.png
+%{_applnkdir}/Utilities/kaddressbook.desktop
 
 %files devel
 %defattr(644,root,root,755)
