@@ -8,7 +8,7 @@
 #
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
-Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
+Summary(pl):	Zarz╠dca informacji osobistych (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
