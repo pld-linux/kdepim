@@ -1,11 +1,11 @@
---- kdepim-030317/kmail/kmcomposewin.cpp~	Mon Mar 10 01:20:13 2003
-+++ kdepim-030317/kmail/kmcomposewin.cpp	Thu Mar 20 08:36:27 2003
-@@ -871,7 +871,7 @@
+--- kdepim-031024/kmail/kmcomposewin.cpp.orig	2003-10-19 23:36:21.000000000 +0200
++++ kdepim-031024/kmail/kmcomposewin.cpp	2003-10-24 13:20:53.000000000 +0200
+@@ -892,7 +892,7 @@
    (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
                        actionCollection(), "clean_spaces");
  
--  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
-+  fixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text", 0, this,
+-  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
++  mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), "text", 0, this,
                        SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
  
    //these are checkable!!!
