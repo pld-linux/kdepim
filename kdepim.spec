@@ -12,7 +12,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	2
+Release:	3
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -516,6 +516,8 @@ Biblioteka mimelib oparta na bibliotece mimepp.
 %patch1 -p1
 
 %build
+cp /usr/share/automake/config.sub admin
+
 for f in `find . -name \*.desktop | xargs grep -l '\[nb\]'` ; do
 	echo -e ',s/\[nb\]=/[no]=/\n,w' | ed $f 2>/dev/null
 done
