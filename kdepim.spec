@@ -436,18 +436,17 @@ urz±dzeniami.
 ÕÔÉÌ¦ÔÁ ÄÌÑ ÓÉÎÈÒÏÎ¦ÚÁÃ¦§ Ú 3com Palm Pilots ÔÁ ÓÕÍ¦ÓÎÉÍÉ Ú
 ÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ.
 
-%package wizards-egroupware
-Summary:        eGroupware configuration wizard 
-Summary(pl):    Kreator konfiguracji eGroupware
-Group:          X11/Applications
-Requires:       kdelibs >= 9:%{version}
+#%package wizards-egroupware
+#Summary:        eGroupware configuration wizard 
+#Summary(pl):    Kreator konfiguracji eGroupware
+#Group:          X11/Applications
+#Requires:       kdelibs >= 9:%{version}
 
-%description wizards-egroupware
-eGroupware configuration wizard.
+#%description wizards-egroupware
+#eGroupware configuration wizard.
 
-%description wizards-egroupware -l pl
-Kreator konfiguracji eGroupware.
-
+#%description wizards-egroupware -l pl
+#Kreator konfiguracji eGroupware.
 
 ##%package kresources
 #Summary:        Additional kresources definitions
@@ -1076,6 +1075,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	kmail-libs		-p /sbin/ldconfig
 %postun	kmail-libs		-p /sbin/ldconfig
 
+%post	knotes			-p /sbin/ldconfig
+%postun	knotes			-p /sbin/ldconfig
+
 %post	libkcal			-p /sbin/ldconfig
 %postun	libkcal			-p /sbin/ldconfig
 
@@ -1129,8 +1131,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.Kolab
 %attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/groupwarewizard
-%{_libdir}/kde3/libegroupwarewizard.la
-%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so.*.*.*
 # kitchensync part
 %attr(755,root,root) %{_bindir}/kitchensync
 %{_libdir}/libdummykonnector.la
@@ -1459,8 +1459,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kmail_config_misc.desktop
 %{_datadir}/services/kmail_config_network.desktop
 %{_datadir}/services/kmail_config_security.desktop
-%{_datadir}/services/kleopatra_config_dirserv.desktop
 %{_datadir}/services/kleopatra_config_appear.desktop
+%{_datadir}/services/kleopatra_config_dirserv.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
@@ -1658,6 +1658,8 @@ rm -rf $RPM_BUILD_ROOT
 #%files kontact-libs
 %files libs
 %defattr(644,root,root,755)
+%{_libdir}/kde3/libegroupwarewizard.la
+%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so.*.*.*
 # kitchensync part
 %{_libdir}/libkitchensyncui.la
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.0.0.0
