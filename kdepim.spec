@@ -1,5 +1,6 @@
-# TODO (still on time?):
-# - find out why cant this app find gtk+.h
+# TODO :
+# - find out why cant this app find gtk+.h (stil on time for JPilot proxy)
+# - bluetooth, gnokii, lockdev, system gpg-me support (more libs in BR)
 # Conditional build:
 %bcond_without	apidocs	# prepare API documentation
 %bcond_with  i18n	# build i18n subpackages - not used in this branch
