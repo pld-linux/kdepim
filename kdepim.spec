@@ -5,7 +5,7 @@
 #	- Recheck dependencies
 
 %define         _state          unstable
-%define         _kdever         kde-3.1-rc5
+%define         _kdever         kde-3.1-rc7
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
@@ -13,7 +13,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	3.1
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -21,8 +21,6 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 #Source1:	kde-i18n-%{name}-%{version}.tar.bz2
-#Patch0:		%{name}-am.patch
-#Patch1:		%{name}-kalarm.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -32,7 +30,6 @@ Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix		/usr/X11R6
 %define         _htmldir        /usr/share/doc/kde/HTML
 
 %define         no_install_post_chrpath         1
@@ -234,10 +231,9 @@ Biblioteka do wy¶wietlania i zarz±dzania diagramami Gantta
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
 
 %build
+kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
@@ -327,15 +323,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/*/*/*/karm.png
 %{_applnkdir}/Utilities/karm.desktop
 
-#%files kaplan
-#%defattr(644,root,root,755)
-#%attr(755,root,root) %{_bindir}/kaplan
-#%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.*
-#%attr(755,root,root) %{_libdir}/libkpinterfaces*.*
-#%{_datadir}/apps/kaplan
-#%{_datadir}/apps/kp*plugin
-#%{_datadir}/services/kp*plugin.*
-#%{_datadir}/servicetypes/kaplanplugin.desktop
+%files kaplan
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kaplan
+%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.*
+%attr(755,root,root) %{_libdir}/libkpinterfaces*.*
+%{_datadir}/apps/kaplan
+%{_datadir}/apps/kp*plugin
+%{_datadir}/services/kp*plugin.*
+%{_datadir}/servicetypes/kaplanplugin.desktop
+%{_applnkdir}/Office/PIMs/Kaplan.desktop
+%{_pixmapsdir}/*/*/*/kaplan.png
 
 %files kgantt
 %defattr(644,root,root,755)
