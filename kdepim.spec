@@ -8,7 +8,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -33,6 +33,8 @@ BuildRequires:	pcre-devel
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	zlib-devel
 BuildConflicts:	kdepim-mimelib
+BuildConflicts:	kdepim-libkdgantt
+BuildConflicts:	kdepim-libmimelib
 BuildConflicts:	kdepim-libkcal
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-korganizer-libs
