@@ -31,6 +31,7 @@ BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	pilot-link-devel
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	unsermake
 BuildRequires:	zlib-devel
 BuildRequires:	pcre-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -792,6 +793,8 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 
 %build
 cp /usr/share/automake/config.sub admin
+
+export UNSERMAKE=/usr/share/unsermake/unsermake
 
 %{__make} -f admin/Makefile.common cvs
 
