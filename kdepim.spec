@@ -7,8 +7,8 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040414
-%define		_packager	djurban
+%define		_snap		040424
+%define		_packager	adgor
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -23,10 +23,8 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-#Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}.tar.bz2
-#Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
-Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	c7f69b24b21a8d9853e9d9906b48c624
+Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
+##%% Source0-md5:	c7f69b24b21a8d9853e9d9906b48c624
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
@@ -219,17 +217,6 @@ KArm (nazwa pochodzi od s≥owa "praca" w jÍzyku punjambi) ∂ledzi czas
 spÍdzony na rÛønych zajÍciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunkÛw wielu klientom.
 
-#%package kitchensync
-#Summary:	TODO
-#Summary(pl):	TODO
-#Group:		X11/Applications
-
-#%description kitchensync
-#TODO.
-
-#%description kitchensync -l pl
-#TODO.
-
 %package kmail
 Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
@@ -313,18 +300,6 @@ Dodatkowo, aby mÛc s≥uøyÊ za przypominajkÍ, KNotes moøe wysy≥aÊ pocztÍ
 i drukowaÊ notatki, a takøe przyjmowaÊ przeci±ganie nawet ze zdalnych
 komputerÛw.
 
-#%package kolabwizard
-#Summary:	TODO
-#Summary(pl):	TODO
-#Group:		Applications
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-
-#%description kolabwizard
-#TODO.
-
-#%description kolabwizard -l pl
-#TODO.
-
 %package konsolekalendar
 Summary:	A command line ICard tool
 Summary(pl):	NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ
@@ -336,82 +311,6 @@ Command line tool for accessing calendar files.
 
 %description konsolekalendar -l pl
 NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ.
-
-#%package kontact
-#Summary:	An integrated shell for the PIM apps
-#Summary(pl):	Zintegrowany system aplikacji PIM
-#Group:		X11/Applications
-#Requires:	%{name}-kontact-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Obsoletes:	kdepim-kaplan
-
-#%description kontact
-#An integrated shell for the PIM apps.
-
-#%description kontact -l pl
-#Zintegrowany system aplikacji PIM.
-
-#%package kontact-libs
-#Summary:	kontact - shared libs
-#Summary(pl):	kontact - biblioteki wspÛ≥dzielone
-#Group:		X11/Libraries
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-#Obsoletes:	kdepim-kontact < 3:3.1.92.031012
-
-#%description kontact-libs
-#kontact - shared libs.
-
-#%description kontact-libs -l pl
-#kontact - biblioteki wspÛ≥dzielone.
-
-#%package korganizer
-#Summary:	A complete calendar and scheduling progra
-#Summary(pl):	Kalendarz wraz z harmonogramem zadaÒ
-#Group:		X11/Applications
-#Requires:	kdebase-core >= 9:%{version}
-#Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
-#Obsoletes:	kdepim-kalarm
-#Obsoletes:	kdepim-kgantt
-#Obsoletes:	kdepim-kitchensync
-#Obsoletes:	kdepim-ksync
-#Obsoletes:	korganizer
-
-#%description korganizer
-#A complete calendar and scheduling program, which supports information
-#interchange with other calendar applications through the industry
-#standard vCalendar file format.
-
-#%description korganizer -l pl
-#Kalendarz wraz z harmonogramem zadaÒ (KOrganizer), ktÛry wspiera
-#wymianÍ informacji z innymi tego typu aplikacjami poprzez standard
-#przemys≥owy (vCalendar).
-
-#%description korganizer -l ru
-#–œÃŒœ∆’ŒÀ√…œŒ¡ÃÿŒ¡— –“œ«“¡ÕÕ¡ À¡Ã≈Œƒ¡“— … –≈“”œŒ¡ÃÿŒœ«œ –Ã¡Œ…“œ◊›…À¡
-#(KOrganizer –œƒƒ≈“÷…◊¡≈‘ œ¬Õ≈Œ …Œ∆œ“Õ¡√…≈  ” ƒ“’«…Õ… –“œ«“¡ÕÕ¡Õ…
-#‘¡Àœ«œ “œƒ¡ ﬁ≈“≈⁄ ”‘¡Œƒ¡“‘ŒŸ  ∆œ“Õ¡‘ ∆¡ Ã¡ vCalendar)
-
-#%description korganizer -l uk
-#–œ◊Œœ∆’ŒÀ√¶œŒ¡ÃÿŒ¡ –“œ«“¡Õ¡ À¡Ã≈Œƒ¡“¡ ‘¡ –≈“”œŒ¡ÃÿŒœ«œ
-#–Ã¡Œ’◊¡ÃÿŒ…À¡ (KOrganizer –¶ƒ‘“…Õ’§ œ¬Õ¶Œ …Œ∆œ“Õ¡√¶§¿ ⁄ ¶Œ€…Õ…
-#–“œ«“¡Õ¡Õ… ‘¡Àœ«œ “œƒ’ ﬁ≈“≈⁄ ”‘¡Œƒ¡“‘Œ…  ∆œ“Õ¡‘ ∆¡ Ã’ vCalendar)
-
-#%package korganizer-libs
-#Summary:	korganizer - shared libs
-#Summary(pl):	korganizer - biblioteki wspÛ≥dzielone
-#Group:		X11/Libraries
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdepim = %{epoch}:%{version}-%{release}
-#Requires:	%{name}-libkdgantt = %{epoch}:%{version}-%{release}
-#Obsoletes:	%{name}-korganizer < 3:3.1.92.031012
-#Obsoletes:	%{name}-commonlibs
-
-#%description korganizer-libs
-#korganizer - shared libs.
-
-#%description korganizer-libs -l pl
-#korganizer - biblioteki wspÛ≥dzielone.
 
 %package korn
 Summary:	KDE 'biff' application
@@ -459,42 +358,6 @@ urz±dzeniami.
 ’‘…Ã¶‘¡ ƒÃ— ”…Œ»“œŒ¶⁄¡√¶ß ⁄ 3com Palm Pilots ‘¡ ”’Õ¶”Œ…Õ… ⁄
 Œ…Õ… –“…”‘“œ—Õ….
 
-#%package wizards-egroupware
-#Summary:	Groupware configuration wizard 
-#Summary(pl):	Kreator konfiguracji eGroupware
-#Group:		X11/Applications
-#Requires:	kdelibs >= 9:%{version}
-
-#%description wizards-egroupware
-#eGroupware configuration wizard.
-
-#%description wizards-egroupware -l pl
-#Kreator konfiguracji eGroupware.
-
-##%package kresources
-#Summary:	Additional kresources definitions
-#Summary(pl):	Dodatkowe definicje kresources
-#Group:		X11/Applications
-#Requires:	kdelibs >= 9:%{version}
-#
-##%description kresources
-#Additional kresources definitions.
-#
-##%description kresources -l pl
-#Dodatkowe definicje kresources.
-#
-#%package kresources-devel
-#Summary:	Additional kresources definitions
-#Summary(pl):	Dodatkowe definicje kresources
-#Group:		X11/Development/Libraries
-#Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
-
-#%description kresources-devel
-#Additional kresources definitions.
-
-#%description kresources-devel -l pl
-#Dodatkowe definicje kresources.
-
 %package ktnef
 Summary:	A viewer/extractor for TNEF files
 Summary(pl):	Przegl±darka/ekstraktor plikÛw TNEF
@@ -522,20 +385,6 @@ kcal library.
 %description libkcal -l pl
 Biblioteka kcal.
 
-#%package libkcal-devel
-#Summary:	libkcal header files
-#Summary(pl):	Naglowki libkcal
-#Group:		X11/Libraries
-#Requires:	kdelibs-devel >= 9:%{version}
-#Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
-#Obsoletes:	kdepim
-
-#%description libkcal-devel
-#libkcal header files.
-
-#%description libkcal-devel -l pl
-#Naglowki libkcal.
-
 %package libkdenetwork
 Summary:	A network library
 Summary(pl):	Biblioteka sieciowa
@@ -561,32 +410,6 @@ kdepim library.
 
 %description libkdepim -l pl
 Biblioteka kdepim.
-
-#%package libkdgantt
-#Summary:	A kdgantt library
-#Summary(pl):	Biblioteka kdgantt
-#Group:		X11/Libraries
-#Requires:	kdelibs >= 9:%{version}
-#Obsoletes:	%{name}-korganizer-libs < 3.1.92.031029
-
-#%description libkdgantt
-#A kdgantt library.
-
-#%description libkdgantt -l pl
-#Biblioteka kdgantt.
-
-#%package libkdgantt-devel
-#Summary:	A kdgantt library - header files
-#Summary(pl):	Biblioteka kdgantt - pliki nag≥Ûwkowe
-#Group:		X11/Development/Libraries
-#Requires:	kdelibs-devel >= 9:%{version}
-#Obsoletes:	%{name}-devel < 3.1.92.031029
-
-#%description libkdgantt-devel
-#A kdgantt library - header files.
-
-#%description libkdgantt-devel -l pl
-#Biblioteka kdgantt - pliki nag≥Ûwkowe.
 
 %package libkpilot
 Summary:	kpilot library
@@ -920,8 +743,7 @@ Pliki umiÍdzynarodawiaj±ce dla libkdgantt.
 ### </i18n stuff>
 
 %prep
-%setup -q -n %{name}
-##%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1304,7 +1126,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmailpartIface.h
 %{_includedir}/kabc/kcal_resourcexmlrpc.h
 %{_includedir}/calendar
-%{_includedir}/gpgmepp
+%{_includedir}/gpgme++
 %{_includedir}/kaddressbook
 %{_includedir}/kdepim
 %{_includedir}/kgantt
@@ -1317,7 +1139,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ktnef
 %{_includedir}/mimelib
 %{_includedir}/qgpgme
-%{_libdir}/libgpgmepp.so
+%{_libdir}/libgpgme++.so
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkalarmd.so
@@ -1454,9 +1276,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 
-#%files kitchensync
-#%defattr(644,root,root,755)
-
 %files kmail -f kmail_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
@@ -1482,6 +1301,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kwatchgnupg
 %{_datadir}/apps/libkleopatra
 %{_datadir}/config/kmail.antispamrc
+%{_datadir}/config/libkleopatrarc
 %{_datadir}/config.kcfg/kmail.kcfg
 %{_datadir}/services/kmail_config_appearance.desktop
 %{_datadir}/services/kmail_config_composer.desktop
@@ -1491,12 +1311,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kmail_config_security.desktop
 %{_datadir}/services/kleopatra_config_appear.desktop
 %{_datadir}/services/kleopatra_config_dirserv.desktop
+%{_datadir}/services/kleopatra_config_dnorder.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
 %{_iconsdir}/*/*/apps/kmail.png
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
+# TODO
+%{_iconsdir}/*/*/apps/gpg.png
+%{_iconsdir}/*/*/apps/gpgsm.png
 
 %files kmail-libs
 %defattr(644,root,root,755)
@@ -1530,7 +1354,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/knotes_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_xmlrpc.so
 %{_datadir}/apps/knotes
-%{_datadir}/config.kcfg/knotes.kcfg
+%{_datadir}/config.kcfg/knoteconfig.kcfg
+%{_datadir}/config.kcfg/knotesglobalconfig.kcfg
 %dir %{_datadir}/services/kresources/knotes
 %{_datadir}/services/kresources/knotes/imap.desktop
 %{_datadir}/services/kresources/knotes/local.desktop
@@ -1538,20 +1363,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 
-#%files kolabwizard
-#%defattr(644,root,root,755)
-
 %files konsolekalendar -f konsolekalendar_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
-
-#%files korganizer -f korganizer_en.lang
-#%defattr(644,root,root,755)
-
-#%files korganizer-libs
-#%defattr(644,root,root,755)
 
 %files korn -f korn_en.lang
 %defattr(644,root,root,755)
@@ -1606,15 +1422,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
 %{_mandir}/man1/kpilot.1*
 
-##%files kresources
-##%defattr(644,root,root,755)
-
-##%files kresources-devel
-##%defattr(644,root,root,755)
-
-#%files libkcal-devel
-#%defattr(644,root,root,755)
-
 %files ktnef -f ktnef_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ktnef
@@ -1628,8 +1435,8 @@ rm -rf $RPM_BUILD_ROOT
 %files libkdenetwork
 %defattr(644,root,root,755)
 %doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
-%{_libdir}/libgpgmepp.la
-%attr(755,root,root) %{_libdir}/libgpgmepp.so.*.*.*
+%{_libdir}/libgpgme++.la
+%attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
 %{_libdir}/libqgpgme.la
@@ -1640,23 +1447,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc README*
 %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
-
-#%files libkdgantt
-#%defattr(644,root,root,755)
-#%{_libdir}/libkdgantt.la
-#%attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
-
-#%files libkdgantt-devel
-#%defattr(644,root,root,755)
-#%{_includedir}/KDGanttView.h
-#%{_includedir}/KDGanttViewEventItem.h
-#%{_includedir}/KDGanttViewItem.h
-#%{_includedir}/KDGanttViewSummaryItem.h
-#%{_includedir}/KDGanttViewTaskItem.h
-#%{_includedir}/KDGanttViewTaskLink.h
-#%{_includedir}/KDGanttViewTaskLinkGroup.h
-#%{_includedir}/KDXMLTools.h
-#%{_libdir}/libkdgantt.so
 
 %files libkcal
 %defattr(644,root,root,755)
@@ -1685,7 +1475,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libmimelib.la
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
 
-#%files kontact-libs
 %files libs
 %defattr(644,root,root,755)
 %{_libdir}/kde3/libegroupwarewizard.la
