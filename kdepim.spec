@@ -5,7 +5,7 @@
 #	- Recheck dependencies
 
 %define         _state          stable
-%define         _ver		3.1.1
+%define         _ver		3.1.2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -309,7 +309,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/kde3/*conduit.so
 
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
@@ -403,7 +402,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpilot.la
 %attr(755,root,root) %{_libdir}/libkpilot.so.*
 %{_libdir}/kde3/*conduit.la
-%attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
+%attr(755,root,root) %{_libdir}/kde3/*conduit.so
 %{_datadir}/apps/kpilot
 %{_datadir}/services/expense-conduit.desktop
 %{_datadir}/services/abbrowser_conduit.desktop
