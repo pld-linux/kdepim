@@ -360,7 +360,7 @@ Dodatkowe definicje kresources.
 
 %package ktnef
 Summary:	A viewer/extractor for TNEF files
-Summary(pl):	Konwerter/ekstraktor plików TNEF
+Summary(pl):	Przegl±darka/ekstraktor plików TNEF
 Group:		X11/Applications
 Requires:	%{name}-libktnef = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= 9:%{version}
