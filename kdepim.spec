@@ -1,4 +1,6 @@
 # Conditional build:
+# TODO desc and summary for kalarm (polish)
+
 %bcond_without	apidocs		# prepare API documentation
 
 %define		_state		unstable
@@ -21,7 +23,7 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 # Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
-Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{_ver}-%{_snap}.tar.bz2
+Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{version}-%{_snap}.tar.bz2
 # Source0-md5:	7b536b287d412690ee0a3728cde0fa9e
 Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
@@ -108,10 +110,18 @@ Group:		Documentation
 Requires:	kdelibs >= 9:3.2.90
 
 %description apidocs
-API documentation.
+Annotated reference of libkdepim, libkdenetwork, libkmailprivate,
+libknodecommon and the other kdepim's programming interfaces':
+- class lists
+- class members
+- namespaces
 
 %description apidocs -l pl
-Dokumentacja API.
+Dokumentacja interfejsów programowania libkdepim, libkdenetwork,
+libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
+- listy klas i ich sk³adników
+- listê przestrzeni nazw (namespace)
+
 
 %package -n kde-kio-newimap4
 Summary:	New IMAP4 protocol service
@@ -124,7 +134,6 @@ New IMAP4 protocol service.
 
 %description -n kde-kio-newimap4 -l pl
 Nowa obs³uga protoko³u IMAP4.
-
 
 %package kaddressbook
 Summary:	Address book
@@ -140,16 +149,19 @@ The KDE address book.
 Ksi±¿ka adresowa dla KDE.
 
 %package kalarm
-Summary:	TODO
-Summary(pl):	TODO
+Summary:	A personal alarm scheduler
+#TODO
+#Summary(pl):
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description kalarm
-TODO.
+KAlarm is a personal alarm message, command and email scheduler. It
+lets you set up personal alarm messages which pop up on the screen at
+the chosen time, or you can schedule commands to be executed or emails
+to be sent. Also includes an alarm daemon.
 
-%description kalarm -l pl
-TODO.
+#TODO #%description kalarm -l pl
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
@@ -414,8 +426,8 @@ A viewer/extractor for TNEF files.
 Przegl±darka/ekstraktor plików TNEF.
 
 %package libs
-Summary:	TODO
-Summary(pl):	TODO
+Summary:	Shared kdepim libraries.
+Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
 Obsoletes:	kdenetwork
@@ -436,10 +448,14 @@ Obsoletes:	kdepim-libktnef
 Obsoletes:	kdepim-libmimelib
 
 %description libs
-TODO.
+Libraries shared between PIM applications in KDE, which include:
+libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
+libksieve, libmimelib and more
 
 %description libs -l pl
-TODO.
+Biblioteki wspó³dzielone pomiêdzy aplikacjimi PIM w KDE, m.in.
+libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
+libksieve, libmimelib.
 
 %prep
 %setup -q -D
@@ -497,8 +513,8 @@ export UNSERMAKE=%{_datadir}/unsermake/unsermake
 %{?with_apidocs:%{__make} apidox}
 
 %install
-rm -rf $RPM_BUILD_ROOT *.lang
-
+rm -rf $RPM_BUILD_ROOT
+rm -rf *.lang
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir} \
