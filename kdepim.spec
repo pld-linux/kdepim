@@ -298,8 +298,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kaddressbook
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart*
 %{_datadir}/apps/kaddressbook
-%{_pixmapsdir}/*/*/*/kaddressbook.png
 %{_applnkdir}/Utilities/kaddressbook.desktop
+%{_pixmapsdir}/*/*/*/kaddressbook.png
 
 %files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
@@ -308,10 +308,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkalarmd.*
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart
-%{_pixmapsdir}/*/*/*/kalarm.png
 %{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/kalarm.desktop
 %{_applnkdir}/Utilities/kalarm.desktop
+%{_pixmapsdir}/[!l]*/*/*/kalarm.png
 
 
 %files kandy -f kandy.lang
@@ -336,7 +336,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kp*plugin
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/servicetypes/kaplanplugin.desktop
-#%{_pixmapsdir}/*/*/*/kaplan.png
 %{_applnkdir}/Utilities/kandy.desktop
 
 %files kgantt
@@ -387,8 +386,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/todo-conduit.desktop
 %{_datadir}/services/vcal-conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
-%{_pixmapsdir}/*/*/*/kpilot*.png
 %{_applnkdir}/Utilities/kpilot*.desktop
+%{_pixmapsdir}/[!l]*/*/*/kpilot*.png
 
 %files ksync
 %defattr(644,root,root,755)
