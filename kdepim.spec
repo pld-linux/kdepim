@@ -2,8 +2,8 @@
 # - find out why cant this app find gtk+.h
 
 %define		_state		stable
-%define		_ver		3.2.0
-#%%define		_snap		031114
+%define		_ver		3.2.90
+%define		_snap		040128
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -11,15 +11,15 @@ Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
-Version:	%{_ver}
-Release:	0.1
+Version:	%{_ver}.%{_snap}
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
-# Source0-md5:	657a61e0f3d90d2afec3820e77f81306
+Source0:	http://ep09.pld-linux.org/~adgor/kde/%{name}-%{_snap}.tar.bz2
+##%% Source0-md5:	657a61e0f3d90d2afec3820e77f81306
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	automake
@@ -511,22 +511,20 @@ mimelib library, based on mimepp library.
 Biblioteka mimelib oparta na bibliotece mimepp.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
 
 %build
 cp /usr/share/automake/config.sub admin
 
-z=kpilot/conduits/configure.in.in
-grep -v KPILOT_CHECK_PISOCK $z > $z.1
-mv $z.1 $z
 %{__make} -f admin/Makefile.common cvs
-cp -f /usr/share/automake/config.sub admin
+
 %configure \
-	--with-qt-libraries=%{_libdir} \
 	--disable-rpath \
-	--enable-final
+	--with-qt-libraries=%{_libdir}
+
+%{__make} -C kpilot/conduits/vcalconduit korganizerConduit.h
 
 %{__make}
 
