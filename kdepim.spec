@@ -4,7 +4,9 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030423
+%define		_snap		030501
+%define		_kdelibsminrel	0.%{_snap}.1
+
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -23,13 +25,10 @@ Source0:	http://team.pld.org.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
-BuildRequires:	kdelibs-devel >= %{version}
+BuildRequires:	kdelibs-devel >= %{version}-%{_kdelibsminrel}
 BuildRequires:	pilot-link-devel
-BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
-Requires:	kdelibs >= %{version}
-Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        %{_docdir}/kde/HTML
@@ -42,7 +41,7 @@ for the K Desktop Environment (KDE).
 
 %description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
-(KDE). 
+(KDE).
 
 %description -l ru
 kdepim - ‹‘œ Œ¡¬œ“ ’‘…Ã…‘ ƒÃ— ’–“¡◊Ã≈Œ…— –≈“”œŒ¡ÃÿŒœ  …Œ∆œ“Õ¡√…≈  ƒÃ—
@@ -59,6 +58,9 @@ Summary(uk):	Ê¡ Ã… “œ⁄“œ¬À… ƒÃ— kdepim
 Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 3.2
+Requires:	%{name}-kadderssbook = %{version}-%{release}
+Requires:	%{name}-korganizer = %{version}-%{release}
+Requires:	%{name}-libmimelib = %{version}-%{release}
 
 %description devel
 This package contains header files needed if you wish to build
@@ -80,7 +82,8 @@ bazuj±cych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi±øka adresowa
 Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
+Requires:	kdebase-core >= %{version}
+Requires:	%{name}-libkdepim = %{version}-%{release}
 
 %description kaddressbook
 Address Book.
@@ -88,22 +91,12 @@ Address Book.
 %description kaddressbook -l pl
 Ksi±øka adresowa.
 
-%package kalarm
-Summary:	Alarm
-Summary(pl):	Alarm
-Group:		X11/Applications                       
-Requires:	%{name} = %{version}-%{release}
-
-%description kalarm
-Reminder Message Scheduler.
-
-%description kalarm -l pl
-Nastawianie przypominania o zdarzeniach.
-
 %package kandy
 Summary:        A communication program between mobile phone and PC
 Summary(pl):    Program do komunikacji miÍdzy PC a tel. komÛrkowym
 Group:          X11/Applications
+Requires:	kdebase-core >= %{version}
+Requires:	%{name}-libkdepim = %{version}-%{release}
 Obsoletes:	%{name}-cellphone
 
 %description kandy
@@ -117,7 +110,8 @@ synchronizacjÍ danych z telefonu z danymi na PC.
 %package karm
 Summary:	Personal timetracker
 Summary(pl):	Osobisty czasomierz
-Group:		X11/Applications                                                
+Group:		X11/Applications
+Requires:	%{name}-korganizer = %{version}-%{release}
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
@@ -129,25 +123,16 @@ KArm (nazwa pochodzi od s≥owa "praca" w jÍzyku punjambi) ∂ledzi czas
 spÍdzony na rÛønych zajÍciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunkÛw wielu klientom.
 
-%package kgantt
-Summary:        A library to display and manage Gantt diagrams
-Summary(pl):    Biblioteka do rysowania diagramÛw Gantta zarz±dzania nimi
-Group:          X11/Libraries
-
-%description kgantt
-A library to display and manage Gantt diagrams.
-
-%description kgantt -l pl
-Biblioteka do rysowania diagramÛw Gantta zarz±dzania nimi.
-
 %package kmail
 Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
-Requires:	kdebase-mailnews
-Requires:	kdelibs >= %{version}
-Requires:	%{name}-libkdenetwork >= %{version}
+Requires:	kdebase-mailnews >= %{version}
+Requires:	%{name}-ktnef >= %{version}-%{release}
+Requires:	%{name}-libkdenetwork >= %{version}-%{release}
+Requires:	%{name}-libkdepim = %{version}-%{release}
+Requires:	%{name}-libmimelib = %{version}-%{release}
 Obsoletes:	kdenetwork-kmail
 
 %description kmail
@@ -171,9 +156,10 @@ Summary:	KDE News Reader
 Summary(pl):	Czytnik newsÛw dla KDE
 Summary(pt_BR):	Leitor de notÌcias (news) do KDE
 Group:		X11/Applications
-Requires:	kdebase-mailnews
-Requires:	kdelibs >= %{version}
-Requires:	%{name}-libkdenetwork >= %{version}
+Requires:	kdebase-core >= %{version}
+Requires:	kdebase-mailnews >= %{version}
+Requires:	%{name}-libkdenetwork >= %{version}-%{release}
+Requires:	%{name}-libkdepim = %{version}-%{release}
 Obsoletes:	kdenetwork-knode
 
 %description knode
@@ -189,7 +175,8 @@ Leitor de notÌcias (news) do KDE.
 %package knotes
 Summary:	Yellow cards
 Summary(pl):	ØÛ≥te karteczki
-Group:		X11/Applications                                                
+Group:		X11/Applications
+Requires:	%{name}-korganizer = %{version}-%{release}
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
@@ -204,8 +191,9 @@ komputerÛw.
 
 %package konsolekalendar
 Summary:        A command line ICard tool
-Summary(pl):    NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ 
+Summary(pl):    NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ
 Group:          Applications
+Requires:	%{name}-korganizer = %{version}-%{release}
 
 %description konsolekalendar
 Command line tool for accessing calendar files.
@@ -217,11 +205,9 @@ NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ.
 Summary:	An integrated shell for the PIM apps
 Summary(pl):	Zintegrowany system aplikacji PIM
 Group:          X11/Applications
-Requires:	%{name}-kmail
-#Requires:       %{name}-knode
-Requires:       %{name}-korganizer
-Requires:       %{name}-knotes
-Requires:       %{name}-kaddressbook
+Requires:       %{name}-kaddressbook = %{version}-%{release}
+Requires:	%{name}-kmail = %{version}-%{release}
+Requires:       %{name}-korganizer = %{version}-%{release}
 Obsoletes:	%{name}-kaplan
 
 %description kontact
@@ -234,6 +220,12 @@ Zintegrowany system aplikacji PIM.
 Summary:        A complete calendar and scheduling progra
 Summary(pl):    Kalendarz wraz z harmonogramem zadaÒ
 Group:          X11/Applications
+Requires:	kdebase-core >= %{version}
+Requires:	%{name}-libkdenetwork = %{version}-%{release}
+Requires:	%{name}-libkdepim = %{version}-%{release}
+Obsoletes:	%{name}-kalarm
+Obsoletes:	%{name}-kgantt
+Obsoletes:	korganizer
 
 %description korganizer
 A complete calendar and scheduling program, which supports information
@@ -251,7 +243,7 @@ przemys≥owy (vCalendar).
 ‘¡Àœ«œ “œƒ¡ ﬁ≈“≈⁄ ”‘¡Œƒ¡“‘ŒŸ  ∆œ“Õ¡‘ ∆¡ Ã¡ vCalendar)
 
 %description korganizer -l uk
-–œ◊Œœ∆’ŒÀ√¶œŒ¡ÃÿŒ¡ –“œ«“¡Õ¡ À¡Ã≈Œƒ¡“¡ ‘¡ –≈“”œŒ¡ÃÿŒœ«œ 
+–œ◊Œœ∆’ŒÀ√¶œŒ¡ÃÿŒ¡ –“œ«“¡Õ¡ À¡Ã≈Œƒ¡“¡ ‘¡ –≈“”œŒ¡ÃÿŒœ«œ
 –Ã¡Œ’◊¡ÃÿŒ…À¡ (KOrganizer –¶ƒ‘“…Õ’§ œ¬Õ¶Œ …Œ∆œ“Õ¡√¶§¿ ⁄ ¶Œ€…Õ…
 –“œ«“¡Õ¡Õ… ‘¡Àœ«œ “œƒ’ ﬁ≈“≈⁄ ”‘¡Œƒ¡“‘Œ…  ∆œ“Õ¡‘ ∆¡ Ã’ vCalendar)
 
@@ -260,7 +252,8 @@ Summary:	KDE 'biff' application
 Summary(pl):	Wskaºnik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoraÁ„o da caixa de correio
 Group:		X11/Applications
-Requires:	kdelibs >= %{version}
+Requires:	kdebase-kicker >= %{version}
+Requires:	%{name}-libmimelib = %{version}-%{release}
 Obsoletes:	kdenetwork-korn
 
 %description korn
@@ -273,24 +266,13 @@ pocztowych.
 %description korn -l pt_BR
 Miniaplicativo de monitoraÁ„o da caixa de correio.
 
-%package kpalmdoc
-Summary:	PalmDOC converter
-Summary(pl):	Konwerter PalmDOC
-Group:		X11/Applications
-Requires:	kdelibs >= %{version}
-Obsoletes:	kdenetwork-korn
-
-%description kpalmdoc
-PalmDOC converter.
-
-%description kpalmdoc -l pl
-Konwerter PalmDOC.
-
 %package kpilot
 Summary:        A sync tool for palmtops
 Summary(pl):    NarzÍdzie do synchronizacji z palmtopami
 Group:          X11/Applications
+Requires:	%{name}-korganizer = %{version}-%{release}
 Requires:	pilot-link
+Obsoletes:	%{name}-kpalmdoc
 Obsoletes:	%{name}-pilot
 
 %description kpilot
@@ -305,13 +287,14 @@ urz±dzeniami.
 ” Œ…Õ… ’”‘“œ ”‘◊¡Õ…,
 
 %description kpilot -l uk
-’‘…Ã¶‘¡ ƒÃ— ”…Œ»“œŒ¶⁄¡√¶ß ⁄ 3com Palm Pilots ‘¡ ”’Õ¶”Œ…Õ… ⁄ 
+’‘…Ã¶‘¡ ƒÃ— ”…Œ»“œŒ¶⁄¡√¶ß ⁄ 3com Palm Pilots ‘¡ ”’Õ¶”Œ…Õ… ⁄
 Œ…Õ… –“…”‘“œ—Õ….
 
 %package ksync
 Summary:        A library for syncing stuff
 Summary(pl):    Biblioteka do synchronizacji rzeczy
 Group:          X11/Libraries
+Requires:	%{name}-korganizer = %{version}-%{release}
 
 %description ksync
 libksync is a generic library for syncing collections of data entries
@@ -325,7 +308,7 @@ jak np. kalendarze, zak≥adki, kontakty, foldery pocztowe itp.
 Summary:        A viewer/extractor for TNEF files
 Summary(pl):    Konwerter/ekstraktor plikÛw TNEF
 Group:          X11/Applications
-Requires:	kdelibs >= %{version}
+Requires:	kdebase-core >= %{version}
 Obsoletes:	kdenetwork-korn
 
 %description ktnef
@@ -338,6 +321,7 @@ Konwerter/ekstraktor plikÛw TNEF.
 Summary:	A network library
 Summary(pl):	Biblioteka sieciowa
 Group:		X11/Libraries
+Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
 Obsoletes:	kdenetwork
 
 %description libkdenetwork
@@ -345,6 +329,32 @@ A network library.
 
 %description libkdenetwork -l pl
 Biblioteka sieciowa.
+
+%package libkdepim
+Summary:	TODO
+Summary(pl):	TODO
+Group:		X11/Libraries
+Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
+Obsoletes:	%{name}
+
+%description libkdepim
+TODO
+
+%description libkdepim -l pl
+TODO
+
+%package libmimelib
+Summary:	TODO
+Summary(pl):	TODO
+Group:		X11/Libraries
+Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
+Obsoletes:	%{name}
+
+%description libmimelib
+TODO
+
+%description libmimelib -l pl
+TODO
 
 %prep
 %setup -q -n %{name}-%{_snap}
@@ -363,7 +373,8 @@ for plik in `find ./ -name *.desktop` ; do
 	fi
 done
 
-%configure --enable-final
+%configure \
+	--enable-final
 
 %{__make}
 
@@ -376,20 +387,19 @@ install -d $RPM_BUILD_ROOT%{_desktopdir}
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
 
-mv -f $ALD/{Settings,KDE-Settings}
-mv -f $ALD/{PIM/*,KDE-Settings/Components}
+mv $ALD/{Settings,KDE-Settings}
+mv $ALD/{PIM/*,KDE-Settings/Components}
 
-mv -f $ALD/Applications/[Kk]o*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
-mv -f $ALD/Internet/K[!O]*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
-mv -f $ALD/Internet/More/KOrn.desktop		$RPM_BUILD_ROOT%{_desktopdir}
-mv -f $ALD/Utilities/kaddressbook*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-mv -f $ALD/Utilities/k[!am]*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
-mv -f $ALD/Utilities/More/*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Applications/[Kk]o*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Internet/K[!O]*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Internet/More/KOrn.desktop	$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Utilities/kaddressbook*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Utilities/k[!am]*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
+mv $ALD/Utilities/More/*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kalarmd		--with-kde
-cat kalarmd.lang >> kalarm.lang
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
 %find_lang	kmail		--with-kde
@@ -398,16 +408,11 @@ cat kalarmd.lang >> kalarm.lang
 %find_lang	korganizer	--with-kde
 %find_lang	kpilot		--with-kde
 
+cat kalarm.lang >> korganizer.lang
+cat kalarmd.lang >> korganizer.lang
+
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%files 
-%defattr(644,root,root,755)
-%doc README*
-%{_libdir}/libkdepim.la
-%attr(755,root,root) %{_libdir}/libkdepim.so.*
-%{_libdir}/libmimelib.la
-%attr(755,root,root) %{_libdir}/libmimelib.so.*
 
 %files devel
 %defattr(644,root,root,755)
@@ -434,6 +439,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
 %{_libdir}/kde3/libkaddrbk_location.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
+%{_libdir}/kde3/libkaddrbk_merge.la
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_merge.so
 %{_libdir}/kde3/libkaddrbk_tableview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_tableview.so
 %{_libdir}/kde3/libkaddrbk_*_xxport.la
@@ -452,19 +459,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kaddressbook.desktop
 %{_pixmapsdir}/*/*/*/kaddressbook.png
 
-%files kalarm -f kalarm.lang
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/kalarm*
-%attr(755,root,root) %{_bindir}/korgac
-%attr(755,root,root) %{_bindir}/simplealarmdaemon
-%{_libdir}/libkalarmd.la
-%attr(755,root,root) %{_libdir}/libkalarmd.so.*
-%{_datadir}/apps/kalarm*
-%{_datadir}/autostart/kalarm*.desktop
-%{_applnkdir}/.hidden/kalarmd.desktop
-%{_desktopdir}/kalarm.desktop
-%{_pixmapsdir}/[!l]*/*/*/kalarm.png
-
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
@@ -477,14 +471,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_desktopdir}/karm.desktop
 %{_pixmapsdir}/*/*/*/karm.png
-
-%files kgantt
-%defattr(644,root,root,755)
-%{_libdir}/libkdgantt.la
-%attr(755,root,root) %{_libdir}/libkdgantt.so.*
-%{_libdir}/libkgantt.la
-%attr(755,root,root) %{_libdir}/libkgantt.so.*
-%{_datadir}/apps/kgantt
 
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
@@ -541,10 +527,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kalarm*
+%attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ical2vcal
+%attr(755,root,root) %{_bindir}/simplealarmdaemon
+%{_libdir}/libkalarmd.la
+%attr(755,root,root) %{_libdir}/libkalarmd.so.*
 %{_libdir}/libkcal*.la
 %attr(755,root,root) %{_libdir}/libkcal*.so.*
+%{_libdir}/libkdgantt.la
+%attr(755,root,root) %{_libdir}/libkdgantt.so.*
+%{_libdir}/libkgantt.la
+%attr(755,root,root) %{_libdir}/libkgantt.so.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*
 %{_libdir}/libkorganizer.la
@@ -565,8 +560,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_libdir}/kde3/resourcecalendarimap.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarimap.so
+%{_datadir}/apps/kalarm*
+%{_datadir}/apps/kgantt
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/kresources
+%{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/servicetypes/calendardecoration.desktop
@@ -574,8 +572,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_datadir}/services/webcal.protocol
+%{_applnkdir}/.hidden/kalarmd.desktop
 %{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
+%{_desktopdir}/kalarm.desktop
 %{_desktopdir}/korganizer.desktop
+%{_pixmapsdir}/[!l]*/*/*/kalarm.png
 %{_pixmapsdir}/*/*/*/korganizer*.png
 
 %files korn
@@ -584,31 +585,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/KOrn.desktop
 %{_pixmapsdir}/*/*/*/korn.png
 
-%files kpalmdoc
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/kpalmdoc
-%{_datadir}/services/doc_conduit.desktop
-%{_desktopdir}/kpalmdoc.desktop
-%{_pixmapsdir}/crystalsvg/*/apps/kpalmdoc.png
-
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
 %{_libdir}/libkpilot.la
 %attr(755,root,root) %{_libdir}/libkpilot.so.*
 %{_libdir}/kde3/*conduit.la
 %attr(755,root,root) %{_libdir}/kde3/*conduit.so*
 %{_datadir}/apps/kpilot
-%{_datadir}/services/expense-conduit.desktop
-%{_datadir}/services/abbrowser_conduit.desktop
-%{_datadir}/services/knotes-conduit.desktop
-#%{_datadir}/services/null-conduit.desktop
-%{_datadir}/services/popmail-conduit.desktop
-%{_datadir}/services/time_conduit.desktop
-%{_datadir}/services/todo-conduit.desktop
-%{_datadir}/services/vcal-conduit.desktop
+%{_datadir}/services/*conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
+%{_desktopdir}/kpalmdoc.desktop
 %{_desktopdir}/kpilot*.desktop
+%{_pixmapsdir}/*/*/apps/kpalmdoc.png
 %{_pixmapsdir}/[!l]*/*/*/kpilot*.png
 
 %files ksync
@@ -629,6 +619,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_pixmapsdir}/hicolor/*/apps/ktnef.png
 
 %files libkdenetwork
+%doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
 %defattr(644,root,root,755)
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*
+
+%files libkdepim
+%defattr(644,root,root,755)
+%doc README*
+%{_libdir}/libkdepim.la
+%attr(755,root,root) %{_libdir}/libkdepim.so.*
+
+%files libmimelib
+%doc mimelib/{Changes,README*,Tutorial}
+%defattr(644,root,root,755)
+%{_libdir}/libmimelib.la
+%attr(755,root,root) %{_libdir}/libmimelib.so.*
