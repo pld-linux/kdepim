@@ -1,10 +1,3 @@
-#
-# TODO :
-# - find out why cant this app find gtk+.h (stil on time for JPilot proxy)
-# - bluetooth, gnokii, lockdev (more libs in BR)
-# - Patching apropriate configure.in.in to not grumble about gpg{sm} and
-#   build crypto stuff anyway
-#
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
 
@@ -22,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.%{_snap}.1
+Release:	0.%{_snap}.2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -563,6 +556,7 @@ rm -rf $RPM_BUILD_ROOT
 # kolabwizard
 %doc README.Kolab
 #%attr(755,root,root) %{_bindir}/kolabwizard
+%attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/sloxwizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 # kitchensync part
@@ -666,6 +660,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kontactconfig.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
 %{_datadir}/servicetypes/kaddressbookimprotocol.desktop
+%{_datadir}/services/kcmkontactknt.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
 %{_iconsdir}/crystalsvg/*/actions/kontact_*.png
@@ -710,7 +705,6 @@ rm -rf $RPM_BUILD_ROOT
 ##%{_iconsdir}/crystalsvg/*/actions/knewstuff.png
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_mandir}/man1/ical2vcal.1*
-%{_mandir}/man1/korganizer.1*
 # kresources part
 %{_libdir}/kde3/kabc_imap.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_imap.so
@@ -740,6 +734,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
 %{_datadir}/services/kresources/kcal
+%{_mandir}/man1/*wizard.1*
+%{_mandir}/man1/ksync*.1*
+%{_mandir}/man1/korga*.1*
+%{_mandir}/man1/kontact*.1*
+%{_mandir}/man1/kitchensync*.1*
+%{_mandir}/man1/kdeopt*.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -872,6 +872,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
 %{_kdedocdir}/en/kaddressbook
+%{_mandir}/man1/kaddressbook*.1*
+%{_mandir}/man1/kabc2mutt*.1*
 
 %files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
@@ -881,7 +883,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/kalarm*.desktop
 %{_desktopdir}/kde/kalarm.desktop
 %{_iconsdir}/[!l]*/*/*/kalarm.png
-%{_mandir}/man1/kalarmd.1*
+%{_mandir}/man1/kalarm*.1*
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
@@ -889,7 +891,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
-%{_mandir}/man1/kandy.1*
+%{_mandir}/man1/kandy*.1*
 
 %files karm -f karm.lang
 %defattr(644,root,root,755)
@@ -898,6 +900,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 %{_kdedocdir}/en/karm
+%{_mandir}/man1/karm*.1*
 
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
@@ -967,6 +970,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_datadir}/services/sieve.protocol
+%{_mandir}/man1/kmail*.1*
+%{_mandir}/man1/kwatchgnupg*.1*
+%{_mandir}/man1/kleopatra*.1*
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -988,6 +994,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
 %{_kdedocdir}/en/knode
+%{_mandir}/man1/knode*.1*
 
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
@@ -1008,6 +1015,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 %{_kdedocdir}/en/knotes
+%{_mandir}/man1/knotes*.1*
 
 %files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
@@ -1015,6 +1023,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
 %{_kdedocdir}/en/konsolekalendar
+%{_mandir}/man1/konsolekalendar*.1*
 
 %files korn -f korn.lang
 %defattr(644,root,root,755)
@@ -1022,6 +1031,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
 %{_kdedocdir}/en/korn
+%{_mandir}/man1/korn*.1*
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
@@ -1035,8 +1045,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_knotes.so
 %{_libdir}/kde3/conduit_popmail.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_popmail.so
-#%{_libdir}/kde3/conduit_mal.la
-#%attr(755,root,root) %{_libdir}/kde3/conduit_mal.so
+%{_libdir}/kde3/conduit_mal.la
+%attr(755,root,root) %{_libdir}/kde3/conduit_mal.so
 %{_libdir}/kde3/conduit_sysinfo.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_sysinfo.so
 %{_libdir}/kde3/conduit_time.la
@@ -1058,7 +1068,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/kpalmdoc.kcfg
 %{_datadir}/config.kcfg/kpilot.kcfg
 %{_datadir}/config.kcfg/kpilotlib.kcfg
-#%{_datadir}/config.kcfg/malconduit.kcfg
+%{_datadir}/config.kcfg/malconduit.kcfg
 %{_datadir}/config.kcfg/popmail.kcfg
 %{_datadir}/config.kcfg/sysinfoconduit.kcfg
 %{_datadir}/config.kcfg/timeconduit.kcfg
@@ -1071,7 +1081,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
-%{_mandir}/man1/kpilot.1*
+%{_mandir}/man1/kpilot*.1*
+%{_mandir}/man1/kpalm*.1*
 
 %files ktnef -f ktnef.lang
 %defattr(644,root,root,755)
@@ -1080,6 +1091,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
+%{_mandir}/man1/ktnef*.1*
 
 %files libs
 %defattr(644,root,root,755)
