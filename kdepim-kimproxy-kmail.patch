@@ -6,7 +6,7 @@ RCS file: /home/kde/kdepim/kmail/Makefile.am,v
 retrieving revision 1.261
 diff -u -5 -d -p -r1.261 Makefile.am
 --- Makefile.am	2 May 2004 21:09:38 -0000	1.261
-+++ Makefile.am	4 May 2004 11:07:47 -0000
++++ Makefile.am	9 May 2004 16:12:52 -0000
 @@ -16,11 +16,12 @@ lib_LTLIBRARIES = libkmailprivate.la
  libkmailprivate_la_LDFLAGS = $(all_libraries) -version-info 0:0:0 -no-undefined
  libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
@@ -27,27 +27,109 @@ RCS file: /home/kde/kdepim/kmail/csshelper.cpp,v
 retrieving revision 1.11
 diff -u -5 -d -p -r1.11 csshelper.cpp
 --- csshelper.cpp	13 Oct 2003 18:38:55 -0000	1.11
-+++ csshelper.cpp	4 May 2004 11:07:47 -0000
-@@ -384,11 +384,11 @@ namespace KMail {
++++ csshelper.cpp	9 May 2004 16:12:52 -0000
+@@ -286,11 +286,11 @@ namespace KMail {
+     return s && *s != *d ;
+   }
+ 
+   QString CSSHelper::cssDefinitions( bool fixed ) const {
+     assert( d );
+-    return
++	QString returnVal =
+       d->commonCssDefinitions()
+       +
+       "@media screen {\n\n"
+       +
+       d->screenCssDefinitions( this, fixed )
+@@ -299,10 +299,12 @@ namespace KMail {
+       "@media print {\n\n"
+       +
+       d->printCssDefinitions()
+       +
+       "}\n";
++	kdDebug( 0 ) << returnVal << endl;
++	return returnVal;
+   }
+ 
+   QString CSSHelper::htmlHead( bool fixed ) const {
+     return
+       "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+@@ -384,21 +386,34 @@ namespace KMail {
  	       "  border: solid %3 1px ! important;\n"
  	       "}\n\n"
  
  	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
  
 -	       "div.fancy.header table {\n"
-+	       "div.fancy.header > table {\n"
++	       "div.fancy.header > table.outer{\n"
  	       "  background-color: %2 ! important;\n"
  	       "  color: %3 ! important;\n"
  	       "  border-bottom: solid %3 1px ! important;\n"
  	       "  border-left: solid %3 1px ! important;\n"
  	       "  border-right: solid %3 1px ! important;\n"
+ 	       "}\n\n"
+ 
++		   "div.fancy.header > div.sender-pic{\n"
++		   "  font-size:0.8em;\n"
++		   "  border:1px solid black;\n"
++		   "  background-color:InfoBackground;\n"
++		   "}\n\n"
++
++		   "div.fancy.header > div.sender-status{\n"
++		   "  text-align:center;\n"
++		   "}\n\n"
++
+ 	       "div.htmlWarn {\n"
+ 	       "  border: 2px solid #ffffff ! important;\n"
+-	       "}\n\n" )
++	       "}\n\n"
++           "div.senderStatus {\n"
++            
++            )
+       .arg( headerFont,
+ 	    cg.background().name(),
+ 	    cg.foreground().name() )
+       + quoteCSS;
+   }
+@@ -567,17 +582,29 @@ namespace KMail {
+ 
+ 	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
+ 
+ 	       "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
+ 
+-	       "div.fancy.header table {\n"
++	       "div.fancy.header > table.outer {\n"
+ 	       "  background-color: %5 ! important;\n"
+ 	       "  color: %4 ! important;\n"
+ 	       "  border-bottom: solid %4 1px ! important;\n"
+ 	       "  border-left: solid %4 1px ! important;\n"
+ 	       "  border-right: solid %4 1px ! important;\n"
+-	       "}\n\n" )
++	       "}\n\n"
++
++		   "div.senderpic{\n"
++		   "  font-size:0.8em;\n"
++		   "  border:1px solid black;\n"
++		   //"  background-color:InfoBackground;\n"
++		   "  background-color:yellow;\n"
++		   "}\n\n"
++
++		   "div.senderstatus{\n"
++		   "  text-align:center;\n"
++		   "}\n\n" )
++
+       .arg( headerFont )
+       .arg( cg.highlight().name(),
+ 	    cg.highlightedText().name(),
+ 	    cg.foreground().name(),
+ 	    cg.background().name() )
 Index: headerstrategy.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/headerstrategy.cpp,v
 retrieving revision 1.9
 diff -u -5 -d -p -r1.9 headerstrategy.cpp
 --- headerstrategy.cpp	11 Jan 2004 21:57:07 -0000	1.9
-+++ headerstrategy.cpp	4 May 2004 11:07:47 -0000
++++ headerstrategy.cpp	9 May 2004 16:12:52 -0000
 @@ -51,18 +51,18 @@ namespace KMail {
    };
    static const int numBriefHeaders = sizeof briefHeaders / sizeof *briefHeaders;
@@ -75,7 +157,7 @@ RCS file: /home/kde/kdepim/kmail/headerstyle.cpp,v
 retrieving revision 1.10
 diff -u -5 -d -p -r1.10 headerstyle.cpp
 --- headerstyle.cpp	11 Jan 2004 21:57:07 -0000	1.10
-+++ headerstyle.cpp	4 May 2004 11:07:47 -0000
++++ headerstyle.cpp	9 May 2004 16:12:52 -0000
 @@ -36,21 +36,26 @@
  #include "headerstyle.h"
  
@@ -105,7 +187,43 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
  
  namespace KMail {
  
-@@ -352,20 +357,83 @@ namespace KMail {
+@@ -246,21 +251,29 @@ namespace KMail {
+ 			   strToHtml(message->subject()) + "</b></div>\n")
+                         .arg(subjectDir);
+ 
+     if ( strategy->showHeader( "date" ) )
+       headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
+-
++    
++    // Get Instant Messaging presence
++    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
++    KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( message->from() ) );
++    ::KIMProxy *imProxy = KMKernel::self()->imProxy();
++    QString presence = imProxy->presenceString( addresses[0].uid() );
++ 
+     if ( strategy->showHeader( "from" ) ) {
+       headerStr.append(i18n("From: ") +
+ 		       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
+       if ( !vCardName.isEmpty() )
+-	headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
+-			 "\">" + i18n("[vCard]") + "</a>" );
++        headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
++              "\">" + i18n("[vCard]") + "</a>" );
++      if ( !presence.isEmpty() )
++        headerStr.append("&nbsp;&nbsp;(" + presence + ")" );
+       if ( strategy->showHeader( "organization" )
+-	   && !message->headerField("Organization").isEmpty())
+-	headerStr.append("&nbsp;&nbsp;(" +
+-			 strToHtml(message->headerField("Organization")) + ")");
++          && !message->headerField("Organization").isEmpty())
++        headerStr.append("&nbsp;&nbsp;(" +
++              strToHtml(message->headerField("Organization")) + ")");
+       headerStr.append("<br>\n");
+     }
+ 
+     if ( strategy->showHeader( "to" ) )
+       headerStr.append(i18n("To: ")+
+@@ -352,20 +365,83 @@ namespace KMail {
      }
      else {
        dateString = message->dateStr();
@@ -116,10 +234,13 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 +
 +    // Get KABC picture and IM status
 +    QString userHTML;
-+    QString onlineStatus;
-+
++    QString presence;
++    QString kabcUid;
++    
 +    if( addresses.count() == 1 )
 +    {
++      // kabcUid is embedded in im: URIs to indicate which IM contact to message
++      kabcUid = addresses[0].uid();
 +      // picture
 +      QString photoURL;
 +      if ( addresses[0].photo().isIntern() )
@@ -131,13 +252,11 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 +        QBuffer buffer( ba );
 +        buffer.open( IO_WriteOnly );
 +        photo.save( &buffer, "PNG" );
-+        //photoURL = "data:image/png;base64,";
 +        photoURL = QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
 +        kdDebug( 0 ) << "ENCODED IMAGE LENGTH IS: " << photoURL.length() << endl;
 +      }
 +      else
 +      {
-+        // see if this cures the 'Tom Crash'
 +        kdDebug( 5006 ) << "URL found" << endl;
 +        photoURL = addresses[0].photo().url();
 +        if ( photoURL.startsWith("/") )
@@ -154,19 +273,18 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 +      }
 +      // im status
 +      ::KIMProxy *imProxy = KMKernel::self()->imProxy();
-+      onlineStatus = imProxy->statusString( addresses[0].uid() );
-+      
-+      if( !userHTML.isEmpty() )
++      presence = imProxy->presenceString( addresses[0].uid() );
++      if ( !userHTML.isEmpty() )
 +      {
-+//          userHTML = QString("<div style=\"font-size:0.8em;border:1px solid black;"
-+//              "background-color:InfoBackground;\">") + userHTML +
-+//              "<div style=\"text-align:center;\">" + onlineStatus + "</div></div>";
-+          userHTML = QString("<div>") + userHTML +
-+              onlineStatus + "</div>";
-+          kdDebug( 0 ) << "IM TAG IS " << userHTML << endl;  
-+          kdDebug( 0 ) << endl;
-+           
-+      }    
++        if ( presence.isEmpty() )
++          userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
++        else
++          userHTML = QString( "<div class=\"senderpic\">"
++                              "<a href=\"im:%1\">%2<div class=\"senderstatus\">%3</div></a>"
++                              "</div>" ).arg( kabcUid )
++                                        .arg( userHTML )
++                                        .arg( presence );
++      }
 +    }
 +    else
 +    {
@@ -184,14 +302,27 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
  			     strToHtml(message->subject()));
 -    headerStr += "<table>\n";
 -
-+    headerStr += "<table><tr><td width=\"100%\"><table>\n";
++    headerStr += "<table class=\"outer\"><tr><td width=\"100%\"><table>\n";
 +    //headerStr += "<table>\n";
      // from line
      // the mailto: URLs can contain %3 etc., therefore usage of multiple
      // QString::arg is not possible
      if ( strategy->showHeader( "from" ) )
        headerStr += QString("<tr><th>%1</th>\n"
-@@ -406,14 +474,27 @@ namespace KMail {
+@@ -373,10 +449,12 @@ namespace KMail {
+                          .arg(i18n("From: "))
+                  + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
+                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
+                                 + i18n("[vCard]") + "</a>"
+                               : QString("") )
++                 + ( !presence.isEmpty() ? "&nbsp;&nbsp;(" + presence + ")"
++                              : QString("") )
+                  + ( message->headerField("Organization").isEmpty()
+                               ? QString("")
+                               : "&nbsp;&nbsp;("
+                                 + strToHtml(message->headerField("Organization"))
+                                 + ")")
+@@ -406,14 +484,27 @@ namespace KMail {
        headerStr.append(QString("<tr><th>%1</th>\n"
  			       "<td dir=\"%2\">%3</td></tr>\n")
                              .arg(i18n("Date: "))
@@ -200,12 +331,12 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 -    headerStr.append("</table>\n");
  
 +    //headerStr.append("</table>\n");
-+    if( strategy->showHeader( "status" ) )
++/*    if( strategy->showHeader( "status" ) )
 +      headerStr.append( QString( "<tr><th>%1</th>\n"
 +                                 "<td dir=\"%2\">%3</td></tr>\n")
-+                                    .arg(i18n("Status: "))
++                                    .arg(i18n("Sender status: "))
 +                                    .arg( directionOf( onlineStatus ) )
-+                                    .arg(onlineStatus));
++                                    .arg(onlineStatus));*/
 +    headerStr.append(
 +          QString("</table></td><td align=\"center\">%1</td></tr></table>\n").arg(userHTML)
 +                     );
@@ -224,11 +355,11 @@ diff -u -5 -d -p -r1.10 headerstyle.cpp
 Index: kmcommands.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmcommands.cpp,v
-retrieving revision 1.124
-diff -u -5 -d -p -r1.124 kmcommands.cpp
---- kmcommands.cpp	2 May 2004 20:42:43 -0000	1.124
-+++ kmcommands.cpp	4 May 2004 11:07:48 -0000
-@@ -41,10 +41,13 @@
+retrieving revision 1.127
+diff -u -5 -d -p -r1.127 kmcommands.cpp
+--- kmcommands.cpp	7 May 2004 23:19:20 -0000	1.127
++++ kmcommands.cpp	9 May 2004 16:12:53 -0000
+@@ -43,10 +43,13 @@
  #include <qtextcodec.h>
  
  #include <kdebug.h>
@@ -242,15 +373,29 @@ diff -u -5 -d -p -r1.124 kmcommands.cpp
  #include <kparts/browserextension.h>
  #include <kprogress.h>
  #include <krun.h>
-@@ -2161,5 +2164,41 @@ KMMailingListHelpCommand::KMMailingListH
+@@ -1789,10 +1792,14 @@ void KMUrlClickedCommand::execute()
+ 
+     win = new KMComposeWin(msg, mIdentity);
+     win->setCharset("", TRUE);
+     win->show();
+   }
++  else if ( mUrl.protocol() == "im" )
++  {
++    kmkernel->imProxy()->chatWithContact( mUrl.path() );
++  }
+   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
+            (mUrl.protocol() == "ftp") || (mUrl.protocol() == "file") ||
+            (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
+            (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
+            (mUrl.protocol() == "smb"))
+@@ -2164,5 +2171,43 @@ KMMailingListHelpCommand::KMMailingListH
  }
  KURL::List KMMailingListHelpCommand::urls() const
  {
    return mFolder->mailingList().helpURLS();
  }
 +
-+KMIMChatCommand::KMIMChatCommand( const KURL &url,
-+                                                KMMessage *msg )
++KMIMChatCommand::KMIMChatCommand( const KURL &url, KMMessage *msg )
 +  :mUrl( url ), mMessage( msg )
 +{
 +}
@@ -260,13 +405,16 @@ diff -u -5 -d -p -r1.124 kmcommands.cpp
 +  kdDebug( 0 ) << k_funcinfo << " URL is: " << mUrl << endl;
 +  // find UID for mail address
 +  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-+  KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( mMessage->from() ) );
++  KABC::AddresseeList addresses = addressBook->findByEmail( KMMessage::getEmailAddr( mUrl.path() ) ) ;
 +
-+  // start chant
++  // start chat
 +  if( addresses.count() == 1 )
-+    kmkernel->imProxy()->chatContactById( addresses[0].uid() );
++      kmkernel->imProxy()->chatWithContact( addresses[0].uid() );
 +  else
-+    kdDebug( 0 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;  
++  {
++    kdDebug( 0 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;
++    kdDebug( 0 ) << "mailto url : " << mUrl.path() << " decodes to: " << KMMessage::decodeMailtoUrl( mUrl.path() ) << endl;
++  }
 +}
 +//   KMComposeWin *win;
 +//   KMMessage *msg = new KMMessage;
@@ -287,10 +435,10 @@ diff -u -5 -d -p -r1.124 kmcommands.cpp
 Index: kmcommands.h
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmcommands.h,v
-retrieving revision 1.30
-diff -u -5 -d -p -r1.30 kmcommands.h
---- kmcommands.h	21 Mar 2004 22:06:22 -0000	1.30
-+++ kmcommands.h	4 May 2004 11:07:48 -0000
+retrieving revision 1.32
+diff -u -5 -d -p -r1.32 kmcommands.h
+--- kmcommands.h	7 May 2004 23:19:20 -0000	1.32
++++ kmcommands.h	9 May 2004 16:12:53 -0000
 @@ -721,6 +721,21 @@ public:
    KMMailingListHelpCommand( QWidget *parent, KMFolder *parent );
  protected:
@@ -316,41 +464,20 @@ diff -u -5 -d -p -r1.30 kmcommands.h
 Index: kmkernel.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmkernel.cpp,v
-retrieving revision 1.268
-diff -u -5 -d -p -r1.268 kmkernel.cpp
---- kmkernel.cpp	2 May 2004 21:49:49 -0000	1.268
-+++ kmkernel.cpp	4 May 2004 11:07:49 -0000
-@@ -116,11 +116,11 @@ KMKernel::KMKernel (QObject *parent, con
- 
-   mGroupware = new KMGroupware( this );
- 
-   // Set up DCOP interface
-   mICalIface = new KMailICalIfaceImpl();
--
-+  
-   mXmlGuiInstance = 0;
-   mDeadLetterTimer = 0;
-   mDeadLetterInterval = 1000*120; // 2 minutes
-   allowedToExpire = false;
- 
-@@ -144,11 +144,13 @@ KMKernel::KMKernel (QObject *parent, con
-     // KGlobal::locale()->setEncoding(cdc->mibEnum());
-   } else {
-     netCodec = QTextCodec::codecForLocale();
+retrieving revision 1.269
+diff -u -5 -d -p -r1.270 kmkernel.cpp
+--- kmkernel.cpp	2004-05-12 19:18:01.000000000 +0200	1.270
++++ kmkernel.cpp	2004-05-12 22:27:21.689372480 +0200
+@@ -149,6 +149,8 @@
    }
    mMailService =  new MailServiceImpl();
--
-+  
+ 
 +  mKIMProxy = new KIMProxy( kapp->dcopClient() );
-+  
++
    connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                       "selectFolder(QString)", false );
  }
- 
- KMKernel::~KMKernel ()
-@@ -164,11 +166,13 @@ KMKernel::~KMKernel ()
- 
-   delete mICalIface;
+@@ -168,7 +170,9 @@
    mICalIface = 0;
    delete mMailService;
    mMailService = 0;
@@ -361,12 +488,8 @@ diff -u -5 -d -p -r1.268 kmkernel.cpp
    GlobalSettings::writeConfig();
    mySelf = 0;
    kdDebug(5006) << "KMKernel::~KMKernel" << endl;
- }
- 
-@@ -1823,6 +1827,11 @@ KMMainWidget *KMKernel::getKMMainWidget(
- void KMKernel::slotFolderRemoved( KMFolder * aFolder )
- {
-   if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
+@@ -1810,4 +1814,9 @@
+   the_dimapFolderMgr->expireAllFolders( true /*immediate*/ );
  }
  
 +::KIMProxy* KMKernel::imProxy()
@@ -381,7 +504,7 @@ RCS file: /home/kde/kdepim/kmail/kmkernel.h,v
 retrieving revision 1.97
 diff -u -5 -d -p -r1.97 kmkernel.h
 --- kmkernel.h	2 May 2004 20:42:43 -0000	1.97
-+++ kmkernel.h	4 May 2004 11:07:49 -0000
++++ kmkernel.h	9 May 2004 16:12:54 -0000
 @@ -8,10 +8,11 @@
  #include <weaver.h>
  #include <weaverlogger.h>
@@ -429,11 +552,11 @@ diff -u -5 -d -p -r1.97 kmkernel.h
 Index: kmmainwidget.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmmainwidget.cpp,v
-retrieving revision 1.191
-diff -u -5 -d -p -r1.191 kmmainwidget.cpp
---- kmmainwidget.cpp	2 May 2004 11:29:42 -0000	1.191
-+++ kmmainwidget.cpp	4 May 2004 11:07:50 -0000
-@@ -1980,17 +1980,24 @@ void KMMainWidget::slotMsgPopup(KMMessag
+retrieving revision 1.193
+diff -u -5 -d -p -r1.193 kmmainwidget.cpp
+--- kmmainwidget.cpp	6 May 2004 21:49:56 -0000	1.193
++++ kmmainwidget.cpp	9 May 2004 16:12:54 -0000
+@@ -1985,17 +1985,24 @@ void KMMainWidget::slotMsgPopup(KMMessag
          menu->insertSeparator();
        }
        mMsgView->addAddrBookAction()->plug( menu );
@@ -458,60 +581,13 @@ diff -u -5 -d -p -r1.191 kmmainwidget.cpp
    {
      // popup somewhere else (i.e., not a URL) on the message
  
-Index: kmreaderwin.h
-===================================================================
-RCS file: /home/kde/kdepim/kmail/kmreaderwin.h,v
-retrieving revision 1.192
-diff -u -5 -d -p -r1.192 kmreaderwin.h
---- kmreaderwin.h	2 May 2004 15:43:00 -0000	1.192
-+++ kmreaderwin.h	4 May 2004 11:07:50 -0000
-@@ -201,10 +201,11 @@ public:
-   KAction *copyAction() { return mCopyAction; }
-   KAction *copyURLAction() { return mCopyURLAction; }
-   KAction *urlOpenAction() { return mUrlOpenAction; }
-   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-   KAction *addBookmarksAction() { return mAddBookmarksAction;}
-+  KAction *startImChatAction() { return mStartIMChatAction; }
-   // This function returns the complete data that were in this
-   // message parts - *after* all encryption has been removed that
-   // could be removed.
-   // - This is used to store the message in decrypted form.
-   void objectTreeToDecryptedMsg( partNode* node,
-@@ -321,11 +322,13 @@ public slots:
-   void slotShowMsgSrc();
-   void slotSaveMsg();
-   void slotSaveAttachments();
- 
-   void slotMessageArrived( KMMessage *msg );
--
-+  /** start IM Chat with addressee */
-+  void slotIMChat();
-+  
- protected slots:
-   /** Some attachment operations. */
-   void slotAtmOpen();
-   void slotDoAtmOpen();
-   void slotAtmOpenWith();
-@@ -428,11 +431,11 @@ private:
-   partNode* mRootNode;
-   QString mIdOfLastViewedMessage;
-   QWidget *mMainWindow;
-   KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
-       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
--      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
-+      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
- 
-   KToggleAction *mToggleFixFontAction;
-   KURL mUrlClicked;
-   KMail::HtmlWriter * mHtmlWriter;
-   // an attachment should be updated
 Index: kmreaderwin.cpp
 ===================================================================
 RCS file: /home/kde/kdepim/kmail/kmreaderwin.cpp,v
-retrieving revision 1.754
-diff -u -5 -d -p -r1.754 kmreaderwin.cpp
---- kmreaderwin.cpp.pld	2004-05-06 04:25:00.847666216 +0200
-+++ kmreaderwin.cpp	2004-05-06 04:30:54.106962640 +0200
+retrieving revision 1.756
+diff -u -5 -d -p -r1.756 kmreaderwin.cpp
+--- kmreaderwin.cpp.pld	2004-05-12 22:44:34.037431720 +0200
++++ kmreaderwin.cpp	2004-05-12 22:47:17.268616808 +0200
 @@ -555,6 +555,8 @@
   			Key_X, this, SLOT(slotToggleFixedFont()),
   			ac, "toggle_fixedfont" );
@@ -521,7 +597,7 @@ diff -u -5 -d -p -r1.754 kmreaderwin.cpp
  }
  
  
-@@ -1759,95 +1760,43 @@
+@@ -1762,95 +1764,43 @@
      return;
    }
  
@@ -639,7 +715,7 @@ diff -u -5 -d -p -r1.754 kmreaderwin.cpp
        // load the part
        mAtmUpdate = true;
        KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
-@@ -1857,81 +1806,26 @@
+@@ -1860,81 +1810,26 @@
      } else {
        slotDoAtmOpen();
      }
@@ -731,7 +807,7 @@ diff -u -5 -d -p -r1.754 kmreaderwin.cpp
  }
  
  //-----------------------------------------------------------------------------
-@@ -2237,6 +2131,12 @@
+@@ -2239,6 +2134,12 @@
    else
      saveCommand->start();
  }
@@ -744,3 +820,50 @@ diff -u -5 -d -p -r1.754 kmreaderwin.cpp
  
  //-----------------------------------------------------------------------------
  #include "kmreaderwin.moc"
+Index: kmreaderwin.h
+===================================================================
+RCS file: /home/kde/kdepim/kmail/kmreaderwin.h,v
+retrieving revision 1.192
+diff -u -5 -d -p -r1.192 kmreaderwin.h
+--- kmreaderwin.h	2 May 2004 15:43:00 -0000	1.192
++++ kmreaderwin.h	9 May 2004 16:12:55 -0000
+@@ -201,10 +201,11 @@ public:
+   KAction *copyAction() { return mCopyAction; }
+   KAction *copyURLAction() { return mCopyURLAction; }
+   KAction *urlOpenAction() { return mUrlOpenAction; }
+   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
+   KAction *addBookmarksAction() { return mAddBookmarksAction;}
++  KAction *startImChatAction() { return mStartIMChatAction; }
+   // This function returns the complete data that were in this
+   // message parts - *after* all encryption has been removed that
+   // could be removed.
+   // - This is used to store the message in decrypted form.
+   void objectTreeToDecryptedMsg( partNode* node,
+@@ -321,11 +322,13 @@ public slots:
+   void slotShowMsgSrc();
+   void slotSaveMsg();
+   void slotSaveAttachments();
+ 
+   void slotMessageArrived( KMMessage *msg );
+-
++  /** start IM Chat with addressee */
++  void slotIMChat();
++  
+ protected slots:
+   /** Some attachment operations. */
+   void slotAtmOpen();
+   void slotDoAtmOpen();
+   void slotAtmOpenWith();
+@@ -428,11 +431,11 @@ private:
+   partNode* mRootNode;
+   QString mIdOfLastViewedMessage;
+   QWidget *mMainWindow;
+   KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
+-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
++      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
+ 
+   KToggleAction *mToggleFixFontAction;
+   KURL mUrlClicked;
+   KMail::HtmlWriter * mHtmlWriter;
+   // an attachment should be updated
