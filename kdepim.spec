@@ -5,15 +5,15 @@
 #	- Recheck dependencies
 
 %define         _state          unstable
-%define         _kdever         kde-3.1-beta1
+%define         _kdever         kde-3.1-rc2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
-Version:	3.0.8
-Release:	4
+Version:	3.0.98
+Release:	1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -21,8 +21,8 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 #Source1:	kde-i18n-%{name}-%{version}.tar.bz2
-Patch0:		%{name}-am.patch
-Patch1:		%{name}-kalarm.patch
+#Patch0:		%{name}-am.patch
+#Patch1:		%{name}-kalarm.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -34,6 +34,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
 %define         _htmldir        /usr/share/doc/kde/HTML
+
+%define         no_install_post_chrpath         1
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
@@ -232,8 +234,8 @@ Biblioteka do wy¶wietlania i zarz±dzania diagramami Gantta
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
@@ -274,7 +276,7 @@ cat kalarmd.lang >> kalarm.lang
 %find_lang	kpilot		--with-kde
 
 %clean
-%{!?_without_clean:rm -rf $RPM_BUILD_ROOT}
+rm -rf $RPM_BUILD_ROOT
 
 %files 
 %defattr(644,root,root,755)
@@ -283,8 +285,8 @@ cat kalarmd.lang >> kalarm.lang
 %attr(755,root,root) %{_libdir}/libkdepim.*
 %attr(755,root,root) %{_libdir}/libkcal*.*
 %attr(755,root,root) %{_libdir}/libkpimexchange.*
-%attr(755,root,root) %{_libdir}/kde3/*conduit.*
 %{_datadir}/services/kfile_vcf.desktop
+%{_datadir}/services/webcal.protocol
 
 %files devel
 %defattr(644,root,root,755)
@@ -303,8 +305,7 @@ cat kalarmd.lang >> kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
 %attr(755,root,root) %{_bindir}/korgac
-%attr(755,root,root) %{_libdir}/libkalarmd.la
-%attr(755,root,root) %{_libdir}/libkalarmd.so.*
+%attr(755,root,root) %{_libdir}/libkalarmd.*
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart
 %{_pixmapsdir}/*/*/*/kalarm.png
@@ -375,8 +376,10 @@ cat kalarmd.lang >> kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpilot*
 %attr(755,root,root) %{_libdir}/libkpilot*.*
+%attr(755,root,root) %{_libdir}/kde3/*conduit.*
 %{_datadir}/apps/kpilot
 %{_datadir}/services/expense-conduit.desktop
+%{_datadir}/services/abbrowser_conduit.desktop
 %{_datadir}/services/knotes-conduit.desktop
 %{_datadir}/services/null-conduit.desktop
 %{_datadir}/services/popmail-conduit.desktop
