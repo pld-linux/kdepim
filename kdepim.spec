@@ -1,150 +1,59 @@
-#
-# TODO:
-# - make separate subpackages
-# - separate packages: pilot, cellphone, karm, knotes.
-#
-# Conditional build:
-# _with_pixmapsubdirs - leave different depth/resolution icons
-#
-%define		_with_pixmapsubdirs	1
+# TODO: - Work on kaplan
+#	- Backport .desktop and icon files for Kaplan from recent CVS
+#	- Correct Russian descriptions (for those who understand russian, it is
+#	  clear that H (N) is written in lowercase instead uppercase
+#	- Recheck dependencies
+
+%define         _state          stable
+%define         _ver		3.1.1
+
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
-Summary(pl):	Zarz╠dca informacji osobistych (PIM) dla KDE
+Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.0.5a
-Release:	0.2
+Version:	%{_ver}
+Release:	2
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	482a24da0eae33a053ec656f9e50083e
 # generated from kde-i18n
-Source1:	kde-i18n-%{name}-%{version}.tar.bz2
-Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-no_versioned_modules.patch
-Patch2:		%{name}-desktop_2.patch
-BuildRequires:	awk
+Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/kde-i18n-%{name}-%{version}.tar.bz2
+# Source1-md5:	3a7e3defa86c10d9764a22079b9a247e
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
+BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
+BuildRequires:	perl
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
-%define         _htmldir        %{_datadir}/doc/kde/HTML
+%define         _htmldir        /usr/share/doc/kde/HTML
+
+%define         no_install_post_chrpath         1
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
-for the K Desktop Enviromnent (KDE) kdepim contains the following
-applications:
-
-- KOrganizer - a complete calendar and scheduling program (KOrganizer
-  supports information interchange with other calendar applications
-  through the industry standard vCalendar file format),
-- Empath - an E-Mail client,
-- abbrowser - an address book reader,
-- kpilot - Syncronization tool for 3com Palm Pilots and compatible
-  devices,
-- twister - A PIM client.
+for the K Desktop Enviromnent (KDE).
 
 %description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
-(KDE). kdepim zawiera nastЙpujace programy:
-
-- KOrganizer - kalendarz wraz z harmonogramem zadaЯ (KOrganizer
-  wspiera wymianЙ informacji z innymi tego typu aplikacjami poprzez
-  standard przemysЁowy vCalendar),
-- Empath - klient E-Mail,
-- abbrowser - czytnik ksiazki adresowej,
-- kpilot - narzedzie do synchronizacji z 3Com Palm Pilot'em i
-  kompatybilnymi urzadzeniami.
-- twister - klient PIM.
+(KDE).
 
 %description -l ru
 kdepim - это набор утилит для управления персональной информацией для
-K Desktop Enviromnent (KDE). kdepim содержит следующие программы:
-
-- KOrganizer - полнофункциональная программа календаря и персонального
-  планировщика (KOrganizer поддерживает обмен информацией с другими
-  программами такого рода через стандартный формат файла vCalendar)
-- abbrowser - программа для чтения адресной книги,
-- kpilot - утилита для синхронизации с 3com Palm Pilots и совместимыми
-  с ними устройствами,
+K Desktop Enviromnent (KDE).
 
 %description -l uk
 kdepim - це наб╕р утил╕т для керування персональною информац╕╓ю для K
-Desktop Enviromnent (KDE). kdepim м╕стить так╕ програми:
-
-- KOrganizer - повнофункц╕ональна програма календара та персонального
-  планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
-  програмами такого роду через стандартний формат файлу vCalendar),
-- abbrowser - програма для читання адресно╖ книги,
-- kpilot - утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
-  ними пристроями.
-
-%package pilot
-Summary:	KDE support for synchronizing data with a Palm(tm) or compatible PDA
-Summary(pl):	KDE - obsЁuga synchronizacji danych z Palmem(tm) lub kompatybilnym PDA
-Group:		X11/Applications
-Requires:	%{name} = %{version}
-
-%description pilot
-KDE support for synchronizing data with a Palm(tm) or compatible PDA.
-
-%description pilot -l pl
-KDE - obsЁuga synchronizacji danych z Palmem(tm) lub kompatybilnym
-PDA.
-
-%package cellphone
-Summary:	KDE support for synchronizing data with cellphones
-Summary(pl):	KDE - obsЁuga synchronizacji danych z telefonami komСrkowymi
-Group:		X11/Applications
-Requires:	%{name} = %{version}
-
-%description cellphone
-KDE support for synchronizing data with cellphones.
-
-%description cellphone -l pl
-KDE - obsЁuga synchronizacji danych z telefonami komСrkowymi.
-
-%package karm
-Summary:	Time tracking tool
-Summary(pl):	NarzЙdzie do ╤ledzenia czasu
-Group:		X11/Applications
-Requires:	%{name} = %{version}
-Obsoletes:	karm
-
-%description karm
-KArm - Punjambi language for "work" - tracks time spent on various
-tasks. It is useful for tracking hours to be billed to different
-clients.
-
-%description karm -l pl
-KArm (nazwa pochodzi od sЁowa "praca" w jЙzyku punjambi) ╤ledzi czas
-spЙdzony na rС©nych zajЙciach. Jest przydatny przy obliczaniu godzin
-do wystawiania rachunkСw rС©nym klientom.
-
-%package knotes
-Summary:	Post-It notes on the desktop
-Summary(pl):	Notatki na desktopie, ktСre mo©na wysyЁaФ
-Group:		X11/Applications
-Requires:	%{name} = %{version}
-Obsoletes:	knotes
-
-%description knotes
-KNotes allows you to place Post-It notes on your desktop. In addition
-to serving as a reminder, KNotes can mail and print your notes, and
-accept drag and drop even from remote sites.
-
-%description knotes -l pl
-KNotes pozwala umieszczaФ na desktopie notatki z opcj╠ wysyЁania.
-Dodatkowo, aby mСc sЁu©yФ za przypominajkЙ, KNotes mo©e wysyЁaФ pocztЙ
-i drukowaФ notatki, a tak©e przyjmowaФ przeci╠ganie nawet ze zdalnych
-komputerСw.
+Desktop Enviromnent (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
@@ -158,7 +67,7 @@ This package contains header files needed if you wish to build
 applications based on kdepim.
 
 %description devel -l pl
-Pakiet ten zawiera pliki nagЁСwkowe potrzebne do budowy aplikacji
+Pakiet ten zawiera pliki nagЁСwkowe potzrebne do budowy aplikacji
 bazuj╠cych na kdepim.
 
 %description devel -l uk
@@ -169,109 +78,355 @@ bazuj╠cych na kdepim.
 Этот пакет содержит файлы заголовков необходимые для построения
 программ, основанных на kdepim.
 
+%package kaddressbook
+Summary:	Address Book
+Summary(pl):	Ksi╠©ka adresowa
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description kaddressbook
+Address Book
+
+%description kaddressbook -l pl
+Ksi╠©ka adresowa
+
+%package kalarm
+Summary:	Alarm
+Summary(pl):	Alarm
+Group:		X11/Applications
+Requires:	%{name} = %{version}-%{release}
+
+%description kalarm
+Reminder Message Scheduler
+
+%description kalarm -l pl
+Nastawianie przypominania o zdarzeniach
+
+%package kandy
+Summary:        A communication program between mobile phone and PC
+Summary(pl):    Program do komunikacji miЙdzy PC a tel. komСrkowym.
+Group:          X11/Applications
+Obsoletes:	%{name}-cellphone
+
+%description kandy
+Kandy provides access to your mobile phone and allows to sync the data
+on the phone with the data on your desktop computer.
+
+%description kandy -l pl
+Kandy umo©liwia dostЙp do telefonu komСrkowego i pozwala na
+synchronizacjЙ danych z telefonu z danymi na PC.
+
+%package kaplan
+Summary:        An integrated PIM application
+Summary(pl):    Zintegrowany PIM
+Group:          X11/Applications
+Requires:	kdenetwork-kmail >= %{version}
+Requires:       %{name}-knotes = %{version}-%{release}
+Requires:	%{name}-kaddressbook = %{version}-%{release}
+Requires:       %{name}-korganizer = %{version}-%{release}
+
+%description kaplan
+Kaplan is a PIM application, whcih integrates the knotes, kmail,
+korganizer, kaddressbook parts.
+
+%description kaplan -l pl
+Kaplan jest aplikacj╠ PIM integruj╠c╠ funkcjonalno╤Ф knotes, kmail,
+korganizer i kaddressbook.
+
+%package karm
+Summary:	Personal timetracker
+Summary(pl):	Osobisty czasomierz
+Group:		X11/Applications
+
+%description karm
+KArm - Punjambi language for "work" - tracks time spent on various
+tasks. It is useful for tracking hours to be billed to different
+clients.
+
+%description karm -l pl
+KArm (nazwa pochodzi od sЁowa "praca" w jЙzyku punjambi) ╤ledzi czas
+spЙdzony na rС©nych zajЙciach. Jest przydatny przy obliczaniu godzin
+do wystawiania rachunkСw wielu klientom.
+
+%package kgantt
+Summary:        A library to display and manage Gantt diagrams
+Summary(pl):    Biblioteka do rysowania diagramСw Gantta zarz╠dzania nimi
+Group:          X11/Libraries
+
+%description kgantt
+A library to display and manage Gantt diagrams.
+
+%description kgantt -l pl
+Biblioteka do rysowania diagramСw Gantta zarz╠dzania nimi.
+
+%package knotes
+Summary:	Yellow cards
+Summary(pl):	╞СЁte karteczki
+Group:		X11/Applications
+
+%description knotes
+KNotes allows you to place Post-It notes on your desktop. In addition
+to serving as a reminder, KNotes can mail and print your notes, and
+accept drag and drop even from remote sites.
+
+%description knotes -l pl
+KNotes pozwala umieszczaФ na desktopie notatki z opcj╠ wysyЁania.
+Dodatkowo, aby mСc sЁu©yФ za przypominajkЙ, KNotes mo©e wysyЁaФ pocztЙ
+i drukowaФ notatki, a tak©e przyjmowaФ przeci╠ganie nawet ze zdalnych
+komputerСw.
+
+%package konsolekalendar
+Summary:        A command line ICard tool
+Summary(pl):    NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ
+Group:          Applications
+
+%description konsolekalendar
+Command line tool for accessing calendar files.
+
+%description konsolekalendar -l pl
+NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ.
+
+%package korganizer
+Summary:        A complete calendar and scheduling progra
+Summary(pl):    Kalendarz wraz z harmonogramem zadaЯ
+Group:          X11/Applications
+
+%description korganizer
+A complete calendar and scheduling program, which supports information
+interchange with other calendar applications through the industry
+standard vCalendar file format.
+
+%description korganizer -l pl
+Kalendarz wraz z harmonogramem zadaЯ (KOrganizer), ktСry wspiera
+wymianЙ informacji z innymi tego typu aplikacjami poprzez standard
+przemysЁowy (vCalendar).
+
+%description korganizer -l ru
+полнофункциональная программа календаря и персонального планировщика
+(KOrganizer поддерживает обмен информацией с другими программами
+такого рода через стандартный формат файла vCalendar)
+
+%description korganizer -l uk
+повнофункц╕ональна програма календара та персонального
+планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
+програмами такого роду через стандартний формат файлу vCalendar)
+
+%package kpilot
+Summary:        A sync tool for palmtops
+Summary(pl):    NarzЙdzie do synchronizacji z palmtopami
+Group:          X11/Applications
+Requires:	pilot-link
+Obsoletes:	%{name}-pilot
+
+%description kpilot
+Synchronization tool for 3Com Palm Pilots and compatible devices.
+
+%description kpilot -l pl
+NarzЙdzie do synchronizacji z 3Com Palm Pilotem i zgodnymi
+urz╠dzeniami.
+
+%description kpilot -l ru
+утилита для синхронизации с 3com Palm Pilots и совместимыми
+с ними устройствами,
+
+%description kpilot -l uk
+утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
+ними пристроями.
+
+%package ksync
+Summary:        A library for syncing stuff
+Summary(pl):    Biblioteka do synchronizacji rzeczy
+Group:          X11/Libraries
+
+%description ksync
+libksync is a generic library for syncing collections of data entries
+like calenders, bookmarks, contacts, mail folders etc.
+
+%description ksync -l pl
+libksync jest standardow╠ bibliotek╠ do synchronizacji zbiorСw danych
+jak np. kalendarze, zakЁadki, kontakty, foldery pocztowe itp.
+
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
+kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
+for plik in `find ./ -name \*.desktop` ; do
+		echo $plik
+		perl -pi -e "s/\[nb\]/\[no\]/g" $plik
+done
+
 %configure \
-	--enable-final \
-	--%{?debug:en}%{!?debug:dis}able-debug
+	--enable-final
 
 %{__make}
 
+#cd kaplan
+#%%{__make}
+#cd ..
+
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_applnkdir}/{Office/PIMs,Settings/KDE}
+install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+cd kaplan
+%{__make} install \
+        DESTDIR=$RPM_BUILD_ROOT
+cd ..
 
-mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
-mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications/*,Office/PIMs/}
-install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}
-install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}
+ALD=$RPM_BUILD_ROOT%{_applnkdir}
+mv $ALD/{Applications/*,Office/PIMs}
+mv $ALD/Utilities/{More/*,.}
 
-# create in toplevel %%{_pixmapsdir} links to icons
-for i in $RPM_BUILD_ROOT%{_pixmapsdir}/hicolor/48x48/apps/{kalarm,karm,knotes,korganizer,kpilot}.png
-do
-%if %{?_with_pixmapsubdirs:1}%{!?_with_pixmapsubdirs:0}
-	ln -sf `echo $i | sed "s:^$RPM_BUILD_ROOT%{_pixmapsdir}/::"` $RPM_BUILD_ROOT%{_pixmapsdir}	
-%else
-	cp -af $i $RPM_BUILD_ROOT%{_pixmapsdir}
-%endif
-done
+# bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
-%if %{!?_with_pixmapsubdirs:1}%{?_with_pixmapsubdirs:0}
-# moved
-rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/*color/??x??/*/{kalarm,karm,knotes,korganizer,kpilot}.png \
-%endif
-
-bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
-
-for f in `find $RPM_BUILD_ROOT%{_applnkdir} -name '.directory' -o -name '*.desktop'` ; do
-	awk -v F=$f '/^Icon=/ && !/\.xpm$/ && !/\.png$/ { $0 = $0 ".png";} { print $0; } END { if(F == ".directory") print "Type=Directory"; }' < $f > $f.tmp
-	mv -f $f{.tmp,}
-done
-
-# not compiled: programs="empath ksync twister"
-programs="kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot libkcal"
-> kdepim.lang
-for i in $programs; do
-	%find_lang $i --with-kde
-	cat $i.lang >> kdepim.lang
-done
+%find_lang	kaddressbook	--with-kde
+%find_lang	kalarm		--with-kde
+%find_lang	kalarmd		--with-kde
+cat kalarmd.lang >> kalarm.lang
+%find_lang	kandy		--with-kde
+%find_lang	karm		--with-kde
+%find_lang	knotes		--with-kde
+%find_lang	korganizer	--with-kde
+%find_lang	kpilot		--with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
-
-%files -f kdepim.lang
+%files
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
-
-%{_libdir}/kde3/libabbrowserconduit.la
-%{_libdir}/kde3/libabbrowserconduit.so
-%{_libdir}/kde3/libexpenseconduit.la
-%{_libdir}/kde3/libexpenseconduit.so
-%{_libdir}/kde3/libknotesconduit.la
-%{_libdir}/kde3/libknotesconduit.so
-%{_libdir}/kde3/libnullconduit.la
-%{_libdir}/kde3/libnullconduit.so
-%{_libdir}/kde3/libpopmailconduit.la
-%{_libdir}/kde3/libpopmailconduit.so
-%{_libdir}/kde3/libtodoconduit.la
-%{_libdir}/kde3/libtodoconduit.so*
-%{_libdir}/kde3/libvcalconduit.la
-%{_libdir}/kde3/libvcalconduit.so
-
-%{_libdir}/kde3/libkcm_alarmdaemonctrl.??
-%{_libdir}/kde3/libkorg_datenums.??
-%{_libdir}/kde3/libkorg_holidays.??
-%{_libdir}/kde3/libkorg_projectview.??
-%{_libdir}/kde3/libkorg_webexport.??
-
-%{_datadir}/apps/*
-%{_datadir}/autostart/*
-%{_datadir}/services/*
-%{_datadir}/servicetypes/*
-%{_datadir}/config/*
-%{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Settings/KDE/System/*
-%{_applnkdir}/Utilities/*
-%{_pixmapsdir}/*/*/*/*.png
-%{_pixmapsdir}/*.png
+%{_libdir}/libkdepim.la
+%attr(755,root,root) %{_libdir}/libkdepim.so.*
+%{_libdir}/libkcal*.la
+%attr(755,root,root) %{_libdir}/libkcal*.so.*
+%{_libdir}/libkpimexchange.la
+%attr(755,root,root) %{_libdir}/libkpimexchange.so.*
+%{_libdir}/kde3/kfile_vcf.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
+%{_datadir}/services/kfile_vcf.desktop
+%{_datadir}/services/webcal.protocol
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
-%{_libdir}/*.??
+%{_libdir}/*.so
+%{_libdir}/kde3/*conduit.so
+
+%files kaddressbook -f kaddressbook.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kabc2mutt
+%attr(755,root,root) %{_bindir}/kaddressbook
+%{_libdir}/kde3/libkaddressbookpart.la
+%attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
+%{_datadir}/apps/kaddressbook
+%{_applnkdir}/Utilities/kaddressbook.desktop
+%{_pixmapsdir}/*/*/*/kaddressbook.png
+
+%files kalarm -f kalarm.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kalarm*
+%attr(755,root,root) %{_bindir}/korgac
+%{_libdir}/libkalarmd.la
+%attr(755,root,root) %{_libdir}/libkalarmd.so.*
+%{_datadir}/apps/kalarm*
+%{_datadir}/autostart
+%{_applnkdir}/.hidden/*
+%{_applnkdir}/Office/PIMs/kalarm.desktop
+%{_applnkdir}/Utilities/kalarm.desktop
+%{_pixmapsdir}/[!l]*/*/*/kalarm.png
+
+%files kandy -f kandy.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kandy*
+%{_datadir}/apps/kandy
+%{_applnkdir}/Utilities/kandy.desktop
+
+%files karm -f karm.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/karm
+%{_datadir}/apps/karm
+%{_applnkdir}/Utilities/karm.desktop
+%{_pixmapsdir}/*/*/*/karm.png
+
+%files kaplan
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kaplan
+%{_libdir}/kde3/libkp*plugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
+%{_libdir}/libkpinterfaces*.la
+%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
+%{_datadir}/apps/kaplan
+%{_datadir}/apps/kp*plugin
+%{_datadir}/services/kp*plugin.*
+%{_datadir}/servicetypes/kaplanplugin.desktop
+%{_applnkdir}/Office/PIMs/Kaplan.desktop
+%{_pixmapsdir}/*/*/*/kaplan.png
+
+%files kgantt
+%defattr(644,root,root,755)
+%{_libdir}/libkgantt.la
+%attr(755,root,root) %{_libdir}/libkgantt.so.*
+%{_datadir}/apps/kgantt
+
+%files knotes -f knotes.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/knotes
+%{_datadir}/apps/knotes
+%{_datadir}/config/*
+%{_applnkdir}/Utilities/knotes.desktop
+%{_pixmapsdir}/*/*/*/knotes.png
+
+%files konsolekalendar
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/konsolekalendar
+
+%files korganizer -f korganizer.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/korganizer*
+%attr(755,root,root) %{_bindir}/ical2vcal
+%{_libdir}/libknewstuff.la
+%attr(755,root,root) %{_libdir}/libknewstuff.so.*
+%{_libdir}/libkorganizer.la
+%attr(755,root,root) %{_libdir}/libkorganizer.so.*
+%{_libdir}/kde3/libkorg_*.la
+%attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%{_datadir}/apps/korganizer
+%{_datadir}/services/korganizer
+%{_datadir}/servicetypes/calendardecoration.desktop
+%{_datadir}/servicetypes/calendarplugin.desktop
+%{_datadir}/servicetypes/korganizerpart.desktop
+%{_applnkdir}/Office/PIMs/korganizer.desktop
+%{_pixmapsdir}/*/*/*/korganizer*.png
+
+%files kpilot -f kpilot.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kpilot*
+%{_libdir}/libkpilot.la
+%attr(755,root,root) %{_libdir}/libkpilot.so.*
+%{_libdir}/kde3/*conduit.la
+%attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
+%{_datadir}/apps/kpilot
+%{_datadir}/services/expense-conduit.desktop
+%{_datadir}/services/abbrowser_conduit.desktop
+%{_datadir}/services/knotes-conduit.desktop
+%{_datadir}/services/null-conduit.desktop
+%{_datadir}/services/popmail-conduit.desktop
+%{_datadir}/services/time_conduit.desktop
+%{_datadir}/services/todo-conduit.desktop
+%{_datadir}/services/vcal-conduit.desktop
+%{_datadir}/servicetypes/kpilotconduit.desktop
+%{_applnkdir}/Utilities/kpilot*.desktop
+%{_pixmapsdir}/[!l]*/*/*/kpilot*.png
+
+%files ksync
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/ksync
+%{_libdir}/libksync.la
+%attr(755,root,root) %{_libdir}/libksync.so.*
+%{_datadir}/apps/ksync
