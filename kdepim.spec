@@ -8,12 +8,13 @@
 %define         _ver		3.1
 
 Summary:	Personal Information Management (PIM) for KDE
+Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	6
+Release:	6.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -62,7 +63,7 @@ This package contains header files needed if you wish to build
 applications based on kdepim.
 
 %description devel -l pl
-Pakiet ten zawiera pliki nag³ówkowe potzrebne do budoway aplikacji
+Pakiet ten zawiera pliki nag³ówkowe potzrebne do budowy aplikacji
 bazuj±cych na kdepim.
 
 %description devel -l uk
@@ -97,23 +98,19 @@ Reminder Message Scheduler
 %description kalarm -l pl
 Nastawianie przypominania o zdarzeniach
 
-%package karm
-Summary:	Personal timetracker
-Summary(pl):	Osobisty czasomierz
-Group:		X11/Applications                                                
-
 %package kandy
 Summary:        A communication program between mobile phone and PC
 Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym.
 Group:          X11/Applications
+Obsoletes:	%{name}-cellphone
 
 %description kandy
-Kandy provides access to your mobile phone and allows to sync the data on the
-phone with the data on your desktop computer.
+Kandy provides access to your mobile phone and allows to sync the data
+on the phone with the data on your desktop computer.
 
 %description kandy -l pl
-Kandy umo¿liwia dostêp do telefonu komórkowego i pozwala na synchronizacjê danych
-z telefonu z danymi na PC.
+Kandy umo¿liwia dostêp do telefonu komórkowego i pozwala na
+synchronizacjê danych z telefonu z danymi na PC.
 
 %package kaplan
 Summary:        An integrated PIM application
@@ -125,18 +122,38 @@ Requires:	%{name}-kaddressbook = %{version}-%{release}
 Requires:       %{name}-korganizer = %{version}-%{release}
 
 %description kaplan
-Kaplan is a PIM application, whcih integrates the knotes, kmail, korganizer,  
-kaddressbook parts.
+Kaplan is a PIM application, whcih integrates the knotes, kmail,
+korganizer, kaddressbook parts.
 
 %description kaplan -l pl
-Kaplan jest aplikacj± PIM integruj±c± funkcjonalno¶æ knotes, kmail, korganizer,
-kaddressbook.
+Kaplan jest aplikacj± PIM integruj±c± funkcjonalno¶æ knotes, kmail,
+korganizer i kaddressbook.
+
+%package karm
+Summary:	Personal timetracker
+Summary(pl):	Osobisty czasomierz
+Group:		X11/Applications                                                
 
 %description karm
-Personal timetracker
+KArm - Punjambi language for "work" - tracks time spent on various
+tasks. It is useful for tracking hours to be billed to different
+clients.
 
 %description karm -l pl
-Osobisty czasomierz
+KArm (nazwa pochodzi od s³owa "praca" w jêzyku punjambi) ¶ledzi czas
+spêdzony na ró¿nych zajêciach. Jest przydatny przy obliczaniu godzin
+do wystawiania rachunków wielu klientom.
+
+%package kgantt
+Summary:        A library to display and manage Gantt diagrams
+Summary(pl):    Biblioteka do rysowania diagramów Gantta zarz±dzania nimi
+Group:          X11/Libraries
+
+%description kgantt
+A library to display and manage Gantt diagrams.
+
+%description kgantt -l pl
+Biblioteka do rysowania diagramów Gantta zarz±dzania nimi.
 
 %package knotes
 Summary:	Yellow cards
@@ -144,21 +161,26 @@ Summary(pl):	¯ó³te karteczki
 Group:		X11/Applications                                                
 
 %description knotes
-Yellow cards
+KNotes allows you to place Post-It notes on your desktop. In addition
+to serving as a reminder, KNotes can mail and print your notes, and
+accept drag and drop even from remote sites.
 
 %description knotes -l pl
-¯ó³te karteczki
+KNotes pozwala umieszczaæ na desktopie notatki z opcj± wysy³ania.
+Dodatkowo, aby móc s³u¿yæ za przypominajkê, KNotes mo¿e wysy³aæ pocztê
+i drukowaæ notatki, a tak¿e przyjmowaæ przeci±ganie nawet ze zdalnych
+komputerów.
 
 %package konsolekalendar
 Summary:        A command line ICard tool
-Summary(pl):    Narzêdzie dostepu do plikow kalendarza z linii polecen. 
+Summary(pl):    Narzêdzie dostêpu do plików kalendarza z linii poleceñ 
 Group:          Applications
 
 %description konsolekalendar
 Command line tool for accessing calendar files.
 
 %description konsolekalendar -l pl
-Narzêdzie dostepu do plikow kalendarza z linii polecen.
+Narzêdzie dostêpu do plików kalendarza z linii poleceñ.
 
 %package korganizer
 Summary:        A complete calendar and scheduling progra
@@ -166,14 +188,14 @@ Summary(pl):    Kalendarz wraz z harmonogramem zadañ
 Group:          X11/Applications
 
 %description korganizer
-A complete calendar and scheduling program, which  
-supports information interchange with other calendar applications 
-through the industry standard vCalendar file format.
+A complete calendar and scheduling program, which supports information
+interchange with other calendar applications through the industry
+standard vCalendar file format.
 
 %description korganizer -l pl
-Kalendarz wraz z harmonogramem zadañ (KOrganizer), który 
-wspiera wymianê informacji z innymi tego typu aplikacjami poprzez
-standard przemys³owy (vCalendar).
+Kalendarz wraz z harmonogramem zadañ (KOrganizer), który wspiera
+wymianê informacji z innymi tego typu aplikacjami poprzez standard
+przemys³owy (vCalendar).
 
 %description korganizer -l ru
 <lost>
@@ -185,17 +207,17 @@ standard przemys³owy (vCalendar).
 
 %package kpilot
 Summary:        A sync tool for palmtops
-Summary(pl):    NArzêdzie do synchronizacji z palmtopami
+Summary(pl):    Narzêdzie do synchronizacji z palmtopami
 Group:          X11/Applications
 Requires:	pilot-link
+Obsoletes:	%{name}-pilot
 
 %description kpilot
-Syncronization tool for 3com Palm Pilots and compatible 
-devices
+Synchronization tool for 3Com Palm Pilots and compatible devices.
 
 %description kpilot -l pl
-Narzedzie do synchronizacji z 3Com Palm Pilot'em i 
-kompatybilnymi urzadzeniami.
+Narzêdzie do synchronizacji z 3Com Palm Pilotem i zgodnymi
+urz±dzeniami.
 
 %description kpilot -l ru
 ÕÔÉÌÉÔÁ ÄÌÑ ÓÉÎÈÒÏÎÉÚÁÃÉÉ Ó 3com Palm Pilots É ÓÏ×ÍÅÓÔÉÍÙÍÉ
@@ -211,23 +233,12 @@ Summary(pl):    Biblioteka do synchronizacji rzeczy
 Group:          X11/Libraries
 
 %description ksync
-libksync is a generic library for syncing collections of data entries like
-calenders, bookmarks, contacts, mail folders etc.
+libksync is a generic library for syncing collections of data entries
+like calenders, bookmarks, contacts, mail folders etc.
 
 %description ksync -l pl
-libksync jest standardow± bibliotek± do synchronizacji zbiorów danych jak np. 
-kalendarze, zak³adki, kontakty, foldery pocztowe itp.
-
-%package kgantt
-Summary:        A library to display and manage Gantt diagrams
-Summary(pl):    Biblioteka do wy¶wietlania i zarz±dzania diagramami Gantta
-Group:          X11/Libraries
-
-%description kgantt
-A library to display and manage Gantt diagrams
-
-%description kgantt -l pl
-Biblioteka do wy¶wietlania i zarz±dzania diagramami Gantta
+libksync jest standardow± bibliotek± do synchronizacji zbiorów danych
+jak np. kalendarze, zak³adki, kontakty, foldery pocztowe itp.
 
 %prep
 %setup -q
