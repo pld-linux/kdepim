@@ -1,5 +1,5 @@
-Summary:	K Desktop Environment - pim 
-Summary(pl):	K Desktop Environment - pim
+Summary:	Personal Information Management (PIM) for KDE
+Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Name:		kdepim
 Version:	2.1.1
 Release:	1
@@ -21,10 +21,38 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define         _htmldir        %{_datadir}/doc/kde/HTML
 
 %description
-KDE pim
+kdepim is a collection of Personal Information Management (PIM) tools for
+the K Desktop Enviromnent (KDE)
+kdepim contains the following applications:
+
+KOrganizer: a complete calendar and scheduling program. KOrganizer supports
+information interchange with other calendar applications through the
+industry standard vCalendar file format.
+
+Empath: an E-Mail client
+
+abbrowser: an address book reader
+
+kpilot: Syncronization tool for 3com Palm Pilots and compatible devices
+
+twister: A PIM client
 
 %description -l pl
-Pakiet KDE pim.
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent (KDE).
+kdepim zawiera nastepujace programy:
+
+KOrganizer: kalendarz wraz z harmonogramem zadan. KOrganizer wspiera wymiane
+informacji z innymi tego typu aplikacjami poprzez standard przemyslowy 
+vCalendar.
+
+Empath: klient E-Mail.
+
+abbrowser: czytnik ksiazki adresowej
+
+kpilot: narzedzie do synchronizacji z 3Com Palm Pilot'em i kompatybilnymi
+urzadzeniami.
+
+twister: klient PIM.
 
 %package devel
 Summary:	Development files for KDE pim
@@ -62,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
-%{_libdir}/*.so.*
+%attr(755,root,root) %{_libdir}/*.so.*
 %{_applnkdir}/Applications/*
 %{_applnkdir}/Utilities/*
 %{_prefix}/share/apps/*
