@@ -1,8 +1,8 @@
 # TODO:
 # - make separate subpackages
 
-%define         _state          unstable                                        
-%define         _kdever         kde-3.1-beta1      
+%define         _state          unstable
+%define         _kdever         kde-3.1-beta1
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
@@ -88,7 +88,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	%{name}-common = %{version}
 Requires:	%{name}-kaddressbook = %{version}
-
+Requires:	%{name}-kalarm = %{version}
 
 %description devel
 This package contains header files needed if you wish to build
@@ -129,16 +129,39 @@ Address Book
 %description kaddressbook
 Ksi捫ka adresowa
 
-%package knotes                                                                 
-Summary:        Yellow cards                                                    
-Summary(pl):    草速e karteczki                                                 
-Group:          X11/Applications                                                
-                                                                                
-%description knotes                                                             
-Yellow cards                                                                    
-                                                                                
-%description knotes                                                             
-草速e karteczki  
+%package karm
+Summary:	Personal timetracker
+Summary(pl):	Osobisty czasomierz
+Group:		X11/Applications                                                
+
+%description karm
+Personal timetracker
+
+%description karm
+Osobisty czasomierz
+
+%package kalarm
+Summary:	Alarm
+Summary(pl):	Alarm
+Group:		X11/Applications                       
+Requires:	%{name}-common = %{version}
+
+%description kalarm
+Reminder Message Scheduler
+
+%description kalarm
+Nastawianie przypominania o zdarzeniach
+
+%package knotes
+Summary:	Yellow cards
+Summary(pl):	草速e karteczki
+Group:		X11/Applications                                                
+
+%description knotes
+Yellow cards
+
+%description knotes
+草速e karteczki
 
 %prep
 %setup -q
@@ -167,7 +190,7 @@ mv $ALD/Utilities/{More/*,.}
 
 #programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes \
 #korganizer kpilot ksync libkcal twister"
-programs="kalarm kalarmd kandy karm korganizer kpilot"
+programs="kandy korganizer kpilot"
 
 > kdepim.lang
 for i in $programs; do
@@ -176,6 +199,10 @@ for i in $programs; do
 done
 
 %find_lang kaddressbook		--with-kde
+%find_lang kalarm               --with-kde
+%find_lang kalarmd              --with-kde
+cat kalarmd.lang >> kalarm.lang
+%find_lang karm			--with-kde
 %find_lang knotes               --with-kde
 
 %clean
@@ -184,21 +211,21 @@ done
 %files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_bindir}/?[!n][!bd]*
-%attr(755,root,root) %{_libdir}/????[!d]*.la
-%attr(755,root,root) %{_libdir}/????[!d]*.so.*
+%attr(755,root,root) %{_bindir}/?[!n][!bdl][!m]*
+%attr(755,root,root) %{_libdir}/????[!acd]*.la
+%attr(755,root,root) %{_libdir}/????[!acd]*.so.*
 %attr(755,root,root) %{_libdir}/kde3/kfile*
 %attr(755,root,root) %{_libdir}/kde3/*conduit.la
 %attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
 %attr(755,root,root) %{_libdir}/kde3/libkorg*
-%{_datadir}/apps/?[!n][!d]*
-%{_datadir}/autostart/*
+%{_datadir}/apps/?[!n][!dl][!m]*
+%{_datadir}/autostart/korg*
 %{_datadir}/services/*
 %{_datadir}/servicetypes/*
-%{_pixmapsdir}/*/*/*/?[!n][!d]*
+%{_pixmapsdir}/*/*/*/?[!n][!dl][!m]*
 %{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/*
-%{_applnkdir}/Utilities/?[!n][!d]*
+%{_applnkdir}/Utilities/?[!n][!dl][!m]*
 
 %files devel
 %defattr(644,root,root,755)
@@ -207,10 +234,12 @@ done
 %{_libdir}/kde3/*conduit.so
 
 %files common
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*
 
 %files kaddressbook -f kaddressbook.lang
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart*
@@ -218,9 +247,29 @@ done
 %{_pixmapsdir}/*/*/*/kaddressbook.png
 %{_applnkdir}/Utilities/kaddressbook.desktop
 
-%files knotes -f knotes.lang                    
-%attr(755,root,root) %{_bindir}/knotes          
-%{_datadir}/apps/knotes                         
-%{_datadir}/config/*                            
-%{_pixmapsdir}/*/*/*/knotes.png                 
+%files kalarm -f kalarm.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kalarm*
+%attr(755,root,root) %{_libdir}/libkalarmd.la
+%attr(755,root,root) %{_libdir}/libkalarmd.so.*
+%attr(755,root,root) %{_libdir}/libkcal*.la
+%attr(755,root,root) %{_libdir}/libkcal*.so.*
+%{_datadir}/apps/kalarm*
+%{_datadir}/autostart/kalarm*
+%{_pixmapsdir}/*/*/*/kalarm.png
+%{_applnkdir}/Utilities/kalarm.desktop
+
+%files karm -f karm.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/karm
+%{_datadir}/apps/karm
+%{_pixmapsdir}/*/*/*/karm.png
+%{_applnkdir}/Utilities/karm.desktop
+
+%files knotes -f knotes.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/knotes
+%{_datadir}/apps/knotes
+%{_datadir}/config/*
+%{_pixmapsdir}/*/*/*/knotes.png
 %{_applnkdir}/Utilities/knotes.desktop
