@@ -184,7 +184,7 @@ to serving as a reminder, KNotes can mail and print your notes, and
 accept drag and drop even from remote sites.
 
 %description knotes -l pl
-KNotes pozwala umieszczaæ na desktopie notatki z opcj± wysy³ania.
+KNotes pozwala umieszczaæ na pulpicie notatki z opcj± wysy³ania.
 Dodatkowo, aby móc s³u¿yæ za przypominajkê, KNotes mo¿e wysy³aæ pocztê
 i drukowaæ notatki, a tak¿e przyjmowaæ przeci±ganie nawet ze zdalnych
 komputerów.
@@ -260,7 +260,7 @@ Obsoletes:	kdenetwork-korn
 A simple program showing number of mails in your folders.
 
 %description korn -l pl
-Programik pokazuj±cy ilo¶æ wiadomo¶ci w wybranych folderach
+Programik pokazuj±cy liczbê wiadomo¶ci w wybranych folderach
 pocztowych.
 
 %description korn -l pt_BR
@@ -298,7 +298,7 @@ Requires:	%{name}-korganizer = %{version}-%{release}
 
 %description ksync
 libksync is a generic library for syncing collections of data entries
-like calenders, bookmarks, contacts, mail folders etc.
+like calendars, bookmarks, contacts, mail folders etc.
 
 %description ksync -l pl
 libksync jest standardow± bibliotek± do synchronizacji zbiorów danych
@@ -331,30 +331,30 @@ A network library.
 Biblioteka sieciowa.
 
 %package libkdepim
-Summary:	TODO
-Summary(pl):	TODO
+Summary:	kdepim library
+Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
 Obsoletes:	%{name}
 
 %description libkdepim
-TODO
+kdepim library.
 
 %description libkdepim -l pl
-TODO
+Biblioteka kdepim.
 
 %package libmimelib
-Summary:	TODO
-Summary(pl):	TODO
+Summary:	mimelib library, based on mimepp library
+Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
 Obsoletes:	%{name}
 
 %description libmimelib
-TODO
+mimelib library, based on mimepp library.
 
 %description libmimelib -l pl
-TODO
+Biblioteka mimelib oparta na bibliotece mimepp.
 
 %prep
 %setup -q -n %{name}-%{_snap}
