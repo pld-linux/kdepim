@@ -1,3 +1,11 @@
+--- kdepim-030901/kaddressbook/kaddressbook.desktop~	2003-09-04 11:34:14.000000000 +0200
++++ kdepim-030901/kaddressbook/kaddressbook.desktop	2003-09-04 11:34:33.000000000 +0200
+@@ -54,4 +54,4 @@
+ MimeType=text/x-vcard;text/x-ldif
+ ServiceTypes=KParts/ReadOnlyPart,Browser/View,DCOP/AddressBook
+ X-KDE-Library=libkaddressbookpart
+-Categories=Qt;KDE;Office
++Categories=Qt;KDE;Office;X-PIM
 --- kdepim-030317/kmail/KMail.desktop~	Wed Feb 26 00:59:37 2003
 +++ kdepim-030317/kmail/KMail.desktop	Sun Mar 23 23:54:05 2003
 @@ -55,4 +55,4 @@
@@ -8,24 +16,25 @@
 +Categories=Qt;KDE;Network;Email
 --- kdepim-030317/knode/KNode.desktop~	Mon Jan 27 00:49:44 2003
 +++ kdepim-030317/knode/KNode.desktop	Sun Mar 23 23:54:35 2003
-@@ -51,4 +51,5 @@
+@@ -51,4 +51,4 @@
  GenericName[zu]=Umfundi wezindaba
  X-KDE-StartupNotify=true
  X-DCOP-ServiceType=Unique
 -Categories=Qt;KDE;Network
 +Categories=Qt;KDE;Network;X-News
-+
---- kdepim-030329/kontact/src/Kontact.desktop~	Wed Mar 26 00:48:02 2003
-+++ kdepim-030329/kontact/src/Kontact.desktop	Mon Mar 31 10:20:38 2003
-@@ -19,3 +19,4 @@
+--- kdepim-030901/kontact/src/Kontact.desktop~	2003-09-04 11:33:10.000000000 +0200
++++ kdepim-030901/kontact/src/Kontact.desktop	2003-09-04 11:33:37.000000000 +0200
+@@ -29,4 +29,4 @@
  GenericName[zh_CN]=个人信息管理器
  Terminal=0
  X-KDE-StartupNotify=true
+-Categories=Qt;KDE;Office
 +Categories=Qt;KDE;Office;X-PIM
---- kdepim-030329/korganizer/korganizer.desktop~	Fri Jan 24 00:56:15 2003
-+++ kdepim-030329/korganizer/korganizer.desktop	Mon Mar 31 10:21:23 2003
-@@ -70,3 +70,4 @@
+--- kdepim-030901/korganizer/korganizer.desktop~	2003-09-04 11:34:59.000000000 +0200
++++ kdepim-030901/korganizer/korganizer.desktop	2003-09-04 11:35:18.000000000 +0200
+@@ -74,4 +74,4 @@
  X-KDE-StartupNotify=true
  X-DCOP-ServiceType=Unique
  X-DCOP-ServiceName=korganizer
+-Categories=Qt;KDE;Office
 +Categories=Qt;KDE;Office;X-PIM
