@@ -1,3 +1,5 @@
+# TODO:
+# - changed knotes Category to X-Docklet
 #
 # Conditional build:
 %bcond_without	apidocs		# prepare API documentation
