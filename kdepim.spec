@@ -10,7 +10,7 @@
 %bcond_with     cvs             # use cvs checkouts instead of tarballs
 
 %define		_state		snapshots
-%define		_ver		3.2.91
+%define		_ver		3.2.90
 %define		_snap		040523
 %define		_packager	adgor
 
