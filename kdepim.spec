@@ -26,6 +26,7 @@ BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-devel >= 3.0.5
+BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
@@ -253,10 +254,9 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 for plik in `find ./ -name *.desktop` ; do
 	if [ -d $plik ]; then
 	echo $plik
-	sed -ie "s/[nb]/[no]/g" $plik
+	sed -ie 's/\[nb\]/\[no\]/g' $plik
 	fi
 done
-				
 
 %configure \
 	--enable-final
