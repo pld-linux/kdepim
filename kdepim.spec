@@ -1,15 +1,15 @@
 Summary:	Personal Information Management (PIM) for KDE
-Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
+Summary(pl):	Menad¿er informacji osobistej (PIM) dla KDE
 Name:		kdepim
 Version:	2.2.2
-Release:	1
+Release:	2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
+BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	zlib-devel
-BuildRequires:	bison
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -36,32 +36,32 @@ devices
 twister: A PIM client
 
 %description -l pl
-kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
-(KDE). kdepim zawiera nastepujace programy:
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
+(KDE). kdepim zawiera nastêpuj±ce programy:
 
-KOrganizer: kalendarz wraz z harmonogramem zadan. KOrganizer wspiera
-wymiane informacji z innymi tego typu aplikacjami poprzez standard
-przemyslowy vCalendar.
+KOrganizer: kalendarz wraz z harmonogramem zadañ. KOrganizer wspiera
+wymianê informacji z innymi tego typu aplikacjami poprzez standard
+przemys³owy vCalendar.
 
 Empath: klient E-Mail.
 
-abbrowser: czytnik ksiazki adresowej
+abbrowser: czytnik ksi±¿ki adresowej.
 
-kpilot: narzedzie do synchronizacji z 3Com Palm Pilot'em i
-kompatybilnymi urzadzeniami.
+kpilot: narzêdzie do synchronizacji z 3Com Palm Pilotem i
+kompatybilnymi urz±dzeniami.
 
 twister: klient PIM.
 
 %package devel
 Summary:	Development files for KDE pim
-Summary:	Pliki nag³owkowe do KDE pim
+Summary(pl):	Pliki nag³ówkowe do KDE pim
 Group:		X11/Development/Libraries
 
 %description devel
 Development files for KDE pim.
 
 %description devel -l pl
-Pliki nag³owkowe do KDE pim.
+Pliki nag³ówkowe do KDE pim.
 
 %prep
 %setup -q
@@ -70,7 +70,6 @@ Pliki nag³owkowe do KDE pim.
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-export LDFLAGS
 %configure2_13
 
 %{__make}
@@ -82,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
 
-mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs}/korganizer.desktop
+mv -f $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs}/korganizer.desktop
 
 gzip -9nf README*
 
@@ -99,10 +98,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/alarmd.desktop
 %{_datadir}/apps/*
 %{_datadir}/config/*
-%{_pixmapsdir}/*
+%{_pixmapsdir}/*/*/apps/*
 
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}/*
-%{_libdir}/*.la
-%{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/*.so
