@@ -18,36 +18,37 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define         _htmldir        %{_datadir}/doc/kde/HTML
 
 %description
-kdepim is a collection of Personal Information Management (PIM) tools for
-the K Desktop Enviromnent (KDE)
-kdepim contains the following applications:
+kdepim is a collection of Personal Information Management (PIM) tools
+for the K Desktop Enviromnent (KDE) kdepim contains the following
+applications:
 
-KOrganizer: a complete calendar and scheduling program. KOrganizer supports
-information interchange with other calendar applications through the
-industry standard vCalendar file format.
+KOrganizer: a complete calendar and scheduling program. KOrganizer
+supports information interchange with other calendar applications
+through the industry standard vCalendar file format.
 
 Empath: an E-Mail client
 
 abbrowser: an address book reader
 
-kpilot: Syncronization tool for 3com Palm Pilots and compatible devices
+kpilot: Syncronization tool for 3com Palm Pilots and compatible
+devices
 
 twister: A PIM client
 
 %description -l pl
-kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent (KDE).
-kdepim zawiera nastepujace programy:
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
+(KDE). kdepim zawiera nastepujace programy:
 
-KOrganizer: kalendarz wraz z harmonogramem zadan. KOrganizer wspiera wymiane
-informacji z innymi tego typu aplikacjami poprzez standard przemyslowy 
-vCalendar.
+KOrganizer: kalendarz wraz z harmonogramem zadan. KOrganizer wspiera
+wymiane informacji z innymi tego typu aplikacjami poprzez standard
+przemyslowy vCalendar.
 
 Empath: klient E-Mail.
 
 abbrowser: czytnik ksiazki adresowej
 
-kpilot: narzedzie do synchronizacji z 3Com Palm Pilot'em i kompatybilnymi
-urzadzeniami.
+kpilot: narzedzie do synchronizacji z 3Com Palm Pilot'em i
+kompatybilnymi urzadzeniami.
 
 twister: klient PIM.
 
@@ -59,7 +60,7 @@ Group:		X11/Development/Libraries
 %description devel
 Development files for KDE pim.
 
-%description -l pl devel
+%description devel -l pl
 Pliki nag³owkowe do KDE pim.
 
 %prep
@@ -70,7 +71,7 @@ kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 export LDFLAGS
-%configure2_13 
+%configure2_13
 
 %{__make}
 
