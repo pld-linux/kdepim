@@ -1,7 +1,7 @@
 Summary:	Personal Information Management (PIM) for KDE
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Name:		kdepim
-Version:	2.2.1
+Version:	2.2.2
 Release:	1
 License:	GPL
 Vendor:		The KDE Team
@@ -11,6 +11,7 @@ Group(pl):	X11/Aplikacje
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	zlib-devel
+BuildRequires:	bison
 Requires:	kdelibs >= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -79,23 +80,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} DESTDIR=$RPM_BUILD_ROOT install
 
+gzip -9nf README*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
 %files
 %defattr(644,root,root,755)
+%doc *.gz
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/*.so.*
 %{_applnkdir}/Applications/*
 %{_applnkdir}/Utilities/*
-%{_prefix}/share/apps/*
-%{_prefix}/share/config/*
-%doc
-%{_prefix}/share/pixmaps/*
+%{_datadir}/autostart/alarmd.desktop
+%{_datadir}/apps/*
+%{_datadir}/config/*
+%{_pixmapsdir}/*
 
 %files devel
 %defattr(644,root,root,755)
-%dir %{_includedir}/rmm/*.h
+%{_includedir}/*
 %{_libdir}/*.la
+%{_libdir}/*.so
