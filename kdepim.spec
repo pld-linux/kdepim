@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030329
+%define		_snap		030403
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -19,7 +19,7 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-Source0:	http://team.pld.org.pl/~djurban/kde/%{name}-%{_snap}.tar.bz2
+Source0:	http://team.pld.org.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -331,7 +331,6 @@ Summary:        A network library
 Summary(pl):    Biblioteka sieciowa
 Group:          X11/Libraries
 Obsoletes:	kdenetwork
-Provides:	kdenetwork = 3.2
 
 %description libkdenetwork
 
@@ -354,8 +353,7 @@ for plik in `find ./ -name *.desktop` ; do
 	fi
 done
 
-%configure \
-	--enable-final
+%configure --enable-final
 
 %{__make}
 
@@ -406,6 +404,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkdepim.so.*
 %{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*
+%{_libdir}/libktnef.la
+%attr(755,root,root) %{_libdir}/libktnef.so.*
+%{_libdir}/libmimelib.la
+%attr(755,root,root) %{_libdir}/libmimelib.so.*
 %{_libdir}/kde3/kcal_dir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_dir.so
 %{_libdir}/kde3/kcal_kabc.la
@@ -422,10 +424,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_libdir}/kde3/resourcecalendarimap.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarimap.so
-%{_libdir}/libktnef.la
-%attr(755,root,root) %{_libdir}/libktnef.so*
-%{_libdir}/libmimelib.la
-%attr(755,root,root) %{_libdir}/libmimelib.so*
 %{_datadir}/apps/kresources
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
@@ -445,12 +443,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_includedir}/*
 %{_libdir}/*.so
-%{_libdir}/kde3/*conduit.so
 
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
+%{_libdir}/libkaddressbook.la
+%attr(755,root,root) %{_libdir}/libkaddressbook.so.*
 %{_libdir}/kde3/kcm_kabconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
 %{_libdir}/kde3/kcm_kabldapconfig.la
@@ -513,7 +512,7 @@ rm -rf $RPM_BUILD_ROOT
 %files kgantt
 %defattr(644,root,root,755)
 %{_libdir}/libkdgantt.la
-%attr(755,root,root) %{_libdir}/libkdgantt.so*
+%attr(755,root,root) %{_libdir}/libkdgantt.so.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*
 %{_datadir}/apps/kgantt
@@ -523,7 +522,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kgpgcertmanager
-#%attr(755,root,root) %{_bindir}/mail.local
 %{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
 #%{_libdir}/kde3/kfile_rfc822.la
@@ -561,11 +559,10 @@ rm -rf $RPM_BUILD_ROOT
 %files kontact
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
+%{_libdir}/libkpinterfaces.la
+%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
 %{_libdir}/kde3/libkp*plugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
-%{_libdir}/libkpinterfaces*.la
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libkpinterfaces.so.*
 %{_datadir}/apps/kp*plugin
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/apps/kontact
@@ -603,7 +600,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpilot.la
 %attr(755,root,root) %{_libdir}/libkpilot.so.*
 %{_libdir}/kde3/*conduit.la
-%attr(755,root,root) %{_libdir}/kde3/*conduit.so.*
+%attr(755,root,root) %{_libdir}/kde3/*conduit.so*
 %{_datadir}/apps/kpilot
 %{_datadir}/services/expense-conduit.desktop
 %{_datadir}/services/abbrowser_conduit.desktop
@@ -627,4 +624,4 @@ rm -rf $RPM_BUILD_ROOT
 %files libkdenetwork
 %defattr(644,root,root,755)
 %{_libdir}/libkdenetwork.la
-%attr(755,root,root) %{_libdir}/libkdenetwork.so*
+%attr(755,root,root) %{_libdir}/libkdenetwork.so.*
