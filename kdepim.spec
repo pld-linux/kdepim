@@ -198,7 +198,9 @@ wymianЙ informacji z innymi tego typu aplikacjami poprzez standard
 przemysЁowy (vCalendar).
 
 %description korganizer -l ru
-<lost>
+полнофункциональная программа календаря и персонального планировщика
+(KOrganizer поддерживает обмен информацией с другими программами
+такого рода через стандартный формат файла vCalendar)
 
 %description korganizer -l uk
 повнофункц╕ональна програма календара та персонального 
@@ -372,7 +374,6 @@ rm -rf $RPM_BUILD_ROOT
 %files konsolekalendar
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
-
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
