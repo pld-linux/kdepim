@@ -106,7 +106,7 @@ Nastawianie przypominania o zdarzeniach
 Summary:        A communication program between mobile phone and PC
 Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym.
 Group:          X11/Applications
-Obsoletes:	%{name}-cellphone
+Obsoletes:	kdepim-cellphone
 
 %description kandy
 Kandy provides access to your mobile phone and allows to sync the data
@@ -121,9 +121,9 @@ Summary:        An integrated PIM application
 Summary(pl):    Zintegrowany PIM
 Group:          X11/Applications
 Requires:	kdenetwork-kmail >= %{version}
-Requires:       %{name}-knotes = %{version}-%{release}
-Requires:	%{name}-kaddressbook = %{version}-%{release}
-Requires:       %{name}-korganizer = %{version}-%{release}
+Requires:       kdepim-knotes = %{version}-%{release}
+Requires:	kdepim-kaddressbook = %{version}-%{release}
+Requires:       kdepim-korganizer = %{version}-%{release}
 
 %description kaplan
 Kaplan is a PIM application, whcih integrates the knotes, kmail,
@@ -216,7 +216,8 @@ Summary:        A sync tool for palmtops
 Summary(pl):    Narzêdzie do synchronizacji z palmtopami
 Group:          X11/Applications
 Requires:	pilot-link
-Obsoletes:	%{name}-pilot
+Obsoletes:	kdepim-pilot
+Obsoletes:	kpilot
 
 %description kpilot
 Synchronization tool for 3Com Palm Pilots and compatible devices.
