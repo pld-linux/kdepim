@@ -23,6 +23,7 @@ Group:		X11/Applications
 #Source0:	http://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	bf99a73889c00597c0e2303ed4b3befc
+Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 BuildRequires:	automake
