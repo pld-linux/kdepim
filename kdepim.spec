@@ -84,6 +84,7 @@ opartych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
+Requires:	kdelibs-kabc >= %{version}
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
