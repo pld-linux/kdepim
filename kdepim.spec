@@ -1,11 +1,12 @@
 # TODO:
 # - make separate subpackages
-
 Summary:	Personal Information Management (PIM) for KDE
-Summary(pl):	Menad©er informacji osobistej (PIM) dla KDE
+Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
+Summary(ru):	Персональный планировщик (PIM) для KDE
+Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.3
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -30,46 +31,72 @@ kdepim is a collection of Personal Information Management (PIM) tools
 for the K Desktop Enviromnent (KDE) kdepim contains the following
 applications:
 
-KOrganizer: a complete calendar and scheduling program. KOrganizer
-supports information interchange with other calendar applications
-through the industry standard vCalendar file format.
-
-Empath: an E-Mail client
-
-abbrowser: an address book reader
-
-kpilot: Syncronization tool for 3com Palm Pilots and compatible
-devices
-
-twister: A PIM client
+- KOrganizer - a complete calendar and scheduling program (KOrganizer
+  supports information interchange with other calendar applications
+  through the industry standard vCalendar file format),
+- Empath - an E-Mail client,
+- abbrowser - an address book reader,
+- kpilot - Syncronization tool for 3com Palm Pilots and compatible
+  devices,
+- twister - A PIM client.
 
 %description -l pl
-kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
-(KDE). kdepim zawiera nastЙpuj╠ce programy:
+kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
+(KDE). kdepim zawiera nastЙpujace programy:
 
-KOrganizer: kalendarz wraz z harmonogramem zadaЯ. KOrganizer wspiera
-wymianЙ informacji z innymi tego typu aplikacjami poprzez standard
-przemysЁowy vCalendar.
+- KOrganizer - kalendarz wraz z harmonogramem zadaЯ (KOrganizer
+  wspiera wymianЙ informacji z innymi tego typu aplikacjami poprzez
+  standard przemysЁowy vCalendar),
+- Empath - klient E-Mail,
+- abbrowser - czytnik ksiazki adresowej,
+- kpilot - narzedzie do synchronizacji z 3Com Palm Pilot'em i
+  kompatybilnymi urzadzeniami.
+- twister - klient PIM.
 
-Empath: klient E-Mail.
+%description -l ru
+kdepim - это набор утилит для управления персональной информацией для
+K Desktop Enviromnent (KDE). kdepim содержит следующие программы:
 
-abbrowser: czytnik ksi╠©ki adresowej.
+- KOrganizer - полнофункциональная программа календаря и персонального
+  планировщика (KOrganizer поддерживает обмен информацией с другими
+  программами такого рода через стандартный формат файла vCalendar)
+- abbrowser - программа для чтения адресной книги,
+- kpilot - утилита для синхронизации с 3com Palm Pilots и совместимыми
+  с ними устройствами,
 
-kpilot: narzЙdzie do synchronizacji z 3Com Palm Pilotem i
-kompatybilnymi urz╠dzeniami.
+%description -l uk
+kdepim - це наб╕р утил╕т для керування персональною информац╕╓ю для K
+Desktop Enviromnent (KDE). kdepim м╕стить так╕ програми:
 
-twister: klient PIM.
+- KOrganizer - повнофункц╕ональна програма календара та персонального
+  планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
+  програмами такого роду через стандартний формат файлу vCalendar),
+- abbrowser - програма для читання адресно╖ книги,
+- kpilot - утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
+  ними пристроями.
 
 %package devel
 Summary:	Development files for KDE pim
 Summary(pl):	Pliki nagЁСwkowe do KDE pim
+Summary(uk):	Файли розробки для kdepim
+Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
 
 %description devel
-Development files for KDE pim.
+This package contains header files needed if you wish to build
+applications based on kdepim.
 
 %description devel -l pl
-Pliki nagЁСwkowe do KDE pim.
+Pakiet ten zawiera pliki nagЁСwkowe potzrebne do budoway aplikacji
+bazuj╠cych na kdepim.
+
+%description devel -l uk
+Цей пакет м╕стить файли заголовк╕в необх╕дн╕ для побудови програм,
+базованих на kdepim.
+
+%description devel -l ru
+Этот пакет содержит файлы заголовков необходимые для построения
+программ, основанных на kdepim.
 
 %prep
 %setup -q
@@ -85,10 +112,10 @@ kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%{__make} DESTDIR=$RPM_BUILD_ROOT install
-
 install -d $RPM_BUILD_ROOT%{_applnkdir}{/Office/PIMs,/Settings/KDE}
+
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_applnkdir}/Settings/[!K]* $RPM_BUILD_ROOT%{_applnkdir}/Settings/KDE/
 mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications,Office/PIMs/}
