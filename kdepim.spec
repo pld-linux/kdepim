@@ -1,4 +1,4 @@
-%define		_ver		3.0
+%define		_ver		3.0.1
 #define		_sub_ver
 %define		_rel		1
 
@@ -14,6 +14,7 @@ Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
 Name:		kdepim
 Version:	%{_version}
 Release:	%{_release}
+Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
