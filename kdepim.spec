@@ -1,9 +1,9 @@
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
 
-%define		_state		unstable
-%define		_ver		3.1.95
-%define		_snap		031114
+%define		_state		stable
+%define		_ver		3.2.0
+#%%define		_snap		031114
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -19,7 +19,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://ep09.pld-linux.org/~djurban/kde/%{name}-%{version}.tar.bz2
-# Source0-md5:	c828edf403a4d1b9199caea7fc7649e7
+# Source0-md5:	657a61e0f3d90d2afec3820e77f81306
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	automake
@@ -556,11 +556,27 @@ cat kalarm.lang >> korganizer.lang
 cat kalarmd.lang >> korganizer.lang
 cat kgpgcertmanager.lang >> kmail.lang
 
+programs="kaddressbook \
+kandy \
+korganizer \
+karm \
+kmail \
+knode \
+knotes \
+konsolekalendar \
+kontact \
+korn \
+kpilot"
+
 for f in *.lang; do
-	if grep -q %{name}-%{version}-apidocs $f; then
-		grep -v %{name}-%{version}-apidocs $f > $f.tmp
+	if grep -q %{name}--apidocs $f; then
+		grep -v %{name}-apidocs $f > $f.tmp
 		mv $f.tmp $f
 	fi
+done
+
+for i in $programs; do
+	mv $i.lang $i\_en.lang
 done
 
 %clean
@@ -604,7 +620,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-%{version}-apidocs
+%lang(en) %{_kdedocdir}/en/%{name}-apidocs
 %{_includedir}/KNotesIface.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
@@ -649,7 +665,7 @@ rm -rf $RPM_BUILD_ROOT
 #%{_libdir}/liblocalkonnector.so
 #%{_libdir}/libqtopiakonnector.so
 
-%files kaddressbook -f kaddressbook.lang
+%files kaddressbook -f kaddressbook_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
@@ -697,21 +713,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkabinterfaces.la
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
 
-%files kandy -f kandy.lang
+%files kandy -f kandy_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
 
-%files karm -f karm.lang
+%files karm -f karm_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
 %{_datadir}/apps/karm
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 
-%files kmail -f kmail.lang
+%files kmail -f kmail_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
 %attr(755,root,root) %{_bindir}/kmailcvt
@@ -733,7 +749,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kmailcvt.png
 %{_iconsdir}/*/*/apps/kmaillight.png
 
-%files knode -f knode.lang
+%files knode -f knode_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
 %{_libdir}/kde3/libknodepart.la
@@ -744,7 +760,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
 
-%files knotes -f knotes.lang
+%files knotes -f knotes_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
 %{_datadir}/apps/knotes
@@ -752,13 +768,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 
-%files konsolekalendar -f konsolekalendar.lang
+%files konsolekalendar -f konsolekalendar_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
 
-%files kontact -f kontact.lang
+%files kontact -f kontact_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kontact
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
@@ -798,7 +814,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpinterfaces.la
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
 
-%files korganizer -f korganizer.lang
+%files korganizer -f korganizer_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ghns
 %attr(755,root,root) %{_bindir}/kalarm*
@@ -895,13 +911,13 @@ rm -rf $RPM_BUILD_ROOT
 #%{_libdir}/libksync2.la
 #%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
 
-%files korn -f korn.lang
+%files korn -f korn_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
 
-%files kpilot -f kpilot.lang
+%files kpilot -f kpilot_en.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
