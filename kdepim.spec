@@ -476,7 +476,7 @@ echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;ContactManagement;/' \
 	-e 's/Terminal=0/Terminal=false/' \
 	kaddressbook/kaddressbook.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM/' \
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM;/' \
 	-e 's/Terminal=0/Terminal=false/' \
 	kontact/src/Kontact.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Email;/' \
@@ -498,6 +498,11 @@ echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 %{__sed} -i -e '/\[Desktop Entry\]/aEncoding=UTF-8' \
 	-e 's/Terminal=0/Terminal=false/' \
 	ktnef/gui/ktnef.desktop
+for f in `find . -name \*.desktop`; do
+	if grep -q '^Categories=.*[^;]$' $f; then
+		sed -i -e 's/\(^Categories=.*$\)/\1;/' $f
+	fi
+done
 
 %build
 cp %{_datadir}/automake/config.sub admin
