@@ -258,9 +258,8 @@ kde_appsdir="%{_applnkdir}"; export kde_appsdir
 kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
-for plik in `find ./ -name *.desktop | grep -l '\[nb\]'` ; do
-	echo $plik
-	echo -e ',s/\[nb\]/[no]/\n,w' | ed $plik
+for plik in `find . -name \*.desktop | xargs grep -l '\[nb\]'` ; do
+	echo -e ',s/\[nb\]=/[no]=/\n,w' | ed $plik 2>/dev/null
 done
 
 %configure \
