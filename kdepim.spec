@@ -27,18 +27,18 @@ Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail_senderpic.patch
 BuildRequires:	automake
 BuildRequires:	bison
+BuildRequires:	bluez-libs-devel
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
-%{?with_apidocs:BuildRequires:	graphviz}
-BuildRequires:	kdelibs-devel >= %{_minlibsevr}
-BuildRequires:	libmal-devel >= 0.31
-BuildRequires:	pilot-link-devel
-BuildRequires:	bluez-libs-devel
 #BuildRequires:	gpgme-devel >= 1.0.0
 BuildRequires:	gnupg >= 1.2.2
-BuildRequires:	lockdev-devel
+%{?with_apidocs:BuildRequires:	graphviz}
+BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
+BuildRequires:	libmal-devel >= 0.31
+BuildRequires:	lockdev-devel
 BuildRequires:	pcre-devel
+BuildRequires:	pilot-link-devel
 BuildRequires:	qt-designer-libs
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
@@ -540,7 +540,7 @@ rm -rf *.lang
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian/man
 if [ -f alarmd.sgml ]; then
-	%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+	%{__sed} -i -e 's/alarmd/kalarmd/' -e 's/ALARMD/KALARMD/' alarmd.sgml
 	mv -f alarmd.sgml kalarmd.sgml
 fi
 for f in *.man ; do
