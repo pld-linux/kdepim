@@ -815,7 +815,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian/man
 %{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
-mv -f alarmd.sgml kalarmd.sgml
+[ -f alarmd.sgml -a ! -f kalarmd.sgml ] && mv -f alarmd.sgml kalarmd.sgml
 for f in *.sgml ; do
 	base="$(basename $f .sgml)"
 	upper="$(echo ${base} | tr a-z A-Z)"
@@ -899,7 +899,6 @@ mv {libksync,korganizer-libs}.lang
 cat kgantt.lang >> korganizer-libs.lang
 %find_lang libkpimexchange	--with-kde
 cat libkpimexchange.lang >> korganizer-libs.lang
-%find_lang desktop_kdepim	--with-kde
 %endif
 
 files="kaddressbook \
@@ -976,7 +975,6 @@ rm -rf $RPM_BUILD_ROOT
 %postun	libmimelib		-p /sbin/ldconfig
 
 %if %{with i18n}
-%files i18n -f desktop_kdepim.lang
 %files kaddressbook-i18n -f kaddressbook.lang
 %files kandy-i18n -f kandy.lang
 %files karm-i18n -f karm.lang
