@@ -5,7 +5,7 @@
 #	- Recheck dependencies
 
 %define		_state		stable
-%define		_ver		3.1.4
+%define		_ver		3.1.5
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,16 +14,16 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	0.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	2a3e97a2cd5de688294cb39001282048
+# Source0-md5:	a3bc4986bd6e2a635f9c0ca67e2c8bb9
 # generated from kde-i18n
-Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/%{version}/kde-i18n-%{name}-%{version}.tar.bz2
-# Source1-md5:	d2da1a770c8623b31e465ba7c0268885
+Source1:	kde-i18n-%{name}-%{version}.tar.bz2
+# Source1-md5:	4dda526e26340a67d253b62e8f952c89
 Source2:	%{name}-kandy.png
 BuildRequires:	bison
 BuildRequires:	ed
