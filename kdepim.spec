@@ -3,7 +3,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.1.92
-%define		_snap		031014
+%define		_snap		031024
 
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -20,7 +20,7 @@ Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
 Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
-# Source0-md5:	80cf6325785ad71a14e691420b6c2f2e
+# Source0-md5:	255e4a75a8d240c42c88f8f899e038ad
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -597,6 +597,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
 %{_datadir}/apps/kandy
+%{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
 
 %files karm -f karm.lang
@@ -672,6 +673,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
+%{_datadir}/config.kcfg/kontact.kcfg
 %{_datadir}/services/kontact
 %{_datadir}/services/kontactconfig.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
@@ -695,7 +697,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/ical2vcal
-%attr(755,root,root) %{_bindir}/simplealarmdaemon
+#%attr(755,root,root) %{_bindir}/simplealarmdaemon
 %{_libdir}/kde3/kcm_korganizer.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
 %{_libdir}/kde3/libkded_ksharedfile.la
@@ -722,10 +724,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/knewstuff
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
-%{_datadir}/apps/kresources
+#%{_datadir}/apps/kresources
 %{_datadir}/apps/ksync
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
+%{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/mimelnk/kdedevice/cellphone.desktop
 %{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/configcolors.desktop
@@ -770,6 +773,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
 %{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
+%{_libdir}/libkorganizer_eventviewer.la
+%attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
 %{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
 %{_libdir}/libksharedfile.la
@@ -833,6 +838,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
 %{_libdir}/kde3/kcal_remote.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
+%{_libdir}/kde3/kcal_local.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_local.so
 %{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
 %{_datadir}/services/kresources/kcal
