@@ -27,6 +27,7 @@ BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
+BuildRequires:	perl
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,7 +43,7 @@ for the K Desktop Enviromnent (KDE).
 
 %description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Enviromnent
-(KDE). 
+(KDE).
 
 %description -l ru
 kdepim - это набор утилит для управления персональной информацией для
@@ -90,7 +91,7 @@ Ksi╠©ka adresowa
 %package kalarm
 Summary:	Alarm
 Summary(pl):	Alarm
-Group:		X11/Applications                       
+Group:		X11/Applications
 Requires:	%{name} = %{version}-%{release}
 
 %description kalarm
@@ -133,7 +134,7 @@ korganizer i kaddressbook.
 %package karm
 Summary:	Personal timetracker
 Summary(pl):	Osobisty czasomierz
-Group:		X11/Applications                                                
+Group:		X11/Applications
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
@@ -159,7 +160,7 @@ Biblioteka do rysowania diagramСw Gantta zarz╠dzania nimi.
 %package knotes
 Summary:	Yellow cards
 Summary(pl):	╞СЁte karteczki
-Group:		X11/Applications                                                
+Group:		X11/Applications
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
@@ -174,7 +175,7 @@ komputerСw.
 
 %package konsolekalendar
 Summary:        A command line ICard tool
-Summary(pl):    NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ 
+Summary(pl):    NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ
 Group:          Applications
 
 %description konsolekalendar
@@ -204,7 +205,7 @@ przemysЁowy (vCalendar).
 такого рода через стандартный формат файла vCalendar)
 
 %description korganizer -l uk
-повнофункц╕ональна програма календара та персонального 
+повнофункц╕ональна програма календара та персонального
 планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
 програмами такого роду через стандартний формат файлу vCalendar)
 
@@ -227,7 +228,7 @@ urz╠dzeniami.
 с ними устройствами,
 
 %description kpilot -l uk
-утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з 
+утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
 ними пристроями.
 
 %package ksync
@@ -252,11 +253,8 @@ kde_htmldir="%{_htmldir}"; export kde_htmldir
 kde_icondir="%{_pixmapsdir}"; export kde_icondir
 
 for plik in `find ./ -name \*.desktop` ; do
-	if [ -d $plik ]; then
 		echo $plik
-		sed -e "s/[nb]/[no]/g" > $plik.1
-		mv -f $plik.1 $plik
-	fi
+		perl -pi -e "s/\[nb\]/\[no\]/g" $plik
 done
 
 %configure \
@@ -266,7 +264,7 @@ done
 
 #cd kaplan
 #%%{__make}
-#cd .. 
+#cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -296,7 +294,7 @@ cat kalarmd.lang >> kalarm.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files 
+%files
 %defattr(644,root,root,755)
 %doc README*
 %{_libdir}/libkdepim.la
