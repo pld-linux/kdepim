@@ -368,7 +368,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*
 %{_datadir}/apps/kalarm*
-%{_datadir}/autostart
+%{_datadir}/autostart/*
 %{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/kalarm.desktop
 %{_applnkdir}/Utilities/kalarm.desktop
