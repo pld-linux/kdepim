@@ -1,5 +1,8 @@
+#
 # TODO:
 # - make separate subpackages
+# - separate packages: pilot, cellphone, karm, knotes.
+#
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
@@ -7,7 +10,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.3
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -15,10 +18,12 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.bz2
 # generated from kde-i18n
 Source1:	kde-i18n-%{name}-%{version}.tar.bz2
+Patch0:		%{name}-fix-knotes-crash.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-no_versioned_modules.patch
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
-BuildRequires:	qt-devel >= 3.0.5
 BuildRequires:	zlib-devel
 Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
@@ -76,6 +81,45 @@ Desktop Enviromnent (KDE). kdepim м╕стить так╕ програми:
 - kpilot - утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
   ними пристроями.
 
+%package pilot
+Summary:	KDE support for synchronizing data with a Palm(tm) or compatible PDA
+Group:		X11/Applications
+Requires:	%{name} = %{version}
+
+%description pilot
+KDE support for synchronizing data with a Palm(tm) or compatible PDA.
+
+%package cellphone
+Summary:	KDE support for synchronizing data with cellphones
+Group:		X11/Applications
+Requires:	%{name} = %{version}
+
+%description cellphone
+KDE support for synchronizing data with cellphones. Install
+%{name}-cellphone if you want to use %{name} and have a cellphone.
+
+%package karm
+Summary:	Time tracking tool
+Group:		X11/Applications
+Requires:	%{name} = %{version}
+Obsoletes:	karm
+
+%description karm
+KArm - Punjambi language for "work" - tracks time spent on various
+tasks. It is useful for tracking hours to be billed to different
+clients.
+
+%package knotes
+Summary:	Post-It notes on the desktop
+Group:		X11/Applications
+Requires:	%{name} = %{version}
+Obsoletes:	knotes
+
+%description knotes
+KNotes allows you to place Post-It notes on your desktop. In addition
+to serving as a reminder, KNotes can mail and print your notes, and
+accept drag and drop even from remote sites.
+
 %package devel
 Summary:	Development files for KDE pim
 Summary(pl):	Pliki nagЁСwkowe do KDE pim
@@ -101,6 +145,9 @@ bazuj╠cych na kdepim.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
