@@ -44,7 +44,7 @@ for the K Desktop Environment (KDE).
 
 %description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
-(KDE). 
+(KDE).
 
 %description -l ru
 kdepim - это набор утилит для управления персональной информацией для
@@ -176,7 +176,7 @@ komputerСw.
 
 %package konsolekalendar
 Summary:	A command line ICard tool
-Summary(pl):	NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ 
+Summary(pl):	NarzЙdzie dostЙpu do plikСw kalendarza z linii poleceЯ
 Group:		Applications
 
 %description konsolekalendar
@@ -206,7 +206,7 @@ przemysЁowy (vCalendar).
 такого рода через стандартный формат файла vCalendar)
 
 %description korganizer -l uk
-повнофункц╕ональна програма календара та персонального 
+повнофункц╕ональна програма календара та персонального
 планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
 програмами такого роду через стандартний формат файлу vCalendar)
 
@@ -230,7 +230,7 @@ urz╠dzeniami.
 с ними устройствами,
 
 %description kpilot -l uk
-утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з 
+утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з
 ними пристроями.
 
 %package ksync
@@ -292,7 +292,7 @@ cat kalarmd.lang >> kalarm.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files 
+%files
 %defattr(644,root,root,755)
 %doc README*
 %{_libdir}/libkdepim.la
