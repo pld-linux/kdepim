@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.1
+Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -24,6 +24,7 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/3.3/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	94520aeae0db2fac5da7d1ece7b575a5
 #Source0:	ftp://ftp.pld-linux.org/software/kde/%{name}-%{version}-%{_snap}.tar.bz2
 Icon:		kde-pim.xpm
+Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail_senderpic.patch
@@ -461,6 +462,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q -D
+%patch100 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
