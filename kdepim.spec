@@ -5,7 +5,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040217
+%define		_snap		040225
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -1112,6 +1112,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/konnector.desktop
 # kontact part
 %attr(755,root,root) %{_bindir}/kontact
+%{_libdir}/kde3/kcm_kabsummary.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
 %{_libdir}/kde3/kcm_kmailsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmailsummary.so
 %{_libdir}/kde3/kcm_kontactsummary.la
@@ -1141,6 +1143,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
 %{_datadir}/config.kcfg/kontact.kcfg
+%{_datadir}/services/kcmkabsummary.desktop
 %{_datadir}/services/kcmkmailsummary.desktop
 %{_datadir}/services/kcmkontactsummary.desktop
 %{_datadir}/services/kcmkorgsummary.desktop
@@ -1373,12 +1376,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kmailcvt
 %{_datadir}/apps/libkleopatra
 %{_datadir}/config/kmail.antispamrc
+%{_datadir}/config.kcfg/kmail.kcfg
 %{_datadir}/services/kmail_config_appearance.desktop
 %{_datadir}/services/kmail_config_composer.desktop
 %{_datadir}/services/kmail_config_identity.desktop
 %{_datadir}/services/kmail_config_misc.desktop
 %{_datadir}/services/kmail_config_network.desktop
 %{_datadir}/services/kmail_config_security.desktop
+%{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
 %{_iconsdir}/*/*/apps/kmail.png
