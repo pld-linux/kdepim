@@ -304,7 +304,7 @@ Summary:	KDE 'biff' application
 Summary(pl):	Wska¼nik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
-Requires:	kdebase-kicker >= 9:%{version}
+Requires:	kdebase-desktop >= 9:%{version}
 Requires:	%{name}-libkdenetwork = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libmimelib = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-korn
@@ -652,7 +652,7 @@ Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korna
 Group:		X11/Applications
 Requires:	%{name}-korn = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkdenetwork-i18n = %{epoch}:%{version}-%{release}
-Requires:	kdebase-kicker-i18n >= 9:%{version}
+Requires:	kdebase-desktop-i18n >= 9:%{version}
 
 %description korn-i18n
 Internationalization and localization files for korn.
