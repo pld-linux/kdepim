@@ -2,11 +2,11 @@
 %bcond_without	apidocs		# do not prepare API documentation
 
 %define		_state		unstable
-%define		_ver		3.3.91
-%define		_snap		%{nil}
+%define		_ver		3.3.92
+%define		_snap		050210
 
-%define		_minlibsevr	9:3.3.91
-%define		_minbaseevr	9:3.3.91
+%define		_minlibsevr	9:3.3.92.020510
+%define		_minbaseevr	9:3.3.92.020510
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -14,14 +14,15 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	%{_ver}
+Version:	%{_ver}.%{_snap}
+#Version:	%{_ver}
 Release:	1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-#Source0:	http://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
+Source0:	http://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
+#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	bf99a73889c00597c0e2303ed4b3befc
 Icon:		kde-pim.xpm
 Patch0:		kde-common-PLD.patch
@@ -461,8 +462,8 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
-#%setup -q -n %{name}-%{_snap}
-%setup -q
+%setup -q -n %{name}-%{_snap}
+#%setup -q
 %patch0 -p1
 #%patch1 -p1
 
@@ -597,6 +598,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc README.Kolab
 %attr(755,root,root) %{_bindir}/akregator
+%attr(755,root,root) %{_bindir}/exchangewizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 %attr(755,root,root) %{_bindir}/groupwisewizard
 %attr(755,root,root) %{_bindir}/ical2vcal
@@ -609,6 +611,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/multisynk
+%attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
 
 %{_libdir}/libkabckonnector.la
@@ -626,14 +629,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/conduit_memofile.so
 %{_libdir}/kde3/conduit_notepad.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_notepad.so
+%{_libdir}/kde3/kabc_groupdav.la
+%attr(755,root,root) %{_libdir}/kde3/kabc_groupdav.so
 %{_libdir}/kde3/kabc_groupwise.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_groupwise.so
 %{_libdir}/kde3/kabc_kolab.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_kolab.so
+%{_libdir}/kde3/kabc_newexchange.la
+%attr(755,root,root) %{_libdir}/kde3/kabc_newexchange.so
 %{_libdir}/kde3/kabc_slox.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_slox.so
 %{_libdir}/kde3/kabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
+%{_libdir}/kde3/kcal_blogging.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_blogging.so
+%{_libdir}/kde3/kcal_groupdav.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_groupdav.so
 %{_libdir}/kde3/kcal_groupwise.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_groupwise.so
 %{_libdir}/kde3/kcal_kabc.la
@@ -644,6 +655,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcal_local.so
 %{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
+%{_libdir}/kde3/kcal_newexchange.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_newexchange.so
 %{_libdir}/kde3/kcal_remote.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
 %{_libdir}/kde3/kcal_resourcefeatureplan.la
@@ -668,12 +681,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_korgsummary.so
 %{_libdir}/kde3/kcm_sdsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_sdsummary.so
+%{_libdir}/kde3/kded_networkstatus.la
+%attr(755,root,root) %{_libdir}/kde3/kded_networkstatus.so
 %{_libdir}/kde3/kfile_ics.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_ics.so
 %{_libdir}/kde3/libakregatorpart.la
 %attr(755,root,root) %{_libdir}/kde3/libakregatorpart.so*
-%{_libdir}/kde3/libkded_ksharedfile.la
-%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+#%{_libdir}/kde3/libkded_ksharedfile.la
+#%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+%{_libdir}/kde3/libexchangewizard.la
+%attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
 %{_libdir}/kde3/libgroupwisewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
 %{_libdir}/kde3/libkitchensyncpart.la
@@ -736,6 +753,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_libdir}/kde3/plugins/designer/kdepimwidgets.la
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kdepimwidgets.so
+%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
+%attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/akregator
 %{_datadir}/apps/kconf_update/korganizer.upd
 %{_datadir}/apps/kdepimwidgets
@@ -748,6 +767,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
+%{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
 %{_datadir}/apps/multisynk
 %{_datadir}/autostart/korgac.desktop
@@ -758,10 +778,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/kontact.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/config.kcfg/memofileconduit.kcfg
+%{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
 %{_datadir}/config.kcfg/slox.kcfg
-%{_datadir}/mimelnk/kdedevice/cellphone.desktop
-%{_datadir}/mimelnk/kdedevice/pda.desktop
+#%{_datadir}/mimelnk/kdedevice/cellphone.desktop
+#%{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/akregator_part.desktop
 %{_datadir}/services/feed.protocol
 %{_datadir}/services/kcmkabsummary.desktop
@@ -770,16 +791,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kcmkontactsummary.desktop
 %{_datadir}/services/kcmkorgsummary.desktop
 %{_datadir}/services/kcmsdsummary.desktop
-%{_datadir}/services/kded/ksharedfile.desktop
+%{_datadir}/services/kded/networkstatus.desktop
 %{_datadir}/services/kfile_ics.desktop
 %{_datadir}/services/kitchensync
 %{_datadir}/services/kontact
+%{_datadir}/services/kontactconfig.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/services/korganizer_*.desktop
 %{_datadir}/services/kresources/kabc/imap.desktop
+%{_datadir}/services/kresources/kabc/kabc_groupdav.desktop
 %{_datadir}/services/kresources/kabc/kabc_groupwise.desktop
-%{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
+%{_datadir}/services/kresources/kabc/kabc_newexchange.desktop
+%{_datadir}/services/kresources/kabc/kabc_opengroupware.desktop
 %{_datadir}/services/kresources/kabc/kabc_slox.desktop
+%{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
 %{_datadir}/services/kresources/kabc/kolab.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
@@ -800,8 +825,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/Kontact.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
-%{_iconsdir}/crystalsvg/*x*/apps/akregator.png
-%{_iconsdir}/crystalsvg/scalable/apps/akregator.svgz
+%{_iconsdir}/crystalsvg/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/crystalsvg/*/apps/multisynk.png
 %{_iconsdir}/crystalsvg/*/apps/kontact.png
@@ -819,7 +843,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/KNotesIface.h
 %{_includedir}/KNotesAppIface.h
 %{_includedir}/kdepimmacros.h
-%{_includedir}/ksharedfile.h
+#%{_includedir}/ksharedfile.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
@@ -840,19 +864,24 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/ktnef
 %{_includedir}/libemailfunctions
 %{_includedir}/libkcal
-%{_includedir}/libkdepim
+#%{_includedir}/libkdepim
 %{_includedir}/mimelib
 %{_includedir}/qgpgme
 %{_libdir}/libgpgme++.so
 %{_libdir}/libakregatorprivate.so
+%{_libdir}/libkabc_groupdav.so
 %{_libdir}/libkabc_groupwise.so
+%{_libdir}/libkabc_newexchange.so
 %{_libdir}/libkabc_slox.so
 %{_libdir}/libkabc_xmlrpc.so
 %{_libdir}/libkabckolab.so
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkcal.so
+%{_libdir}/libkcal_blogging.so
+%{_libdir}/libkcal_groupdav.so
 %{_libdir}/libkcal_groupwise.so
+%{_libdir}/libkcal_newexchange.so
 %{_libdir}/libkcal_resourcefeatureplan.so
 %{_libdir}/libkcal_resourceremote.so
 %{_libdir}/libkcal_slox.so
@@ -860,6 +889,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkcalkolab.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
+%{_libdir}/libkgroupwarebase.so
+%{_libdir}/libkgroupwaredav.so
 %{_libdir}/libkholidays.so
 %{_libdir}/libkitchensyncui.so
 %{_libdir}/libkleopatra.so
@@ -882,7 +913,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpimexchange.so
 %{_libdir}/libkpimidentities.so
 %{_libdir}/libkpinterfaces.so
-%{_libdir}/libksharedfile.so
+#%{_libdir}/libksharedfile.so
 %{_libdir}/libksieve.so
 %{_libdir}/libksync.so
 %{_libdir}/libksync2.so
@@ -1177,14 +1208,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%{_libdir}/libakregatorprivate.la
-%attr(755,root,root) %{_libdir}/libakregatorprivate.so.*.*.*
+#%{_libdir}/libakregatorprivate.la
+#%attr(755,root,root) %{_libdir}/libakregatorprivate.so.*.*.*
 %{_libdir}/libgpgme++.la
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
 %{_libdir}/libkaddressbook.la
 %attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
+%{_libdir}/libkabc_groupdav.la
+%attr(755,root,root) %{_libdir}/libkabc_groupdav.so.*.*.*
 %{_libdir}/libkabc_groupwise.la
 %attr(755,root,root) %{_libdir}/libkabc_groupwise.so.*.*.*
+%{_libdir}/libkabc_newexchange.la
+%attr(755,root,root) %{_libdir}/libkabc_newexchange.so.*.*.*
 %{_libdir}/libkabc_slox.la
 %attr(755,root,root) %{_libdir}/libkabc_slox.so.*.*.*
 %{_libdir}/libkabc_xmlrpc.la
@@ -1195,8 +1230,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
 %{_libdir}/libkcal.la
 %attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
-%{_libdir}/libkcal_groupwise.la
+%{_libdir}/libkcal_blogging.la
+%attr(755,root,root) %{_libdir}/libkcal_blogging.so.*.*.*
+%{_libdir}/libkcal_groupdav.la
+%attr(755,root,root) %{_libdir}/libkcal_groupdav.so.*.*.*
+%{_libdir}/libkcal_groupwise.la                                                 
 %attr(755,root,root) %{_libdir}/libkcal_groupwise.so.*.*.*
+%{_libdir}/libkcal_newexchange.la
+%attr(755,root,root) %{_libdir}/libkcal_newexchange.so.*.*.*
 %{_libdir}/libkcal_resourcefeatureplan.la
 %attr(755,root,root) %{_libdir}/libkcal_resourcefeatureplan.so.*.*.*
 %{_libdir}/libkcal_resourceremote.la
@@ -1211,18 +1252,22 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
+%{_libdir}/libkgroupwarebase.la
+%attr(755,root,root) %{_libdir}/libkgroupwarebase.so.*.*.*
+%{_libdir}/libkgroupwaredav.la
+%attr(755,root,root) %{_libdir}/libkgroupwaredav.so.*.*.*
 %{_libdir}/libkholidays.la
 %attr(755,root,root) %{_libdir}/libkholidays.so.*.*.*
 %{_libdir}/libkitchensyncui.la
 %attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libkleopatra.la
 %attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
-%{_libdir}/libkmailprivate.la
-%attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
+#%{_libdir}/libkmailprivate.la
+#%attr(755,root,root) %{_libdir}/libkmailprivate.so.*.*.*
 %{_libdir}/libkmime.la
 %attr(755,root,root) %{_libdir}/libkmime.so.*.*.*
-%{_libdir}/libknodecommon.la
-%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+#%{_libdir}/libknodecommon.la
+#%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
 %{_libdir}/libknotes_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %{_libdir}/libknoteskolab.la
@@ -1253,8 +1298,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkpimidentities.so.*.*.*
 %{_libdir}/libkpinterfaces.la
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
-%{_libdir}/libksharedfile.la
-%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
+#%{_libdir}/libksharedfile.la
+#%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
 %{_libdir}/libksieve.la
 %attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
 %{_libdir}/libkslox.la
