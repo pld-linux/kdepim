@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.2
+Release:	0.3
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -284,19 +284,36 @@ mv $ALD/Utilities/{More/*,.}
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
 %find_lang	kaddressbook	--with-kde
+%find_lang	kabc2mutt	--with-kde
+cat kabc2mutt.lang >> kaddressbook.lang
 %find_lang	kalarm		--with-kde
 %find_lang	kalarmd		--with-kde
-cat kalarmd.lang >> kalarm.lang
+%find_lang	kalarmdgui	--with-kde
+cat kalarmd{,gui}.lang >> kalarm.lang
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
+%find_lang	kgantt		--with-kde
 %find_lang	knotes		--with-kde
+%find_lang	konsolekalendar	--with-kde
 %find_lang	korganizer	--with-kde
 %find_lang	kpilot		--with-kde
+%find_lang	ksync		--with-kde
+%find_lang	libksync	--with-kde
+cat libksync.lang >> ksync.lang
+%find_lang	kfile_vcf	--with-kde
+%find_lang	libkcal		--with-kde
+%find_lang	libkcalsystem	--with-kde
+%find_lang	libkdepim	--with-kde
+%find_lang	libkpimexchange	--with-kde
+cat {kfile_vcf,libk{cal{,system},depim,pimexchange}}.lang > kdepim.lang
+
+# probably obsolete
+#%find_lang	alarmdaemonctrl	--with-kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f kdepim.lang
 %defattr(644,root,root,755)
 %doc README*
 %{_libdir}/libkdepim.la
@@ -365,7 +382,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Office/PIMs/Kaplan.desktop
 %{_pixmapsdir}/*/*/*/kaplan.png
 
-%files kgantt
+%files kgantt -f kgantt.lang
 %defattr(644,root,root,755)
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*
@@ -379,7 +396,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Utilities/knotes.desktop
 %{_pixmapsdir}/*/*/*/knotes.png
 
-%files konsolekalendar
+%files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 
@@ -421,7 +438,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Utilities/kpilot*.desktop
 %{_pixmapsdir}/[!l]*/*/*/kpilot*.png
 
-%files ksync
+%files ksync -f ksync.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ksync
 %{_libdir}/libksync.la
