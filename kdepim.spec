@@ -3,6 +3,9 @@
 # - make separate subpackages
 # - separate packages: pilot, cellphone, karm, knotes.
 #
+# Conditional build:
+# _with_pixmapsubdirs - leave different depth/resolution icons
+#
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
 Summary(pl):	Manadzer informacji osobistej (PIM) dla KDE
@@ -10,7 +13,7 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	3.0.4
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -20,6 +23,8 @@ Source0:	ftp://ftp.kde.org/pub/kde/stable/%{version}/src/%{name}-%{version}.tar.
 Source1:	kde-i18n-%{name}-%{version}.tar.bz2
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-no_versioned_modules.patch
+Patch2:		%{name}-desktop_2.patch
+BuildRequires:	awk
 BuildRequires:	bison
 BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
@@ -167,6 +172,7 @@ bazuj±cych na kdepim.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 kde_htmldir="%{_htmldir}"; export kde_htmldir
@@ -190,9 +196,30 @@ mv $RPM_BUILD_ROOT%{_applnkdir}/{Applications/*,Office/PIMs/}
 install libkcal/.libs/libkcal.so.2.*.* $RPM_BUILD_ROOT%{_libdir}
 install kpilot/lib/.libs/libkpilot.so.0.*.* $RPM_BUILD_ROOT%{_libdir}
 
+# create in toplevel %%{_pixmapsdir} links to icons
+for i in $RPM_BUILD_ROOT%{_pixmapsdir}/hicolor/48x48/apps/{kalarm,karm,knotes,korganizer,kpilot}.png
+do
+%if %{?_with_pixmapsubdirs:1}%{!?_with_pixmapsubdirs:0}
+	ln -sf `echo $i | sed "s:^$RPM_BUILD_ROOT%{_pixmapsdir}/::"` $RPM_BUILD_ROOT%{_pixmapsdir}	
+%else
+	cp -af $i $RPM_BUILD_ROOT%{_pixmapsdir}
+%endif
+done
+
+%if %{!?_with_pixmapsubdirs:1}%{?_with_pixmapsubdirs:0}
+# moved
+rm -f $RPM_BUILD_ROOT%{_pixmapsdir}/*color/??x??/*/{kalarm,karm,knotes,korganizer,kpilot}.png \
+%endif
+
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
-programs="empath kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot ksync libkcal twister"
+for f in `find $RPM_BUILD_ROOT%{_applnkdir} -name '.directory' -o -name '*.desktop'` ; do
+	awk -v F=$f '/^Icon=/ && !/\.xpm$/ && !/\.png$/ { $0 = $0 ".png";} { print $0; } END { if(F == ".directory") print "Type=Directory"; }' < $f > $f.tmp
+	mv -f $f{.tmp,}
+done
+
+# not compiled: programs="empath ksync twister"
+programs="kalarm kalarmd kalarmdgui kandy karm kgantt knotes korganizer kpilot libkcal"
 > kdepim.lang
 for i in $programs; do
 	%find_lang $i --with-kde
@@ -241,6 +268,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Settings/KDE/System/*
 %{_applnkdir}/Utilities/*
 %{_pixmapsdir}/*/*/*/*.png
+%{_pixmapsdir}/*.png
 
 %files devel
 %defattr(644,root,root,755)
