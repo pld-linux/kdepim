@@ -11,7 +11,7 @@
 #
 %define		_state		snapshots
 %define		_ver		3.2.90
-%define		_snap		040506
+%define		_snap		040508
 %define		_packager	adgor
 
 %define		_minlibsevr	9:3.2.90.040505
@@ -30,9 +30,9 @@ License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 #Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
-#Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
-Source0:	%{name}-%{_snap}.tar.bz2
-# Source0-md5:	509467a5c635fed8096e44afd0af9014
+Source0:	http://ep09.pld-linux.org/~%{_packager}/kde/%{name}-%{_snap}.tar.bz2
+#Source0:	%{name}-%{_snap}.tar.bz2
+##%% Source0-md5:	509467a5c635fed8096e44afd0af9014
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 Patch2:		kde-common-QTDOCDIR.patch
