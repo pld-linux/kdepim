@@ -87,8 +87,8 @@ Summary:	TODO
 Summary(pl):	TODO
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}
-Obsoletes:	%{name}
-Obsoletes:	%{name}-korganizer < 3:3.1.90.030618-1
+Obsoletes:	kdepim
+Obsoletes:	kdepim-korganizer < 3:3.1.90.030618-1
 
 %description commonlibs
 TODO.
@@ -115,7 +115,7 @@ Summary(pl):    Program do komunikacji miêdzy PC a tel. komórkowym
 Group:          X11/Applications
 Requires:	kdebase-core >= %{version}
 Requires:	%{name}-libkdepim = %{version}-%{release}
-Obsoletes:	%{name}-cellphone
+Obsoletes:	kdepim-cellphone
 
 %description kandy
 Kandy provides access to your mobile phone and allows to sync the data
@@ -227,7 +227,7 @@ Group:          X11/Applications
 Requires:       %{name}-kaddressbook = %{version}-%{release}
 Requires:	%{name}-kmail = %{version}-%{release}
 Requires:       %{name}-korganizer = %{version}-%{release}
-Obsoletes:	%{name}-kaplan
+Obsoletes:	kdepim-kaplan
 
 %description kontact
 An integrated shell for the PIM apps.
@@ -243,10 +243,10 @@ Requires:	kdebase-core >= %{version}
 Requires:	%{name}-libkcal = %{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{version}-%{release}
 Requires:	%{name}-libkdepim = %{version}-%{release}
-Obsoletes:	%{name}-kalarm
-Obsoletes:	%{name}-kgantt
-Obsoletes:	%{name}-kitchensync
-Obsoletes:	%{name}-ksync
+Obsoletes:	kdepim-kalarm
+Obsoletes:	kdepim-kgantt
+Obsoletes:	kdepim-kitchensync
+Obsoletes:	kdepim-ksync
 Obsoletes:	korganizer
 
 %description korganizer
@@ -294,8 +294,9 @@ Summary(pl):    Narzêdzie do synchronizacji z palmtopami
 Group:          X11/Applications
 Requires:	%{name}-korganizer = %{version}-%{release}
 Requires:	pilot-link
-Obsoletes:	%{name}-kpalmdoc
-Obsoletes:	%{name}-pilot
+Obsoletes:	kdepim-kpalmdoc
+Obsoletes:	kdepim-pilot
+Obsoletes:	kpilot
 
 %description kpilot
 Synchronization tool for 3Com Palm Pilots and compatible devices.
@@ -330,7 +331,7 @@ Summary:	kcal library
 Summary(pl):	Biblioteka kcal
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}
-Obsoletes:	%{name}
+Obsoletes:	kdepim
 
 %description libkcal
 kcal library.
@@ -356,7 +357,7 @@ Summary:	kdepim library
 Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}
-Obsoletes:	%{name}
+Obsoletes:	kdepim
 
 %description libkdepim
 kdepim library.
@@ -369,7 +370,7 @@ Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
 Requires:	kdelibs >= %{version}
-Obsoletes:	%{name}
+Obsoletes:	kdepim
 
 %description libmimelib
 mimelib library, based on mimepp library.
