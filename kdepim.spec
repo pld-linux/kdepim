@@ -1,6 +1,5 @@
+#
 # Conditional build:
-# TODO desc and summary for kalarm (polish)
-
 %bcond_without	apidocs		# prepare API documentation
 
 %define		_state		stable
@@ -149,8 +148,7 @@ Ksi±¿ka adresowa dla KDE.
 
 %package kalarm
 Summary:	A personal alarm scheduler
-#TODO
-#Summary(pl):
+Summary(pl):	Osobisty program do przypominania
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -160,7 +158,12 @@ lets you set up personal alarm messages which pop up on the screen at
 the chosen time, or you can schedule commands to be executed or emails
 to be sent. Also includes an alarm daemon.
 
-#TODO #%description kalarm -l pl
+%description kalarm -l pl
+KAlarm to osobisty program do planowania i przypominania poprzez
+uruchomienie polecenia lub poczt± elektroniczn±. Umo¿liwia ustawienie
+w³asnej wiadomo¶ci alarmowej, która wyskoczy na ekranie o wybranym
+czasie albo zaszeregowanie poleceñ do wykonania lub poczty do wys³ania.
+Zawiera tak¿e demona obs³uguj±cego przypominanie.
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
