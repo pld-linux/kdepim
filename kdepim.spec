@@ -33,7 +33,6 @@ Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_prefix		/usr/X11R6
 %define         _htmldir        %{_datadir}/doc/kde/HTML
 
 %description
