@@ -4,8 +4,8 @@
 #	  clear that H (N) is written in lowercase instead uppercase
 #	- Recheck dependencies
 
-%define         _state          stable
-%define         _ver		3.1.2
+%define		_state		stable
+%define		_ver		3.1.2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
@@ -33,9 +33,9 @@ Requires:	kdelibs >= %{version}
 Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define         _htmldir        /usr/share/doc/kde/HTML
+%define		_htmldir	/usr/share/doc/kde/HTML
 
-%define         no_install_post_chrpath         1
+%define		no_install_post_chrpath		1
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
@@ -91,7 +91,7 @@ Ksi±øka adresowa.
 %package kalarm
 Summary:	Alarm
 Summary(pl):	Alarm
-Group:		X11/Applications                       
+Group:		X11/Applications
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kalarm
@@ -101,9 +101,9 @@ Reminder Message Scheduler.
 Nastawianie przypominania o zdarzeniach.
 
 %package kandy
-Summary:        A communication program between mobile phone and PC
-Summary(pl):    Program do komunikacji miÍdzy PC a tel. komÛrkowym
-Group:          X11/Applications
+Summary:	A communication program between mobile phone and PC
+Summary(pl):	Program do komunikacji miÍdzy PC a tel. komÛrkowym
+Group:		X11/Applications
 Obsoletes:	kdepim-cellphone
 
 %description kandy
@@ -115,13 +115,13 @@ Kandy umoøliwia dostÍp do telefonu komÛrkowego i pozwala na
 synchronizacjÍ danych z telefonu z danymi na PC.
 
 %package kaplan
-Summary:        An integrated PIM application
-Summary(pl):    Zintegrowany PIM
-Group:          X11/Applications
+Summary:	An integrated PIM application
+Summary(pl):	Zintegrowany PIM
+Group:		X11/Applications
 Requires:	kdenetwork-kmail >= %{version}
-Requires:       %{name}-knotes = %{epoch}:%{version}-%{release}
+Requires:	%{name}-knotes = %{epoch}:%{version}-%{release}
 Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
-Requires:       %{name}-korganizer = %{epoch}:%{version}-%{release}
+Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
 
 %description kaplan
 Kaplan is a PIM application, which integrates the knotes, kmail,
@@ -134,7 +134,7 @@ korganizer i kaddressbook.
 %package karm
 Summary:	Personal timetracker
 Summary(pl):	Osobisty czasomierz
-Group:		X11/Applications                                                
+Group:		X11/Applications
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
@@ -147,9 +147,9 @@ spÍdzony na rÛønych zajÍciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunkÛw wielu klientom.
 
 %package kgantt
-Summary:        A library to display and manage Gantt diagrams
-Summary(pl):    Biblioteka do rysowania diagramÛw Gantta zarz±dzania nimi
-Group:          X11/Libraries
+Summary:	A library to display and manage Gantt diagrams
+Summary(pl):	Biblioteka do rysowania diagramÛw Gantta zarz±dzania nimi
+Group:		X11/Libraries
 
 %description kgantt
 A library to display and manage Gantt diagrams.
@@ -160,7 +160,7 @@ Biblioteka do rysowania diagramÛw Gantta zarz±dzania nimi.
 %package knotes
 Summary:	Yellow cards
 Summary(pl):	ØÛ≥te karteczki
-Group:		X11/Applications                                                
+Group:		X11/Applications
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
@@ -174,9 +174,9 @@ i drukowaÊ notatki, a takøe przyjmowaÊ przeci±ganie nawet ze zdalnych
 komputerÛw.
 
 %package konsolekalendar
-Summary:        A command line ICard tool
-Summary(pl):    NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ 
-Group:          Applications
+Summary:	A command line ICard tool
+Summary(pl):	NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ 
+Group:		Applications
 
 %description konsolekalendar
 Command line tool for accessing calendar files.
@@ -185,9 +185,9 @@ Command line tool for accessing calendar files.
 NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ.
 
 %package korganizer
-Summary:        A complete calendar and scheduling progra
-Summary(pl):    Kalendarz wraz z harmonogramem zadaÒ
-Group:          X11/Applications
+Summary:	A complete calendar and scheduling progra
+Summary(pl):	Kalendarz wraz z harmonogramem zadaÒ
+Group:		X11/Applications
 
 %description korganizer
 A complete calendar and scheduling program, which supports information
@@ -210,9 +210,9 @@ przemys≥owy (vCalendar).
 –“œ«“¡Õ¡Õ… ‘¡Àœ«œ “œƒ’ ﬁ≈“≈⁄ ”‘¡Œƒ¡“‘Œ…  ∆œ“Õ¡‘ ∆¡ Ã’ vCalendar)
 
 %package kpilot
-Summary:        A sync tool for palmtops
-Summary(pl):    NarzÍdzie do synchronizacji z palmtopami
-Group:          X11/Applications
+Summary:	A sync tool for palmtops
+Summary(pl):	NarzÍdzie do synchronizacji z palmtopami
+Group:		X11/Applications
 Requires:	pilot-link
 Obsoletes:	kdepim-pilot
 Obsoletes:	kpilot
@@ -233,9 +233,9 @@ urz±dzeniami.
 Œ…Õ… –“…”‘“œ—Õ….
 
 %package ksync
-Summary:        A library for syncing stuff
-Summary(pl):    Biblioteka do synchronizacji rzeczy
-Group:          X11/Libraries
+Summary:	A library for syncing stuff
+Summary(pl):	Biblioteka do synchronizacji rzeczy
+Group:		X11/Libraries
 
 %description ksync
 libksync is a generic library for syncing collections of data entries
@@ -271,7 +271,7 @@ install -d $RPM_BUILD_ROOT%{_applnkdir}/Office/PIMs
 	DESTDIR=$RPM_BUILD_ROOT
 cd kaplan
 %{__make} install \
-        DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT
 cd ..
 
 ALD=$RPM_BUILD_ROOT%{_applnkdir}
