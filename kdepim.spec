@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.3
+Release:	0.4
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -24,6 +24,7 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_ver}/src/%{name}-%{version}.tar.
 # generated from kde-i18n
 Source1:	ftp://blysk.ds.pg.gda.pl/linux/kde-i18n-package/%{version}/kde-i18n-%{name}-%{version}.tar.bz2
 # Source1-md5:	d2da1a770c8623b31e465ba7c0268885
+Source2:	%{name}-kandy.png
 BuildRequires:	bison
 BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 8:%{version}
@@ -281,6 +282,14 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 mv $ALD/{Applications/*,Office/PIMs}
 mv $ALD/Utilities/{More/*,.}
 
+# There is no .xpm icon
+echo -e ',s:\.xpm$::\n,w' | ed $RPM_BUILD_ROOT%{_applnkdir}/Utilities/kpilotdaemon.desktop
+
+install %{SOURCE2} $RPM_BUILD_ROOT%{_pixmapsdir}/kandy.png
+for i in {kalarm,kaplan,karm,knotes,korganizer,kpilot}.png; do
+	ln -s crystalsvg/48x48/apps/$i $RPM_BUILD_ROOT%{_pixmapsdir}/$i
+done
+
 bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
 
 %find_lang	kaddressbook	--with-kde
@@ -354,12 +363,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Office/PIMs/kalarm.desktop
 %{_applnkdir}/Utilities/kalarm.desktop
 %{_pixmapsdir}/[!l]*/*/*/kalarm.png
+%{_pixmapsdir}/kalarm.png
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
 %{_datadir}/apps/kandy
 %{_applnkdir}/Utilities/kandy.desktop
+%{_pixmapsdir}/kandy.png
 
 %files karm -f karm.lang
 %defattr(644,root,root,755)
@@ -367,6 +378,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_applnkdir}/Utilities/karm.desktop
 %{_pixmapsdir}/*/*/*/karm.png
+%{_pixmapsdir}/karm.png
 
 %files kaplan
 %defattr(644,root,root,755)
@@ -381,6 +393,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaplanplugin.desktop
 %{_applnkdir}/Office/PIMs/Kaplan.desktop
 %{_pixmapsdir}/*/*/*/kaplan.png
+%{_pixmapsdir}/kaplan.png
 
 %files kgantt -f kgantt.lang
 %defattr(644,root,root,755)
@@ -395,6 +408,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config/*
 %{_applnkdir}/Utilities/knotes.desktop
 %{_pixmapsdir}/*/*/*/knotes.png
+%{_pixmapsdir}/knotes.png
 
 %files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
@@ -417,6 +431,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_applnkdir}/Office/PIMs/korganizer.desktop
 %{_pixmapsdir}/*/*/*/korganizer*.png
+%{_pixmapsdir}/korganizer*.png
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
@@ -437,6 +452,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kpilotconduit.desktop
 %{_applnkdir}/Utilities/kpilot*.desktop
 %{_pixmapsdir}/[!l]*/*/*/kpilot*.png
+%{_pixmapsdir}/kpilot.png
 
 %files ksync -f ksync.lang
 %defattr(644,root,root,755)
