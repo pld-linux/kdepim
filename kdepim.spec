@@ -214,7 +214,8 @@ Summary:        A sync tool for palmtops
 Summary(pl):    Narzêdzie do synchronizacji z palmtopami
 Group:          X11/Applications
 Requires:	pilot-link
-Obsoletes:	%{name}-pilot
+Obsoletes:	kdepim-pilot
+Obsoletes:	kpilot
 
 %description kpilot
 Synchronization tool for 3Com Palm Pilots and compatible devices.
