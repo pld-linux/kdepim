@@ -80,7 +80,7 @@ bazuj±cych na kdepim.
 Summary:	Address Book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kaddressbook
 Address Book.
@@ -92,7 +92,7 @@ Ksi±¿ka adresowa.
 Summary:	Alarm
 Summary(pl):	Alarm
 Group:		X11/Applications                       
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description kalarm
 Reminder Message Scheduler.
@@ -119,9 +119,9 @@ Summary:        An integrated PIM application
 Summary(pl):    Zintegrowany PIM
 Group:          X11/Applications
 Requires:	kdenetwork-kmail >= %{version}
-Requires:       %{name}-knotes = %{version}-%{release}
-Requires:	%{name}-kaddressbook = %{version}-%{release}
-Requires:       %{name}-korganizer = %{version}-%{release}
+Requires:       %{name}-knotes = %{epoch}:%{version}-%{release}
+Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
+Requires:       %{name}-korganizer = %{epoch}:%{version}-%{release}
 
 %description kaplan
 Kaplan is a PIM application, which integrates the knotes, kmail,
