@@ -874,6 +874,7 @@ Pliki umiêdzynarodawiaj±ce dla libkdgantt.
 ### </i18n stuff>
 
 %prep
+#%setup -q -n %{name}
 %setup -q -n %{name}-%{_snap}
 %patch0 -p1
 %patch1 -p1
@@ -1307,7 +1308,8 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with apidocs}
 %files apidocs
 %defattr(644,root,root,755)
-%lang(en) %{_kdedocdir}/en/%{name}-%{_snap}-apidocs
+#%{_kdedocdir}/en/%{name}-apidocs
+%{_kdedocdir}/en/%{name}-%{_snap}-apidocs
 %endif
 
 %files -n kde-kio-sieve
