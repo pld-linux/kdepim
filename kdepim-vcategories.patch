@@ -11,7 +11,7 @@
 @@ -55,4 +55,4 @@
  X-DCOP-ServiceType=Unique
  X-DCOP-ServiceName=kmail
- ServiceTypes=DCOP/ResourceBackend/IMAP,DCOP/Mailer
+ ServiceTypes=DCOP/ResourceBackend/IMAP
 -Categories=Qt;KDE;Network
 +Categories=Qt;KDE;Network;Email
 --- kdepim-030317/knode/KNode.desktop~	Mon Jan 27 00:49:44 2003
