@@ -209,6 +209,7 @@ Requires:	kde-kio-smtp >= %{_minbaseevr}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-sieve
 Obsoletes:	kdenetwork-kmail
+Obsoletes:	kdenetwork-korn
 Obsoletes:	kdepim-ktnef
 
 %description kmail
