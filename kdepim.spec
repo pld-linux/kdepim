@@ -736,6 +736,7 @@ Summary(pl):	Pliki umiêdzynarodawiaj±ce dla korganizer-libs
 Group:		X11/Applications
 Requires:	%{name}-korganizer-libs = %{epoch}:%{version}-%{release}
 Requires:	%{name}-i18n = %{epoch}:%{version}-%{release}
+Obsoletes:	kdepim-kgantt-i18n
 
 %description korganizer-libs-i18n
 Internationalization and localization files for korganizer-libs.
