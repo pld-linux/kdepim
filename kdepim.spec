@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.2
-%define		_snap		030317
+%define		_snap		030329
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -13,12 +13,13 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.%{_snap}.0.4
+Release:	0.%{_snap}.1
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{name}-%{_snap}.tar.bz2
+Source0:	http://team.pld.org.pl/~djurban/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
@@ -369,7 +370,7 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 
 install -d $ALD/{Office/PIMs,Settings/KDE}
 
-mv -f $ALD/{Applications/[Kk]o*,Office/PIMs}
+mv -f $ALD/Applications/[Kk]o*.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/Internet/K[!O]*.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/Internet/More/KOrn.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/{Settings/Components,Settings/KDE}
@@ -464,6 +465,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_location.so
 %{_libdir}/kde3/libkaddrbk_tableview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_tableview.so
+%{_libdir}/kde3/libkaddrbk_*_xxport.la
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_*_xxport.so
 %{_libdir}/kde3/libkaddressbookpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
@@ -471,6 +474,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopaddressbook.desktop
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
+%{_datadir}/servicetypes/kaddressbook_xxport.desktop
 %{_applnkdir}/Settings/KDE/Components/kabconfig.desktop
 %{_applnkdir}/Settings/KDE/Components/kabldapconfig.desktop
 %{_desktopdir}/kaddressbook.desktop
@@ -566,7 +570,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/apps/kontact
 %{_pixmapsdir}/crystalsvg/*/apps/kontact.png
-%{_applnkdir}/Office/PIMs/Kontact.desktop
+%{_desktopdir}/Kontact.desktop
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
@@ -584,7 +588,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
-%{_applnkdir}/Office/PIMs/korganizer.desktop
+%{_desktopdir}/korganizer.desktop
 %{_pixmapsdir}/*/*/*/korganizer*.png
 
 %files korn
