@@ -3,9 +3,8 @@
 # - find out why cant this app find gtk+.h
 
 %define         _state          snapshots
-%define         _ver		3.2
-%define		_snap		030613
-%define		_kdelibsminrel	0.%{_snap}.1
+%define         _ver		3.1.90
+%define		_snap		030618
 
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -14,9 +13,9 @@ Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
-Version:	%{_ver}
-Release:	0.%{_snap}.0.1
-Epoch:		2
+Version:	%{_ver}.%{_snap}
+Release:	1
+Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
@@ -26,7 +25,7 @@ Source0:	http://www.kernel.pl/~adgor/kde/%{name}-%{_snap}.tar.bz2
 Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	bison
-BuildRequires:	kdelibs-devel >= %{version}-%{_kdelibsminrel}
+BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	pilot-link-devel
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
@@ -62,6 +61,7 @@ Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 3.2
 Requires:	%{name}-kaddressbook = %{version}-%{release}
 Requires:	%{name}-korganizer = %{version}-%{release}
+Requires:	%{name}-libkcal = %{version}-%{release}
 Requires:	%{name}-libmimelib = %{version}-%{release}
 
 %description devel
@@ -125,18 +125,6 @@ KArm (nazwa pochodzi od s³owa "praca" w jêzyku punjambi) ¶ledzi czas
 spêdzony na ró¿nych zajêciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunków wielu klientom.
 
-%package kitchensync
-Summary:	TODO
-Summary(pl):	TODO
-Group:		X11/Applications
-#Requires:	%{name}-korganizer = %{version}-%{release}
-
-%description kitchensync
-TODO.
-
-%description kitchensync -l pl
-TODO.
-
 %package kmail
 Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
@@ -144,6 +132,7 @@ Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
 Requires:	kdebase-mailnews >= %{version}
 Requires:	%{name}-ktnef >= %{version}-%{release}
+Requires:	%{name}-libkcal >= %{version}-%{release}
 Requires:	%{name}-libkdenetwork >= %{version}-%{release}
 Requires:	%{name}-libkdepim = %{version}-%{release}
 Requires:	%{name}-libmimelib = %{version}-%{release}
@@ -235,10 +224,13 @@ Summary:        A complete calendar and scheduling progra
 Summary(pl):    Kalendarz wraz z harmonogramem zadañ
 Group:          X11/Applications
 Requires:	kdebase-core >= %{version}
+Requires:	%{name}-libkcal = %{version}-%{release}
 Requires:	%{name}-libkdenetwork = %{version}-%{release}
 Requires:	%{name}-libkdepim = %{version}-%{release}
 Obsoletes:	%{name}-kalarm
 Obsoletes:	%{name}-kgantt
+Obsoletes:	%{name}-kitchensync
+Obsoletes:	%{name}-ksync
 Obsoletes:	korganizer
 
 %description korganizer
@@ -304,20 +296,6 @@ urz±dzeniami.
 ÕÔÉÌ¦ÔÁ ÄÌÑ ÓÉÎÈÒÏÎ¦ÚÁÃ¦§ Ú 3com Palm Pilots ÔÁ ÓÕÍ¦ÓÎÉÍÉ Ú
 ÎÉÍÉ ÐÒÉÓÔÒÏÑÍÉ.
 
-%package ksync
-Summary:        A library for syncing stuff
-Summary(pl):    Biblioteka do synchronizacji rzeczy
-Group:          X11/Libraries
-Requires:	%{name}-korganizer = %{version}-%{release}
-
-%description ksync
-libksync is a generic library for syncing collections of data entries
-like calendars, bookmarks, contacts, mail folders etc.
-
-%description ksync -l pl
-libksync jest standardow± bibliotek± do synchronizacji zbiorów danych
-jak np. kalendarze, zak³adki, kontakty, foldery pocztowe itp.
-
 %package ktnef
 Summary:        A viewer/extractor for TNEF files
 Summary(pl):    Konwerter/ekstraktor plików TNEF
@@ -331,11 +309,24 @@ A viewer/extractor for TNEF files.
 %description ktnef -l pl
 Konwerter/ekstraktor plików TNEF.
 
+%package libkcal
+Summary:	kcal library
+Summary(pl):	Biblioteka kcal
+Group:		X11/Libraries
+Requires:	kdelibs >= %{version}
+Obsoletes:	%{name}
+
+%description libkcal
+kcal library.
+
+%description libkcal -l pl
+Biblioteka kcal.
+
 %package libkdenetwork
 Summary:	A network library
 Summary(pl):	Biblioteka sieciowa
 Group:		X11/Libraries
-Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
+Requires:	kdelibs >= %{version}
 Obsoletes:	kdenetwork
 
 %description libkdenetwork
@@ -348,7 +339,7 @@ Biblioteka sieciowa.
 Summary:	kdepim library
 Summary(pl):	Biblioteka kdepim
 Group:		X11/Libraries
-Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
+Requires:	kdelibs >= %{version}
 Obsoletes:	%{name}
 
 %description libkdepim
@@ -361,7 +352,7 @@ Biblioteka kdepim.
 Summary:	mimelib library, based on mimepp library
 Summary(pl):	Biblioteka mimelib oparta na bibliotece mimepp
 Group:		X11/Libraries
-Requires:	kdelibs >= %{version}-%{_kdelibsminrel}
+Requires:	kdelibs >= %{version}
 Obsoletes:	%{name}
 
 %description libmimelib
@@ -433,20 +424,17 @@ rm -rf $RPM_BUILD_ROOT
 %post	kontact		-p /sbin/ldconfig
 %postun	kontact		-p /sbin/ldconfig
 
-%post	kitchensync	-p /sbin/ldconfig
-%postun	kitchensync	-p /sbin/ldconfig
-
 %post	korganizer	-p /sbin/ldconfig
 %postun	korganizer	-p /sbin/ldconfig
 
 %post	kpilot		-p /sbin/ldconfig
 %postun	kpilot		-p /sbin/ldconfig
 
-%post	ksync		-p /sbin/ldconfig
-%postun	ksync		-p /sbin/ldconfig
-
 %post	ktnef		-p /sbin/ldconfig
 %postun	ktnef		-p /sbin/ldconfig
+
+%post	libkcal		-p /sbin/ldconfig
+%postun	libkcal		-p /sbin/ldconfig
 
 %post	libkdenetwork	-p /sbin/ldconfig
 %postun	libkdenetwork	-p /sbin/ldconfig
@@ -521,36 +509,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/karm.desktop
 %{_icondir}/*/*/*/karm.png
 
-%files kitchensync
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/kitchensync
-%{_libdir}/libagendakonnector.la
-%attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
-%{_libdir}/libdummykonnector.la
-%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
-%{_libdir}/libkitchensyncui.la
-%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
-%{_libdir}/libkonnector.la
-%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
-%{_libdir}/libksharedfile.la
-%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
-%{_libdir}/libqtopiakonnector.la
-%attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
-%{_libdir}/kde3/libkded_ksharedfile.la
-%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
-%{_libdir}/kde3/libksync_debugger.la
-%attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
-%{_libdir}/kde3/liboverviewpart.la
-%attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
-%{_datadir}/apps/kitchensync
-%{_datadir}/mimelnk/kdedevice/cellphone.desktop
-%{_datadir}/mimelnk/kdedevice/pda.desktop
-%{_datadir}/services/kded/ksharedfile.desktop
-%{_datadir}/services/kitchensync
-%{_datadir}/services/overview.desktop
-%{_datadir}/servicetypes/kitchensync.desktop
-%{_datadir}/servicetypes/konnector.desktop
-
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
@@ -613,60 +571,77 @@ rm -rf $RPM_BUILD_ROOT
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
+%attr(755,root,root) %{_bindir}/kitchensync
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
+%attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_bindir}/simplealarmdaemon
+%{_libdir}/libagendakonnector.la
+%attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
+%{_libdir}/libdummykonnector.la
+%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
 %{_libdir}/libkalarmd.la
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*.*.*
-%{_libdir}/libkcal*.la
-%attr(755,root,root) %{_libdir}/libkcal*.so.*.*.*
 %{_libdir}/libkdgantt.la
 %attr(755,root,root) %{_libdir}/libkdgantt.so.*.*.*
 %{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
+%{_libdir}/libkitchensyncui.la
+%attr(755,root,root) %{_libdir}/libkitchensyncui.so.*.*.*
 %{_libdir}/libknewstuff.la
 %attr(755,root,root) %{_libdir}/libknewstuff.so.*.*.*
+%{_libdir}/libkonnector.la
+%attr(755,root,root) %{_libdir}/libkonnector.so.*.*.*
 %{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
-%{_libdir}/kde3/kcal_imap.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_imap.so
-%{_libdir}/kde3/kcal_kabc.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
-%{_libdir}/kde3/kcal_remote.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
-%{_libdir}/kde3/kcal_localdir.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
-#%{_libdir}/kde3/libkcm_kcalendars.la
-#%attr(755,root,root) %{_libdir}/kde3/libkcm_kcalendars.so
+%{_libdir}/libksharedfile.la
+%attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
+%{_libdir}/libksync.la
+%attr(755,root,root) %{_libdir}/libksync.so.*.*.*
+%{_libdir}/libksync2.la
+%attr(755,root,root) %{_libdir}/libksync2.so.*.*.*
+%{_libdir}/libqtopiakonnector.la
+%attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
+%{_libdir}/kde3/libkded_ksharedfile.la
+%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%{_libdir}/kde3/libksync_debugger.la
+%attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
+%{_libdir}/kde3/liboverviewpart.la
+%attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
+%{_libdir}/kde3/libkorganizerpart.la
+%attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
 %{_libdir}/kde3/liborganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/liborganizerpart.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
 %{_datadir}/apps/kgantt
+%{_datadir}/apps/kitchensync
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/kresources
+%{_datadir}/apps/ksync
 %{_datadir}/autostart/kalarm*.desktop
 %{_datadir}/autostart/korgac.desktop
+%{_datadir}/mimelnk/kdedevice/cellphone.desktop
+%{_datadir}/mimelnk/kdedevice/pda.desktop
+%{_datadir}/services/kded/ksharedfile.desktop
+%{_datadir}/services/kitchensync
+%{_datadir}/services/overview.desktop
 %{_datadir}/services/korganizer
-%{_datadir}/services/kresources/kcal/imap.desktop
-%{_datadir}/services/kresources/kcal/kabc.desktop
-%{_datadir}/services/kresources/kcal/local.desktop
-%{_datadir}/services/kresources/kcal/localdir.desktop
-%{_datadir}/services/kresources/kcal/remote.desktop
 %{_datadir}/services/organizer.desktop
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
+%{_datadir}/servicetypes/kitchensync.desktop
+%{_datadir}/servicetypes/konnector.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
-#%{_applnkdir}/KDE-Settings/Components/kcalendars.desktop
 %{_desktopdir}/kalarm.desktop
 %{_desktopdir}/korganizer.desktop
 %{_icondir}/[!l]*/*/*/kalarm.png
@@ -694,13 +669,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_icondir}/*/*/apps/kpalmdoc.png
 %{_icondir}/[!l]*/*/*/kpilot*.png
 
-%files ksync
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/ksync
-%{_libdir}/libksync.la
-%attr(755,root,root) %{_libdir}/libksync.so.*.*.*
-%{_datadir}/apps/ksync
-
 %files ktnef
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ktnef
@@ -711,9 +679,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/ktnef.desktop
 %{_icondir}/hicolor/*/apps/ktnef.png
 
+%files libkcal
+%doc libkcal/{HACKING,README}
+%defattr(644,root,root,755)
+%{_libdir}/libkcal.la
+%attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
+%{_libdir}/kde3/kcal_imap.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_imap.so
+%{_libdir}/kde3/kcal_kabc.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
+%{_libdir}/kde3/kcal_remote.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
+%{_libdir}/kde3/kcal_localdir.la
+%attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
+%{_datadir}/services/kresources/kcal
+
 %files libkdenetwork
 %doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
 %defattr(644,root,root,755)
+
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
 
