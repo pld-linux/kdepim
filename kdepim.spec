@@ -32,7 +32,7 @@ BuildRequires:	bluez-libs-devel
 BuildRequires:	flex
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
-#BuildRequires:	gpgme-devel >= 1:1.0.0
+BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	gnupg >= 1.2.2
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
