@@ -288,10 +288,14 @@ rm -rf $RPM_BUILD_ROOT
 %files 
 %defattr(644,root,root,755)
 %doc README*
-%attr(755,root,root) %{_libdir}/kde3/kfile*.*
-%attr(755,root,root) %{_libdir}/libkdepim.*
-%attr(755,root,root) %{_libdir}/libkcal*.*
-%attr(755,root,root) %{_libdir}/libkpimexchange.*
+%{_libdir}/libkdepim.la
+%attr(755,root,root) %{_libdir}/libkdepim.so.*
+%{_libdir}/libkcal*.la
+%attr(755,root,root) %{_libdir}/libkcal*.so.*
+%{_libdir}/libkpimexchange.la
+%attr(755,root,root) %{_libdir}/libkpimexchange.so.*
+%{_libdir}/kde3/kfile_vcf.la
+%attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/webcal.protocol
 
