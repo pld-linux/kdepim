@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1
+Release:	2
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -31,6 +31,8 @@ Patch0:		%{name}-kmail_toolbars.patch
 Patch1:		%{name}-vcategories.patch
 BuildRequires:	automake
 BuildRequires:	bison
+BuildRequires:	docbook-dtd41-sgml
+BuildRequires:	docbook-utils
 BuildRequires:	ed
 BuildRequires:	kdelibs-devel >= 9:%{version}
 BuildRequires:	libmal-devel >= 0.31
@@ -808,6 +810,19 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir}
 
+# Debian manpages
+install -d $RPM_BUILD_ROOT%{_mandir}/man1
+cd debian
+%{__perl} -pi -e 's/alarmd/kalarmd/;s/ALARMD/KALARMD/' alarmd.sgml
+mv -f alarmd.sgml kalarmd.sgml
+for f in *.sgml ; do
+	base="$(basename $f .sgml)"
+	upper="$(echo ${base} | tr a-z A-Z)"
+	db2man $f
+	install ${upper}.1 $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
+done
+cd ..
+
 %if %{with i18n}
 if [ -f "%{SOURCE1}" ] ; then
 	bzip2 -dc %{SOURCE1} | tar xf - -C $RPM_BUILD_ROOT
@@ -1067,6 +1082,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
+%{_mandir}/man1/kandy.1*
 
 %files karm -f karm_en.lang
 %defattr(644,root,root,755)
@@ -1211,6 +1227,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/[!l]*/*/*/kalarm.png
 %{_iconsdir}/crystalsvg/*/actions/knewstuff.png
 %{_iconsdir}/*/*/*/korganizer*.png
+%{_mandir}/man1/ical2vcal.1*
+%{_mandir}/man1/kalarmd.1*
+%{_mandir}/man1/korganizer.1*
 # kitchensync part
 #%attr(755,root,root) %{_bindir}/kitchensync
 #%attr(755,root,root) %{_bindir}/simplealarmdaemon
@@ -1297,6 +1316,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
+%{_mandir}/man1/kpilot.1*
 
 %files kresources
 %defattr(644,root,root,755)
