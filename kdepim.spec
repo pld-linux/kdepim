@@ -1,5 +1,6 @@
 #
-# TODO: Separating the naw apps
+# TODO: - Separating the naw apps
+#	- Deps verifying	
 #
 
 %define         _state          snapshots
@@ -13,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.%{_snap}.0.2
+Release:	0.%{_snap}.0.3
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -349,10 +350,10 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 install -d $ALD/{Office/PIMs,Settings/KDE}
 
 mv -f $ALD/{Applications/[Kk]o*,Office/PIMs}
-mv -f $ALD/{PIM/*,Settings}
 mv -f $ALD/Internet/K[!O]*.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/Internet/More/KOrn.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/{Settings/Components,Settings/KDE}
+mv -f $ALD/{PIM/*,Settings/KDE/Components}
 mv -f $ALD/Utilities/kaddressbook*.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/Utilities/k[!am]*.desktop $RPM_BUILD_ROOT%{_desktopdir}
 mv -f $ALD/Utilities/More/*.desktop $RPM_BUILD_ROOT%{_desktopdir}
@@ -459,8 +460,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/dcopaddressbook.desktop
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
-%{_applnkdir}/Settings/kabconfig.desktop
-%{_applnkdir}/Settings/kabldapconfig.desktop
+%{_applnkdir}/Settings/KDE/Components/kabconfig.desktop
+%{_applnkdir}/Settings/KDE/Components/kabldapconfig.desktop
 %{_desktopdir}/kaddressbook.desktop
 %{_pixmapsdir}/*/*/*/kaddressbook.png
 
