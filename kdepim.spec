@@ -1,4 +1,3 @@
-#
 # TODO (still on time?):
 # - find out why cant this app find gtk+.h
 
