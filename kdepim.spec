@@ -4,7 +4,7 @@
 
 %define         _state          snapshots
 %define         _ver		3.1.90
-%define		_snap		030726
+%define		_snap		030901
 
 
 Summary:	Personal Information Management (PIM) for KDE
@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}.%{_snap}
-Release:	1
+Release:	0.1
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -34,7 +34,6 @@ BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define         _htmldir        %{_docdir}/kde/HTML
-%define         _icondir        %{_datadir}/icons
 
 %define         no_install_post_chrpath         1
 
@@ -62,6 +61,7 @@ Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
 Obsoletes:	kdenetwork-devel < 3.2
 Requires:	%{name}-kaddressbook = %{epoch}:%{version}-%{release}
+Requires:	%{name}-knode = %{epoch}:%{version}-%{release}
 Requires:	%{name}-kontact = %{epoch}:%{version}-%{release}
 Requires:	%{name}-korganizer = %{epoch}:%{version}-%{release}
 Requires:	%{name}-libkcal = %{epoch}:%{version}-%{release}
@@ -410,6 +410,9 @@ done
 
 %{__make} -f Makefile.cvs
 
+#%%configure \
+#	--enable-final	
+
 %configure
 
 %{__make}
@@ -422,19 +425,8 @@ rm -rf $RPM_BUILD_ROOT
 	kde_appsdir=%{_applnkdir} \
 	kde_htmldir=%{_htmldir}
 
-install -d $RPM_BUILD_ROOT%{_desktopdir}
-
-ALD=$RPM_BUILD_ROOT%{_applnkdir}
-
-mv $ALD/Applications/[Kk]o*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-mv $ALD/Internet/K[!O]*.desktop		$RPM_BUILD_ROOT%{_desktopdir}
-mv $ALD/Internet/More/KOrn.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-mv $ALD/Utilities/kaddressbook*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-mv $ALD/Utilities/k[!am]*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-mv $ALD/Utilities/More/*.desktop	$RPM_BUILD_ROOT%{_desktopdir}
-
-echo "[Desktop Entry]\nType=Directory\nNoDisplay=true" \
-	> $ALD/PIM/.directory
+mv $RPM_BUILD_ROOT%{_applnkdir}/Utilities/More/karm.desktop \
+	$RPM_BUILD_ROOT%{_desktopdir}/kde
 
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
@@ -444,6 +436,7 @@ echo "[Desktop Entry]\nType=Directory\nNoDisplay=true" \
 %find_lang	kmail		--with-kde
 %find_lang	knode		--with-kde
 %find_lang	knotes		--with-kde
+%find_lang	konsolekalendar	--with-kde
 %find_lang	korganizer	--with-kde
 %find_lang	korn		--with-kde
 %find_lang	kgpgcertmanager	--with-kde
@@ -456,71 +449,41 @@ cat kgpgcertmanager.lang >> kmail.lang
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	commonlibs
-/sbin/ldconfig
+%post	commonlibs	-p /sbin/ldconfig
+%postun	commonlibs	-p /sbin/ldconfig
 
-%postun	commonlibs
-/sbin/ldconfig
+%post	kaddressbook	-p /sbin/ldconfig
+%postun	kaddressbook	-p /sbin/ldconfig
 
-%post	kaddressbook
-/sbin/ldconfig
+%post	knode		-p /sbin/ldconfig
+%postun	knode		-p /sbin/ldconfig
 
-%postun	kaddressbook
-/sbin/ldconfig
+%post	kontact		-p /sbin/ldconfig
+%postun	kontact		-p /sbin/ldconfig
 
-%post	kontact
-/sbin/ldconfig
+%post	korganizer	-p /sbin/ldconfig
+%postun	korganizer	-p /sbin/ldconfig
 
-%postun	kontact
-/sbin/ldconfig
+%post	kpilot		-p /sbin/ldconfig
+%postun	kpilot		-p /sbin/ldconfig
 
-%post	korganizer
-/sbin/ldconfig
+%post	ktnef		-p /sbin/ldconfig
+%postun	ktnef		-p /sbin/ldconfig
 
-%postun	korganizer
-/sbin/ldconfig
+%post	libkcal		-p /sbin/ldconfig
+%postun	libkcal		-p /sbin/ldconfig
 
-%post	kpilot
-/sbin/ldconfig
+%post	libkdenetwork	-p /sbin/ldconfig
+%postun	libkdenetwork	-p /sbin/ldconfig
 
-%postun	kpilot
-/sbin/ldconfig
+%post	libkdepim	-p /sbin/ldconfig
+%postun	libkdepim	-p /sbin/ldconfig
 
-%post	ktnef
-/sbin/ldconfig
+%post	libksieve	-p /sbin/ldconfig
+%postun	libksieve	-p /sbin/ldconfig
 
-%postun	ktnef
-/sbin/ldconfig
-
-%post	libkcal
-/sbin/ldconfig
-
-%postun	libkcal
-/sbin/ldconfig
-
-%post	libkdenetwork
-/sbin/ldconfig
-
-%postun	libkdenetwork
-/sbin/ldconfig
-
-%post	libkdepim
-/sbin/ldconfig
-
-%postun	libkdepim
-/sbin/ldconfig
-
-%post	libksieve
-/sbin/ldconfig
-
-%postun	libksieve
-/sbin/ldconfig
-
-%post	libmimelib
-/sbin/ldconfig
-
-%postun	libmimelib
-/sbin/ldconfig
+%post	libmimelib	-p /sbin/ldconfig
+%postun	libmimelib	-p /sbin/ldconfig
 
 %files devel
 %defattr(644,root,root,755)
@@ -542,6 +505,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kaddressbook
 %{_libdir}/libkaddressbook.la
 %attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
+%{_libdir}/libkabinterfaces.la
+%attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
 %{_libdir}/kde3/kcm_kabconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
 %{_libdir}/kde3/kcm_kabldapconfig.la
@@ -550,8 +515,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
 %{_libdir}/kde3/ldifvcardthumbnail.la
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
-%{_libdir}/kde3/libaddressbookpart.la
-%attr(755,root,root) %{_libdir}/kde3/libaddressbookpart.so
+#%{_libdir}/kde3/libaddressbookpart.la
+#%attr(755,root,root) %{_libdir}/kde3/libaddressbookpart.so
 %{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %{_libdir}/kde3/libkaddrbk_distributionlist.la
@@ -569,7 +534,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/libkaddressbookpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
-%{_datadir}/services/addressbook.desktop
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/ldifvcardthumbnail.desktop
@@ -577,27 +541,23 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
 %{_datadir}/servicetypes/kaddressbook_view.desktop
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
-#%{_applnkdir}/KDE-Settings/Components/kabconfig.desktop
-#%{_applnkdir}/KDE-Settings/Components/kabldapconfig.desktop
-%dir %{_applnkdir}/PIM
-%{_applnkdir}/PIM/.directory
-%{_applnkdir}/PIM/kabconfig.desktop
-%{_applnkdir}/PIM/kabldapconfig.desktop
-%{_desktopdir}/kaddressbook.desktop
-%{_icondir}/*/*/*/kaddressbook.png
+%{_applnkdir}/.hidden/kabconfig.desktop
+%{_applnkdir}/.hidden/kabldapconfig.desktop
+%{_desktopdir}/kde/kaddressbook.desktop
+%{_iconsdir}/*/*/*/kaddressbook.png
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kandy*
 %{_datadir}/apps/kandy
-%{_desktopdir}/kandy.desktop
+%{_desktopdir}/kde/kandy.desktop
 
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
 %{_datadir}/apps/karm
-%{_desktopdir}/karm.desktop
-%{_icondir}/*/*/*/karm.png
+%{_desktopdir}/kde/karm.desktop
+%{_iconsdir}/*/*/*/karm.png
 
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
@@ -615,26 +575,28 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kmailcvt
 %{_datadir}/services/sieve.protocol
 %{_datadir}/servicetypes/dcopmail.desktop
-%{_desktopdir}/KMail.desktop
-%{_icondir}/*/*/*/kmail*.png
+%{_desktopdir}/kde/KMail.desktop
+%{_iconsdir}/*/*/*/kmail*.png
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
+%{_libdir}/kde3/libknodepart.la
+%attr(755,root,root) %{_libdir}/kde3/libknodepart.so.*.*.*
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
-%{_desktopdir}/KNode.desktop
-%{_icondir}/*/*/*/knode.png
+%{_desktopdir}/kde/KNode.desktop
+%{_iconsdir}/*/*/*/knode.png
 
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
 %{_datadir}/apps/knotes
 %{_datadir}/config/*
-%{_desktopdir}/knotes.desktop
-%{_icondir}/*/*/*/knotes.png
+%{_desktopdir}/kde/knotes.desktop
+%{_iconsdir}/*/*/*/knotes.png
 
-%files konsolekalendar
+%files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 
@@ -645,30 +607,43 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkontact.so.*.*.*
 %{_libdir}/libkpinterfaces.la
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
-%{_libdir}/kde3/libkp*plugin.la
-%attr(755,root,root) %{_libdir}/kde3/libkp*plugin.so
+%{_libdir}/kde3/libkontact_kaddressbookplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
+%{_libdir}/kde3/libkontact_kitchensync.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_kitchensync.so
+%{_libdir}/kde3/libkontact_kmailplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
+%{_libdir}/kde3/libkontact_knodeplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
+%{_libdir}/kde3/libkontact_knotesplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_knotesplugin.so
+%{_libdir}/kde3/libkontact_summaryplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
+%{_libdir}/kde3/libkontact_weatherplugin.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_weatherplugin.so
 %{_libdir}/kde3/kcm_kontact.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontact.so
 %{_libdir}/kde3/libkontact_korganizerplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
 %{_libdir}/kde3/libkontact_todoplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
-%{_datadir}/apps/kp*plugin
+#%{_datadir}/apps/kp*plugin
 %{_datadir}/apps/kontact
-%{_datadir}/apps/summaryviewpart
+%{_datadir}/apps/kontactsummary
+#%{_datadir}/apps/summaryviewpart
 %{_datadir}/services/kontact
-%{_datadir}/services/kp*plugin.*
+#%{_datadir}/services/kp*plugin.*
 %{_datadir}/servicetypes/kontactplugin.desktop
-#%{_applnkdir}/KDE-Settings/Components/kontactconfig.desktop
-%{_applnkdir}/PIM/kontactconfig.desktop
-%{_desktopdir}/Kontact.desktop
-%{_icondir}/crystalsvg/*/apps/kontact.png
+%{_applnkdir}/.hidden/kontactconfig.desktop
+%{_desktopdir}/kde/Kontact.desktop
+%{_iconsdir}/crystalsvg/*/apps/kontact.png
 
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ghns
 %attr(755,root,root) %{_bindir}/kalarm*
 %attr(755,root,root) %{_bindir}/kitchensync
+%attr(755,root,root) %{_bindir}/khotnewstuff
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ksync
@@ -676,8 +651,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/simplealarmdaemon
 #%{_libdir}/libagendakonnector.la
 #%attr(755,root,root) %{_libdir}/libagendakonnector.so.*.*.*
-%{_libdir}/libdummykonnector.la
-%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
+#%{_libdir}/libdummykonnector.la
+#%attr(755,root,root) %{_libdir}/libdummykonnector.so.*.*.*
 #%{_libdir}/liblocalkonnector.la
 #%attr(755,root,root) %{_libdir}/liblocalkonnector.so.*.*.*
 %{_libdir}/libkalarmd.la
@@ -696,14 +671,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libksharedfile.so.*.*.*
 %{_libdir}/libksync.la
 %attr(755,root,root) %{_libdir}/libksync.so.*.*.*
-%{_libdir}/liblocalkonnector.la
-%attr(755,root,root) %{_libdir}/liblocalkonnector.so.*.*.*
 #%{_libdir}/libqtopiakonnector.la
 #%attr(755,root,root) %{_libdir}/libqtopiakonnector.so.*.*.*
+%{_libdir}/kde3/kcm_korganizer.la
+%attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
 %{_libdir}/kde3/libkded_ksharedfile.la
 %attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+%{_libdir}/kde3/libkitchensyncpart.la
+%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
 %{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%{_libdir}/kde3/libksync_backup.la
+%attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
 %{_libdir}/kde3/libksync_debugger.la
 %attr(755,root,root) %{_libdir}/kde3/libksync_debugger.so
 %{_libdir}/kde3/libksync_syncerpart.la
@@ -712,14 +691,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/liboverviewpart.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
-%{_libdir}/kde3/liborganizerpart.la
-%attr(755,root,root) %{_libdir}/kde3/liborganizerpart.so
+#%{_libdir}/kde3/liborganizerpart.la
+#%attr(755,root,root) %{_libdir}/kde3/liborganizerpart.so
 %{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %{_datadir}/apps/kalarm*
 %{_datadir}/apps/kgantt
 %{_datadir}/apps/kitchensync
 %{_datadir}/apps/knewstuff
+%{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/kresources
 %{_datadir}/apps/ksync
@@ -732,7 +712,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/overview.desktop
 %{_datadir}/services/korganizer
 %{_datadir}/services/kresources/konnector
-%{_datadir}/services/organizer.desktop
+#%{_datadir}/services/organizer.desktop
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
@@ -740,17 +720,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kitchensync.desktop
 %{_datadir}/servicetypes/konnector.desktop
 %{_datadir}/servicetypes/korganizerpart.desktop
+%{_applnkdir}/.hidden/configcolors.desktop
+%{_applnkdir}/.hidden/configfonts.desktop
+%{_applnkdir}/.hidden/configgroupautomation.desktop
+%{_applnkdir}/.hidden/configgroupscheduling.desktop
+%{_applnkdir}/.hidden/configmain.desktop
+%{_applnkdir}/.hidden/configtime.desktop
+%{_applnkdir}/.hidden/configviews.desktop
 %{_applnkdir}/.hidden/kalarmd.desktop
-%{_desktopdir}/kalarm.desktop
-%{_desktopdir}/korganizer.desktop
-%{_icondir}/[!l]*/*/*/kalarm.png
-%{_icondir}/*/*/*/korganizer*.png
+%{_desktopdir}/kde/kalarm.desktop
+%{_desktopdir}/kde/korganizer.desktop
+%{_iconsdir}/[!l]*/*/*/kalarm.png
+%{_iconsdir}/crystalsvg/*/actions/knewstuff.png
+%{_iconsdir}/*/*/*/korganizer*.png
 
 %files korn -f korn.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
-%{_desktopdir}/KOrn.desktop
-%{_icondir}/*/*/*/korn.png
+%{_desktopdir}/kde/KOrn.desktop
+%{_iconsdir}/*/*/*/korn.png
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
@@ -775,10 +763,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kpilot
 %{_datadir}/services/*conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
-%{_desktopdir}/kpalmdoc.desktop
-%{_desktopdir}/kpilot*.desktop
-%{_icondir}/*/*/apps/kpalmdoc.png
-%{_icondir}/[!l]*/*/*/kpilot*.png
+%{_desktopdir}/kde/kpalmdoc.desktop
+%{_desktopdir}/kde/kpilot*.desktop
+%{_iconsdir}/*/*/apps/kpalmdoc.png
+%{_iconsdir}/[!l]*/*/*/kpilot*.png
 
 %files ktnef
 %defattr(644,root,root,755)
@@ -787,8 +775,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
-%{_desktopdir}/ktnef.desktop
-%{_icondir}/hicolor/*/apps/ktnef.png
+%{_desktopdir}/kde/ktnef.desktop
+%{_iconsdir}/hicolor/*/apps/ktnef.png
 
 %files libkcal
 %defattr(644,root,root,755)
@@ -808,13 +796,14 @@ rm -rf $RPM_BUILD_ROOT
 %files libkdenetwork
 %defattr(644,root,root,755)
 %doc libkdenetwork/{AUTHORS*,CLASSTREE*,DESIGN.kmime,README}
-
 %{_libdir}/libkdenetwork.la
 %attr(755,root,root) %{_libdir}/libkdenetwork.so.*.*.*
 
 %files libkdepim
 %defattr(644,root,root,755)
 %doc README*
+# Temporary location; add README
+%attr(755,root,root) %{_bindir}/cfgc
 %{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
 
