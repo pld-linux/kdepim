@@ -57,9 +57,6 @@ Summary(pl):	Pliki nagЁСwkowe do KDE pim
 Summary(uk):	Файли розробки для kdepim
 Summary(ru):	Файлы разработки для kdepim
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}
-Requires:	%{name}-kaddressbook = %{version}
-Requires:	%{name}-kalarm = %{version}
 
 %description devel
 This package contains header files needed if you wish to build
@@ -89,17 +86,6 @@ Address Book
 %description kaddressbook -l pl
 Ksi╠©ka adresowa
 
-%package karm
-Summary:	Personal timetracker
-Summary(pl):	Osobisty czasomierz
-Group:		X11/Applications                                                
-
-%description karm
-Personal timetracker
-
-%description karm -l pl
-Osobisty czasomierz
-
 %package kalarm
 Summary:	Alarm
 Summary(pl):	Alarm
@@ -112,16 +98,10 @@ Reminder Message Scheduler
 %description kalarm -l pl
 Nastawianie przypominania o zdarzeniach
 
-%package knotes
-Summary:	Yellow cards
-Summary(pl):	╞СЁte karteczki
+%package karm
+Summary:	Personal timetracker
+Summary(pl):	Osobisty czasomierz
 Group:		X11/Applications                                                
-
-%description knotes
-Yellow cards
-
-%description knotes -l pl
-╞СЁte karteczki
 
 %package kandy
 Summary:        A communication program between mobile phone and PC
@@ -145,7 +125,6 @@ Requires:       %{name}-knotes = %{version}
 Requires:	%{name}-kaddressbook = %{version}
 Requires:       %{name}-korganizer = %{version}
 
-
 %description kaplan
 Kaplan is a PIM application, whcih integrates the knotes, kmail, korganizer,  
 kaddressbook parts.
@@ -154,6 +133,22 @@ kaddressbook parts.
 Kaplan jest aplikacj╠ PIM integruj╠c╠ funkcjonalno╤Ф knotes, kmail, korganizer,
 kaddressbook.
 
+%description karm
+Personal timetracker
+
+%description karm -l pl
+Osobisty czasomierz
+
+%package knotes
+Summary:	Yellow cards
+Summary(pl):	╞СЁte karteczki
+Group:		X11/Applications                                                
+
+%description knotes
+Yellow cards
+
+%description knotes -l pl
+╞СЁte karteczki
 
 %package konsolekalendar
 Summary:        A command line ICard tool
@@ -165,28 +160,6 @@ Command line tool for accessing calendar files.
 
 %description konsolekalendar -l pl
 NarzЙdzie dostepu do plikow kalendarza z linii polecen.
-
-%package kpilot
-Summary:        A sync tool for palmtops
-Summary(pl):    NArzЙdzie do synchronizacji z palmtopami
-Group:          X11/Applications
-Requires:	pilot-link
-
-%description kpilot
-Syncronization tool for 3com Palm Pilots and compatible 
-devices
-
-%description kpilot -l pl
-Narzedzie do synchronizacji z 3Com Palm Pilot'em i 
-kompatybilnymi urzadzeniami.
-
-%description kpilot -l ru
-утилита для синхронизации с 3com Palm Pilots и совместимыми
-с ними устройствами,
-
-%description kpilot -l uk
-утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з 
-ними пристроями.
 
 %package korganizer
 Summary:        A complete calendar and scheduling progra
@@ -210,6 +183,28 @@ standard przemysЁowy (vCalendar).
 повнофункц╕ональна програма календара та персонального 
 планувальника (KOrganizer п╕дтриму╓ обм╕н информац╕╓ю з ╕ншими
 програмами такого роду через стандартний формат файлу vCalendar)
+
+%package kpilot
+Summary:        A sync tool for palmtops
+Summary(pl):    NArzЙdzie do synchronizacji z palmtopami
+Group:          X11/Applications
+Requires:	pilot-link
+
+%description kpilot
+Syncronization tool for 3com Palm Pilots and compatible 
+devices
+
+%description kpilot -l pl
+Narzedzie do synchronizacji z 3Com Palm Pilot'em i 
+kompatybilnymi urzadzeniami.
+
+%description kpilot -l ru
+утилита для синхронизации с 3com Palm Pilots и совместимыми
+с ними устройствами,
+
+%description kpilot -l uk
+утил╕та для синхрон╕зац╕╖ з 3com Palm Pilots та сум╕сними з 
+ними пристроями.
 
 %package ksync
 Summary:        A library for syncing stuff
@@ -268,6 +263,16 @@ ALD=$RPM_BUILD_ROOT%{_applnkdir}
 mv $ALD/{Applications/*,Office/PIMs}
 mv $ALD/Utilities/{More/*,.}
 
+%find_lang	kaddressbook	--with-kde
+%find_lang	kalarm		--with-kde
+%find_lang	kalarmd		--with-kde
+cat kalarmd.lang >> kalarm.lang
+%find_lang	kandy		--with-kde
+%find_lang	karm		--with-kde
+%find_lang	knotes		--with-kde
+%find_lang	korganizer	--with-kde
+%find_lang	kpilot		--with-kde
+
 %clean
 %{!?_without_clean:rm -rf $RPM_BUILD_ROOT}
 
@@ -285,8 +290,7 @@ mv $ALD/Utilities/{More/*,.}
 %defattr(644,root,root,755)
 %{_includedir}/*
 
-
-%files kaddressbook
+%files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
@@ -295,7 +299,7 @@ mv $ALD/Utilities/{More/*,.}
 %{_pixmapsdir}/*/*/*/kaddressbook.png
 %{_applnkdir}/Utilities/kaddressbook.desktop
 
-%files kalarm
+%files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
 %attr(755,root,root) %{_bindir}/korgac
@@ -303,36 +307,28 @@ mv $ALD/Utilities/{More/*,.}
 %attr(755,root,root) %{_libdir}/libkalarmd.so.*
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart
-%{_applnkdir}/.hidden/*
 %{_pixmapsdir}/*/*/*/kalarm.png
-%{_applnkdir}/Utilities/kalarm.desktop
+%{_applnkdir}/.hidden/*
 %{_applnkdir}/Office/PIMs/kalarm.desktop
+%{_applnkdir}/Utilities/kalarm.desktop
 
-%files karm
+
+%files kandy -f kandy.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/kandy*
+%{_datadir}/apps/kandy
+%{_applnkdir}/Utilities/kandy.desktop
+
+%files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
 %{_datadir}/apps/karm
 %{_pixmapsdir}/*/*/*/karm.png
 %{_applnkdir}/Utilities/karm.desktop
 
-%files knotes
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/knotes
-%{_datadir}/apps/knotes
-%{_datadir}/config/*
-%{_pixmapsdir}/*/*/*/knotes.png
-%{_applnkdir}/Utilities/knotes.desktop
-
-%files kandy
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/kandy*
-%{_applnkdir}/Utilities/kandy.desktop
-%{_datadir}/apps/kandy
-
 %files kaplan
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kaplan
-%{_applnkdir}/Utilities/kandy.desktop
 %attr(755,root,root) %{_libdir}/kde3/libkp*plugin.*
 %attr(755,root,root) %{_libdir}/libkpinterfaces*.*
 %{_datadir}/apps/kaplan
@@ -340,17 +336,46 @@ mv $ALD/Utilities/{More/*,.}
 %{_datadir}/services/kp*plugin.*
 %{_datadir}/servicetypes/kaplanplugin.desktop
 #%{_pixmapsdir}/*/*/*/kaplan.png
+%{_applnkdir}/Utilities/kandy.desktop
+
+%files kgantt
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libkgantt*.*
+%{_datadir}/apps/kgantt
+
+%files knotes -f knotes.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/knotes
+%{_datadir}/apps/knotes
+%{_datadir}/config/*
+%{_pixmapsdir}/*/*/*/knotes.png
+%{_applnkdir}/Utilities/knotes.desktop
 
 %files konsolekalendar
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 
-%files kpilot
+
+%files korganizer -f korganizer.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/korganizer*
+%attr(755,root,root) %{_bindir}/ical2vcal
+%attr(755,root,root) %{_libdir}/libknewstuff*.*
+%attr(755,root,root) %{_libdir}/libkorganizer*.*
+%attr(755,root,root) %{_libdir}/kde3/libkorg_*.*
+%{_datadir}/apps/korganizer
+%{_datadir}/services/korganizer
+%{_datadir}/servicetypes/calendardecoration.desktop
+%{_datadir}/servicetypes/calendarplugin.desktop
+%{_datadir}/servicetypes/korganizerpart.desktop
+%{_pixmapsdir}/*/*/*/korganizer*.png
+%{_applnkdir}/Office/PIMs/korganizer.desktop
+
+%files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpilot*
 %attr(755,root,root) %{_libdir}/libkpilot*.*
 %{_datadir}/apps/kpilot
-%{_applnkdir}/Utilities/kpilot*.desktop
 %{_datadir}/services/expense-conduit.desktop
 %{_datadir}/services/knotes-conduit.desktop
 %{_datadir}/services/null-conduit.desktop
@@ -360,29 +385,10 @@ mv $ALD/Utilities/{More/*,.}
 %{_datadir}/services/vcal-conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
 %{_pixmapsdir}/*/*/*/kpilot*.png
-
-%files korganizer
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/korganizer*
-%attr(755,root,root) %{_bindir}/ical2vcal
-%attr(755,root,root) %{_libdir}/libknewstuff*.*
-%attr(755,root,root) %{_libdir}/libkorganizer*.*
-%attr(755,root,root) %{_libdir}/kde3/libkorg_*.*
-%{_applnkdir}/Office/PIMs/korganizer.desktop
-%{_datadir}/apps/korganizer
-%{_datadir}/services/korganizer
-%{_datadir}/servicetypes/calendardecoration.desktop
-%{_datadir}/servicetypes/calendarplugin.desktop
-%{_datadir}/servicetypes/korganizerpart.desktop
-%{_pixmapsdir}/*/*/*/korganizer*.png
+%{_applnkdir}/Utilities/kpilot*.desktop
 
 %files ksync
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/ksync
-%{_datadir}/apps/ksync
 %attr(755,root,root) %{_libdir}/libksync*.*
-
-%files kgantt
-%defattr(644,root,root,755)
-%{_datadir}/apps/kgantt
-%attr(755,root,root) %{_libdir}/libkgantt*.*
+%{_datadir}/apps/ksync
