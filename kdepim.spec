@@ -422,6 +422,7 @@ Requires:	kdelibs >= %{_minlibsevr}
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
 Obsoletes:	kdepim-kaddressbook-libs
+Obsoletes:	kdepim-kgantt
 Obsoletes:	kdepim-kmail-libs
 Obsoletes:	kdepim-kontact-libs
 Obsoletes:	kdepim-korganizer-libs
