@@ -13,6 +13,7 @@ BuildRequires:	kdelibs-devel >= %{version}
 BuildRequires:	zlib-devel
 BuildRequires:	bison
 Requires:	kdelibs >= %{version}
+Obsoletes:	korganizer
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
