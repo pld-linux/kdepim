@@ -14,7 +14,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	4
+Release:	5
 Epoch:		3
 License:	GPL
 Vendor:		The KDE Team
@@ -489,7 +489,7 @@ echo "KDE_OPTIONS = nofinal" >> korganizer/Makefile.am
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
 	-e 's/Terminal=0/Terminal=false/' \
 	kandy/src/kandy.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Applet;/' \
+%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Utility;/' \
 	knotes/knotes.desktop
 %{__sed} -i -e 's/Terminal=0/Terminal=false/' \
 	karm/support/karm.desktop \
