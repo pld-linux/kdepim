@@ -6,7 +6,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.0.3
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL
 Vendor:		The KDE Team
@@ -172,7 +172,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_applnkdir}/Office/PIMs/*
 %{_applnkdir}/Settings/KDE/System/*
 %{_applnkdir}/Utilities/*
-%{_pixmapsdir}/*
+%{_pixmapsdir}/*/*/*/*.png
 
 %files devel
 %defattr(644,root,root,755)
