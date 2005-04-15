@@ -43,6 +43,7 @@ BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	lockdev-devel
+BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pilot-link-devel
 BuildRequires:	qt-designer-libs
