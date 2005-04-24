@@ -62,7 +62,6 @@ Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kresources
 Obsoletes:	kdepim-ksync
-#Obsoletes:	akregator
 #Obsoletes:	kdeaddons-konqueror
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -440,6 +439,7 @@ Summary:	Shared kdepim libraries.
 Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
+Obsoletes:	akregator < 3.4.0
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
 Obsoletes:	kdepim-kaddressbook-libs
