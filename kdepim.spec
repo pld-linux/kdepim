@@ -439,7 +439,6 @@ Summary:	Shared kdepim libraries.
 Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
-Obsoletes:	akregator < 3.4.0
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
 Obsoletes:	kdepim-kaddressbook-libs
@@ -460,6 +459,7 @@ Obsoletes:	kdepim-libmimelib
 Provides:	kdepim-libkdenetwork = %{epoch}:%{version}-%{release}
 Provides:	kdepim-libkdepim = %{epoch}:%{version}-%{release}
 Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
+Conflicts:	akregator < 3.4.0
 
 %description libs
 Libraries shared between PIM applications in KDE, which include:
