@@ -1,0 +1,13 @@
+--- kdepim.org/kresources/groupwise/soap/stdsoap2.h.org	2005-04-25 19:58:34.312229672 +0200
++++ kdepim/kresources/groupwise/soap/stdsoap2.h	2005-04-25 19:58:59.237440464 +0200
+@@ -163,10 +163,6 @@
+ # define HP_UX
+ #endif
+ 
+-#ifdef __alpha
+-# define TRU64 
+-#endif
+-
+ #ifdef __MVS__
+ # define OS390
+ #endif
