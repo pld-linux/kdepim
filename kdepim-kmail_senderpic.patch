@@ -1,0 +1,42 @@
+--- kdepim-040521/kmail/csshelper.cpp.orig	2004-05-22 09:14:35.056555504 +0200
++++ kdepim-040521/kmail/csshelper.cpp	2004-05-22 09:15:08.138526280 +0200
+@@ -395,7 +395,7 @@
+ 	       "}\n\n"
+ 
+ 		   "div.fancy.header > div.sender-pic{\n"
+-		   "  font-size:0.8em;\n"
++		   "  font-size:1.0em;\n"
+ 		   "  border:1px solid black;\n"
+ 		   "  background-color:InfoBackground;\n"
+ 		   "}\n\n"
+@@ -591,7 +591,7 @@
+ 	       "}\n\n"
+ 
+ 		   "div.senderpic{\n"
+-		   "  font-size:0.8em;\n"
++		   "  font-size:1.0em;\n"
+ 		   "  border:1px solid black;\n"
+ 		   // FIXME: InfoBackground crashes KHTML
+ 		   //"  background-color:InfoBackground;\n"
+--- kdepim-040521/kmail/headerstrategy.cpp.orig	2004-05-22 09:15:28.781388088 +0200
++++ kdepim-040521/kmail/headerstrategy.cpp	2004-05-22 09:15:50.718053208 +0200
+@@ -60,7 +60,7 @@
+ 
+   static const char * richHeaders[] = {
+     "subject", "date", "from", "cc", "bcc", "to",
+-    "organization", "organisation", "reply-to", "status" /*, "statuspic" */
++    "organization", "organisation", "reply-to", "status", "statuspic"
+   };
+   static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
+ 
+--- kdepim-040524/kmail/headerstyle.cpp.orig	2004-05-25 01:27:16.624535848 +0200
++++ kdepim-040524/kmail/headerstyle.cpp	2004-05-25 01:27:44.850244888 +0200
+@@ -432,7 +432,7 @@
+               }
+               else
+                 userHTML = QString( "<div class=\"senderpic\">"
+-                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
++                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\">%3</div></a>"
+                                       "</div>" ).arg( kabcUid )
+                                                 .arg( userHTML )
+                                                 .arg( presence );
