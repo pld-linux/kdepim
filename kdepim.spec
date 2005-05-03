@@ -2,12 +2,12 @@
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
 #
-%define		_state		stable
-%define		_kdever		3.4
-%define		_ver		3.4.0
-
-%define		_minlibsevr	9:3.4.0
-%define		_minbaseevr	9:3.4.0
+%define		_state		unstable
+%define		_kdever		3.4.89
+%define		_ver		3.4.89
+%define         _snap           050428
+%define		_minlibsevr	9:3.4.89.050428
+%define		_minbaseevr	9:3.4.89.050428
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K µ¥½ºÅ©Å¾ È¯°æ - PIM (°³ÀÎ Á¤º¸ °ü¸®)
@@ -15,20 +15,21 @@ Summary(pl):	Manad¿er informacji osobistej (PIM) dla KDE
 Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
-Version:	%{_ver}
-Release:	3
+Version:	%{_ver}.%{_snap}
+Release:	1
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
+#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
+Source0:        ftp://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
+##% Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
 Icon:		kde-pim.xpm
-Patch100:	%{name}-branch.diff
+#Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
-Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-iconsidepane-showtext.diff
-Patch3:		%{name}-notru64.patch
+#Patch1:		%{name}-kmail_toolbars.patch
+#Patch2:		%{name}-iconsidepane-showtext.diff
+#Patch3:		%{name}-notru64.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -473,11 +474,13 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
-%setup -q
-%patch100 -p1
+#%setup -q
+%setup -q -n %{name}-%{_snap}
+#%patch100 -p1
 %patch0 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -572,6 +575,7 @@ for f in *.man ; do
 done
 cd -
 
+%find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kalarmd		--with-kde
@@ -595,6 +599,7 @@ cat kwatchgnupg.lang >> kmail.lang
 %find_lang	multisynk	--with-kde
 
 > %{name}.lang
+cat akregator.lang	>> %{name}.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
 cat kalarmd.lang	>> %{name}.lang
@@ -709,6 +714,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
 %{_libdir}/kde3/libgroupwisewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
+%{_libdir}/kde3/libakregator_mk4storage_plugin.la
+%attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
 %{_libdir}/kde3/libkitchensyncpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
 %{_libdir}/kde3/libkontact_akregator.la
@@ -743,6 +750,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
+%{_libdir}/kde3/libksfilter_addressbook.la
+%attr(755,root,root) %{_libdir}/kde3/libksfilter_addressbook.so
+%{_libdir}/kde3/libksfilter_calendar.la
+%attr(755,root,root) %{_libdir}/kde3/libksfilter_calendar.so
 %{_libdir}/kde3/libksync_backup.la
 %attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
 %{_libdir}/kde3/libksync_debugger.la
@@ -783,6 +794,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
+# !!!
+%{_datadir}/apps/libical
+#
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
 %{_datadir}/apps/multisynk
@@ -794,11 +808,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/kontact.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/config.kcfg/memofileconduit.kcfg
+%{_datadir}/config.kcfg/mk4config.kcfg
 %{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
 %{_datadir}/config.kcfg/slox.kcfg
 #%{_datadir}/mimelnk/kdedevice/cellphone.desktop
 #%{_datadir}/mimelnk/kdedevice/pda.desktop
+%{_datadir}/services/akregator_mk4storage_plugin.desktop
 %{_datadir}/services/akregator_part.desktop
 %{_datadir}/services/feed.protocol
 %{_datadir}/services/kcmkabsummary.desktop
@@ -828,6 +844,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/konnector_manager.desktop
 %{_datadir}/services/overview.desktop
 %{_datadir}/services/webcal.protocol
+%{_datadir}/servicetypes/akregator_plugin.desktop
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
