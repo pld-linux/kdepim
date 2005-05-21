@@ -1,0 +1,20 @@
+--- kdepim-3.4.0/kresources/slox/kcalresourceslox.cpp.orig	2005-05-21 13:45:37.000000000 +0200
++++ kdepim-3.4.0/kresources/slox/kcalresourceslox.cpp	2005-05-21 13:49:30.000000000 +0200
+@@ -148,7 +148,7 @@
+ 
+ bool KCalResourceSlox::doLoad()
+ {
+-  kdDebug() << "KCalResourceSlox::load() " << int( this ) << endl;
++  kdDebug() << "KCalResourceSlox::load() " << long( this ) << endl;
+ 
+   if ( mLoadEventsJob || mLoadTodosJob ) {
+     kdWarning() << "KCalResourceSlox::load(): download still in progress."
+@@ -796,7 +796,7 @@
+ 
+ void KCalResourceSlox::slotLoadEventsResult( KIO::Job *job )
+ {
+-  kdDebug() << "KCalResourceSlox::slotLoadEventsResult() " << int( this ) << endl;
++  kdDebug() << "KCalResourceSlox::slotLoadEventsResult() " << long( this ) << endl;
+ 
+   if ( job->error() ) {
+     loadError( job->errorString() );
