@@ -37,7 +37,7 @@ BuildRequires:	cyrus-sasl-devel
 BuildRequires:	ed
 BuildRequires:	flex
 BuildRequires:	gpgme-devel >= 1:1.0.0
-BuildRequires:	gnupg >= 1.2.2
+BuildRequires:	gnupg2
 BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
