@@ -1,7 +1,7 @@
-Index: kdepilot/conduits/memofileconduit/memofile-conduit.cc
+Index: kpilot/conduits/memofileconduit/memofile-conduit.cc
 ===================================================================
---- kdepilot/conduits/memofileconduit/memofile-conduit.cc	(.../tags/KDE/3.4.1/kdepilot/kpilot)	(revision 418726)
-+++ kdepilot/conduits/memofileconduit/memofile-conduit.cc	(.../branches/KDE/3.4/kdepilot/kpilot)	(revision 418726)
+--- kpilot/conduits/memofileconduit/memofile-conduit.cc	(.../tags/KDE/3.4.1/kpilot/kpilot)	(revision 418726)
++++ kpilot/conduits/memofileconduit/memofile-conduit.cc	(.../branches/KDE/3.4/kpilot/kpilot)	(revision 418726)
 @@ -114,7 +114,7 @@
  	setFirstSync( _memofiles->isFirstSync() );
  	addSyncLogEntry(i18n(" Syncing with %1.").arg(_memo_directory));
@@ -70,10 +70,10 @@ Index: kdepilot/conduits/memofileconduit/memofile-conduit.cc
  int MemofileConduit::writeToPilot(Memofile * memofile)
  {
  	FUNCTIONSETUP;
-Index: kdepilot/conduits/memofileconduit/memofile-conduit.h
+Index: kpilot/conduits/memofileconduit/memofile-conduit.h
 ===================================================================
---- kdepilot/conduits/memofileconduit/memofile-conduit.h	(.../tags/KDE/3.4.1/kdepilot/kpilot)	(revision 418726)
-+++ kdepilot/conduits/memofileconduit/memofile-conduit.h	(.../branches/KDE/3.4/kdepilot/kpilot)	(revision 418726)
+--- kpilot/conduits/memofileconduit/memofile-conduit.h	(.../tags/KDE/3.4.1/kpilot/kpilot)	(revision 418726)
++++ kpilot/conduits/memofileconduit/memofile-conduit.h	(.../branches/KDE/3.4/kpilot/kpilot)	(revision 418726)
 @@ -88,6 +88,7 @@
  
  	bool	copyHHToPC();
@@ -82,10 +82,10 @@ Index: kdepilot/conduits/memofileconduit/memofile-conduit.h
  	bool	sync();
  
  	int 	writeToPilot(Memofile * memofile);
-Index: kdepilot/lib/pilotDatabase.cc
+Index: kpilot/lib/pilotDatabase.cc
 ===================================================================
---- kdepilot/lib/pilotDatabase.cc	(.../tags/KDE/3.4.1/kdepilot/kpilot)	(revision 418726)
-+++ kdepilot/lib/pilotDatabase.cc	(.../branches/KDE/3.4/kdepilot/kpilot)	(revision 418726)
+--- kpilot/lib/pilotDatabase.cc	(.../tags/KDE/3.4.1/kpilot/kpilot)	(revision 418726)
++++ kpilot/lib/pilotDatabase.cc	(.../branches/KDE/3.4/kpilot/kpilot)	(revision 418726)
 @@ -185,7 +185,7 @@
  	int len = CATEGORY_NAME_SIZE - 1;
  	QCString t = PilotAppCategory::codec()->fromUnicode(s,len);
@@ -95,7 +95,7 @@ Index: kdepilot/lib/pilotDatabase.cc
  	return true;
  }
  
-Index: kdepilot/lib/data/MemoDB.pdb
+Index: kpilot/lib/data/MemoDB.pdb
 ===================================================================
 Cannot display: file marked as a binary type.
 svn:mime-type = application/octet-stream
@@ -105,10 +105,10 @@ ___________________________________________________________________
 Name: svn:mime-type
    + application/octet-stream
 
-Index: kdepilot/lib/pilotLocalDatabase.cc
+Index: kpilot/lib/pilotLocalDatabase.cc
 ===================================================================
---- kdepilot/lib/pilotLocalDatabase.cc	(.../tags/KDE/3.4.1/kdepilot/kpilot)	(revision 418726)
-+++ kdepilot/lib/pilotLocalDatabase.cc	(.../branches/KDE/3.4/kdepilot/kpilot)	(revision 418726)
+--- kpilot/lib/pilotLocalDatabase.cc	(.../tags/KDE/3.4.1/kpilot/kpilot)	(revision 418726)
++++ kpilot/lib/pilotLocalDatabase.cc	(.../branches/KDE/3.4/kpilot/kpilot)	(revision 418726)
 @@ -618,7 +618,7 @@
  
  	int count;
@@ -118,10 +118,10 @@ Index: kdepilot/lib/pilotLocalDatabase.cc
  	{
  		KPILOT_DELETE(d);
  		d = new Private(count);
-Index: kdepilot/lib/pilotDatabase.h
+Index: kpilot/lib/pilotDatabase.h
 ===================================================================
---- kdepilot/lib/pilotDatabase.h	(.../tags/KDE/3.4.1/kdepilot/kpilot)	(revision 418726)
-+++ kdepilot/lib/pilotDatabase.h	(.../branches/KDE/3.4/kdepilot/kpilot)	(revision 418726)
+--- kpilot/lib/pilotDatabase.h	(.../tags/KDE/3.4.1/kpilot/kpilot)	(revision 418726)
++++ kpilot/lib/pilotDatabase.h	(.../branches/KDE/3.4/kpilot/kpilot)	(revision 418726)
 @@ -279,9 +279,12 @@
  		int appLen = MAX_APPINFO_SIZE;
  		unsigned char buffer[MAX_APPINFO_SIZE];
