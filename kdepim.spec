@@ -557,6 +557,8 @@ rm -rf *.lang
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
 
+install korganizer/korganizerIn $RPM_BUILD_ROOT%{_bindir}
+
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
 cd debian/man
@@ -848,6 +850,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/kdeopt*.1*
 %{_mandir}/man1/kitchensync*.1*
 %{_mandir}/man1/korga*.1*
+%exclude %{_mandir}/man1/korganizerIn.1*
 %{_mandir}/man1/kontact*.1*
 %{_mandir}/man1/ksync*.1*
 %{_mandir}/man1/*wizard.1*
@@ -1036,6 +1039,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
+%attr(755,root,root) %{_bindir}/korganizerIn
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
 %{_libdir}/kde3/kcm_kleopatra.la
@@ -1099,6 +1103,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/kmail*.1*
 %{_mandir}/man1/kwatchgnupg*.1*
 %{_mandir}/man1/kleopatra*.1*
+%{_mandir}/man1/korganizerIn.1*
 # ktnef
 %attr(755,root,root) %{_bindir}/ktnef
 %{_datadir}/apps/ktnef
