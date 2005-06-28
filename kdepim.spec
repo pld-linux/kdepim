@@ -5,9 +5,9 @@
 %define		_state		unstable
 %define		_kdever		3.4.89
 %define		_ver		3.4.89
-%define         _snap           050428
-%define		_minlibsevr	9:3.4.89.050428
-%define		_minbaseevr	9:3.4.89.050428
+%define         _snap           050627
+%define		_minlibsevr	9:3.4.89.050624
+%define		_minbaseevr	9:3.4.89.050625
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K 데스크탑 환경 - PIM (개인 정보 관리)
@@ -38,7 +38,7 @@ BuildRequires:	cyrus-sasl-devel
 BuildRequires:	ed
 BuildRequires:	flex
 BuildRequires:	gpgme-devel >= 1:1.0.0
-BuildRequires:	gnupg >= 1.2.2
+#BuildRequires:	gnupg >= 1.2.2
 BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
@@ -686,8 +686,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcal_slox.so
 %{_libdir}/kde3/kcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
-%{_libdir}/kde3/kcm_kabsummary.la
-%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
+#%{_libdir}/kde3/kcm_kabsummary.la
+#%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
 %{_libdir}/kde3/kcm_kmailsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmailsummary.so
 %{_libdir}/kde3/kcm_kontact.la
@@ -724,6 +724,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
+%{_libdir}/kde3/libkontact_karm.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_karm.so
 %{_libdir}/kde3/libkontact_kmailplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
 %{_libdir}/kde3/libkontact_knodeplugin.la
@@ -817,7 +819,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/akregator_mk4storage_plugin.desktop
 %{_datadir}/services/akregator_part.desktop
 %{_datadir}/services/feed.protocol
-%{_datadir}/services/kcmkabsummary.desktop
+#%{_datadir}/services/kcmkabsummary.desktop
 %{_datadir}/services/kcmkmailsummary.desktop
 %{_datadir}/services/kcmkontactknt.desktop
 %{_datadir}/services/kcmkontactsummary.desktop
@@ -856,13 +858,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_datadir}/servicetypes/korgprintplugin.desktop
 %{_desktopdir}/kde/Kontact.desktop
+%{_desktopdir}/kde/akregator.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
-%{_iconsdir}/crystalsvg/*/apps/akregator*
+%{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
-%{_iconsdir}/crystalsvg/*/apps/multisynk.png
-%{_iconsdir}/crystalsvg/*/apps/kontact.png
-%{_iconsdir}/crystalsvg/*/actions/kontact_*.png
+%{_iconsdir}/*/*/apps/multisynk.png
+%{_iconsdir}/*/*/apps/kontact.png
+%{_iconsdir}/*/*/actions/kontact_*.png
+#
+%{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
+%{_iconsdir}/crystalsvg/22x22/actions/button_more.png
+#
+%{_mandir}/man1/akregator.1*
 %{_mandir}/man1/ical2vcal.1*
 %{_mandir}/man1/kdeopt*.1*
 %{_mandir}/man1/kitchensync*.1*
@@ -1040,7 +1048,11 @@ rm -rf $RPM_BUILD_ROOT
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
+%{_libdir}/kde3/libkarmpart.la
+%attr(755,root,root) %{_libdir}/kde3/libkarmpart.so
 %{_datadir}/apps/karm
+%{_datadir}/apps/karmpart
+%{_datadir}/services/karm_part.desktop
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 %{_mandir}/man1/karm*.1*
@@ -1100,10 +1112,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kmail_view.desktop
 # hidden (todo)
 %{_desktopdir}/kde/kleopatra_import.desktop
-%{_iconsdir}/*/*/apps/kmail.png
-%{_iconsdir}/crystalsvg/scalable/apps/kmail.svgz
-%{_iconsdir}/*/*/apps/kmailcvt.png
-%{_iconsdir}/*/*/apps/kmaillight.png
+%{_iconsdir}/*/*/apps/kmail.*
+%{_iconsdir}/*/*/apps/kmailcvt.*
+%{_iconsdir}/*/*/apps/kmaillight.*
 # TODO
 %{_iconsdir}/*/*/apps/gpg.png
 %{_iconsdir}/*/*/apps/gpgsm.png
