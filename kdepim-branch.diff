@@ -1,7 +1,56 @@
+Index: akregator/src/pageviewer.cpp
+===================================================================
+--- akregator/src/pageviewer.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ akregator/src/pageviewer.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -361,7 +361,7 @@
+         if (copylinkaddress)
+         {
+             copylinkaddress->plug( &popup);
+-            popup.insertSeparator();
++            //popup.insertSeparator();
+         }
+     }
+     else // we are not on a link
+Index: kresources/egroupware/kabc_xmlrpc.desktop
+===================================================================
+--- kresources/egroupware/kabc_xmlrpc.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/egroupware/kabc_xmlrpc.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -11,6 +11,7 @@
+ Name[et]=eGroupware server (XML-RPC vahendusel)
+ Name[eu]=eGroupware zerbitzaria (XML-RPC bidez)
+ Name[fr]=Serveur eGroupware (via XML-RPC)
++Name[ga]=Freastalaí eGroupware (via XML-RPC)
+ Name[hu]=eGroupware-kiszolgáló (XML-RPC-n keresztül)
+ Name[is]=eGroupware þjónn (gegnum XML-RPC)
+ Name[it]=Server eGroupware (via XML-RPC)
+Index: kresources/egroupware/knotes_xmlrpc.desktop
+===================================================================
+--- kresources/egroupware/knotes_xmlrpc.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/egroupware/knotes_xmlrpc.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -11,6 +11,7 @@
+ Name[et]=eGroupware server (XML-RPC vahendusel)
+ Name[eu]=eGroupware zerbitzaria (XML-RPC bidez)
+ Name[fr]=Serveur eGroupware (via XML-RPC)
++Name[ga]=Freastalaí eGroupware (via XML-RPC)
+ Name[hu]=eGroupware-kiszolgáló (XML-RPC-n keresztül)
+ Name[is]=eGroupware þjónn (gegnum XML-RPC)
+ Name[it]=Server eGroupware (via XML-RPC)
+Index: kresources/egroupware/kcal_xmlrpc.desktop
+===================================================================
+--- kresources/egroupware/kcal_xmlrpc.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/egroupware/kcal_xmlrpc.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -11,6 +11,7 @@
+ Name[et]=eGroupware server (XML-RPC vahendusel)
+ Name[eu]=eGroupware zerbitzaria (XML-RPC bidez)
+ Name[fr]=Serveur eGroupware (via XML-RPC)
++Name[ga]=Freastalaí eGroupware (via XML-RPC)
+ Name[hu]=eGroupware-kiszolgáló (XML-RPC-n keresztül)
+ Name[is]=eGroupware þjónn (gegnum XML-RPC)
+ Name[it]=Server eGroupware (via XML-RPC)
 Index: kresources/exchange/exchange.desktop
 ===================================================================
---- kresources/exchange/exchange.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/exchange/exchange.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/exchange/exchange.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/exchange/exchange.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -17,6 +17,7 @@
  Name[et]=Exchange 2000 server
  Name[eu]=Exchange 2000 zerbitzaria
@@ -12,8 +61,8 @@ Index: kresources/exchange/exchange.desktop
  Name[is]=Exchange 2000 þjónn
 Index: kresources/slox/kcal_slox.desktop
 ===================================================================
---- kresources/slox/kcal_slox.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/slox/kcal_slox.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/slox/kcal_slox.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/slox/kcal_slox.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -11,6 +11,7 @@
  Name[et]=SUSE LINUX Openexchange server
  Name[eu]=SUSE LINUX Openexchange zerbitzaria
@@ -24,8 +73,8 @@ Index: kresources/slox/kcal_slox.desktop
  Name[it]=Server SUSE LINUX Openexchange
 Index: kresources/slox/webdavhandler.cpp
 ===================================================================
---- kresources/slox/webdavhandler.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/slox/webdavhandler.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/slox/webdavhandler.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/slox/webdavhandler.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -28,6 +28,8 @@
  #endif
  #endif
@@ -55,8 +104,8 @@ Index: kresources/slox/webdavhandler.cpp
  }
 Index: kresources/slox/kabc_slox.desktop
 ===================================================================
---- kresources/slox/kabc_slox.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/slox/kabc_slox.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/slox/kabc_slox.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/slox/kabc_slox.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -11,6 +11,7 @@
  Name[et]=SUSE LINUX Openexchange server
  Name[eu]=SUSE LINUX Openexchange zerbitzaria
@@ -67,8 +116,8 @@ Index: kresources/slox/kabc_slox.desktop
  Name[it]=Server SUSE LINUX Openexchange
 Index: kresources/groupdav/kabc_groupdav.desktop
 ===================================================================
---- kresources/groupdav/kabc_groupdav.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/groupdav/kabc_groupdav.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/groupdav/kabc_groupdav.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/groupdav/kabc_groupdav.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -12,6 +12,7 @@
  Name[et]=GroupDAV server (nt. OpenGroupware)
  Name[eu]=GroupDAV zerbitzaria (adib. OpenGroupware)
@@ -79,8 +128,8 @@ Index: kresources/groupdav/kabc_groupdav.desktop
  Name[it]=Server GroupDAV (per es. OpenGroupware)
 Index: kresources/groupdav/kcal_groupdav.desktop
 ===================================================================
---- kresources/groupdav/kcal_groupdav.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/groupdav/kcal_groupdav.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/groupdav/kcal_groupdav.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/groupdav/kcal_groupdav.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -12,6 +12,7 @@
  Name[et]=GroupDAV server (nt. OpenGroupware)
  Name[eu]=GroupDAV zerbitzaria (adib. OpenGroupware)
@@ -89,10 +138,46 @@ Index: kresources/groupdav/kcal_groupdav.desktop
  Name[hu]=GroupDAV-kiszolgáló (pl. OpenGroupware)
  Name[is]=GroupDAV þjónn (t.d. OpenGroupware)
  Name[it]=Server GroupDAV (per es. OpenGroupware)
+Index: kresources/kolab/kabc/kolab.desktop
+===================================================================
+--- kresources/kolab/kabc/kolab.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/kolab/kabc/kolab.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -12,6 +12,7 @@
+ Name[et]=Aadressiraamat IMAP-serveril (KMaili vahendusel)
+ Name[eu]=Helbide-liburua IMAP zerbitzarian KMail-en bidez
+ Name[fr]=Carnet d'adresse sur serveur IMAP (via KMail)
++Name[ga]=Leabhar Seoltaí ar Fhreastalaí IMAP via KMail
+ Name[hu]=IMAP-kiszolgálón tárolt címjegyzék a KMailen keresztül
+ Name[is]=Vistfangaskrá á IMAP þjóni gegnum KMail
+ Name[it]=Rubrica indirizzi su server IMAP via KMail
+Index: kresources/kolab/knotes/kolabresource.desktop
+===================================================================
+--- kresources/kolab/knotes/kolabresource.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/kolab/knotes/kolabresource.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -12,6 +12,7 @@
+ Name[et]=IMAP-server (KMaili vahendusel)
+ Name[eu]=IMAP zerbitzaria KMail-en bidez
+ Name[fr]=Serveur IMAP (via KMail)
++Name[ga]=Freastalaí IMAP via KMail
+ Name[hu]=IMAP-kiszolgáló a KMailen keresztül
+ Name[is]=IMAP þjónn gegnum KMail
+ Name[it]=Server IMAP via KMail
+Index: kresources/kolab/kcal/kolab.desktop
+===================================================================
+--- kresources/kolab/kcal/kolab.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/kolab/kcal/kolab.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -12,6 +12,7 @@
+ Name[et]=Kalender IMAP-serveril (KMaili vahendusel)
+ Name[eu]=Egutegia IMAP zerbitzarian KMail-en bidez
+ Name[fr]=Agenda sur serveur IMAP (via KMail)
++Name[ga]=Féilire ar Fhreastalaí IMAP via KMail
+ Name[hu]=IMAP-kiszolgálón tárolt naptár a KMailen keresztül
+ Name[is]=Dagatal á IMAP þjóni gegnum KMail
+ Name[it]=Calendario su server IMAP via KMail
 Index: kresources/kolab/kcal/resourcekolab.cpp
 ===================================================================
---- kresources/kolab/kcal/resourcekolab.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/kolab/kcal/resourcekolab.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/kolab/kcal/resourcekolab.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/kolab/kcal/resourcekolab.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -487,10 +487,18 @@
        mUidMap[ uid ] = StorageReference( subResource, sernum );
      } else {
@@ -116,8 +201,8 @@ Index: kresources/kolab/kcal/resourcekolab.cpp
        /* Add to the cache if the add didn't come from KOrganizer, in which case
 Index: kresources/groupware/kabc_groupware.desktop
 ===================================================================
---- kresources/groupware/kabc_groupware.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/groupware/kabc_groupware.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/groupware/kabc_groupware.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/groupware/kabc_groupware.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -10,6 +10,7 @@
  Name[et]=Grupitöö server
  Name[eu]=Groupware zerbitzaria
@@ -128,8 +213,8 @@ Index: kresources/groupware/kabc_groupware.desktop
  Name[is]=Groupware þjónn
 Index: kresources/groupware/kcal_groupware.desktop
 ===================================================================
---- kresources/groupware/kcal_groupware.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/groupware/kcal_groupware.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/groupware/kcal_groupware.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/groupware/kcal_groupware.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -10,6 +10,7 @@
  Name[et]=Grupitöö server
  Name[eu]=Groupware zerbitzaria
@@ -140,8 +225,8 @@ Index: kresources/groupware/kcal_groupware.desktop
  Name[is]=Groupware þjónn
 Index: kresources/remote/remote.desktop
 ===================================================================
---- kresources/remote/remote.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kresources/remote/remote.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kresources/remote/remote.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/remote/remote.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -15,6 +15,7 @@
  Name[eu]=Egutegia urruneko fitxategi batean
  Name[fi]=Kalenteri etätiedostossa
@@ -150,10 +235,22 @@ Index: kresources/remote/remote.desktop
  Name[hi]=रिमोट फ़ाइल में कैलेन्डर
  Name[hu]=Távoli fájlban tárolt naptár
  Name[is]=Dagatal í fjarlægri skrá
+Index: kresources/newexchange/kcal_newexchange_final.desktop
+===================================================================
+--- kresources/newexchange/kcal_newexchange_final.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kresources/newexchange/kcal_newexchange_final.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -13,6 +13,7 @@
+ Name[et]=Kalender Exchange-serveril
+ Name[eu]=Egutegia Exchange zerbitzari batean
+ Name[fr]=Agenda sur un serveur Exchange
++Name[ga]=Féilire ar Fhreastalaí Exchange
+ Name[hu]=Exchange 2000-kiszolgáló naptára
+ Name[is]=Dagatal á Exchange þjóni
+ Name[it]=Calendario su un server Exchange
 Index: kmail/kmailicalifaceimpl.cpp
 ===================================================================
---- kmail/kmailicalifaceimpl.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmail/kmailicalifaceimpl.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmail/kmailicalifaceimpl.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/kmailicalifaceimpl.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -848,7 +848,7 @@
  void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
                                               Q_UINT32 sernum )
@@ -163,10 +260,23 @@ Index: kmail/kmailicalifaceimpl.cpp
      return;
  
  //  kdDebug(5006) << "KMailICalIfaceImpl::slotIncidenceAdded" << endl;
+Index: kmail/kmail_config_composer.desktop
+===================================================================
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -109,7 +109,7 @@
+ Keywords[he]=kmail,כתבן
+ Keywords[hi]=के-मेल,कम्पोज़र
+ Keywords[hu]=kmail,szerkesztő
+-Keywords[is]=kmail,composer,ritill
++Keywords[is]=kmail,ritill
+ Keywords[it]=kmail,compositore
+ Keywords[lt]=kmail,composer,redaktorius
+ Keywords[nb]=kmail,komposer
 Index: kmail/partNode.cpp
 ===================================================================
---- kmail/partNode.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmail/partNode.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmail/partNode.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/partNode.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -36,6 +36,7 @@
  #include "kmmimeparttree.h"
  #include <mimelib/utility.h>
@@ -184,10 +294,74 @@ Index: kmail/partNode.cpp
          return this;
      if( mChild )
          found = mChild->findNodeForDwPart( part );
+Index: kmail/eventsrc
+===================================================================
+--- kmail/eventsrc	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/eventsrc	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -10,6 +10,7 @@
+ [new-mail-arrived]
+ Name=New Mail Arrived
+ Name[bg]=Имате ново писмо
++Name[br]=Deuet eo ur postel nevez
+ Name[bs]=Stigla vam je nova pošta
+ Name[ca]=Ha arribat correu nou
+ Name[cs]=Přišla nová pošta
+Index: kmail/avscripts/kmail_sav.sh
+===================================================================
+--- kmail/avscripts/kmail_sav.sh	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/avscripts/kmail_sav.sh	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -28,7 +28,7 @@
+ #    your version.
+ #
+ TEMPFILE=`mktemp` 
+-if [ $? ] ; then 
++if [ $? != 0 ] ; then 
+     TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
+ fi 
+ export TEMPFILE
+Index: kmail/avscripts/kmail_fprot.sh
+===================================================================
+--- kmail/avscripts/kmail_fprot.sh	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/avscripts/kmail_fprot.sh	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -28,7 +28,7 @@
+ #    your version.
+ #
+ TEMPFILE=`mktemp` 
+-if [ $? ] ; then 
++if [ $? != 0 ] ; then 
+     TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
+ fi 
+ export TEMPFILE
+Index: kmail/avscripts/kmail_antivir.sh
+===================================================================
+--- kmail/avscripts/kmail_antivir.sh	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/avscripts/kmail_antivir.sh	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -28,7 +28,7 @@
+ #    your version.
+ #
+ TEMPFILE=`mktemp` 
+-if [ $? ] ; then 
++if [ $? != 0 ] ; then 
+     TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
+ fi 
+ export TEMPFILE
+Index: kmail/avscripts/kmail_clamav.sh
+===================================================================
+--- kmail/avscripts/kmail_clamav.sh	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/avscripts/kmail_clamav.sh	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -28,7 +28,7 @@
+ #    your version.
+ #
+ TEMPFILE=`mktemp` 
+-if [ $? ] ; then 
++if [ $? != 0 ] ; then 
+     TEMPFILE=`mktemp /tmp/kmail.XXXXXX` 
+ fi 
+ export TEMPFILE
 Index: kmail/keyresolver.cpp
 ===================================================================
---- kmail/keyresolver.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmail/keyresolver.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmail/keyresolver.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/keyresolver.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -1171,6 +1171,17 @@
      for ( uint i = 0; i < items.size(); ++i ) {
        ContactPreferences& pref = lookupContactPreferences( items[i].address );
@@ -208,8 +382,8 @@ Index: kmail/keyresolver.cpp
    }
 Index: kmail/kmsender.cpp
 ===================================================================
---- kmail/kmsender.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmail/kmsender.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmail/kmsender.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmail/kmsender.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -519,8 +519,10 @@
  	       .arg(mCurrentMsg->subject()));
    if (!mSendProc->send(mCurrentMsg))
@@ -246,10 +420,46 @@ Index: kmail/kmsender.cpp
        mCurrentMsg = 0;
        mFailedMessages++;
        // Sending of message failed.
+Index: knode/knode_config_identity.desktop
+===================================================================
+--- knode/knode_config_identity.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ knode/knode_config_identity.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -58,6 +58,7 @@
+ Comment=Personal Information
+ Comment[be]=Пэрсанальная інфармацыя
+ Comment[bg]=Управление на личната информация
++Comment[br]=Titouroù diouzhin
+ Comment[bs]=Lične informacije
+ Comment[ca]=Informació personal
+ Comment[cs]=Osobní informace
+Index: knode/knode_config_cleanup.desktop
+===================================================================
+--- knode/knode_config_cleanup.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ knode/knode_config_cleanup.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -25,6 +25,7 @@
+ Name[eu]=Garbiketa
+ Name[fi]=Siivoaminen
+ Name[fr]=Nettoyage
++Name[ga]=Glan
+ Name[gl]=Limpeza
+ Name[hi]=साफ़-सफाई
+ Name[hu]=Tisztítás
+Index: knode/knarticlewidget.cpp
+===================================================================
+--- knode/knarticlewidget.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ knode/knarticlewidget.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -16,6 +16,7 @@
+ 
+ #include <sys/types.h>
+ #include <sys/stat.h>
++#include <cstdlib>
+ #include <unistd.h>
+ 
+ #include <qaccel.h>
 Index: kalarm/alarmcalendar.h
 ===================================================================
---- kalarm/alarmcalendar.h	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kalarm/alarmcalendar.h	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kalarm/alarmcalendar.h	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kalarm/alarmcalendar.h	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -46,7 +46,7 @@
  		void                  startUpdate();
  		void                  endUpdate();
@@ -262,7 +472,7 @@ Index: kalarm/alarmcalendar.h
 Index: Makefile.cvs
 ===================================================================
 --- Makefile.cvs	(.../tags/KDE/3.4.2/kdepim)	(revision 0)
-+++ Makefile.cvs	(.../branches/KDE/3.4/kdepim)	(revision 442272)
++++ Makefile.cvs	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -0,0 +1,16 @@
 +
 +all: 
@@ -288,8 +498,8 @@ Name: svn:keywords
 
 Index: libemailfunctions/email.cpp
 ===================================================================
---- libemailfunctions/email.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libemailfunctions/email.cpp	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libemailfunctions/email.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libemailfunctions/email.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -697,14 +697,24 @@
      //          and outside of quoted text behind the trailing '>'.
      bInComment = false;
@@ -329,10 +539,22 @@ Index: libemailfunctions/email.cpp
                break;
              default:
                if( ' ' != c )
+Index: korn/KOrn.desktop
+===================================================================
+--- korn/KOrn.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korn/KOrn.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -16,6 +16,7 @@
+ GenericName[eu]=Mail abisua
+ GenericName[fi]=Saapuneen sähköpostin ilmoitus
+ GenericName[fr]=Surveillance du courrier électronique
++GenericName[ga]=Fógairt Ríomhphoist
+ GenericName[gl]=Alerta de Correo-e
+ GenericName[hi]=डाक सतर्क
+ GenericName[hr]=Upozorenje na nove poruke
 Index: kmailcvt/filters.hxx
 ===================================================================
---- kmailcvt/filters.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filters.hxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filters.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filters.hxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -85,6 +85,57 @@
  };
  
@@ -394,8 +616,8 @@ Index: kmailcvt/filters.hxx
 -// vim: ts=2 sw=2 et
 Index: kmailcvt/filter_thunderbird.cxx
 ===================================================================
---- kmailcvt/filter_thunderbird.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_thunderbird.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_thunderbird.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_thunderbird.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -198,7 +198,7 @@
        tmp.close();
        first_msg = false;
@@ -407,8 +629,8 @@ Index: kmailcvt/filter_thunderbird.cxx
           if(_targetDir.contains(".sbd")) _targetDir.remove(".sbd");
 Index: kmailcvt/filter_evolution_v2.cxx
 ===================================================================
---- kmailcvt/filter_evolution_v2.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_evolution_v2.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_evolution_v2.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_evolution_v2.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -201,7 +201,7 @@
        tmp.close();
        first_msg = false;
@@ -420,8 +642,8 @@ Index: kmailcvt/filter_evolution_v2.cxx
           if(_targetDir.contains(".sbd")) _targetDir.remove(".sbd");
 Index: kmailcvt/filter_outlook.cxx
 ===================================================================
---- kmailcvt/filter_outlook.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_outlook.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_outlook.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_outlook.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -52,7 +52,7 @@
    info->addLog(i18n("Importing new mail files..."));
    info->addLog(i18n("No files found for import."));
@@ -433,8 +655,8 @@ Index: kmailcvt/filter_outlook.cxx
    QStringList files = importDir.entryList("*.[pP][sS][tT]", QDir::Files, QDir::Name);
 Index: kmailcvt/filter_pmail.cxx
 ===================================================================
---- kmailcvt/filter_pmail.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_pmail.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_pmail.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_pmail.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -320,13 +320,13 @@
  QString FilterPMail::getFolderName(QString ID) 
  {
@@ -454,8 +676,8 @@ Index: kmailcvt/filter_pmail.cxx
              if(_ID == search) {
 Index: kmailcvt/filter_oe.cxx
 ===================================================================
---- kmailcvt/filter_oe.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_oe.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_oe.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_oe.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -138,7 +138,7 @@
                  folderName = "OE-" + mailfileinfo.baseName(TRUE);
                  if(parsedFolder) {
@@ -513,8 +735,8 @@ Index: kmailcvt/filter_oe.cxx
  }
 Index: kmailcvt/filter_mbox.cxx
 ===================================================================
---- kmailcvt/filter_mbox.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_mbox.cxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_mbox.cxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_mbox.cxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -69,8 +69,9 @@
  
        while ( ! mbox.atEnd() ) {
@@ -544,8 +766,8 @@ Index: kmailcvt/filter_mbox.cxx
          first_msg = false;
 Index: kmailcvt/filter_pmail.hxx
 ===================================================================
---- kmailcvt/filter_pmail.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_pmail.hxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_pmail.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_pmail.hxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -50,8 +50,18 @@
      QDir dir;
      /**  pointer to the info */
@@ -569,8 +791,8 @@ Index: kmailcvt/filter_pmail.hxx
      bool folderParsed;
 Index: kmailcvt/filter_oe.hxx
 ===================================================================
---- kmailcvt/filter_oe.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kmailcvt/filter_oe.hxx	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kmailcvt/filter_oe.hxx	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kmailcvt/filter_oe.hxx	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -61,8 +61,17 @@
      bool parsedFolder;
      /** true if the current parsing file is the folder file */
@@ -590,10 +812,73 @@ Index: kmailcvt/filter_oe.hxx
  
      /** name of the current folder */
      QString folderName;
+Index: kaddressbook/interfaces/kaddressbook_xxport.desktop
+===================================================================
+--- kaddressbook/interfaces/kaddressbook_xxport.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kaddressbook/interfaces/kaddressbook_xxport.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -21,7 +21,7 @@
+ Comment[he]=תוסף ייבוא/יצוא עבור פנקס הכתובות
+ Comment[hi]=के-एड्रेस-बुक आयात/निर्यात प्लगइन
+ Comment[hu]=KAddressBook importálási/exportálási bővítőmodul
+-Comment[is]=Íforrit til að færa inn í/út úr KAddressbook
++Comment[is]=KAddressbook flytja inn/út íforrit
+ Comment[it]=Plugin importa/esporta di KAddressbook
+ Comment[ja]=KAddressbook インポート/エクスポートプラグイン
+ Comment[lt]=KAddressBook importo/eksporto priedas
+Index: kaddressbook/interfaces/kaddressbook_contacteditorwidget.desktop
+===================================================================
+--- kaddressbook/interfaces/kaddressbook_contacteditorwidget.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kaddressbook/interfaces/kaddressbook_contacteditorwidget.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -17,7 +17,7 @@
+ Comment[fr]=Module d'édition de contacts de KAddressBook
+ Comment[hi]=के-एड्रेस-बुक सम्पर्क संपादक विजेट प्लगइन
+ Comment[hu]=KAddressBook névjegyszerkesztő bővítőmodul
+-Comment[is]=KAddressbook tengiliðaritils-íforrit
++Comment[is]=KAddressbook tengiliðaritils íforrit
+ Comment[it]=Plugin editor dei contatti di KAddressbook
+ Comment[ja]=KAddressbook コンタクト エディタ ウィジェット プラグイン
+ Comment[lt]=KAddressBook kontaktų redaktoriaus valdiklių priedas
+Index: kaddressbook/csv-templates/yahoo.desktop
+===================================================================
+--- kaddressbook/csv-templates/yahoo.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kaddressbook/csv-templates/yahoo.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -25,7 +25,7 @@
+ Name[he]=פנקס כתובת של Yahoo!
+ Name[hi]=याहू! पता पुस्तिका
+ Name[hu]=Yahoo! címjegyzék
+-Name[is]=Yahoo! Póstfangaskrá
++Name[is]=Yahoo! póstfangaskrá
+ Name[it]=Rubrica indirizzi Yahoo!
+ Name[ja]=Yahoo! アドレス帳
+ Name[lt]=Yahoo! Adresų knygutė
+Index: kaddressbook/editors/protocols/smsprotocol.desktop
+===================================================================
+--- kaddressbook/editors/protocols/smsprotocol.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kaddressbook/editors/protocols/smsprotocol.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -19,6 +19,7 @@
+ Comment[eu]=SMS protokoloa
+ Comment[fi]=SMS-protokolla
+ Comment[fr]=Protocole SMS
++Comment[ga]=Prótacal SMS
+ Comment[gl]=Protocolo SMS
+ Comment[he]=פרוטוקול SMS
+ Comment[hi]=एसएमएस प्रोटोकॉल
+Index: kaddressbook/features/distributionlist.desktop
+===================================================================
+--- kaddressbook/features/distributionlist.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kaddressbook/features/distributionlist.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -4,6 +4,7 @@
+ Name=KAB Distribution List Plugin
+ Name[ar]=ملحق قائمة توزيع KAB
+ Name[be]=Дапаўненьне KAB "Сьпіс распаўсюджваньня"
++Name[br]=Lugent roll ingaladur evit KAB
+ Name[bs]=KAB dodatak za distribucione liste
+ Name[ca]=Endollable de la llista de distribució KAB
+ Name[cs]=Modul distribučního seznamu
 Index: libkdepim/komposer/plugins/default/defaulteditor.desktop
 ===================================================================
---- libkdepim/komposer/plugins/default/defaulteditor.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libkdepim/komposer/plugins/default/defaulteditor.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libkdepim/komposer/plugins/default/defaulteditor.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkdepim/komposer/plugins/default/defaulteditor.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -28,6 +28,7 @@
  Name[et]=Komposeri redaktor
  Name[eu]=Komposer editorea
@@ -612,8 +897,8 @@ Index: libkdepim/komposer/plugins/default/defaulteditor.desktop
  Comment[hu]=A Komposer alapértelmezett szerkesztője
 Index: libkdepim/komposer/core/komposerplugin.desktop
 ===================================================================
---- libkdepim/komposer/core/komposerplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libkdepim/komposer/core/komposerplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libkdepim/komposer/core/komposerplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkdepim/komposer/core/komposerplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -17,6 +17,7 @@
  Name[eu]=Komposer plugin-a
  Name[fi]=Komposer-liitännäinen
@@ -624,8 +909,8 @@ Index: libkdepim/komposer/core/komposerplugin.desktop
  Name[hi]=कम्पोज़र प्लगइन
 Index: libkdepim/komposer/core/komposereditor.desktop
 ===================================================================
---- libkdepim/komposer/core/komposereditor.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libkdepim/komposer/core/komposereditor.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libkdepim/komposer/core/komposereditor.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkdepim/komposer/core/komposereditor.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -16,6 +16,7 @@
  Comment[eu]=Komposer editorea
  Comment[fi]=Komposer-editori
@@ -636,8 +921,8 @@ Index: libkdepim/komposer/core/komposereditor.desktop
  Comment[hi]=कम्पोज़र एडिटर
 Index: libkcal/localdir.desktop
 ===================================================================
---- libkcal/localdir.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libkcal/localdir.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libkcal/localdir.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkcal/localdir.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -16,6 +16,7 @@
  Name[eu]=Egutegia direktorio lokalean
  Name[fi]=Kalenteri paikallisessa hakemistossa
@@ -648,8 +933,8 @@ Index: libkcal/localdir.desktop
  Name[is]=Dagatal í staðbundinni möppu
 Index: libkcal/local.desktop
 ===================================================================
---- libkcal/local.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ libkcal/local.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- libkcal/local.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkcal/local.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -16,6 +16,7 @@
  Name[eu]=Egutegia fitxategi lokalean
  Name[fi]=Kalenteri paikallisessa tiedostossa
@@ -658,14 +943,51 @@ Index: libkcal/local.desktop
  Name[hi]=स्थानीय फ़ाइल में कैलेन्डर
  Name[hu]=Helyi fájlban tárolt naptár
  Name[is]=Dagatal í staðbundinni skrá
+Index: libkcal/kabc.desktop
+===================================================================
+--- libkcal/kabc.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkcal/kabc.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -16,6 +16,7 @@
+ Name[eu]=Urtebetetzeak KAddressBook-etik
+ Name[fi]=Syntymäpäivät KDE:n osoitekirjasta
+ Name[fr]=Dates de naissance de KAddressBook
++Name[ga]=Breithlaethanta ó KAddressBook
+ Name[gl]=Cumpreanos de KAddressBook
+ Name[he]=ימי הולדת מתוך KAddressBook
+ Name[hi]=के-एड्रेस-बुक से जन्मतिथि
+Index: libkcal/icalformatimpl.cpp
+===================================================================
+--- libkcal/icalformatimpl.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ libkcal/icalformatimpl.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -2107,7 +2107,7 @@
+ 
+ icaltimetype ICalFormatImpl::writeICalDate(const QDate &date)
+ {
+-  icaltimetype t;
++  icaltimetype t = icaltime_null_time();
+ 
+   t.year = date.year();
+   t.month = date.month();
+@@ -2128,7 +2128,7 @@
+ 
+ icaltimetype ICalFormatImpl::writeICalDateTime(const QDateTime &datetime)
+ {
+-  icaltimetype t;
++  icaltimetype t = icaltime_null_time();
+ 
+   t.year = datetime.date().year();
+   t.month = datetime.date().month();
 Index: kpilot/ChangeLog
 ===================================================================
---- kpilot/ChangeLog	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/ChangeLog	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -13,6 +13,19 @@
+--- kpilot/ChangeLog	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/ChangeLog	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -13,6 +13,22 @@
  TODO: give the knotes conduit a decent test mode.
  TODO: only re-write a local database if it is changed.
  
++2005-08-03  Jason 'vanRijn' Kasper
++* Bumping version number to 4.5.4 in case there's a KDE 3.4.3 release
++
 +2005-07-20  Jason 'vanRijn' Kasper
 +* D'oh!  Version number should change from 4.5.2 to 4.5.3 since we actually
 +  did do stuff since KDE 3.4.1, and being that 3.4.2 just got tagged 8
@@ -684,8 +1006,8 @@ Index: kpilot/ChangeLog
    "child", or otherwise short for "kind of liable to eat your data").
 Index: kpilot/conduits/perlconduit/perl-conduit.desktop
 ===================================================================
---- kpilot/conduits/perlconduit/perl-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/conduits/perlconduit/perl-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kpilot/conduits/perlconduit/perl-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/perlconduit/perl-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -13,6 +13,7 @@
  Name[et]=Perl (näidis)
  Name[eu]=Perl (adibidea)
@@ -694,10 +1016,42 @@ Index: kpilot/conduits/perlconduit/perl-conduit.desktop
  Name[gl]=Perl (Mostra)
  Name[hi]=पर्ल (सेंपल)
  Name[hu]=Perl (példa)
+@@ -50,6 +51,7 @@
+ Comment[et]=See näidiskanal käivitab Perli interpretaatori.
+ Comment[eu]=Adibide honek Perl interpretatzaile bat exekutatzen du.
+ Comment[fr]=Cet exemple de canal lance un interpréteur Perl.
++Comment[ga]=Ritheann an seoladán samplach seo léirmhínitheoir Perl.
+ Comment[hi]=यह सेंपल कन्ड्यूइट पर्ल इंटरप्रेटर चलाता है.
+ Comment[hu]=Ez a mintacsatoló a Perl-értelmezőt futtatja
+ Comment[is]=Þessi sýnishornarás keyrir Perl túlk.
+Index: kpilot/conduits/malconduit/mal_conduit.desktop
+===================================================================
+--- kpilot/conduits/malconduit/mal_conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/malconduit/mal_conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -13,6 +13,7 @@
+ Name[eu]=MAL (AvantGo) kanala
+ Name[fi]=MAL (AvantGo) yhdyskäytävä
+ Name[fr]=MAL (AvantGo) Canal
++Name[ga]=Seoladán MAL (AvantGo)
+ Name[he]=ממשק AvantGo) MAL)
+ Name[hi]=एमएएल (AvantGo) कन्ड्यूइट
+ Name[hu]=MAL- (AvantGo) csatoló
+Index: kpilot/conduits/knotes/knotes-conduit.desktop
+===================================================================
+--- kpilot/conduits/knotes/knotes-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/knotes/knotes-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -49,6 +49,7 @@
+ Name[et]=KNotes / memod
+ Name[eu]=KNotes / Oharrak
+ Name[fr]=KNotes / Mémos
++Name[ga]=KNotes / Meamraim
+ Name[hi]=के-नोट्स / मेमो
+ Name[hu]=KNotes / memók
+ Name[is]=KNotes / minnisblöð
 Index: kpilot/conduits/pythonconduit/python-conduit.desktop
 ===================================================================
---- kpilot/conduits/pythonconduit/python-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/conduits/pythonconduit/python-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kpilot/conduits/pythonconduit/python-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/pythonconduit/python-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -13,6 +13,7 @@
  Name[et]=Python (näidis)
  Name[eu]=Python (adibidea)
@@ -706,10 +1060,42 @@ Index: kpilot/conduits/pythonconduit/python-conduit.desktop
  Name[gl]=Python (Mostra)
  Name[hi]=पायथन (सेम्पल)
  Name[hu]=Python (példa)
+@@ -50,6 +51,7 @@
+ Comment[et]=See näidiskanal käivitab Pythoni interpretaatori.
+ Comment[eu]=Adibide honek Python interpretatzaile bat exekutatzen du.
+ Comment[fr]=Cet exemple de canal lance un interpréteur Python.
++Comment[ga]=Ritheann an seoladán samplach seo léirmhínitheoir Python.
+ Comment[hi]=यह सेंपल कन्ड्यूइट पायथन इंटरप्रेटर चलाता है.
+ Comment[hu]=Ez a mintacsatoló a Python-értelmezőt futtatja
+ Comment[is]=Þessi sýnishornarás keyrir Python túlk.
+Index: kpilot/conduits/null/null-conduit.desktop
+===================================================================
+--- kpilot/conduits/null/null-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/null/null-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -20,6 +20,7 @@
+ Comment[eu]=Kanal honek ez du ezer egiten.
+ Comment[fi]=Tämä yhdyskäytävä ei tee mitään.
+ Comment[fr]=Ce canal ne fait rien.
++Comment[ga]=Ní dhéanann an seoladán seo faic.
+ Comment[hi]=यह कन्ड्यूइट कुछ नहीं करता है.
+ Comment[hu]=Ez a csatoló üres, csak tesztelési célokat szolgál
+ Comment[is]=Þessi rás gerir ekki neitt.
+Index: kpilot/conduits/vcalconduit/todo-conduit.desktop
+===================================================================
+--- kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -50,6 +50,7 @@
+ Name[et]=Ülesanded (KOrganizer)
+ Name[eu]=Egitekoak (KOrganizer)
+ Name[fr]=Tâches (KOrganizer)
++Name[ga]=Tascanna (KOrganizer)
+ Name[gl]=Pendentes (KOrganizer)
+ Name[hi]=कार्य सूची (के-आर्गेनाइज़र)
+ Name[hu]=Feladatok (KOrganizer)
 Index: kpilot/conduits/vcalconduit/vcal-conduit.desktop
 ===================================================================
---- kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -15,6 +15,7 @@
  Name[eu]=Egutegia (KOrganizer)
  Name[fi]=Kalenteri (KOrganizer)
@@ -718,11 +1104,54 @@ Index: kpilot/conduits/vcalconduit/vcal-conduit.desktop
  Name[gl]=Calendario (KOrganizer)
  Name[hi]=कैलेण्डर (के-आर्गेनाइज़र)
  Name[hu]=Naptár (KOrganizer)
+Index: kpilot/kpilot/memoWidget.cc
+===================================================================
+--- kpilot/kpilot/memoWidget.cc	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/memoWidget.cc	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -410,7 +410,7 @@
+ void MemoWidget::updateWidget()
+ {
+ 	FUNCTIONSETUP;
+-	if (!shown) return;
++	if (!shown || !d->fMemoAppInfo ) return;
+ 
+ 	if (fCatList->currentItem() == -1)
+ 	{
+@@ -608,7 +608,7 @@
+ void MemoWidget::slotImportMemo()
+ {
+ 	FUNCTIONSETUP;
+-	if (!shown) return;
++	if (!shown || !d->fMemoAppInfo) return;
+ 
+ 	int currentCatID = findSelectedCategory(fCatList,
+ 		d->fMemoAppInfo->categoryInfo(), true);
+Index: kpilot/kpilot/todoWidget.cc
+===================================================================
+--- kpilot/kpilot/todoWidget.cc	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/todoWidget.cc	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -294,7 +294,7 @@
+ void TodoWidget::updateWidget()
+ {
+ 	FUNCTIONSETUP;
+-	if (!shown) return;
++	if (!shown || !fTodoAppInfo ) return;
+ 
+ 	int listIndex = 0;
+ 
 Index: kpilot/kpilot/kpilot_config.desktop
 ===================================================================
---- kpilot/kpilot/kpilot_config.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/kpilot/kpilot_config.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -63,6 +63,7 @@
+--- kpilot/kpilot/kpilot_config.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/kpilot_config.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -25,6 +25,7 @@
+ Name[eu]=KPilot-en konfigurazioa
+ Name[fi]=KPilot-asetukset
+ Name[fr]=Configuration de KPilot
++Name[ga]=Cumraíocht KPilot
+ Name[gl]=Configuración de KPilot
+ Name[hi]=के-पायलट कॉन्फ़िगरेशन
+ Name[hu]=A KPilot beállításai
+@@ -63,6 +64,7 @@
  Comment[eu]=KPilot-en konfigurazio nagusia
  Comment[fi]=KPilotin pääasetukset
  Comment[fr]=Configuration principale de KPilot
@@ -730,7 +1159,7 @@ Index: kpilot/kpilot/kpilot_config.desktop
  Comment[gl]=Configuración Principal de KPilot 
  Comment[hi]=के-पायलट मुख्य कॉन्फ़िगरेशन
  Comment[hu]=A KPilot legfontosabb beállításai
-@@ -99,6 +100,7 @@
+@@ -99,6 +101,7 @@
  Keywords[eu]=kpilot,nagusia
  Keywords[fi]=kpilot
  Keywords[fr]=kpilot,principal
@@ -740,8 +1169,8 @@ Index: kpilot/kpilot/kpilot_config.desktop
  Keywords[hu]=kpilot,alap
 Index: kpilot/kpilot/kpilot.desktop
 ===================================================================
---- kpilot/kpilot/kpilot.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/kpilot/kpilot.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kpilot/kpilot/kpilot.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/kpilot.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -31,6 +31,7 @@
  GenericName[eu]=PalmPilot tresna
  GenericName[fi]=Palm Pilot -työkalu
@@ -750,24 +1179,136 @@ Index: kpilot/kpilot/kpilot.desktop
  GenericName[gl]=Ferramenta de PalmPilot
  GenericName[he]=כלי פאלם-פיילוט
  GenericName[hi]=पाम-पायलट औज़ार
+Index: kpilot/kpilot/addressWidget.cc
+===================================================================
+--- kpilot/kpilot/addressWidget.cc	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/addressWidget.cc	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -295,6 +295,8 @@
+ {
+ 	FUNCTIONSETUP;
+ 
++	if( !fAddressAppInfo )
++			return;
+ 	int addressDisplayMode = KPilotSettings::addressDisplayMode();
+ 
+ 	int listIndex = 0;
+@@ -675,7 +677,7 @@
+ void AddressWidget::slotExport()
+ {
+ 	FUNCTIONSETUP;
+-
++	if(!fAddressAppInfo) return;
+ 	int currentCatID = findSelectedCategory(fCatList,
+ 		fAddressAppInfo->categoryInfo());
+ 
+Index: kpilot/kpilot/kpilotconduit.desktop
+===================================================================
+--- kpilot/kpilot/kpilotconduit.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/kpilot/kpilotconduit.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -20,6 +20,7 @@
+ Comment[eu]=KPilot kanala
+ Comment[fi]=KPilot yhdyskäytävä
+ Comment[fr]=Canal de KPilot
++Comment[ga]=Seoladán KPilot
+ Comment[gl]=Conducto de KPilot
+ Comment[he]=ממשק של KPilot
+ Comment[hi]=के-पायलट कन्ड्यूइट
 Index: kpilot/lib/options.h
 ===================================================================
---- kpilot/lib/options.h	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kpilot/lib/options.h	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kpilot/lib/options.h	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/lib/options.h	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -224,7 +224,7 @@
  #define FUNCTIONSETUPL(a) const int fname = a; Q_UNUSED(fname);
  #endif
  
 -#define KPILOT_VERSION	"4.5.2 (kind)"
-+#define KPILOT_VERSION	"4.5.3 (peuter)"
++#define KPILOT_VERSION	"4.5.4 (dreumes)"
  
  
  // Function to expand newlines in rich text to <br>\n
+Index: kpilot/lib/kpilotlink.cc
+===================================================================
+--- kpilot/lib/kpilotlink.cc	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kpilot/lib/kpilotlink.cc	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -399,7 +399,8 @@
+ 	if (ret >= 0)
+ 	{
+ 		fLinkStatus = DeviceOpen;
+-		fOpenTimer->stop();
++		if(fOpenTimer)
++			fOpenTimer->stop();
+ 
+ 		KPilotDeviceLinkPrivate::self()->bindDevice( fRealPilotPath );
+ 		fSocketNotifier = new QSocketNotifier(fPilotMasterSocket,
+@@ -447,9 +448,9 @@
+ 		}
+ 		e = errno;
+ 		msg = i18n("Cannot open Pilot port \"%1\". ");
++		if( fOpenTimer )
++			fOpenTimer->stop();
+ 
+-		fOpenTimer->stop();
+-
+ 		// goto errInit;
+ 	}
+ 
+Index: kontact/plugins/multisynk/multisynk.desktop
+===================================================================
+--- kontact/plugins/multisynk/multisynk.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/multisynk/multisynk.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -24,6 +24,7 @@
+ Comment[et]=MultiSynki plugin
+ Comment[eu]=MultiSynk plugin-a
+ Comment[fr]=Module MultiSynk
++Comment[ga]=Breiseán MultiSynk
+ Comment[hi]=मल्टी-सिंक प्लगइन
+ Comment[hu]=MultiSynk bővítőmodul
+ Comment[is]=MultiSynk íforrit
+Index: kontact/plugins/weather/weatherplugin.desktop
+===================================================================
+--- kontact/plugins/weather/weatherplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/weather/weatherplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -73,6 +73,7 @@
+ Name[eu]=Eguraldia
+ Name[fi]=Sää
+ Name[fr]=Météo
++Name[ga]=Aimsir
+ Name[gl]=O Tempo
+ Name[hi]=वेदर
+ Name[hu]=Időjárás
+Index: kontact/plugins/knode/knodeplugin.desktop
+===================================================================
+--- kontact/plugins/knode/knodeplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/knode/knodeplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -30,6 +30,7 @@
+ Comment[eu]=Kontact-en KNode plugin-a
+ Comment[fi]=Kontactin KNode-liitännäinen
+ Comment[fr]=Module KNode pour Kontact
++Comment[ga]=Breiseán KNode le haghaidh Kontact
+ Comment[gl]=Extensión de KNode para Kontact
+ Comment[hi]=कॉन्टेक्ट के-नोड प्लगइन
+ Comment[hu]=Kontact KNode-bővítőmodul
 Index: kontact/plugins/specialdates/kcmsdsummary.desktop
 ===================================================================
---- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -86,7 +86,7 @@
+--- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -12,6 +12,7 @@
+ X-KDE-CfgDlgHierarchy=KontactSummary
+ 
+ Name=Special Dates
++Name[br]=Deiziadoù dibar
+ Name[ca]=Dates especials
+ Name[cs]=Speciální datumy
+ Name[da]=Særlige datoer
+@@ -22,6 +23,7 @@
+ Name[eu]=Data bereziak
+ Name[fi]=Erikoispäivät
+ Name[fr]=Date particulières
++Name[ga]=Dátaí Speisialta
+ Name[hi]=विशिष्ट तारीख़
+ Name[hu]=Fontos dátumok
+ Name[is]=Sérstakir dagar
+@@ -86,7 +88,7 @@
  Keywords[hu]=születésnap,évforduló,szabadság,konfigurálás,beállítások
  Keywords[is]=afmæli, frídagar, stillingar, stilla
  Keywords[it]=compleanno, anniversario, vacanze, configura, impostazioni
@@ -776,10 +1317,62 @@ Index: kontact/plugins/specialdates/kcmsdsummary.desktop
  Keywords[nb]=fødselsdag, jubileum, ferie, sette opp, innstillinger
  Keywords[nl]=verjaardag,jubileum,vakantie,instellingen,configuratie,feestdag
  Keywords[nn]=fødselsdag,bursdag,gebursdag,jubileum,ferie,helgedag,merkedag,oppsett,innstillingar
+Index: kontact/plugins/specialdates/specialdatesplugin.desktop
+===================================================================
+--- kontact/plugins/specialdates/specialdatesplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/specialdates/specialdatesplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -15,6 +15,7 @@
+ X-KDE-PluginInfo-EnabledByDefault=true
+ 
+ Name=Special Dates
++Name[br]=Deiziadoù dibar
+ Name[ca]=Dates especials
+ Name[cs]=Speciální datumy
+ Name[da]=Særlige datoer
+@@ -25,6 +26,7 @@
+ Name[eu]=Data bereziak
+ Name[fi]=Erikoispäivät
+ Name[fr]=Date particulières
++Name[ga]=Dátaí Speisialta
+ Name[hi]=विशिष्ट तारीख़
+ Name[hu]=Fontos dátumok
+ Name[is]=Sérstakir dagar
+Index: kontact/plugins/kpilot/kpilotplugin.desktop
+===================================================================
+--- kontact/plugins/kpilot/kpilotplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/kpilot/kpilotplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -30,6 +30,7 @@
+ Comment[eu]=Kontact-en KPilot plugin-a
+ Comment[fi]=Kontactin KPilot-laajennus
+ Comment[fr]=Module KPilot pour Kontact
++Comment[ga]=Breiseán KPilot le haghaidh Kontact
+ Comment[gl]=Extensión de KPilot para Kontact
+ Comment[hi]=कॉन्टेक्ट के-पायलट प्लगइन
+ Comment[hu]=Kontact KPilot-bővítőmodul
+@@ -69,6 +70,7 @@
+ Name[eu]=KPilot-en konfigurazioa
+ Name[fi]=KPilot-asetukset
+ Name[fr]=Configuration de KPilot
++Name[ga]=Cumraíocht KPilot
+ Name[gl]=Configuración de KPilot
+ Name[hi]=के-पायलट कॉन्फ़िगरेशन
+ Name[hu]=A KPilot beállításai
+Index: kontact/plugins/knotes/knotesplugin.desktop
+===================================================================
+--- kontact/plugins/knotes/knotesplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/knotes/knotesplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -30,6 +30,7 @@
+ Comment[eu]=Kontact-en KNotes plugin-a
+ Comment[fi]=Kontactin KNotes-liitännäinen
+ Comment[fr]=Module KNotes pour Kontact
++Comment[ga]=Breiseán KNotes le haghaidh Kontact
+ Comment[gl]=Extensión de KNotes para Kontact
+ Comment[hi]=कॉन्टेक्ट के-नोट्स प्लगइन
+ Comment[hu]=Kontact KNotes-bővítőmodul
 Index: kontact/plugins/kaddressbook/kcmkabsummary.desktop
 ===================================================================
---- kontact/plugins/kaddressbook/kcmkabsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kontact/plugins/kaddressbook/kcmkabsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- kontact/plugins/kaddressbook/kcmkabsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/kaddressbook/kcmkabsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -107,7 +107,7 @@
  Keywords[is]=afmæli, stillingar, stilla
  Keywords[it]=compleanno, anniversario, configura, impostazioni
@@ -789,33 +1382,119 @@ Index: kontact/plugins/kaddressbook/kcmkabsummary.desktop
  Keywords[nb]=fødselsdag, jubileum, sette opp, innstillinger
  Keywords[nl]=verjaardag,instellingen,configuratie
  Keywords[nn]=fødselsdag,bursdag,gebursdag,jubileum,oppsett,innstillingar
+Index: kontact/plugins/korganizer/kcmkorgsummary.desktop
+===================================================================
+--- kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -103,10 +103,11 @@
+ Keywords[eu]=egutegia, egitekoak, konfiguratu, ezarpenak
+ Keywords[fi]=kalenteri, tehtävät, muokkaa, asetukset
+ Keywords[fr]=calendrier,agenda,tâches,configurer,paramètres,paramètre
++Keywords[ga]=féilire, tascanna, cumraigh, socruithe
+ Keywords[gl]=calendario, pendentes, configurar, opcións
+ Keywords[hi]=कैलेण्डर, औज़ार, कॉन्फ़िगर, विन्यास 
+ Keywords[hu]=naptár,feladatok,konfigurálás,beállítások
+-Keywords[is]=dagatal, tossalisti, stillingar, stilla
++Keywords[is]=dagatal, verkþættir, stillingar, stilla
+ Keywords[it]=calendario, cose da fare, configura, impostazioni
+ Keywords[ja]=スケジュール,todos,設定,設定
+ Keywords[lt]=calendar, todos, configure, settings, kalendorius, darbai, konfigūruoti, nustatymai
 Index: kontact/plugins/korganizer/todoplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -30,7 +30,7 @@
+--- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -26,11 +26,12 @@
+ Comment[et]=Kontacti KOrganizeri ülesannete nimekirja plugin
+ Comment[eu]=Kontact-en KOrganizer-en egitekoen plugin-a
+ Comment[fr]=Module de liste des tâches de KOrganizer pour Kontact
++Comment[ga]=Breiseán Tascliosta KOrganizer le haghaidh Kontact
+ Comment[hi]=कॉन्टेक्ट के-आर्गेनाइज़र कार्य सूची प्लगइन
  Comment[hu]=Kontact-bővítőmodul a KOrganizer feladatlistához
- Comment[is]=Kontact KOrganizer tossalista íforrit
+-Comment[is]=Kontact KOrganizer tossalista íforrit
++Comment[is]=Kontact KOrganizer verkþátta íforrit
  Comment[it]=Plugin Kontact per le cose da fare di KOrganizer
 -Comment[lt]=Kontact KOrganizer užduočių sąrašo priedas
 +Comment[lt]=Kontact KOrganizer darbų sąrašo priedas
  Comment[nb]=Kontact programtillegg for KOrganizer gjøreliste
  Comment[nl]=Kontact KOrganizer takenlijstplugin
  Comment[nn]=Kontact-programtillegg for KOrganizer-hugselister
-@@ -62,7 +62,7 @@
+@@ -57,12 +58,13 @@
+ Name[et]=Ülesanded
+ Name[eu]=Egitekoen zerrenda
+ Name[fr]=Liste de tâches
++Name[ga]=Tascliosta
+ Name[he]=רשימת מטלות
+ Name[hi]=कार्य-सूची
  Name[hu]=Feladatok
- Name[is]=Tossalisti
+-Name[is]=Tossalisti
++Name[is]=Verkþættir
  Name[it]=Cose da fare
 -Name[lt]=Užduočių sąrašas
 +Name[lt]=Darbų sąrašas
  Name[nb]=Gjøreliste
  Name[nl]=Takenlijst
  Name[nn]=Hugseliste
+Index: kontact/plugins/korganizer/korganizerplugin.desktop
+===================================================================
+--- kontact/plugins/korganizer/korganizerplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/korganizer/korganizerplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -32,6 +32,7 @@
+ Comment[eu]=Kontact-en KOrganizer plugin-a
+ Comment[fi]=Kontactin KOrganizer-liitännäinen
+ Comment[fr]=Module KOrganizer pour Kontact
++Comment[ga]=Breiseán KOrganizer le haghaidh Kontact
+ Comment[gl]=Extensión de KOrganizer para Kontact
+ Comment[hi]=कॉन्टेक्ट के-आर्गेनाइज़र प्लगइन
+ Comment[hu]=Kontact KOrganizer-bővítőmodul
+Index: kontact/plugins/kmail/kmailplugin.desktop
+===================================================================
+--- kontact/plugins/kmail/kmailplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/kmail/kmailplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -33,6 +33,7 @@
+ Comment[eu]=Kontact-en KMail plugin-a
+ Comment[fi]=Kontactin KMail-liitännäinen
+ Comment[fr]=Module KMail pour Kontact
++Comment[ga]=Breiseán KMail le haghaidh Kontact
+ Comment[gl]=Extensión de KMail para Kontact
+ Comment[he]=תוסף KMail ל-Kontact
+ Comment[hi]=कॉन्टेक्ट के-मेल प्लगइन
+Index: kontact/plugins/kmail/kcmkmailsummary.desktop
+===================================================================
+--- kontact/plugins/kmail/kcmkmailsummary.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/kmail/kcmkmailsummary.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -102,6 +102,7 @@
+ Keywords[eu]=eposta, laburpena, konfiguratu, ezarpenak
+ Keywords[fi]=sähköposti, yhteenveto, asetukset
+ Keywords[fr]=message,messagerie,courrier,résumé,vue,configurer,paramètres,paramètre
++Keywords[ga]=ríomhphost, achoimre, cumraigh, socruithe
+ Keywords[gl]=email, resumo, configurar, opcións
+ Keywords[hi]=ई-मेल, सारांश, कॉन्फ़िगर, विन्यास 
+ Keywords[hu]=e-mail,áttekintés,konfigurálás,beállítások
+Index: kontact/plugins/newsticker/newstickerplugin.desktop
+===================================================================
+--- kontact/plugins/newsticker/newstickerplugin.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/plugins/newsticker/newstickerplugin.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -27,6 +27,7 @@
+ Comment[eu]=Kontact-en NewsTicker plugin-a
+ Comment[fi]=Kontactin uutisnäyttäjä
+ Comment[fr]=Module NewsTicker pour Kontact
++Comment[ga]=Breiseán NewsTicker le haghaidh Kontact
+ Comment[gl]=Extensión de NewsTicker para Kontact
+ Comment[hi]=कॉन्टेक्ट न्यूज़-टिकर प्लगइन
+ Comment[hu]=Kontact KNewsTicker-bővítőmodul
 Index: kontact/src/kontact.setdlg
 ===================================================================
---- kontact/src/kontact.setdlg	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ kontact/src/kontact.setdlg	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -522,7 +522,7 @@
+--- kontact/src/kontact.setdlg	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ kontact/src/kontact.setdlg	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -471,6 +471,7 @@
+ Name[eu]=Eguraldia
+ Name[fi]=Sää
+ Name[fr]=Météo
++Name[ga]=Aimsir
+ Name[gl]=O Tempo
+ Name[hi]=वेदर
+ Name[hu]=Időjárás
+@@ -522,7 +523,7 @@
  Comment[nl]=Het weer
  Comment[nn]=Vêrinformasjon
  Comment[pl]=Informacje o pogodzie
@@ -824,11 +1503,78 @@ Index: kontact/src/kontact.setdlg
  Comment[pt_BR]=Informações sobre o Clima
  Comment[ru]=Информация о погоде
  Comment[sl]=Podatki o vremenu
+Index: korganizer/korganizer_configfonts.desktop
+===================================================================
+--- korganizer/korganizer_configfonts.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configfonts.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -121,6 +121,7 @@
+ Keywords[eu]=korganizer,letra-tipoak
+ Keywords[fi]=korganizer,kirjasimet
+ Keywords[fr]=KOrganizer,polices
++Keywords[ga]=korganizer,clónna,clófhoirne
+ Keywords[gl]=korganizer,fontes
+ Keywords[hi]=के-आर्गेनाइज़र,फ़ॉन्ट्स
+ Keywords[hu]=korganizer,betűtípusok
+Index: korganizer/korganizer_configplugins.desktop
+===================================================================
+--- korganizer/korganizer_configplugins.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configplugins.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -86,6 +86,7 @@
+ Keywords[et]=korganizer,plugin,moodul
+ Keywords[eu]=korganizer,plugin-a,modulua
+ Keywords[fr]=KOrganizer,module
++Keywords[ga]=korganizer,breiseán,modúl
+ Keywords[hi]=के-आर्गेनाइज़र,प्लगइन,मॉड्यूल
+ Keywords[hu]=korganizer,bővítőmodul,modul
+ Keywords[is]=korganizer,íforrit,eining
+Index: korganizer/korganizer_configtime.desktop
+===================================================================
+--- korganizer/korganizer_configtime.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configtime.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -29,6 +29,7 @@
+ Name[eu]=Ordua eta data
+ Name[fi]=Aika ja päiväys
+ Name[fr]=Date et heure
++Name[ga]=Am & Dáta
+ Name[gl]=Hora e Data
+ Name[hi]=तारीख़ व समय
+ Name[hu]=Dátum és idő
+@@ -113,6 +114,7 @@
+ Keywords[eu]=korganizer,ordua,data
+ Keywords[fi]=korganizer,aika
+ Keywords[fr]=KOrganizer,date
++Keywords[ga]=korganizer,am
+ Keywords[gl]=korganizer,hora
+ Keywords[hi]=के-आर्गेनाइज़र,समय
+ Keywords[hu]=korganizer,idő
+Index: korganizer/Makefile.am
+===================================================================
+--- korganizer/Makefile.am	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/Makefile.am	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -47,8 +47,8 @@
+ timezone_SOURCES = timezone.cpp
+ timezone_COMPILE_FIRST = koprefs_base.h
+ 
+-lib_LTLIBRARIES = libkorganizer.la libkorganizer_eventviewer.la \
+-                  libkorganizer_calendar.la
++lib_LTLIBRARIES = libkorganizer_eventviewer.la \
++                  libkorganizer_calendar.la libkorganizer.la 
+ 
+ libkorganizer_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
+ libkorganizer_la_LIBADD  = $(LIB_KPARTS) $(LIB_KFILE) $(LIB_KNEWSTUFF) \
 Index: korganizer/plugins/projectview/projectview.desktop
 ===================================================================
---- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
-@@ -67,7 +67,7 @@
+--- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -6,6 +6,7 @@
+ Name[ar]=ملحق عرض المشاريع للمنظم
+ Name[az]=KOrganizer Layihə Nümayiş Əlavəsi
+ Name[bg]=Приставка на организатора за преглед на проекти
++Name[br]=Lugent gwell raktres evit KOrganizer
+ Name[bs]=Preglednik projekata, dodatak za KOrganizer
+ Name[ca]=Endollable de vista de projectes per a KOrganizer
+ Name[cs]=Modul projektového pohledu pro KOrganizer
+@@ -67,7 +68,7 @@
  Comment[hu]=Ezzel a modullal projekttervező nézet alakítható ki a KOrganizerben (például a feladatokhoz vagy a havi nézetekhez). Ha aktiválja ezt a modult, átválthat projektnézetbe, hogy a feladatok projekttervként legyenek megtekinthetők.
  Comment[is]=Þetta íforrit veitir verkskipulagssýn fyrir KOrganizer (svipað og verkþátta eða mánaðarsýn). Ef þú virkjar þetta íforrit, getur þú á einfaldan hátt skipt yfir í verkefnasýn og skoðað verkþáttalistann þinn í skipuleggjara.
  Comment[it]=Questo plugin fornisce una vista di pianificazione progetto per KOrganizer (come la vista delle cose da fare o quella mensile). Se abiliti questo plugin, puoi passare dalla vista progetto alla vista delle cose da fare come in un pianificatore di progetti.
@@ -837,10 +1583,22 @@ Index: korganizer/plugins/projectview/projectview.desktop
  Comment[nb]=Dette tilleggsprogrammet lager en prosjektplan-visning for KOrganizer (som i gjørelister og månedsvisninger). Slår du på dette tilleggsprogrammet kan du bytte til prosjektvisning og se på gjørelista som i en prosjektplan.
  Comment[nl]=Deze plugin biedt een projectweergave voor KOrganizer (net zoals een takenlijst of maandweergave). Wanneer u deze plugin aanzet, kunt u deze weergave aanzetten om uw takenlijst te bekijken als een projectplanner.
  Comment[pl]=Ta wtyczka tworzy widok planowania projektu w KOrganizerze (tak jak widok zadań do zrobienia lub widok miesiąca). Po włączeniu tej wtyczki możliwe jest przełączenie się na widok projektu zadań do zrobienia.
+Index: korganizer/plugins/exchange/exchange.desktop
+===================================================================
+--- korganizer/plugins/exchange/exchange.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/plugins/exchange/exchange.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -15,6 +15,7 @@
+ Name[eu]=KOrganizer-en Microsoft Exchange 2000 plugin-a
+ Name[fi]=KOrganizerin Microsoft Exchange 2000 -laajennus
+ Name[fr]=Module Microsoft Exchange 2000 pour KOrganizer
++Name[ga]=Breiseán Microsoft Exchange 2000 le haghaidh KOrganizer
+ Name[gl]=Extensión de Microsoft Exchange 2000 para KOrganizer
+ Name[hi]=के-आर्गेनाइज़र के लिए माइक्रोसॉफ्ट एक्सचेंज 2000  प्लगइन
+ Name[hu]=Microsoft Exchange 2000-bővítőmodul a KOrganizerhez
 Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
 ===================================================================
---- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -41,7 +41,7 @@
  Comment[hu]=Ezzel a modullal kinyomtathatók a rövidesen aktuálissá váló feladatok és események.
  Comment[is]=Þetta íforrit gerir þér kleyft að prenta út lista yfir alla væntanlega atburði og verkþætti.
@@ -852,8 +1610,8 @@ Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
  Comment[nn]=Dette programtillegget lèt deg skriva ut ei liste over alle dei komande hendingane og oppføringane i hugselista.
 Index: korganizer/plugins/printing/list/listprint.desktop
 ===================================================================
---- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -43,7 +43,7 @@
  Comment[hu]=Ezzel a modullal listaként kinyomtathatók a feladatok és események.
  Comment[is]=Þetta íforrit gerir þér kleyft að prenta út lista með atburðum og verkþáttum.
@@ -865,8 +1623,8 @@ Index: korganizer/plugins/printing/list/listprint.desktop
  Comment[nn]=Dette programtillegget lèt deg skriva ut hendingar og hugselister på listeform.
 Index: korganizer/plugins/timespanview/timespanview.desktop
 ===================================================================
---- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -40,7 +40,7 @@
  Comment[hu]=Ezzel modullal egy időszakot lehet áttekinteni a KOrganizerben (például a feladatokat vagy a havi nézeteket). Ha aktiválja ezt a modult, átválthat időszakos nézetbe, hogy az események Gantt-diagramon legyenek megtekinthetők.
  Comment[is]=Þetta íforrit veitir tímabilssýn fyrir KOrganizer (svipað og verkþátta eða mánaðarsýn). Ef þú virkjar þetta íforrit getur þú skipt yfir í tímabilssýn og skoðað atburðina þína eins og á Gantt skýringarmynd.
@@ -876,10 +1634,46 @@ Index: korganizer/plugins/timespanview/timespanview.desktop
  Comment[nb]=Dette tilleggsprogrammet lager en periodevisning for korganizer (slik som gjøreliste og månedsvisning). Hvis du slår på dette tilleggsprogrammet kan du bytte til periodevisning og se hendelser som i et Gantt-diagram.
  Comment[nl]=Deze plugin biedt een weergave voor KOrganizer (zoals de takenlijst en de maandweergave). Wanneer u deze plugin inschakelt kunt u kiezen voor een weergave waarin u uw evenementen in een Gantt-diagram kunt bekijken.
  Comment[pl]=Ta wtyczka tworzy widok zakresu czasu w KOrganizerze (tak jak widok zadań do zrobienia lub widok miesiąca). Po włączeniu tej wtyczki możliwe jest przełączenie się na widok zakresu czasu i przeglądanie zdarzeń jak na diagramie Gantta.
+Index: korganizer/korganizer_configcolors.desktop
+===================================================================
+--- korganizer/korganizer_configcolors.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configcolors.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -127,6 +127,7 @@
+ Keywords[eu]=korganizer,koloreak
+ Keywords[fi]=korganizer,värit
+ Keywords[fr]=KOrganizer,couleurs
++Keywords[ga]=korganizer,dathanna
+ Keywords[gl]=korganizer,cores
+ Keywords[hi]=के-आर्गेनाइज़र,रंग
+ Keywords[hu]=korganizer,színek
+Index: korganizer/korganizer_configdesignerfields.desktop
+===================================================================
+--- korganizer/korganizer_configdesignerfields.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configdesignerfields.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -102,6 +102,7 @@
+ Keywords[et]=korganizer, seadistamine, seadistused, omaloodud väljad
+ Keywords[eu]=korganizer, konfiguratu, ezarpenak, eremu pertsonalizatuak
+ Keywords[fr]=KOrganizer, configuration, configurer, champs personnalisés
++Keywords[ga]=korganizer, cumraigh, socruithe, réimsí saincheaptha
+ Keywords[hi]=केऑर्गेनाइज़र, कॉन्फ़िगर, विन्यास, मनपसंद फ़ील्ड्स
+ Keywords[hu]=korganizer,beállítás,beállítások,egyéni mezők
+ Keywords[is]=korganizer, stillingar, stilla, sérsniðnir reitir
+Index: korganizer/korganizer_configviews.desktop
+===================================================================
+--- korganizer/korganizer_configviews.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configviews.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -112,6 +112,7 @@
+ Keywords[eu]=korganizer,ikuspegia
+ Keywords[fi]=korganizer,näkymä
+ Keywords[fr]=KOrganizer,vues
++Keywords[ga]=korganizer,amharc
+ Keywords[gl]=korganizer,vista
+ Keywords[hi]=के-आर्गेनाइज़र,दृश्य
+ Keywords[hu]=korganizer,nézet
 Index: korganizer/korganizer-import.desktop
 ===================================================================
---- korganizer/korganizer-import.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- korganizer/korganizer-import.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -21,6 +21,7 @@
  Name[et]=Kalendri import
  Name[eu]=Inportatu egutegia
@@ -890,16 +1684,54 @@ Index: korganizer/korganizer-import.desktop
  Name[is]=Flytja inn dagatal
 Index: korganizer/korganizer_configmain.desktop
 ===================================================================
---- korganizer/korganizer_configmain.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 442272)
-+++ korganizer/korganizer_configmain.desktop	(.../branches/KDE/3.4/kdepim)	(revision 442272)
+--- korganizer/korganizer_configmain.desktop	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ korganizer/korganizer_configmain.desktop	(.../branches/KDE/3.4/kdepim)	(revision 453465)
 @@ -16,6 +16,7 @@
  Name[ar]=شخصي
  Name[be]=Пэрсанальныя
  Name[bg]=Персоналност
-+Name[br]=Diouzhoc'h :
++Name[br]=Diouzhoc'h
  Name[bs]=Lično
  Name[cs]=Osobní
  Name[cy]=Personol
+@@ -55,6 +56,7 @@
+ Name[zh_CN]=个人
+ Comment=KOrganizer Main Configuration
+ Comment[bg]=Главни настройки за KOrganizer
++Comment[br]=Kefluniadur kentañ KOrganizer
+ Comment[bs]=KOrganizer glavno podešavanje
+ Comment[ca]=Configuració principal a KOrganizer
+ Comment[cs]=Hlavní nastavení KOrganizeru
+@@ -67,6 +69,7 @@
+ Comment[eu]=KOrganizer-en konfigurazio nagusia
+ Comment[fi]=KOrganizerin pääasetukset
+ Comment[fr]=Configuration principale de KOrganizer
++Comment[ga]=Príomhchumraíocht KOrganizer
+ Comment[gl]=Configuración Principal de KOrganizer
+ Comment[hi]=के-आर्गेनाइज़र मुख्य कॉन्फ़िगरेशन
+ Comment[hu]=A KOrganizer alapbeállításai
+Index: konsolekalendar/konsolekalendar.cpp
+===================================================================
+--- konsolekalendar/konsolekalendar.cpp	(.../tags/KDE/3.4.2/kdepim)	(revision 453465)
++++ konsolekalendar/konsolekalendar.cpp	(.../branches/KDE/3.4/kdepim)	(revision 453465)
+@@ -157,7 +157,8 @@
+ 
+ 	  Event::List sortedList =
+             m_variables->getCalendar()->events( EventSortStartDate );
+-
++	  if( sortedList.count() > 0)
++	  {
+           QDate dt, firstdate, lastdate;
+           firstdate = sortedList.first()->dtStart().date();
+           lastdate = sortedList.last()->dtStart().date();
+@@ -167,6 +168,7 @@
+             Event::List events = m_variables->getCalendar()->events( dt, true );
+             status = printEventList( &ts, &events, dt );
+           }
++	  }
+ 
+ 	} else if ( m_variables->isUID() ) {
+ 	  kdDebug() << "konsolekalendar.cpp::showInstance() | "
 
 Property changes on: .
 ___________________________________________________________________
