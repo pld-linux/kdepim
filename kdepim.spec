@@ -221,6 +221,7 @@ Summary:	KDE Mail client
 Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
+URL:		http://kmail.kde.org/
 Requires:	kdebase-core >= %{_minbaseevr}
 Requires:	kde-kio-imap4 >= %{epoch}:%{version}-%{release}
 Requires:	kde-kio-pop3 >= %{_minbaseevr}
