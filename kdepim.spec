@@ -1,13 +1,15 @@
-#
+# TODO:
+# - include akregator.desktop
+
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
 #
 %define		_state		stable
-%define		_kdever		3.4.2
-%define		_ver		3.4.2
+%define		_kdever		3.4.3
+%define		_ver		3.4.3
 
-%define		_minlibsevr	9:3.4.2
-%define		_minbaseevr	9:3.4.2
+%define		_minlibsevr	9:3.4.3
+%define		_minbaseevr	9:3.4.3
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -16,13 +18,13 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	3.1
+Release:	0.1
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	e7bd012faa559bcf2a949b6a8ed5ff7f
+# Source0-md5:	b2c145f3779578c9208dcbec9a4a5aea
 Icon:		kde-pim.xpm
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
@@ -473,7 +475,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p0
+#%patch100 -p0
 %patch0 -p1
 %patch2 -p1
 %patch3 -p1
