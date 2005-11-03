@@ -18,13 +18,14 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	1
+Release:	2
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	b2c145f3779578c9208dcbec9a4a5aea
+Source1:	akregator.desktop
 Icon:		kde-pim.xpm
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
@@ -607,6 +608,9 @@ cat multisynk.lang	>> %{name}.lang
 # Omit apidocs entries
 sed -i 's/.*apidocs.*//' *.lang
 
+# install missing akregator.desktop
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/kde
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -844,6 +848,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/Kontact.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
+%{_desktopdir}/kde/akregator.desktop
 %{_iconsdir}/crystalsvg/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/crystalsvg/*/apps/multisynk.png
