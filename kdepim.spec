@@ -3,9 +3,9 @@
 %bcond_without	apidocs		# do not prepare API documentation
 #
 %define		_state		unstable
-%define		_kdever		3.4.89
-%define		_ver		3.4.89
-%define         _snap           050627
+%define		_kdever		3.4.91
+%define		_ver		3.4.91
+%define         _snap           050926
 %define		_minlibsevr	9:3.4.89.050624
 %define		_minbaseevr	9:3.4.89.050625
 
@@ -21,9 +21,7 @@ Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
-#Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-Source0:        ftp://ftp.pld-linux.org/software/kde/%{name}-%{_snap}.tar.bz2
-##% Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
+Source0:        ziew.tar.bz2
 Icon:		kde-pim.xpm
 #Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
@@ -41,6 +39,7 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 #BuildRequires:	gnupg >= 1.2.2
 BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
+BuildRequires:	indexlib-devel
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
@@ -475,7 +474,7 @@ libksieve, libmimelib.
 
 %prep
 #%setup -q
-%setup -q -n %{name}-%{_snap}
+%setup -q -n %{name} -T -D
 #%patch100 -p1
 %patch0 -p1
 #%patch1 -p1
@@ -533,28 +532,28 @@ done
 # change annoyance-filter path (required by autodetect in kmail)
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
-
-%build
 cp %{_datadir}/automake/config.sub admin
-
 #export UNSERMAKE=%{_datadir}/unsermake/unsermake
-
 %{__make} -f admin/Makefile.common cvs
 
+%build
 %configure \
 	--disable-rpath \
-	--enable-final \
+	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir} \
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
-	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full}
+	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
+	--enable-newdistrlists \
+	--enable-indexlib
 
 %{__make}
 
 %{?with_apidocs:%{__make} apidox}
 
 %install
+%if 0
 rm -rf $RPM_BUILD_ROOT
 rm -rf *.lang
 %{__make} install \
@@ -578,8 +577,9 @@ cd -
 %find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
-%find_lang	kalarmd		--with-kde
-cat kalarmd.lang >> kalarm.lang
+#%find_lang	kalarmd		--with-kde
+#cat kalarmd.lang >> kalarm.lang
+%endif
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
 %find_lang	kmail		--with-kde
@@ -840,6 +840,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kabc/kabc_slox.desktop
 %{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
 %{_datadir}/services/kresources/kabc/kolab.desktop
+%{_datadir}/services/kresources/kabc/kabc_ox.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
 %{_datadir}/services/kresources/konnector
@@ -861,11 +862,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/akregator.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
+%{_desktopdir}/kde/groupwarewizard.desktop
 %{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/*/*/apps/multisynk.png
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
+%{_iconsdir}/*/*/actions/*rss*
 #
 %{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
 %{_iconsdir}/crystalsvg/22x22/actions/button_more.png
@@ -888,6 +891,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
+%{_includedir}/akregator
 %{_includedir}/calendar
 %{_includedir}/gpgme++
 %{_includedir}/kabc/kabc_resourcexmlrpc.h
@@ -1191,7 +1195,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
 %{_libdir}/kconf_update_bin/korn-3-4-config_change
-%{_datadir}/apps/kconf_update/korn-3-4-config_change.upd
+%{_datadir}/apps/kconf_update/korn-*.upd
+%attr(755,root,root) %{_datadir}/apps/kconf_update/korn-3-5*.pl
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
 %{_mandir}/man1/korn*.1*
