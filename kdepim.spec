@@ -5,11 +5,11 @@
 %bcond_without	apidocs		# do not prepare API documentation
 #
 %define		_state		stable
-%define		_kdever		3.4.3
-%define		_ver		3.4.3
+%define		_kdever		3.5
+%define		_ver		3.5.0
 
-%define		_minlibsevr	9:3.4.3
-%define		_minbaseevr	9:3.4.3
+%define		_minlibsevr	9:3.5.0
+%define		_minbaseevr	9:3.5.0
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -18,16 +18,16 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	0.2
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	b2c145f3779578c9208dcbec9a4a5aea
+# Source0-md5:	6d5df9a18022f020e97d279ac42b7885
 Source1:	akregator.desktop
 Icon:		kde-pim.xpm
-Patch100:	%{name}-branch.diff
+#Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-iconsidepane-showtext.diff
@@ -40,7 +40,9 @@ BuildRequires:	cyrus-sasl-devel
 BuildRequires:	ed
 BuildRequires:	flex
 BuildRequires:	gpgme-devel >= 1:1.0.0
+BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
+BuildRequires:	indexlib-devel
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
@@ -478,8 +480,9 @@ libksieve, libmimelib.
 %setup -q
 #%patch100 -p0
 %patch0 -p1
-%patch2 -p1
-%patch3 -p1
+#%patch1 -p1
+#%patch2 -p1
+#%patch3 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -532,22 +535,22 @@ done
 # change annoyance-filter path (required by autodetect in kmail)
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
-
-%build
 cp %{_datadir}/automake/config.sub admin
-
 #export UNSERMAKE=%{_datadir}/unsermake/unsermake
-
 %{__make} -f admin/Makefile.common cvs
 
+%build
 %configure \
-	--disable-rpath \
 	--enable-final \
+	--disable-rpath \
+	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir} \
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
-	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full}
+	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
+	--enable-newdistrlists \
+	--enable-indexlib
 
 %{__make}
 
@@ -560,8 +563,6 @@ rm -rf *.lang
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir} \
 	kde_libs_htmldir=%{_kdedocdir}
-
-install korganizer/korganizerIn $RPM_BUILD_ROOT%{_bindir}
 
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
@@ -576,10 +577,11 @@ for f in *.man ; do
 done
 cd -
 
+%find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
-%find_lang	kalarmd		--with-kde
-cat kalarmd.lang >> kalarm.lang
+#%find_lang	kalarmd		--with-kde
+#cat kalarmd.lang >> kalarm.lang
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
 %find_lang	kmail		--with-kde
@@ -599,9 +601,10 @@ cat kwatchgnupg.lang >> kmail.lang
 %find_lang	multisynk	--with-kde
 
 > %{name}.lang
+cat akregator.lang	>> %{name}.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
-cat kalarmd.lang	>> %{name}.lang
+#cat kalarmd.lang	>> %{name}.lang
 # TODO
 cat multisynk.lang	>> %{name}.lang
 
@@ -688,8 +691,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcal_slox.so
 %{_libdir}/kde3/kcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
-%{_libdir}/kde3/kcm_kabsummary.la
-%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
+#%{_libdir}/kde3/kcm_kabsummary.la
+#%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
 %{_libdir}/kde3/kcm_kmailsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmailsummary.so
 %{_libdir}/kde3/kcm_kontact.la
@@ -716,6 +719,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
 %{_libdir}/kde3/libgroupwisewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
+%{_libdir}/kde3/libakregator_mk4storage_plugin.la
+%attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
 %{_libdir}/kde3/libkitchensyncpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
 %{_libdir}/kde3/libkontact_akregator.la
@@ -724,6 +729,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
 %{_libdir}/kde3/libkontact_kaddressbookplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
+%{_libdir}/kde3/libkontact_karm.la
+%attr(755,root,root) %{_libdir}/kde3/libkontact_karm.so
 %{_libdir}/kde3/libkontact_kmailplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
 %{_libdir}/kde3/libkontact_knodeplugin.la
@@ -750,6 +757,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
+%{_libdir}/kde3/libksfilter_addressbook.la
+%attr(755,root,root) %{_libdir}/kde3/libksfilter_addressbook.so
+%{_libdir}/kde3/libksfilter_calendar.la
+%attr(755,root,root) %{_libdir}/kde3/libksfilter_calendar.so
 %{_libdir}/kde3/libksync_backup.la
 %attr(755,root,root) %{_libdir}/kde3/libksync_backup.so
 %{_libdir}/kde3/libksync_debugger.la
@@ -790,6 +801,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
+# !!!
+%{_datadir}/apps/libical
+#
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
 %{_datadir}/apps/multisynk
@@ -801,14 +815,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/kontact.kcfg
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/config.kcfg/memofileconduit.kcfg
+%{_datadir}/config.kcfg/mk4config.kcfg
 %{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
 %{_datadir}/config.kcfg/slox.kcfg
 #%{_datadir}/mimelnk/kdedevice/cellphone.desktop
 #%{_datadir}/mimelnk/kdedevice/pda.desktop
+%{_datadir}/services/akregator_mk4storage_plugin.desktop
 %{_datadir}/services/akregator_part.desktop
 %{_datadir}/services/feed.protocol
-%{_datadir}/services/kcmkabsummary.desktop
+#%{_datadir}/services/kcmkabsummary.desktop
 %{_datadir}/services/kcmkmailsummary.desktop
 %{_datadir}/services/kcmkontactknt.desktop
 %{_datadir}/services/kcmkontactsummary.desktop
@@ -829,12 +845,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kabc/kabc_slox.desktop
 %{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
 %{_datadir}/services/kresources/kabc/kolab.desktop
+%{_datadir}/services/kresources/kabc/kabc_ox.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
 %{_datadir}/services/kresources/konnector
 %{_datadir}/services/kresources/konnector_manager.desktop
 %{_datadir}/services/overview.desktop
 %{_datadir}/services/webcal.protocol
+%{_datadir}/servicetypes/akregator_plugin.desktop
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
 %{_datadir}/servicetypes/dcopcalendar.desktop
@@ -846,14 +864,21 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/korganizerpart.desktop
 %{_datadir}/servicetypes/korgprintplugin.desktop
 %{_desktopdir}/kde/Kontact.desktop
+%{_desktopdir}/kde/akregator.desktop
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
-%{_desktopdir}/kde/akregator.desktop
-%{_iconsdir}/crystalsvg/*/apps/akregator*
+%{_desktopdir}/kde/groupwarewizard.desktop
+%{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
-%{_iconsdir}/crystalsvg/*/apps/multisynk.png
-%{_iconsdir}/crystalsvg/*/apps/kontact.png
-%{_iconsdir}/crystalsvg/*/actions/kontact_*.png
+%{_iconsdir}/*/*/apps/multisynk.png
+%{_iconsdir}/*/*/apps/kontact.png
+%{_iconsdir}/*/*/actions/kontact_*.png
+%{_iconsdir}/*/*/actions/*rss*
+#
+%{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
+%{_iconsdir}/crystalsvg/22x22/actions/button_more.png
+#
+%{_mandir}/man1/akregator.1*
 %{_mandir}/man1/ical2vcal.1*
 %{_mandir}/man1/kdeopt*.1*
 %{_mandir}/man1/kitchensync*.1*
@@ -872,6 +897,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
+%{_includedir}/akregator
 %{_includedir}/calendar
 %{_includedir}/gpgme++
 %{_includedir}/kabc/kabc_resourcexmlrpc.h
@@ -1032,7 +1058,11 @@ rm -rf $RPM_BUILD_ROOT
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
+%{_libdir}/kde3/libkarmpart.la
+%attr(755,root,root) %{_libdir}/kde3/libkarmpart.so
 %{_datadir}/apps/karm
+%{_datadir}/apps/karmpart
+%{_datadir}/services/karm_part.desktop
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 %{_mandir}/man1/karm*.1*
@@ -1047,7 +1077,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
-%attr(755,root,root) %{_bindir}/korganizerIn
 %{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
 %{_libdir}/kde3/kcm_kleopatra.la
@@ -1093,10 +1122,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kmail_view.desktop
 # hidden (todo)
 %{_desktopdir}/kde/kleopatra_import.desktop
-%{_iconsdir}/*/*/apps/kmail.png
-%{_iconsdir}/crystalsvg/scalable/apps/kmail.svgz
-%{_iconsdir}/*/*/apps/kmailcvt.png
-%{_iconsdir}/*/*/apps/kmaillight.png
+%{_iconsdir}/*/*/apps/kmail.*
+%{_iconsdir}/*/*/apps/kmailcvt.*
+%{_iconsdir}/*/*/apps/kmaillight.*
 # TODO
 %{_iconsdir}/*/*/apps/gpg.png
 %{_iconsdir}/*/*/apps/gpgsm.png
@@ -1174,7 +1202,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
 %{_libdir}/kconf_update_bin/korn-3-4-config_change
-%{_datadir}/apps/kconf_update/korn-3-4-config_change.upd
+%{_datadir}/apps/kconf_update/korn-*.upd
+%attr(755,root,root) %{_datadir}/apps/kconf_update/korn-3-5*.pl
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
 %{_mandir}/man1/korn*.1*
