@@ -1,5 +1,14 @@
 # TODO:
-# - include akregator.desktop
+# - system indexlib-devel is not used, bundled one instead is compiled and installed
+#   also bundled one is newer than system
+# - check files
+#   /usr/share/applnk/Applications/kalarm.desktop
+#   /usr/share/applnk/Utilities/kandy.desktop
+#   /usr/share/applnk/Utilities/karm.desktop
+#   /usr/share/applnk/Utilities/kmailcvt.desktop
+#   /usr/share/icons/locolor/16x16/apps/kpilot.png
+#   /usr/share/icons/locolor/16x16/apps/ktnef.png
+#   /usr/share/icons/locolor/32x32/apps/ktnef.png
 
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
@@ -18,14 +27,13 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.3
+Release:	0.6
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	9ed0b1a66121ee1c4fbaafd17017f2d9
-Source1:	akregator.desktop
 Icon:		kde-pim.xpm
 #Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
@@ -186,8 +194,8 @@ to be sent. Also includes an alarm daemon.
 KAlarm to osobisty program do planowania i przypominania poprzez
 uruchomienie polecenia lub poczt± elektroniczn±. Umo¿liwia ustawienie
 w³asnej wiadomo¶ci alarmowej, która wyskoczy na ekranie o wybranym
-czasie albo zaszeregowanie poleceñ do wykonania lub poczty do wys³ania.
-Zawiera tak¿e demona obs³uguj±cego przypominanie.
+czasie albo zaszeregowanie poleceñ do wykonania lub poczty do
+wys³ania. Zawiera tak¿e demona obs³uguj±cego przypominanie.
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
@@ -440,7 +448,7 @@ Obs³uguje urz±dzenia serii:
 ÐÒÉÓÔÒÏÑÍÉ.
 
 %package libs
-Summary:	Shared kdepim libraries.
+Summary:	Shared kdepim libraries
 Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
@@ -558,7 +566,7 @@ cp %{_datadir}/automake/config.sub admin
 
 %install
 rm -rf $RPM_BUILD_ROOT
-rm -rf *.lang
+rm -f *.lang
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	kde_htmldir=%{_kdedocdir} \
@@ -610,9 +618,6 @@ cat multisynk.lang	>> %{name}.lang
 
 # Omit apidocs entries
 sed -i 's/.*apidocs.*//' *.lang
-
-# install missing akregator.desktop
-install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/kde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1287,7 +1292,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkcal_blogging.so.*.*.*
 %{_libdir}/libkcal_groupdav.la
 %attr(755,root,root) %{_libdir}/libkcal_groupdav.so.*.*.*
-%{_libdir}/libkcal_groupwise.la                                                 
+%{_libdir}/libkcal_groupwise.la
 %attr(755,root,root) %{_libdir}/libkcal_groupwise.so.*.*.*
 %{_libdir}/libkcal_newexchange.la
 %attr(755,root,root) %{_libdir}/libkcal_newexchange.so.*.*.*
