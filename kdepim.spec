@@ -18,13 +18,13 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	0.2
+Release:	0.3
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	6d5df9a18022f020e97d279ac42b7885
+# Source0-md5:	9ed0b1a66121ee1c4fbaafd17017f2d9
 Source1:	akregator.desktop
 Icon:		kde-pim.xpm
 #Patch100:	%{name}-branch.diff
