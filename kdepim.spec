@@ -633,6 +633,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 %attr(755,root,root) %{_bindir}/groupwisewizard
 %attr(755,root,root) %{_bindir}/ical2vcal
+%attr(755,root,root) %{_bindir}/indexlib-config
 %attr(755,root,root) %{_bindir}/kode
 %attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/kontact
@@ -905,6 +906,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/akregator
 %{_includedir}/calendar
 %{_includedir}/gpgme++
+%{_includedir}/index
 %{_includedir}/kabc/kabc_resourcexmlrpc.h
 %{_includedir}/kabc/kcal_resourcexmlrpc.h
 %{_includedir}/kaddressbook
@@ -1268,6 +1270,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libakregatorprivate.la
 %attr(755,root,root) %{_libdir}/libakregatorprivate.so
+%{_libdir}/libindex.la
+%attr(755,root,root) %{_libdir}/libindex.so.*.*.*
 %{_libdir}/libgpgme++.la
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
 %{_libdir}/libkaddressbook.la
