@@ -927,6 +927,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/qgpgme
 %{_libdir}/libgpgme++.so
 %{_libdir}/libkabc_groupdav.so
+%{_libdir}/libindex.so
 %{_libdir}/libkabc_groupwise.so
 %{_libdir}/libkabc_newexchange.so
 %{_libdir}/libkabc_slox.so
