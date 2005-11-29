@@ -27,7 +27,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	3
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
@@ -38,8 +38,7 @@ Icon:		kde-pim.xpm
 #Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-iconsidepane-showtext.diff
-Patch3:		%{name}-knode-google-msgid.patch
+Patch2:		%{name}-alpha.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -489,8 +488,7 @@ libksieve, libmimelib.
 #%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
-#%patch2 -p1
-#%patch3 -p1
+%patch2 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -549,7 +547,9 @@ cp %{_datadir}/automake/config.sub admin
 
 %build
 %configure \
+%ifnarch alpha
 	--enable-final \
+%endif
 	--disable-rpath \
 	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir} \
