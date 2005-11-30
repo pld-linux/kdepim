@@ -1,15 +1,3 @@
-# TODO:
-# - system indexlib-devel is not used, bundled one instead is compiled and installed
-#   also bundled one is newer than system
-# - check files
-#   /usr/share/applnk/Applications/kalarm.desktop
-#   /usr/share/applnk/Utilities/kandy.desktop
-#   /usr/share/applnk/Utilities/karm.desktop
-#   /usr/share/applnk/Utilities/kmailcvt.desktop
-#   /usr/share/icons/locolor/16x16/apps/kpilot.png
-#   /usr/share/icons/locolor/16x16/apps/ktnef.png
-#   /usr/share/icons/locolor/32x32/apps/ktnef.png
-
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
 #
@@ -49,7 +37,6 @@ BuildRequires:	flex
 BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
-BuildRequires:	indexlib-devel
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
@@ -102,6 +89,7 @@ Group:		X11/Development/Libraries
 Requires:	kdelibs-devel >= %{_minlibsevr}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Conflicts:	kdenetwork-devel < 10:3.1.90
+Obsoletes:	indexlib-devel
 Obsoletes:	kdepim-libkcal-devel
 
 %description devel
@@ -451,6 +439,7 @@ Summary:	Shared kdepim libraries
 Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
+Obsoletes:	indexlib
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
 Obsoletes:	kdepim-kaddressbook-libs
@@ -633,7 +622,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 %attr(755,root,root) %{_bindir}/groupwisewizard
 %attr(755,root,root) %{_bindir}/ical2vcal
-%attr(755,root,root) %{_bindir}/indexlib-config
 %attr(755,root,root) %{_bindir}/kode
 %attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/kontact
@@ -896,6 +884,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/indexlib-config
 %{_includedir}/KNotesIface.h
 %{_includedir}/KNotesAppIface.h
 %{_includedir}/kdepimmacros.h
