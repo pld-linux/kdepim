@@ -609,6 +609,10 @@ cat multisynk.lang	>> %{name}.lang
 # Omit apidocs entries
 sed -i 's/.*apidocs.*//' *.lang
 
+# remove checked files
+rm $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
+rm $RPM_BUILD_ROOT%{_iconsdir}/locolor/{16x16/apps/{kpilot,ktnef},32x32/apps/ktnef}.png
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
