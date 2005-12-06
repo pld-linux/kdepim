@@ -15,7 +15,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	3
+Release:	4
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
@@ -23,7 +23,7 @@ Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
 # Source0-md5:	e19a2a40e422ecd483884ce6e9ac8925
 Icon:		kde-pim.xpm
-#Patch100:	%{name}-branch.diff
+Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-alpha.patch
@@ -51,6 +51,7 @@ BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	zlib-devel
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
+BuildConflicts:	indexlib
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 # subpackage akregator
 Obsoletes:	akregator
@@ -474,7 +475,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-#%patch100 -p0
+%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
 %patch2 -p1
