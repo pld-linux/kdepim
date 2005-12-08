@@ -1,5 +1,8 @@
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
+					# & '--fvisibility-inlines-hidden'
+					# to g++ 
 #
 %define		_state		stable
 %define		_kdever		3.5
@@ -34,6 +37,7 @@ BuildRequires:	cyrus-sasl-devel
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
 BuildRequires:	flex
+%{?with_hidden_visibility:BuildRequires:	gcc-c++ >= 5:4.1.0-0.20051206r108118.1}
 BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	gnupg-agent
 %{?with_apidocs:BuildRequires:	graphviz}
@@ -44,6 +48,7 @@ BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pilot-link-devel
+%{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 BuildRequires:	qt-designer-libs
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
@@ -537,18 +542,19 @@ cp %{_datadir}/automake/config.sub admin
 
 %build
 %configure \
+	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
+	%{!?debug:--disable-rpath} \
 %ifnarch alpha
 	--enable-final \
 %endif
-	--disable-rpath \
-	--with-distribution="PLD Linux Distribution" \
-	--with-qt-libraries=%{_libdir} \
+	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
+	--enable-indexlib
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
-	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
 	--enable-newdistrlists \
-	--enable-indexlib
+	--with-distribution="PLD Linux Distribution" \
+	--with-qt-libraries=%{_libdir} \
 
 %{__make}
 
