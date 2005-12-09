@@ -806,11 +806,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
-# !!!
-%{_datadir}/apps/libical
-#
-%{_datadir}/apps/libkdepim
-%{_datadir}/apps/libkholidays
 %{_datadir}/apps/multisynk
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
@@ -1379,3 +1374,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
 %{_libdir}/libmultisynk.la
 %attr(755,root,root) %{_libdir}/libmultisynk.so.*.*.*
+%{_datadir}/apps/libical
+%{_datadir}/apps/libkdepim
+%{_datadir}/apps/libkholidays
