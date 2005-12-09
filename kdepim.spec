@@ -548,13 +548,13 @@ cp %{_datadir}/automake/config.sub admin
 	--enable-final \
 %endif
 	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
-	--enable-indexlib
+	--enable-indexlib \
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
 	--enable-newdistrlists \
 	--with-distribution="PLD Linux Distribution" \
-	--with-qt-libraries=%{_libdir} \
+	--with-qt-libraries=%{_libdir}
 
 %{__make}
 
