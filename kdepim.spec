@@ -1,3 +1,5 @@
+# TODO
+# - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
 %bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
