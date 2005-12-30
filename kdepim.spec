@@ -36,6 +36,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cyrus-sasl-devel
+BuildRequires:	docbook-dtd42-xml
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
 BuildRequires:	flex
