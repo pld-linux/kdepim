@@ -546,9 +546,7 @@ cp %{_datadir}/automake/config.sub admin
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
 	%{!?debug:--disable-rpath} \
-%ifnarch alpha
-	--enable-final \
-%endif
+	--disable-final \
 	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
 	--enable-indexlib \
 %if "%{_lib}" == "lib64"
