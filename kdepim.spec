@@ -2,16 +2,16 @@
 # - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
+%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
 					# & '--fvisibility-inlines-hidden'
 					# to g++ 
 #
 %define		_state		stable
-%define		_kdever		3.5.1
-%define		_ver		3.5.1
+%define		_kdever		3.5.2
+%define		_ver		3.5.2
 
-%define		_minlibsevr	9:3.5.1
-%define		_minbaseevr	9:3.5.1
+%define		_minlibsevr	9:3.5.2
+%define		_minbaseevr	9:3.5.2
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko):	K ╣╔╫╨е╘е╬ х╞╟Ф - PIM (╟Ёюн а╓╨╦ ╟Э╦╝)
@@ -20,17 +20,16 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	%{_ver}
-Release:	2
+Release:	1
 Epoch:		9
 License:	GPL
 Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{_ver}.tar.bz2
-# Source0-md5:	8e87c9cbe1f0c0f983f94d804a5bc8f9
+# Source0-md5:	ac6b3b503e27a65a7b883c1e0a57262e
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-alpha.patch
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -482,10 +481,9 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p0
+#%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
-%patch2 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -570,16 +568,16 @@ rm -f *.lang
 
 # Debian manpages
 install -d $RPM_BUILD_ROOT%{_mandir}/man1
-cd debian/man
-if [ -f alarmd.sgml ]; then
-	%{__sed} -i -e 's/alarmd/kalarmd/' -e 's/ALARMD/KALARMD/' alarmd.sgml
-	mv -f alarmd.sgml kalarmd.sgml
-fi
-for f in *.man ; do
-	base="$(basename $f .man)"
-	install ${base}.man $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
-done
-cd -
+#cd debian/man
+#if [ -f alarmd.sgml ]; then
+#	%{__sed} -i -e 's/alarmd/kalarmd/' -e 's/ALARMD/KALARMD/' alarmd.sgml
+#	mv -f alarmd.sgml kalarmd.sgml
+#fi
+#for f in *.man ; do
+#	base="$(basename $f .man)"
+#	install ${base}.man $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
+#done
+#cd -
 
 %find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
@@ -672,8 +670,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kabc_slox.so
 %{_libdir}/kde3/kabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
-%{_libdir}/kde3/kcal_blogging.la
-%attr(755,root,root) %{_libdir}/kde3/kcal_blogging.so
+#%{_libdir}/kde3/kcal_blogging.la
+#%attr(755,root,root) %{_libdir}/kde3/kcal_blogging.so
 %{_libdir}/kde3/kcal_groupdav.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_groupdav.so
 %{_libdir}/kde3/kcal_groupwise.la
@@ -878,15 +876,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
 %{_iconsdir}/crystalsvg/22x22/actions/button_more.png
 #
-%{_mandir}/man1/akregator.1*
-%{_mandir}/man1/ical2vcal.1*
-%{_mandir}/man1/kdeopt*.1*
-%{_mandir}/man1/kitchensync*.1*
-%{_mandir}/man1/korga*.1*
-%exclude %{_mandir}/man1/korganizerIn.1*
-%{_mandir}/man1/kontact*.1*
-%{_mandir}/man1/ksync*.1*
-%{_mandir}/man1/*wizard.1*
+#%{_mandir}/man1/akregator.1*
+#%{_mandir}/man1/ical2vcal.1*
+#%{_mandir}/man1/kdeopt*.1*
+#%{_mandir}/man1/kitchensync*.1*
+#%{_mandir}/man1/korga*.1*
+#%exclude %{_mandir}/man1/korganizerIn.1*
+#%{_mandir}/man1/kontact*.1*
+#%{_mandir}/man1/ksync*.1*
+#%{_mandir}/man1/*wizard.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -931,7 +929,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkcal.so
-%{_libdir}/libkcal_blogging.so
+#%{_libdir}/libkcal_blogging.so
 %{_libdir}/libkcal_groupdav.so
 %{_libdir}/libkcal_groupwise.so
 %{_libdir}/libkcal_newexchange.so
@@ -1037,8 +1035,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/servicetypes/kaddressbook_xxport.desktop
 %{_desktopdir}/kde/kaddressbook.desktop
 %{_iconsdir}/*/*/*/kaddressbook.png
-%{_mandir}/man1/kaddressbook*.1*
-%{_mandir}/man1/kabc2mutt*.1*
+#%{_mandir}/man1/kaddressbook*.1*
+#%{_mandir}/man1/kabc2mutt*.1*
 
 %files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
@@ -1048,7 +1046,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/kalarm*.desktop
 %{_desktopdir}/kde/kalarm.desktop
 %{_iconsdir}/[!l]*/*/*/kalarm.png
-%{_mandir}/man1/kalarm*.1*
+#%{_mandir}/man1/kalarm*.1*
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
@@ -1056,7 +1054,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
-%{_mandir}/man1/kandy*.1*
+#%{_mandir}/man1/kandy*.1*
 
 %files karm -f karm.lang
 %defattr(644,root,root,755)
@@ -1068,7 +1066,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/karm_part.desktop
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
-%{_mandir}/man1/karm*.1*
+#%{_mandir}/man1/karm*.1*
 
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
@@ -1139,17 +1137,17 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_datadir}/services/sieve.protocol
-%{_mandir}/man1/kmail*.1*
-%{_mandir}/man1/kwatchgnupg*.1*
-%{_mandir}/man1/kleopatra*.1*
-%{_mandir}/man1/korganizerIn.1*
+#%{_mandir}/man1/kmail*.1*
+#%{_mandir}/man1/kwatchgnupg*.1*
+#%{_mandir}/man1/kleopatra*.1*
+#%{_mandir}/man1/korganizerIn.1*
 # ktnef
 %attr(755,root,root) %{_bindir}/ktnef
 %{_datadir}/apps/ktnef
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
-%{_mandir}/man1/ktnef*.1*
+#%{_mandir}/man1/ktnef*.1*
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -1170,7 +1168,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
-%{_mandir}/man1/knode*.1*
+#%{_mandir}/man1/knode*.1*
 
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
@@ -1192,14 +1190,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/knotes_manager.desktop
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
-%{_mandir}/man1/knotes*.1*
+#%{_mandir}/man1/knotes*.1*
 
 %files konsolekalendar -f konsolekalendar.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
-%{_mandir}/man1/konsolekalendar*.1*
+#%{_mandir}/man1/konsolekalendar*.1*
 
 %files korn -f korn.lang
 %defattr(644,root,root,755)
@@ -1209,7 +1207,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_datadir}/apps/kconf_update/korn-3-5*.pl
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
-%{_mandir}/man1/korn*.1*
+#%{_mandir}/man1/korn*.1*
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
@@ -1259,8 +1257,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/[!l]*/*/*/kpilot*.png
-%{_mandir}/man1/kpilot*.1*
-%{_mandir}/man1/kpalm*.1*
+#%{_mandir}/man1/kpilot*.1*
+#%{_mandir}/man1/kpalm*.1*
 
 %files libs
 %defattr(644,root,root,755)
@@ -1288,8 +1286,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
 %{_libdir}/libkcal.la
 %attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
-%{_libdir}/libkcal_blogging.la
-%attr(755,root,root) %{_libdir}/libkcal_blogging.so.*.*.*
+#%{_libdir}/libkcal_blogging.la
+#%attr(755,root,root) %{_libdir}/libkcal_blogging.so.*.*.*
 %{_libdir}/libkcal_groupdav.la
 %attr(755,root,root) %{_libdir}/libkcal_groupdav.so.*.*.*
 %{_libdir}/libkcal_groupwise.la
