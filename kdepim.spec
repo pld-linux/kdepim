@@ -554,7 +554,10 @@ cp %{_datadir}/automake/config.sub admin
 	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir}
 
-%{__make}
+%{__make} \
+	CXXLD=%{_host_cpu}-%{_vendor}-%{_os}-g++ \
+	CCLD=%{_host_cpu}-%{_vendor}-%{_os}-gcc \
+	AM_MAKEFLAGS='CXXLD=$(CXXLD) CCLD=$(CCLD)'
 
 %{?with_apidocs:%{__make} apidox}
 
