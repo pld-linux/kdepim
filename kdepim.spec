@@ -31,6 +31,7 @@ Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 BuildRequires:	automake
+BuildRequires:	autoconf
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cyrus-sasl-devel
@@ -554,11 +555,7 @@ cp %{_datadir}/automake/config.sub admin
 	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir}
 
-%{__make} \
-	CXXLD=%{_host_cpu}-%{_vendor}-%{_os}-g++ \
-	CCLD=%{_host_cpu}-%{_vendor}-%{_os}-gcc \
-	AM_MAKEFLAGS='CXXLD=$(CXXLD) CCLD=$(CCLD)'
-
+%{__make}
 %{?with_apidocs:%{__make} apidox}
 
 %install
