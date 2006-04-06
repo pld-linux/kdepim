@@ -2,9 +2,9 @@
 # - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
 					# & '--fvisibility-inlines-hidden'
-					# to g++ 
+					# to g++
 #
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
@@ -17,18 +17,18 @@ Summary(ru):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÉÒÏ×ÝÉË (PIM) ÄÌÑ KDE
 Summary(uk):	ðÅÒÓÏÎÁÌØÎÙÊ ÐÌÁÎÕ×ÁÌØÎÉË (PIM) ÄÌÑ KDE
 Name:		kdepim
 Version:	3.5.2
-Release:	1
+Release:	2
 Epoch:		9
 License:	GPL
-Vendor:		The KDE Team
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	ac6b3b503e27a65a7b883c1e0a57262e
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-BuildRequires:	automake
 BuildRequires:	autoconf
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cyrus-sasl-devel
@@ -37,8 +37,8 @@ BuildRequires:	docbook-dtd42-xml
 BuildRequires:	ed
 BuildRequires:	flex
 %{?with_hidden_visibility:BuildRequires:	gcc-c++ >= 5:4.1.0-0.20051206r108118.1}
-BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	gnupg-agent
+BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
@@ -47,25 +47,25 @@ BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
 BuildRequires:	pilot-link-devel
-%{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 BuildRequires:	qt-designer-libs
+%{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 %{?with_apidocs:BuildRequires:	qt-doc}
 BuildRequires:	rpmbuild(macros) >= 1.129
 #BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
+BuildConflicts:	indexlib
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
-BuildConflicts:	indexlib
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 # subpackage akregator
 Obsoletes:	akregator
+#Obsoletes:	kdeaddons-konqueror
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
 Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kresources
 Obsoletes:	kdepim-ksync
-#Obsoletes:	kdeaddons-konqueror
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -88,14 +88,14 @@ Desktop Environment (KDE).
 %package devel
 Summary:	Development files for KDE pim
 Summary(pl):	Pliki nag³ówkowe do KDE pim
-Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Summary(ru):	æÁÊÌÙ ÒÁÚÒÁÂÏÔËÉ ÄÌÑ kdepim
+Summary(uk):	æÁÊÌÉ ÒÏÚÒÏÂËÉ ÄÌÑ kdepim
 Group:		X11/Development/Libraries
-Requires:	kdelibs-devel >= %{_minlibsevr}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Conflicts:	kdenetwork-devel < 10:3.1.90
+Requires:	kdelibs-devel >= %{_minlibsevr}
 Obsoletes:	indexlib-devel
 Obsoletes:	kdepim-libkcal-devel
+Conflicts:	kdenetwork-devel < 10:3.1.90
 
 %description devel
 This package contains header files needed if you wish to build
@@ -161,8 +161,8 @@ Obs³uga protoko³u IMAP4.
 Summary:	Address book
 Summary(pl):	Ksi±¿ka adresowa
 Group:		X11/Applications
-Requires:	kdelibs >= %{_minlibsevr}
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdelibs >= %{_minlibsevr}
 
 %description kaddressbook
 The KDE address book.
@@ -193,8 +193,8 @@ wys³ania. Zawiera tak¿e demona obs³uguj±cego przypominanie.
 Summary:	A communication program between mobile phone and PC
 Summary(pl):	Program do komunikacji miêdzy PC a tel. komórkowym
 Group:		X11/Applications
-Requires:	kdebase-core >= %{_minlibsevr}
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core >= %{_minlibsevr}
 Obsoletes:	kdepim-cellphone
 
 %description kandy
@@ -227,11 +227,11 @@ Summary(pl):	Program pocztowy KDE
 Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
 URL:		http://kmail.kde.org/
-Requires:	kdebase-core >= %{_minbaseevr}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kde-kio-imap4 >= %{epoch}:%{version}-%{release}
 Requires:	kde-kio-pop3 >= %{_minbaseevr}
 Requires:	kde-kio-smtp >= %{_minbaseevr}
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdebase-core >= %{_minbaseevr}
 Obsoletes:	kde-kio-sieve
 Obsoletes:	kdenetwork-kmail
 Obsoletes:	kdenetwork-korn
@@ -280,9 +280,9 @@ Summary:	KDE News Reader
 Summary(pl):	Czytnik newsów dla KDE
 Summary(pt_BR):	Leitor de notícias (news) do KDE
 Group:		X11/Applications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kde-kio-nntp >= %{_minbaseevr}
 Requires:	kdebase-core >= %{_minbaseevr}
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kdenetwork-knode
 
 %description knode
@@ -367,8 +367,8 @@ Summary:	KDE 'biff' application
 Summary(pl):	Wska¼nik skrzynki pocztowej dla KDE
 Summary(pt_BR):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
-Requires:	kdebase-desktop >= %{_minbaseevr}
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdebase-desktop >= %{_minbaseevr}
 Obsoletes:	kdenetwork-korn
 
 %description korn
@@ -444,6 +444,9 @@ Summary:	Shared kdepim libraries
 Summary(pl):	Wspó³dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
+Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
+Provides:	kdepim-libkdenetwork = %{epoch}:%{version}-%{release}
+Provides:	kdepim-libkdepim = %{epoch}:%{version}-%{release}
 Obsoletes:	indexlib
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
@@ -462,9 +465,6 @@ Obsoletes:	kdepim-libkpilot
 Obsoletes:	kdepim-libksieve
 Obsoletes:	kdepim-libktnef
 Obsoletes:	kdepim-libmimelib
-Provides:	kdepim-libkdenetwork = %{epoch}:%{version}-%{release}
-Provides:	kdepim-libkdepim = %{epoch}:%{version}-%{release}
-Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
 Conflicts:	akregator < 3.4.0
 
 %description libs
