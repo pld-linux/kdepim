@@ -174,6 +174,7 @@ Ksi±¿ka adresowa dla KDE.
 Summary:	A personal alarm scheduler
 Summary(pl):	Osobisty program do przypominania
 Group:		X11/Libraries
+Obsoletes:	kalarm
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description kalarm
