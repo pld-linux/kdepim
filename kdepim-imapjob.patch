@@ -1,0 +1,11 @@
+--- kdepim-3.5.3/kmail/imapjob.cpp.orig	2006-05-22 20:10:53.000000000 +0200
++++ kdepim-3.5.3/kmail/imapjob.cpp	2006-05-29 16:13:40.356360000 +0200
+@@ -276,7 +276,7 @@
+ {
+   KMMessage *msg = mMsgList.first();
+   KMFolderImap *msgParent = msg ? static_cast<KMFolderImap*>(msg->storage()) : 0;
+-  if ( !msgParent || msg->UID() == 0 )
++  if ( !msgParent || !msg || msg->UID() == 0 )
+   {
+     // broken message
+     emit messageRetrieved( 0 );
