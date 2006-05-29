@@ -26,6 +26,7 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.t
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
+Patch2:		%{name}-imapjob.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -483,6 +484,7 @@ libksieve, libmimelib.
 #%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
+%patch2 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
