@@ -16,13 +16,13 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.2
-Release:	2
+Version:	3.5.3
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	ac6b3b503e27a65a7b883c1e0a57262e
+# Source0-md5:	2b83885854a5953bca59508d9a7cf5ef
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -174,6 +174,7 @@ Ksi╠©ka adresowa dla KDE.
 Summary:	A personal alarm scheduler
 Summary(pl):	Osobisty program do przypominania
 Group:		X11/Libraries
+Obsoletes:	kalarm
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description kalarm
