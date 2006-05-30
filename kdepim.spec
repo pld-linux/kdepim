@@ -2,7 +2,7 @@
 # - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
 					# & '--fvisibility-inlines-hidden'
 					# to g++
 #
@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.3
-Release:	1
+Release:	2
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -27,6 +27,7 @@ Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-imapjob.patch
+Patch3:		%{name}-alpha-bug-123214.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -174,8 +175,8 @@ Ksi╠©ka adresowa dla KDE.
 Summary:	A personal alarm scheduler
 Summary(pl):	Osobisty program do przypominania
 Group:		X11/Libraries
-Obsoletes:	kalarm
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Obsoletes:	kalarm
 
 %description kalarm
 KAlarm is a personal alarm message, command and email scheduler. It
@@ -484,6 +485,7 @@ libksieve, libmimelib.
 %patch0 -p1
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p4
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -543,7 +545,7 @@ rm -f configure
 %build
 # speedup
 if [ ! -f configure ]; then
-%{__make} -f admin/Makefile.common cvs
+	%{__make} -f admin/Makefile.common cvs
 fi
 
 %configure \
