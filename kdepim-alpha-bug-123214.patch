@@ -1,0 +1,53 @@
+--- /branches/KDE/3.5/kdepim/kresources/groupwise/soap/stdsoap2.cpp	2006/03/07 14:08:39	516530
++++ branches/KDE/3.5/kdepim/kresources/groupwise/soap/stdsoap2.cpp	2006/03/07 14:09:20	516531
+@@ -2996,7 +2996,7 @@
+   strncpy(addrcopy, addr, strlen(addr)+1);
+   iadd = inet_addr(addrcopy);
+ #else
+-#if defined(_AIXVERSION_431) || defined(TRU64)
++#if defined(_AIXVERSION_431) || defined(__osf__)
+   struct hostent_data ht_data;
+ #endif
+   iadd = inet_addr(addr);
+@@ -3011,7 +3011,7 @@
+ #if defined(__GLIBC__)
+   if (gethostbyname_r(addr, &hostent, soap->buf, SOAP_BUFLEN, &host, &soap->errnum) < 0)
+     host = NULL;
+-#elif defined(_AIXVERSION_431) || defined(TRU64)
++#elif defined(_AIXVERSION_431) || defined(__osf__)
+   memset((void*)&ht_data, 0, sizeof(ht_data));
+   if (gethostbyname_r(addr, &hostent, &ht_data) < 0)
+   { host = NULL;
+--- /branches/KDE/3.5/kdepim/kresources/groupwise/soap/stdsoap2.h	2006/03/07 14:08:39	516530
++++ branches/KDE/3.5/kdepim/kresources/groupwise/soap/stdsoap2.h	2006/03/07 14:09:20	516531
+@@ -170,12 +170,6 @@
+ # endif
+ #endif
+ 
+-#ifdef __alpha
+-# ifndef TRU64
+-#  define TRU64 
+-# endif
+-#endif
+-
+ #ifdef __MVS__
+ # ifndef OS390
+ #  define OS390
+@@ -297,7 +291,7 @@
+ #  define HAVE_WCTOMB
+ #  define HAVE_MBTOWC
+ #  define HAVE_ISNAN
+-# elif defined(TRU64)
++# elif defined(__osf__)
+ #  define HAVE_STRRCHR
+ #  define HAVE_STRTOD
+ #  define HAVE_SSCANF
+@@ -553,7 +547,7 @@
+ # define SOAP_SOCKLEN_T SOCKLEN_T
+ #elif defined(__socklen_t_defined) || defined(_SOCKLEN_T) || defined(CYGWIN) || defined(FREEBSD) || defined(__FreeBSD__) || defined(__QNX__) || defined(QNX) || defined(_AIX)
+ # define SOAP_SOCKLEN_T socklen_t
+-#elif defined(IRIX) || defined(WIN32) || defined(__APPLE__) || defined(HP_UX) || defined(SUN_OS) || defined(OPENSERVER) || defined(TRU64) || defined(VXWORKS)
++#elif defined(IRIX) || defined(WIN32) || defined(__APPLE__) || defined(HP_UX) || defined(SUN_OS) || defined(OPENSERVER) || defined(__osf__) || defined(VXWORKS)
+ # define SOAP_SOCKLEN_T int
+ #else
+ # define SOAP_SOCKLEN_T size_t
