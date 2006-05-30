@@ -38,7 +38,6 @@ BuildRequires:	docbook-dtd42-xml
 BuildRequires:	ed
 BuildRequires:	flex
 %{?with_hidden_visibility:BuildRequires:	gcc-c++ >= 5:4.1.0-0.20051206r108118.1}
-BuildRequires:	gnupg-agent
 BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
@@ -538,10 +537,15 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-%build
 cp %{_datadir}/automake/config.sub admin
+rm -f configure
 
+%build
+# speedup
+if [ ! -f configure ]; then
 %{__make} -f admin/Makefile.common cvs
+fi
+
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
 	%{!?debug:--disable-rpath} \
@@ -551,6 +555,8 @@ cp %{_datadir}/automake/config.sub admin
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
+	--with-gpg=/usr/bin/gpg \
+	--with-gpgsm=/usr/bin/gpgsm \
 	--enable-newdistrlists \
 	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir}
