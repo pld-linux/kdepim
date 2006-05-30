@@ -537,11 +537,11 @@ done
 # change annoyance-filter path (required by autodetect in kmail)
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
-cp %{_datadir}/automake/config.sub admin
-#export UNSERMAKE=%{_datadir}/unsermake/unsermake
-%{__make} -f admin/Makefile.common cvs
 
 %build
+cp %{_datadir}/automake/config.sub admin
+
+%{__make} -f admin/Makefile.common cvs
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
 	%{!?debug:--disable-rpath} \
