@@ -28,6 +28,7 @@ Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-imapjob.patch
 Patch3:		%{name}-alpha-bug-123214.patch
+Patch4:		%{name}-kmail-vcardviewer.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -486,6 +487,7 @@ libksieve, libmimelib.
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p4
+%patch4 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -539,12 +541,12 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-cp %{_datadir}/automake/config.sub admin
 rm -f configure
 
 %build
 # speedup
 if [ ! -f configure ]; then
+	cp %{_datadir}/automake/config.sub admin
 	%{__make} -f admin/Makefile.common cvs
 fi
 
