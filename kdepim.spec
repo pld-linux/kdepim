@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.3
-Release:	2
+Release:	3
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -26,9 +26,8 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.t
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-imapjob.patch
-Patch3:		%{name}-alpha-bug-123214.patch
-Patch4:		%{name}-kmail-vcardviewer.patch
+Patch2:		%{name}-alpha-bug-123214.patch
+Patch3:		%{name}-kmail-vcardviewer.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -482,12 +481,11 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-#%patch100 -p0
+%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
-%patch2 -p1
-%patch3 -p4
-%patch4 -p1
+%patch2 -p4
+%patch3 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
