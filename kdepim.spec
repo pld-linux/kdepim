@@ -16,17 +16,16 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.3
-Release:	3
+Version:	3.5.4
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	2b83885854a5953bca59508d9a7cf5ef
+# Source0-md5:	4a01ceaeb6067d03003edb77b104f559
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-alpha-bug-123214.patch
 Patch3:		%{name}-kmail-vcardviewer.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
@@ -481,10 +480,9 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p0
+#%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
-%patch2 -p4
 %patch3 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
