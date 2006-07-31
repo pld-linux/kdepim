@@ -2,7 +2,7 @@
 # - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
 					# & '--fvisibility-inlines-hidden'
 					# to g++
 #
@@ -16,18 +16,17 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.3
-Release:	2
+Version:	3.5.4
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	2b83885854a5953bca59508d9a7cf5ef
+# Source0-md5:	4a01ceaeb6067d03003edb77b104f559
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-imapjob.patch
-Patch3:		%{name}-alpha-bug-123214.patch
+Patch3:		%{name}-kmail-vcardviewer.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -484,8 +483,7 @@ libksieve, libmimelib.
 #%patch100 -p0
 %patch0 -p1
 #%patch1 -p1
-%patch2 -p1
-%patch3 -p4
+%patch3 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	-e 's/Terminal=0/Terminal=false/' \
@@ -539,13 +537,13 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-cp %{_datadir}/automake/config.sub admin
 rm -f configure
 
 %build
 # speedup
 if [ ! -f configure ]; then
-%{__make} -f admin/Makefile.common cvs
+	cp %{_datadir}/automake/config.sub admin
+	%{__make} -f admin/Makefile.common cvs
 fi
 
 %configure \
