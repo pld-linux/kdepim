@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.4
-Release:	2
+Release:	3
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
