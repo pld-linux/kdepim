@@ -1,7 +1,782 @@
+Index: akregator/ChangeLog
+===================================================================
+--- akregator/ChangeLog	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/ChangeLog	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -2,6 +2,22 @@
+ ===================
+ (c) 2004-2006 the Akregator authors.
+ 
++Changes after 1.2.4:
++-----------------------------
++
++Bug fixes:
++
++ 2006/08/28 Do not create multiple items in the feed lists when dragging feeds to a folder
++            that was moved before (#124303) -fo
++ 2006/08/26 Fix a possible crash in the internal browser when going forward -fo
++ 2006/08/26 show error messages while browsing as HTML, not as annoying popups (#107740) -fo
++ 2006/08/25 Show title of selected feed in window caption (#111471) -fo
++ 2006/08/25 Konqueror plugins: correctly enable/disable icon when enabling/disabling the plugin (#132823) -fo
++ 2006/08/21 Don't crash on very long URLs (>255 chars) used for feed logos (#130849) -fo
++ 2006/08/20 Konqueror plugins: Fix crash when using the Akregator plugin in file manager mode (#124891) -fo
++ 2006/08/20 Feed detection: Fix detection when relative URLs are used in the link tags (#132687) -fo
++ 2006/08/17 Speak selected text in internal browser when using the "Speak Text" button (#132505) -fo
++
+ Changes after 1.2.3:
+ -----------------------------
+ 
+Index: akregator/src/aboutdata.cpp
+===================================================================
+--- akregator/src/aboutdata.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/aboutdata.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -31,7 +31,7 @@
+ AboutData::AboutData()
+     : KAboutData("akregator", I18N_NOOP("Akregator"), AKREGATOR_VERSION, I18N_NOOP("A KDE Feed Aggregator"),
+                  License_GPL, I18N_NOOP("(C) 2004, 2005 Akregator developers"), 0,
+-                     "http://akregator.sourceforge.net/")
++                     "http://akregator.kde.org/")
+ {
+     addAuthor( "Frank Osterfeld", I18N_NOOP("Maintainer"), "frank.osterfeld@kdemail.net" );
+     addAuthor( "Teemu Rytilahti", I18N_NOOP("Developer"), "tpr@d5k.net" );
+Index: akregator/src/articleviewer.cpp
+===================================================================
+--- akregator/src/articleviewer.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/articleviewer.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -384,7 +384,7 @@
+             "<p>Thank you,</p>\n"
+             "<p style='margin-bottom: 0px'>&nbsp; &nbsp; The Akregator Team</p>\n")
+             .arg(AKREGATOR_VERSION) // Akregator version
+-            .arg("http://akregator.sourceforge.net/"); // Akregator homepage URL
++            .arg("http://akregator.kde.org/"); // Akregator homepage URL
+ 
+     QString fontSize = QString::number( pointsToPixel( Settings::mediumFontSize() ));
+     QString appTitle = i18n("Akregator");
+@@ -428,8 +428,7 @@
+ 
+     if (feed && !feed->image().isNull())
+     {
+-        QString url=feed->xmlUrl();
+-        QString file = url.replace("/", "_").replace(":", "_");
++        QString file = Utils::fileNameForUrl(feed->xmlUrl());
+         KURL u(m_imageDir);
+         u.setFileName(file);
+         text += QString("<a href=\"%1\"><img class=\"headimage\" src=\"%2.png\"></a>\n").arg(feed->htmlUrl()).arg(u.url());
+@@ -493,13 +492,15 @@
+     QString text;
+     text = QString("<div class=\"headerbox\" dir=\"%1\">\n").arg(QApplication::reverseLayout() ? "rtl" : "ltr");
+ 
++    KURL link = article.link();
++    
+     if (!article.title().isEmpty())
+     {
+         text += QString("<div class=\"headertitle\" dir=\"%1\">\n").arg(directionOf(Utils::stripTags(article.title())));
+-        if (article.link().isValid())
+-            text += "<a href=\""+article.link().url()+"\">";
++        if (link.isValid())
++            text += "<a href=\""+link.url()+"\">";
+         text += article.title().replace("<", "&lt;").replace(">", "&gt;"); // TODO: better leave things escaped in the parser
+-        if (article.link().isValid())
++        if (link.isValid())
+             text += "</a>";
+         text += "</div>\n";
+     }
+@@ -524,8 +525,7 @@
+ 
+     if (feed && !feed->image().isNull())
+     {
+-        QString url=feed->xmlUrl();
+-        QString file = url.replace("/", "_").replace(":", "_");
++        QString file = Utils::fileNameForUrl(feed->xmlUrl());
+         KURL u(m_imageDir);
+         u.setFileName(file);
+         text += QString("<a href=\"%1\"><img class=\"headimage\" src=\"%2.png\"></a>\n").arg(feed->htmlUrl()).arg(u.url());
+@@ -554,13 +554,13 @@
+         text += "</a>";
+     }
+ 
+-    if (article.link().isValid() || (article.guidIsPermaLink() && KURL(article.guid()).isValid()))
++    if (link.isValid() || (article.guidIsPermaLink() && KURL(article.guid()).isValid()))
+     {
+         text += "<p><a class=\"contentlink\" href=\"";
+         // in case link isn't valid, fall back to the guid permaLink.
+-        if (article.link().isValid())
++        if (link.isValid())
+         {
+-            text += article.link().url();
++            text += link.url();
+         }
+         else
+          {
+Index: akregator/src/feed.cpp
+===================================================================
+--- akregator/src/feed.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/feed.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -46,6 +46,7 @@
+ #include "feedstorage.h"
+ #include "storage.h"
+ #include "treenodevisitor.h"
++#include "utils.h"
+ 
+ #include "librss/librss.h"
+ 
+@@ -205,8 +206,9 @@
+ 
+ void Feed::loadImage()
+ {
+-    QString u = d->xmlUrl;
+-    QString imageFileName = KGlobal::dirs()->saveLocation("cache", "akregator/Media/") + u.replace("/", "_").replace(":", "_")+".png";
++    QString imageFileName = KGlobal::dirs()->saveLocation("cache", "akregator/Media/") 
++                            + Utils::fileNameForUrl(d->xmlUrl) + 
++".png";
+     d->imagePixmap.load(imageFileName, "PNG");
+ }
+         
+@@ -585,8 +587,9 @@
+     if (image.isNull())
+         return;
+     d->imagePixmap=image;
+-    QString u = d->xmlUrl;
+-    d->imagePixmap.save(KGlobal::dirs()->saveLocation("cache", "akregator/Media/")+u.replace("/", "_").replace(":", "_")+".png","PNG");
++    d->imagePixmap.save(KGlobal::dirs()->saveLocation("cache", "akregator/Media/") 
++                        + Utils::fileNameForUrl(d->xmlUrl) + 
++".png","PNG");
+     nodeModified();
+ }
+ 
+Index: akregator/src/articlelistview.cpp
+===================================================================
+--- akregator/src/articlelistview.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/articlelistview.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -424,6 +424,11 @@
+         setSelected(next, true);
+         setCurrentItem(next);
+     }
++    else
++    {
++        d->noneSelected = true;
++    }
++    
+ 
+     setUpdatesEnabled(true);
+     triggerUpdate();
+@@ -465,7 +470,11 @@
+         setSelected(next, true);
+         setCurrentItem(next);
+     }
+-
++    else
++    {
++        d->noneSelected = true;
++    }
++     
+     setUpdatesEnabled(true);
+     triggerUpdate();
+ }
+@@ -745,8 +754,11 @@
+     ArticleItem* ai = dynamic_cast<ArticleItem*> (item);
+     if (ai)
+         emit signalArticleChosen( ai->article() );
+-    else 
++    else
++    {
++        d->noneSelected = true;
+         emit signalArticleChosen( Article() );
++    }
+ } 
+ 
+ 
+Index: akregator/src/librss/feeddetector.h
+===================================================================
+--- akregator/src/librss/feeddetector.h	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
++++ akregator/src/librss/feeddetector.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -0,0 +1,80 @@
++/*
++    This file is part of Akregator.
++
++    Copyright (C) 2004 Teemu Rytilahti <tpr@d5k.net>
++
++    This program is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2 of the License, or
++    (at your option) any later version.
++
++    This program is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program; if not, write to the Free Software
++    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++
++    As a special exception, permission is given to link this program
++    with any edition of Qt, and distribute the resulting executable,
++    without including the source code for Qt in the source distribution.
++*/
++ 
++#ifndef LIBRSS_FEEDDETECTOR_H
++#define LIBRSS_FEEDDETECTOR_H
++
++#include <qstring.h>
++#include <qvaluelist.h>
++
++class QStringList;
++class KURL;
++
++namespace RSS
++{
++
++    class FeedDetectorEntry
++    {
++        public:
++            FeedDetectorEntry() {}
++            FeedDetectorEntry(const QString& url, const QString& title) 
++                : m_url(url), m_title(title) {}
++
++            const QString& url() const { return m_url; } 
++            const QString& title() const { return m_title; }
++
++        private:	
++            const QString m_url;
++            const QString m_title;
++    };	
++
++    typedef QValueList<FeedDetectorEntry> FeedDetectorEntryList; 
++
++    /** a class providing functions to detect linked feeds in HTML sources */
++    class FeedDetector
++    {
++        public:
++            /** \brief searches an HTML page for feeds listed in @c <link> tags
++            @c <link> tags with @c rel attribute values @c alternate or 
++            @c service.feed are considered as feeds 
++            @param s the html source to scan (the actual source, no URI)
++            @return a list containing the detected feeds
++            */
++            static FeedDetectorEntryList extractFromLinkTags(const QString& s);
++
++            /** \brief searches an HTML page for slightly feed-like looking links and catches everything not running away quickly enough. 
++            Extracts links from @c <a @c href> tags which end with @c xml, @c rss or @c rdf
++            @param s the html source to scan (the actual source, no URI)
++            @return a list containing the detected feeds
++            */
++            static QStringList extractBruteForce(const QString& s);
++
++            static QString fixRelativeURL(const QString &s, const KURL &baseurl);
++            
++        private:
++            FeedDetector() {}
++    };
++}
++
++#endif //LIBRSS_FEEDDETECTOR_H
+Index: akregator/src/librss/loader.cpp
+===================================================================
+--- akregator/src/librss/loader.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/librss/loader.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -10,6 +10,7 @@
+  */
+ #include "loader.h"
+ #include "document.h"
++#include "feeddetector.h"
+ 
+ #include <kio/job.h>
+ #include <kprocess.h>
+@@ -377,74 +378,35 @@
+ void Loader::discoverFeeds(const QByteArray &data)
+ {
+     QString str = QString(data).simplifyWhiteSpace();
+-    QString s2;
+-    //QTextStream ts( &str, IO_WriteOnly );
+-    //ts << data.data();
+-
+-    // "<[\\s]link[^>]*rel[\\s]=[\\s]\\\"[\\s]alternate[\\s]\\\"[^>]*>"
+-    // "type[\\s]=[\\s]\\\"application/rss+xml\\\""
+-    // "href[\\s]=[\\s]\\\"application/rss+xml\\\""
+-    QRegExp rx( "(?:REL)[^=]*=[^sAa]*(?:service.feed|ALTERNATE)[\\s]*[^s][^s](?:[^>]*)(?:HREF)[^=]*=[^A-Z0-9-_~,./$]*([^'\">\\s]*)", false);
+-    if (rx.search(str)!=-1)
+-        s2=rx.cap(1);
+-    else{
+-    // does not support Atom/RSS autodiscovery.. try finding feeds by brute force....
+-        int pos=0;
+-        QStringList feeds;
+-        QString host=d->url.host();
+-        rx.setPattern("(?:<A )[^H]*(?:HREF)[^=]*=[^A-Z0-9-_~,./]*([^'\">\\s]*)");
+-        while ( pos >= 0 ) {
+-            pos = rx.search( str, pos );
+-            s2=rx.cap(1);
+-            if (s2.endsWith(".rdf") || s2.endsWith(".rss") || s2.endsWith(".xml"))
+-                    feeds.append(s2);
+-            if ( pos >= 0 ) {
+-                pos += rx.matchedLength();
+-            }
+-        }
+-
+-        s2=feeds.first();
+-        KURL testURL;
+-        // loop through, prefer feeds on same host
+-        QStringList::Iterator end( feeds.end() );
+-        for ( QStringList::Iterator it = feeds.begin(); it != end; ++it ) {
+-            testURL=*it;
+-            if (testURL.host()==host)
+-            {
+-                s2=*it;
+-                break;
+-            }
+-        }
+-    }
+-
+-    if (s2.isNull()) {
+-        //kdDebug() << "No feed found for a site" << endl;
+-        return;
+-    }
+-
+-    if (KURL::isRelativeURL(s2))
++    
++    QStringList feeds; 
++    
++    FeedDetectorEntryList list = FeedDetector::extractFromLinkTags(str); 
++    
++    for (FeedDetectorEntryList::ConstIterator it = list.begin(); it != list.end(); ++it)
+     {
+-        if (s2.startsWith("//"))
++        feeds += (*it).url();
++    }  
++    
++    if (list.isEmpty())
++        feeds = FeedDetector::extractBruteForce(str);
++        
++    QString feed = feeds.first();
++    QString host = d->url.host();
++    KURL testURL;
++    // loop through, prefer feeds on same host
++    QStringList::Iterator end( feeds.end() );
++    for ( QStringList::Iterator it = feeds.begin(); it != end; ++it) 
++    {
++        testURL=*it;
++        if (testURL.host() == host)
+         {
+-            s2=s2.prepend(d->url.protocol()+":");
+-            d->discoveredFeedURL=s2;
++            feed = *it;
++            break;
+         }
+-        else if (s2.startsWith("/"))
+-        {
+-            d->discoveredFeedURL=d->url;
+-            d->discoveredFeedURL.setPath(s2);
+-        }
+-        else
+-        {
+-            d->discoveredFeedURL=d->url;
+-            d->discoveredFeedURL.addPath(s2);
+-        }
+-        d->discoveredFeedURL.cleanPath();
+     }
+-    else
+-        d->discoveredFeedURL=s2;
+ 
+-    d->discoveredFeedURL.cleanPath();
++    d->discoveredFeedURL = feed.isNull() ? QString() : FeedDetector::fixRelativeURL(feed, d->url); 
+ }
+ 
+ #include "loader.moc"
+Index: akregator/src/librss/Makefile.am
+===================================================================
+--- akregator/src/librss/Makefile.am	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/librss/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -9,7 +9,7 @@
+   loader.h librss.h enclosure.h
+ 
+ librsslocal_la_SOURCES = article.cpp document.cpp image.cpp textinput.cpp \
+-  tools_p.cpp loader.cpp enclosure.cpp category.cpp
++  tools_p.cpp loader.cpp enclosure.cpp category.cpp feeddetector.cpp
+ 
+ librsslocal_la_METASOURCES = AUTO
+ 
+Index: akregator/src/librss/feeddetector.cpp
+===================================================================
+--- akregator/src/librss/feeddetector.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
++++ akregator/src/librss/feeddetector.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -0,0 +1,179 @@
++/*
++    This file is part of Akregator.
++
++    Copyright (C) 2004 Teemu Rytilahti <tpr@d5k.net>
++
++    This program is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2 of the License, or
++    (at your option) any later version.
++
++    This program is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++    GNU General Public License for more details.
++
++    You should have received a copy of the GNU General Public License
++    along with this program; if not, write to the Free Software
++    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++
++    As a special exception, permission is given to link this program
++    with any edition of Qt, and distribute the resulting executable,
++    without including the source code for Qt in the source distribution.
++*/
++ 
++#include <qregexp.h>
++#include <qstring.h>
++#include <qstringlist.h>
++#include <qvaluelist.h>
++#include <kcharsets.h>
++#include <kurl.h>
++
++#include "feeddetector.h"
++
++
++using namespace RSS;
++
++FeedDetectorEntryList FeedDetector::extractFromLinkTags(const QString& s)	
++{
++    //reduce all sequences of spaces, newlines etc. to one space:
++    QString str = s.simplifyWhiteSpace();
++
++    // extracts <link> tags
++    QRegExp reLinkTag("<[\\s]?LINK[^>]*REL[\\s]?=[\\s]?\\\"[\\s]?(ALTERNATE|SERVICE\\.FEED)[\\s]?\\\"[^>]*>", false);
++
++    // extracts the URL (href="url")
++    QRegExp reHref("HREF[\\s]?=[\\s]?\\\"([^\\\"]*)\\\"", false);
++    // extracts type attribute
++    QRegExp reType("TYPE[\\s]?=[\\s]?\\\"([^\\\"]*)\\\"", false);
++    // extracts the title (title="title")
++    QRegExp reTitle("TITLE[\\s]?=[\\s]?\\\"([^\\\"]*)\\\"", false);
++
++    int pos = 0;
++    int matchpos = 0;
++
++    // get all <link> tags
++    QStringList linkTags;
++    //int strlength = str.length();
++    while ( matchpos != -1 )
++    {
++        matchpos = reLinkTag.search(str, pos);
++        if (matchpos != -1)
++        {
++            linkTags.append( str.mid(matchpos, reLinkTag.matchedLength()) );
++            pos = matchpos + reLinkTag.matchedLength();
++        }
++    }
++
++    FeedDetectorEntryList list;
++
++    for ( QStringList::Iterator it = linkTags.begin(); it != linkTags.end(); ++it )
++    {
++        QString type;
++        int pos = reType.search(*it, 0);
++        if (pos != -1)
++            type = reType.cap(1).lower();
++
++        // we accept only type attributes indicating a feed
++        if ( type != "application/rss+xml" && type != "application/rdf+xml"
++	      && type != "application/atom+xml" && type != "text/xml" )
++            continue;
++                
++        QString title;
++        pos = reTitle.search(*it, 0);
++        if (pos != -1)
++        title = reTitle.cap(1);
++
++        title = KCharsets::resolveEntities(title);
++
++        QString url;
++        pos = reHref.search(*it, 0);
++        if (pos != -1)
++            url = reHref.cap(1);
++
++        url = KCharsets::resolveEntities(url);
++
++        // if feed has no title, use the url as preliminary title (until feed is parsed)
++        if ( title.isEmpty() )
++            title = url;
++
++        if ( !url.isEmpty() )
++            list.append(FeedDetectorEntry(url, title) );		
++    }
++
++
++    return list;
++}
++
++QStringList FeedDetector::extractBruteForce(const QString& s)
++{
++    QString str = s.simplifyWhiteSpace();
++    
++    QRegExp reAhrefTag("<[\\s]?A[^>]?HREF=[\\s]?\\\"[^\\\"]*\\\"[^>]*>", false);
++    
++    // extracts the URL (href="url")
++    QRegExp reHref("HREF[\\s]?=[\\s]?\\\"([^\\\"]*)\\\"", false);
++
++    QRegExp rssrdfxml(".*(RSS|RDF|XML)", false);
++
++    int pos = 0;
++    int matchpos = 0;
++    
++    // get all <a href> tags and capture url
++    QStringList list;
++    //int strlength = str.length();
++    while ( matchpos != -1 )
++    {
++        matchpos = reAhrefTag.search(str, pos);
++        if ( matchpos != -1 )
++        {
++            QString ahref = str.mid(matchpos, reAhrefTag.matchedLength());
++            int hrefpos = reHref.search(ahref, 0);
++            if ( hrefpos != -1 )
++            {
++                QString url = reHref.cap(1);
++
++                url = KCharsets::resolveEntities(url);
++
++                if ( rssrdfxml.exactMatch(url) )
++                    list.append(url);
++            }
++
++            pos = matchpos + reAhrefTag.matchedLength();
++        }
++    }
++    
++    return list;
++}
++
++QString FeedDetector::fixRelativeURL(const QString &s, const KURL &baseurl)
++{
++    QString s2=s;
++    KURL u;
++    if (KURL::isRelativeURL(s2))
++    {
++        if (s2.startsWith("//"))
++        {
++            s2=s2.prepend(baseurl.protocol()+":");
++            u=s2;
++        }
++        else if (s2.startsWith("/"))
++        {
++            KURL b2(baseurl);
++            b2.setPath(QString()); // delete path and query, so that only protocol://host remains
++            b2.setQuery(QString());
++            u = KURL(b2, s2.remove(0,1)); // remove leading "/" 
++        }
++        else
++        {
++            u = KURL(baseurl, s2);
++        }
++    }
++    else
++        u=s2;
++
++    u.cleanPath();
++    //kdDebug() << "AKREGATOR_PLUGIN_FIXURL: " << "url=" << s << " baseurl=" << baseurl.url() << " fixed=" << u.url() << 
++    endl;
++    return u.url();
++}
+Index: akregator/src/feedlistview.cpp
+===================================================================
+--- akregator/src/feedlistview.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/feedlistview.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -72,47 +72,8 @@
+     DisconnectNodeVisitor* disconnectNodeVisitor;
+     CreateItemVisitor* createItemVisitor;
+     DeleteItemVisitor* deleteItemVisitor;
+-    DragAndDropVisitor* dragAndDropVisitor;
+ };
+ 
+-class NodeListView::DragAndDropVisitor : public TreeNodeVisitor
+-{
+-
+-public:
+-    DragAndDropVisitor(NodeListView* view) : m_view(view) {}
+-
+-    /*
+-    virtual bool visitTagNode(TagNode* node)
+-    {
+-        if (m_mode == ArticlesDropped)
+-        {
+-            Tag tag = node->tag();
+-            QValueList<ArticleDragItem>::ConstIterator end(m_items.end());
+-            for (QValueList<ArticleDragItem>::ConstIterator it = m_items.begin(); it != end; ++it)
+-            {
+-                Article a = Kernel::self()->feedList()->findArticle((*it).feedURL, (*it).guid);
+-                if (!a.isNull())
+-                     a.addTag(tag.id());
+-            }
+-        }
+-        return true;
+-    }
+-*/
+-    void articlesDropped(TreeNode* node, const QValueList<ArticleDragItem>& items)
+-    {
+-        m_items = items;
+-        m_mode = ArticlesDropped;
+-        visit(node);
+-    }
+-
+-private:
+-    NodeListView* m_view;
+-    QValueList<ArticleDragItem> m_items;
+-     
+-    enum Mode { ArticlesDropped };
+-    Mode m_mode;
+-};
+-
+ class NodeListView::ConnectNodeVisitor : public TreeNodeVisitor
+ {
+     public:
+@@ -210,6 +171,7 @@
+                     m_view->setSelected(item, false);
+             }
+             
++            m_view->disconnectFromNode(node);
+             delete item;
+             return true;
+         
+@@ -245,6 +207,9 @@
+ 
+         virtual bool visitTagNode(TagNode* node)
+         {
++            if (m_view->findNodeItem(node))
++                return true;
++            
+             TagNodeItem* item = 0;
+             TreeNode* prev = node->prevSibling();
+             FolderItem* parentItem = static_cast<FolderItem*>(m_view->findNodeItem(node->parent()));
+@@ -276,6 +241,9 @@
+ 
+         virtual bool visitTagFolder(TagFolder* node)
+         {
++            if (m_view->findNodeItem(node))
++                return true;
++         
+             TagFolderItem* item = 0;
+             TreeNode* prev = node->prevSibling();
+             FolderItem* parentItem = static_cast<FolderItem*>(m_view->findNodeItem(node->parent()));
+@@ -311,6 +279,9 @@
+         
+         virtual bool visitFolder(Folder* node)
+         {
++            if (m_view->findNodeItem(node))
++                return true;
++                     
+             FolderItem* item = 0;
+             TreeNode* prev = node->prevSibling();
+             FolderItem* parentItem = static_cast<FolderItem*>(m_view->findNodeItem(node->parent()));
+@@ -345,6 +316,9 @@
+         
+         virtual bool visitFeed(Feed* node)
+         {
++            if (m_view->findNodeItem(node))
++                return true;
++         
+             FeedItem* item = 0;
+             TreeNode* prev = node->prevSibling();
+             FolderItem* parentItem = static_cast<FolderItem*>(m_view->findNodeItem(node->parent()));
+@@ -386,7 +360,6 @@
+     d->disconnectNodeVisitor = new DisconnectNodeVisitor(this);
+     d->createItemVisitor = new CreateItemVisitor(this);
+     d->deleteItemVisitor = new DeleteItemVisitor(this);
+-    d->dragAndDropVisitor = new DragAndDropVisitor(this);
+ 
+     setMinimumSize(150, 150);
+     addColumn(i18n("Feeds"));
+@@ -426,7 +399,6 @@
+     delete d->disconnectNodeVisitor;
+     delete d->createItemVisitor;
+     delete d->deleteItemVisitor;
+-    delete d->dragAndDropVisitor;
+     delete d;
+     d = 0;
+ }
+@@ -536,26 +508,14 @@
+     {
+         openFolder();
+ 
+-        FolderItem* parent = dynamic_cast<FolderItem*> (d->parent);
+-        TreeNodeItem* afterMe = 0;
+-
+-        if(d->afterme)
+-            afterMe = dynamic_cast<TreeNodeItem*> (d->afterme);
+-
+-        if (ArticleDrag::canDecode(e))
++        if (KURLDrag::canDecode(e))
+         {
+-            QPoint vp = contentsToViewport(e->pos());
+-            TreeNodeItem* tni = dynamic_cast<TreeNodeItem*>(itemAt(vp));
+-            if (tni != 0 && tni->node() != 0)
+-            {
+-                QValueList<ArticleDragItem> items;
+-                ArticleDrag::decode(e, items);
+-                d->dragAndDropVisitor->articlesDropped(tni->node(), items);
+-
+-            }
+-        }
+-        else if (KURLDrag::canDecode(e))
+-        {
++            FolderItem* parent = dynamic_cast<FolderItem*> (d->parent);
++            TreeNodeItem* afterMe = 0;
++            
++            if(d->afterme)
++                afterMe = dynamic_cast<TreeNodeItem*> (d->afterme);
++            
+             KURL::List urls;
+             KURLDrag::decode( e, urls );
+             e->accept();
+Index: akregator/src/pageviewer.cpp
+===================================================================
+--- akregator/src/pageviewer.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/pageviewer.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -175,7 +175,7 @@
+ // Taken from KDevelop (lib/widgets/kdevhtmlpart.cpp)
+ void PageViewer::slotForward()
+ {
+-    if (  d->current != d->history.fromLast() )
++    if ( d->current != d->history.fromLast() && d->current != d->history.end() )
+     {
+         QValueList<HistoryEntry>::Iterator tmp = d->current;
+         ++tmp;
+Index: akregator/src/utils.h
+===================================================================
+--- akregator/src/utils.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/utils.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -43,6 +43,14 @@
+     */
+ 
+     static uint calcHash(const QString& str);
++    
++    /**
++     * returns a file name for a URL, with chars like "/" ":"
++     * replaced by "_". Too long URLs (>255 chars) are shortened and
++     * appended with a hash value.
++     * 
++     */
++    static QString fileNameForUrl(const QString& url);
+ };
+ 
+ }
+Index: akregator/src/akregator_run.cpp
+===================================================================
+--- akregator/src/akregator_run.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/akregator_run.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -31,7 +31,7 @@
+ 
+ 
+ BrowserRun::BrowserRun(QWidget* mainWindow, Viewer* currentViewer, const KURL& url, const KParts::URLArgs& args, OpeningMode mode)
+-    : KParts::BrowserRun(url, args, 0L, mainWindow, false, true)
++    : KParts::BrowserRun(url, args, 0L, mainWindow, false, false, true)
+ {
+     m_currentViewer = currentViewer;
+     m_openingMode = mode;
 Index: akregator/src/akregator.desktop
 ===================================================================
---- akregator/src/akregator.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- akregator/src/akregator.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -58,7 +58,6 @@
  Comment[fi]=RSS-syötelukija
  Comment[fr]=Un lecteur de flux RSS pour KDE
@@ -10,10 +785,57 @@ Index: akregator/src/akregator.desktop
  Comment[hu]=KDE-s hírolvasó RSS hírcsatornákhoz
  Comment[is]=RSS fréttaforrit fyrir KDE
  Comment[it]=Un concentratore KDE per RSS
+Index: akregator/src/utils.cpp
+===================================================================
+--- akregator/src/utils.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/utils.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -44,4 +44,16 @@
+     return hash;
+ }
+ 
++QString Utils::fileNameForUrl(const QString& url_p)
++{
++    QString url2(url_p);
++    
++    url2 = url2.replace("/", "_").replace(":", "_");
++    
++    if (url2.length() > 255)
++        url2 = url2.left(200) + QString::number(Akregator::Utils::calcHash(url2), 16);
++    
++    return url2;
+ }
++
++}
+Index: akregator/src/akregator_view.cpp
+===================================================================
+--- akregator/src/akregator_view.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ akregator/src/akregator_view.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -819,6 +819,9 @@
+         m_articleViewer->slotShowSummary(node);
+     }
+ 
++    if (node)
++        m_mainFrame->setCaption(node->title());
++
+     m_actionManager->slotNodeSelected(node);
+ 
+     updateTagActions();
+@@ -1394,7 +1397,10 @@
+     }
+     else
+     {
+-        // TODO: read selected page viewer
++        QString selectedText = static_cast<PageViewer *>(m_currentFrame->part())->selectedText();
++        
++        if (!selectedText.isEmpty())
++            SpeechClient::self()->slotSpeak(selectedText, "en");
+     }
+ }
+ 
 Index: kresources/egroupware/xmlrpciface.cpp
 ===================================================================
---- kresources/egroupware/xmlrpciface.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kresources/egroupware/xmlrpciface.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kresources/egroupware/xmlrpciface.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kresources/egroupware/xmlrpciface.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -200,7 +200,14 @@
    {
        case QVariant::String:
@@ -32,8 +854,8 @@ Index: kresources/egroupware/xmlrpciface.cpp
        case QVariant::Double:
 Index: kresources/groupwise/soap/types.xsd
 ===================================================================
---- kresources/groupwise/soap/types.xsd	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kresources/groupwise/soap/types.xsd	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kresources/groupwise/soap/types.xsd	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kresources/groupwise/soap/types.xsd	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -524,7 +524,7 @@
  					<xs:element name="officialVersion" type="xs:unsignedInt" minOccurs="0"/>
  					<xs:element name="currentVersion" type="xs:unsignedInt" minOccurs="0"/>
@@ -43,10 +865,770 @@ Index: kresources/groupwise/soap/types.xsd
  					<xs:element name="fileSize" type="xs:unsignedInt" minOccurs="0"/>
  					<xs:element name="acl" type="tns:AccessControlList" minOccurs="0"/>
  				</xs:sequence>
+Index: kresources/groupwise/kioslave/groupwise.cpp
+===================================================================
+--- kresources/groupwise/kioslave/groupwise.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kresources/groupwise/kioslave/groupwise.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -21,6 +21,8 @@
+ 
+ #include "groupwiseserver.h"
+ 
++#include <qregexp.h>
++
+ #include <libkdepim/kabcresourcecached.h>
+ 
+ #include <libkcal/freebusy.h>
+@@ -164,6 +166,12 @@
+     QString email = file.left( file.length() - 4 );
+     debugMessage( "Email: " + email );
+ 
++    // Sanitise local Nuernberg email addresses
++    kdDebug() << "Email before sanitizing: " << email << endl;
++    email = email.replace(QRegExp("\\.EMEA5-1\\.EMEA5" ), "" );
++    email = email.replace(QRegExp("\\.Suse.INTERNET" ), "" );
++    kdDebug() << "Email after sanitizing: " << email << endl;
++
+     QString u = soapUrl( url );
+ 
+     QString user = url.user();
+Index: certmanager/conf/kleopatra_config_dnorder.desktop
+===================================================================
+--- certmanager/conf/kleopatra_config_dnorder.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ certmanager/conf/kleopatra_config_dnorder.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -72,7 +72,7 @@
+ Comment[he]=הגדרה של הסדר שבהם מאפייני DN מוצגים
+ Comment[hu]=A DN-attribútumok megjelenítési sorrendjének beállítása
+ Comment[is]=Stilla röð DN eiginleikanna
+-Comment[it]=Configuraz l'ordine in cui sono mostrati gli attributi DN
++Comment[it]=Configura l'ordine in cui sono mostrati gli attributi DN
+ Comment[ja]=DN 属性を表示する順位を設定
+ Comment[km]=កំណត់​រចនាសម្ព័ន្ធ​លំដាប់ ដែល​ត្រូវ​បង្ហាញ​គុណលក្ខណៈ DN
+ Comment[lt]=Konfigūruoti DN savybių rodymo tvarką
+Index: kmail/kmfoldersearch.h
+===================================================================
+--- kmail/kmfoldersearch.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfoldersearch.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -71,6 +71,7 @@
+   bool running() const { return mRunning; }
+   void stop();
+   int foundCount() const { return mFoundCount; }
++  int searchCount() const { return mSearchCount; }
+   QString currentFolder() const { return mLastFolder; }
+ 
+ public slots:
+@@ -101,6 +102,7 @@
+   SerNumList mSerNums;
+   QString mLastFolder;
+   int mFoundCount;
++  int mSearchCount;
+   QTimer *mProcessNextBatchTimer;
+ };
+ 
+@@ -162,7 +164,7 @@
+   virtual int updateIndex();
+ 
+   // Examine the message
+-  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum, 
++  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum,
+                                  const KMSearchPattern*, bool );
+ 
+ public:
+Index: kmail/kmreadermainwin.rc
+===================================================================
+--- kmail/kmreadermainwin.rc	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmreadermainwin.rc	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,5 +1,5 @@
+ <!DOCTYPE kpartgui>
+-<kpartgui version="4" name="kmreadermainwin" >
++<kpartgui version="5" name="kmreadermainwin" >
+  <MenuBar>
+   <Menu noMerge="1" name="file" >
+    <text>&amp;File</text>
+@@ -33,6 +33,7 @@
+      <text>&amp;Forward</text>
+      <Action name="message_forward_as_attachment" />
+      <Action name="message_forward_inline" />
++     <Action name="message_forward_as_digest" />
+      <Action name="message_forward_redirect" />
+    </Menu>
+   </Menu>
+Index: kmail/searchwindow.h
+===================================================================
+--- kmail/searchwindow.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/searchwindow.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -86,13 +86,13 @@
+    * @param curFolder The folder to use as the new base for searches.
+    */
+   void activateFolder( KMFolder* curFolder );
+-  
++
+   /**
+    * Provides access to the list of currently selected message in the listview.
+    * @return The list of currenty selected search result messages.
+    */
+   KMMessageList selectedMessages();
+-  
++
+   /**
+    * Provides access to the currently selected message.
+    * @return the currently selected message.
+@@ -115,13 +115,15 @@
+   virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
+   virtual void copySelectedToFolder( int menuId );
+   virtual void moveSelectedToFolder( int menuId );
+-  virtual void slotFolderActivated( KMFolder* );
++  virtual void slotFolderActivated();
+   void slotClearSelection();
+   void slotReplyToMsg();
+   void slotReplyAllToMsg();
+   void slotReplyListToMsg();
+-  void slotForwardMsg();
++  void slotForwardInlineMsg();
+   void slotForwardAttachedMsg();
++  void slotForwardDigestMsg();
++  void slotRedirectMsg();
+   void slotSaveMsg();
+   void slotSaveAttachments();
+   void slotPrintMsg();
+@@ -167,8 +169,8 @@
+   QWidget* mLastFocus; // to remember the position of the focus
+   QMap<int,KMFolder*> mMenuToFolder;
+   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
+-    *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction,
+-    *mSaveAtchAction;
++    *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
++    *mRedirectAction, *mPrintAction, *mClearAction, *mSaveAtchAction;
+   KActionMenu *mForwardActionMenu;
+   QValueList<QGuardedPtr<KMFolder> > mFolders;
+ 
+Index: kmail/kmfilterdlg.cpp
+===================================================================
+--- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -69,6 +69,12 @@
+ 	   "it is deleted, but you can always leave the "
+ 	   "dialog by clicking <em>Cancel</em> to discard the "
+ 	   "changes made.</p></qt>" );
++const char * _wt_filterlist_top =
++I18N_NOOP( "<qt><p>Click this button to move the currently-"
++	   "selected filter to the <em>top</em> of the list above.</p>"
++	   "<p>This is useful since the order of the filters in the list "
++	   "determines the order in which they are tried on messages: "
++	   "The topmost filter gets tried first.</p></qt>" );
+ const char * _wt_filterlist_up =
+ I18N_NOOP( "<qt><p>Click this button to move the currently-"
+ 	   "selected filter <em>up</em> one in the list above.</p>"
+@@ -85,6 +91,12 @@
+ 	   "The topmost filter gets tried first.</p>"
+ 	   "<p>If you have clicked this button accidentally, you can undo this "
+ 	   "by clicking on the <em>Up</em> button.</p></qt>" );
++const char * _wt_filterlist_bot =
++I18N_NOOP( "<qt><p>Click this button to move the currently-"
++	   "selected filter to the <em>bottom</em> of the list above.</p>"
++	   "<p>This is useful since the order of the filters in the list "
++	   "determines the order in which they are tried on messages: "
++	   "The topmost filter gets tried first.</p></qt>" );
+ const char * _wt_filterlist_rename =
+ I18N_NOOP( "<qt><p>Click this button to rename the currently-selected filter.</p>"
+ 	   "<p>Filters are named automatically, as long as they start with "
+@@ -268,7 +280,7 @@
+   	     this, SLOT(slotApplicableAccountsChanged()) );
+     connect( mAccountList, SIGNAL(spacePressed(QListViewItem*)),
+   	     this, SLOT(slotApplicableAccountsChanged()) );
+-    
++
+     // transfer changes from the 'stop processing here'
+     // check box to the filter
+     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
+@@ -434,7 +446,7 @@
+       mFilter->setApplicability( KMFilter::ButImap );
+     else if ( mApplyOnForChecked->isChecked() )
+       mFilter->setApplicability( KMFilter::Checked );
+-      
++
+     mApplyOnForAll->setEnabled( mApplyOnIn->isChecked() );
+     mApplyOnForTraditional->setEnabled(  mApplyOnIn->isChecked() );
+     mApplyOnForChecked->setEnabled( mApplyOnIn->isChecked() );
+@@ -566,6 +578,10 @@
+   //----------- the first row of buttons
+   QHBox *hb = new QHBox(this);
+   hb->setSpacing(4);
++  mBtnTop = new KPushButton( QString::null, hb );
++  mBtnTop->setAutoRepeat( true );
++  mBtnTop->setIconSet( BarIconSet( "top", KIcon::SizeSmall ) );
++  mBtnTop->setMinimumSize( mBtnTop->sizeHint() * 1.2 );
+   mBtnUp = new KPushButton( QString::null, hb );
+   mBtnUp->setAutoRepeat( true );
+   mBtnUp->setIconSet( BarIconSet( "up", KIcon::SizeSmall ) );
+@@ -574,10 +590,18 @@
+   mBtnDown->setAutoRepeat( true );
+   mBtnDown->setIconSet( BarIconSet( "down", KIcon::SizeSmall ) );
+   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
++  mBtnBot = new KPushButton( QString::null, hb );
++  mBtnBot->setAutoRepeat( true );
++  mBtnBot->setIconSet( BarIconSet( "bottom", KIcon::SizeSmall ) );
++  mBtnBot->setMinimumSize( mBtnBot->sizeHint() * 1.2 );
++  QToolTip::add( mBtnTop, i18n("Top") );
+   QToolTip::add( mBtnUp, i18n("Up") );
+   QToolTip::add( mBtnDown, i18n("Down") );
++  QToolTip::add( mBtnBot, i18n("Bottom") );
++  QWhatsThis::add( mBtnTop, i18n(_wt_filterlist_top) );
+   QWhatsThis::add( mBtnUp, i18n(_wt_filterlist_up) );
+   QWhatsThis::add( mBtnDown, i18n(_wt_filterlist_down) );
++  QWhatsThis::add( mBtnBot, i18n(_wt_filterlist_bot) );
+ 
+   //----------- the second row of buttons
+   hb = new QHBox(this);
+@@ -606,10 +630,14 @@
+ 	   this, SLOT(slotSelected(int)) );
+   connect( mListBox, SIGNAL( doubleClicked ( QListBoxItem * )),
+            this, SLOT( slotRename()) );
++  connect( mBtnTop, SIGNAL(clicked()),
++	   this, SLOT(slotTop()) );
+   connect( mBtnUp, SIGNAL(clicked()),
+ 	   this, SLOT(slotUp()) );
+   connect( mBtnDown, SIGNAL(clicked()),
+ 	   this, SLOT(slotDown()) );
++  connect( mBtnBot, SIGNAL(clicked()),
++	   this, SLOT(slotBottom()) );
+   connect( mBtnNew, SIGNAL(clicked()),
+ 	   this, SLOT(slotNew()) );
+   connect( mBtnCopy, SIGNAL(clicked()),
+@@ -720,7 +748,7 @@
+ 		       "IMAP account. Such filters will only be applied "
+ 		       "when manually filtering and when filtering "
+ 		       "incoming online IMAP mail.");
+-    KMessageBox::information( this, str, QString::null, 
++    KMessageBox::information( this, str, QString::null,
+ 			      "filterDlgOnlineImapCheck" );
+   }
+   // allow usage of the filters again.
+@@ -811,6 +839,21 @@
+   enableControls();
+ }
+ 
++void KMFilterListBox::slotTop()
++{
++  if ( mIdxSelItem < 0 ) {
++    kdDebug(5006) << "KMFilterListBox::slotTop called while no filter is selected, ignoring." << endl;
++    return;
++  }
++  if ( mIdxSelItem == 0 ) {
++    kdDebug(5006) << "KMFilterListBox::slotTop called while the _topmost_ filter is selected, ignoring." << endl;
++    return;
++  }
++
++  swapFilters( mIdxSelItem, 0 );
++  enableControls();
++}
++
+ void KMFilterListBox::slotUp()
+ {
+   if ( mIdxSelItem < 0 ) {
+@@ -841,6 +884,21 @@
+   enableControls();
+ }
+ 
++void KMFilterListBox::slotBottom()
++{
++  if ( mIdxSelItem < 0 ) {
++    kdDebug(5006) << "KMFilterListBox::slotBottom called while no filter is selected, ignoring." << endl;
++    return;
++  }
++  if ( mIdxSelItem == (int)mListBox->count() - 1 ) {
++    kdDebug(5006) << "KMFilterListBox::slotBottom called while the _last_ filter is selected, ignoring." << endl;
++    return;
++  }
++
++  swapFilters( mIdxSelItem, mListBox->count()-1 );
++  enableControls();
++}
++
+ void KMFilterListBox::slotRename()
+ {
+   if ( mIdxSelItem < 0 ) {
+@@ -888,8 +946,10 @@
+   bool theLast = ( mIdxSelItem >= (int)mFilterList.count() - 1 );
+   bool aFilterIsSelected = ( mIdxSelItem >= 0 );
+ 
++  mBtnTop->setEnabled( aFilterIsSelected && !theFirst );
+   mBtnUp->setEnabled( aFilterIsSelected && !theFirst );
+   mBtnDown->setEnabled( aFilterIsSelected && !theLast );
++  mBtnBot->setEnabled( aFilterIsSelected && !theLast );
+   mBtnCopy->setEnabled( aFilterIsSelected );
+   mBtnDelete->setEnabled( aFilterIsSelected );
+   mBtnRename->setEnabled( aFilterIsSelected );
+@@ -983,7 +1043,20 @@
+   mIdxSelItem += movedOne - untouchedOne;
+ }
+ 
++void KMFilterListBox::swapFilters( int from, int to )
++{
++  QListBoxItem *item = mListBox->item( from );
++  mListBox->takeItem( item );
++  mListBox->insertItem( item, to );
+ 
++  KMFilter* filter = mFilterList.take( from );
++  mFilterList.insert( to, filter );
++
++  mIdxSelItem = to;
++  mListBox->setCurrentItem( mIdxSelItem );
++  mListBox->setSelected( mIdxSelItem, true );
++}
++
+ //=============================================================================
+ //
+ // class KMFilterActionWidget
+Index: kmail/kmail.antispamrc
+===================================================================
+--- kmail/kmail.antispamrc	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmail.antispamrc	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -106,6 +106,11 @@
+ UseRegExp=0
+ SupportsBayes=1
+ SupportsUnsure=1
++ScoreName=Spambayes 
++ScoreHeader=X-Spambayes-Classification 
++ScoreType=Decimal 
++ScoreValueRegexp=(?:spam|ham);\ ([\\d\\.]+) 
++ScoreThresholdRegexp=
+ 
+ [Spamtool #6]
+ HeadersOnly=yes
+@@ -171,10 +176,10 @@
+ Executable=bsfilter --help > /dev/null
+ URL=http://bsfilter.org/
+ PipeFilterName=Bsfilter Check
+-PipeCmdDetect=bsfilter --pipe --insert-flag --insert-probability
++PipeCmdDetect=bsfilter --pipe --insert-flag --insert-probability --header-prefix BSFilter
+ ExecCmdSpam=bsfilter --add-spam --update
+ ExecCmdHam=bsfilter --add-clean --update
+-DetectionHeader=X-Spam-Flag
++DetectionHeader=X-BSFilter-Flag
+ DetectionPattern=Yes
+ DetectionPattern2=
+ DetectionOnly=0
+@@ -182,7 +187,7 @@
+ SupportsBayes=1
+ SupportsUnsure=0
+ ScoreName=Bsfilter
+-ScoreHeader=X-Spam-Probability
++ScoreHeader=X-BSFilter-Probability
+ ScoreType=Decimal
+ ScoreValueRegexp=(.+)
+ ScoreThresholdRegexp=
+Index: kmail/kmmainwin.rc
+===================================================================
+--- kmail/kmmainwin.rc	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmainwin.rc	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -2,7 +2,7 @@
+      the same menu entries at the same place in KMail and Kontact  -->
+ 
+ <!DOCTYPE kpartgui>
+-<kpartgui version="88" name="kmmainwin" >
++<kpartgui version="89" name="kmmainwin" >
+  <MenuBar>
+   <Menu noMerge="1" name="file" >
+    <text>&amp;File</text>
+@@ -120,6 +120,7 @@
+      <text>&amp;Forward</text>
+      <Action name="message_forward_as_attachment" />
+      <Action name="message_forward_inline" />
++     <Action name="message_forward_as_digest" />
+      <Action name="message_forward_redirect" />
+    </Menu>
+    <Action name="send_again" />
+Index: kmail/imapaccountbase.cpp
+===================================================================
+--- kmail/imapaccountbase.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/imapaccountbase.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -976,7 +976,8 @@
+ 
+     QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
+     mMailCheckFolders = mFoldersQueuedForChecking;
+-    kmkernel->acctMgr()->singleCheckMail(this, true);
++    if ( kmkernel->acctMgr() )
++      kmkernel->acctMgr()->singleCheckMail(this, true);
+     mMailCheckFolders = mSaveList;
+     mFoldersQueuedForChecking.clear();
+   }
+@@ -1144,14 +1145,16 @@
+      ImapAccountBase::JobIterator it = findJob(job);
+      if ( it == jobsEnd() ) return;
+      int errorCode = job->error();
++     KMFolder * const parent = (*it).parent;
++     const QString path = (*it).path;
+      if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
+      {
+        bool cont = handleJobError( job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
+-       emit imapStatusChanged( (*it).parent, (*it).path, cont );
++       emit imapStatusChanged( parent, path, cont );
+      }
+      else
+      {
+-       emit imapStatusChanged( (*it).parent, (*it).path, true );
++       emit imapStatusChanged( parent, path, true );
+        removeJob(it);
+      }
+   }
+Index: kmail/kmheaders.cpp
+===================================================================
+--- kmail/kmheaders.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmheaders.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1359,7 +1359,7 @@
+     int msgCountToFilter = msgList->count();
+     for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
+       int diff = msgCountToFilter - ++msgCount;
+-      if ( diff < 10 || !( msgCount % 20 ) ) {
++      if ( diff < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
+         QString statusMsg = i18n("Filtering message %1 of %2");
+         statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+         KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+Index: kmail/kmedit.cpp
+===================================================================
+--- kmail/kmedit.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -248,8 +248,6 @@
+                                                 col1, col2, col3, col4,
+                                                 mSpellConfig );
+ 
+-  connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
+-           mComposer, SLOT(slotStatusMessage(const QString &)));
+   connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
+            this, SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
+ }
+Index: kmail/kmmessage.h
+===================================================================
+--- kmail/kmmessage.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmessage.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -33,7 +33,7 @@
+ class KMMessagePart;
+ class KMMsgInfo;
+ class KMHeaders;
+-class KMForwardCommand;
++class KMForwardDigestCommand;
+ 
+ namespace KMime {
+   class CharFreq;
+@@ -66,7 +66,7 @@
+ /** This is a Mime Message. */
+ class KMMessage: public KMMsgBase, public KMail::ISubject
+ {
+-  friend class ::KMForwardCommand;    // needed for MIME Digest forward
++  friend class ::KMForwardDigestCommand; // needed for MIME Digest forward
+ 
+ public:
+   // promote some of KMMsgBase's methods to public:
+@@ -811,7 +811,7 @@
+   bool transferInProgress() const;
+   /** Set that the message shall not be deleted because it is still required */
+   void setTransferInProgress(bool value, bool force = false);
+-  
++
+   /** Returns an mbox message separator line for this message, i.e. a
+       string of the form
+       "From local@domain.invalid Sat Jun 12 14:00:00 2004\n".
+Index: kmail/kmmsgdict.cpp
+===================================================================
+--- kmail/kmmsgdict.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmsgdict.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -210,7 +210,7 @@
+       << "null pointer to storage. Requested serial: " << msgSerNum
+       << endl;
+     kdDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
+-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl; 
++      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
+     return 0;
+   }
+ 
+@@ -255,7 +255,7 @@
+       << "number, null pointer to storage. Requested serial: " << msgSerNum
+       << endl;
+     kdDebug(5006) << "  Message info: Subject: " << msg->subject() << ", To: "
+-      << msg->toStrip() << ", Date: " << msg->dateStr() << endl; 
++      << msg->toStrip() << ", Date: " << msg->dateStr() << endl;
+     return;
+   }
+ 
+@@ -345,9 +345,11 @@
+ unsigned long KMMsgDict::getMsgSerNum(KMFolder *folder, int index) const
+ {
+   unsigned long msn = 0;
+-  KMMsgDictREntry *rentry = folder->storage()->rDict();
+-  if (rentry)
+-    msn = rentry->getMsn(index);
++  if ( folder ) {
++    KMMsgDictREntry *rentry = folder->storage()->rDict();
++    if (rentry)
++      msn = rentry->getMsn(index);
++  }
+   return msn;
+ }
+ 
+Index: kmail/kmreadermainwin.cpp
+===================================================================
+--- kmail/kmreadermainwin.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmreadermainwin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -164,14 +164,14 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
+-void KMReaderMainWin::slotForwardMsg()
++void KMReaderMainWin::slotForwardInlineMsg()
+ {
+    KMCommand *command = 0;
+    if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
+-    command = new KMForwardCommand( this, mReaderWin->message(),
++    command = new KMForwardInlineCommand( this, mReaderWin->message(),
+         mReaderWin->message()->parent()->identity() );
+    } else {
+-    command = new KMForwardCommand( this, mReaderWin->message() );
++    command = new KMForwardInlineCommand( this, mReaderWin->message() );
+    }
+    command->start();
+ }
+@@ -190,6 +190,19 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
++void KMReaderMainWin::slotForwardDigestMsg()
++{
++   KMCommand *command = 0;
++   if ( mReaderWin->message() && mReaderWin->message()->parent() ) {
++     command = new KMForwardDigestCommand( this, mReaderWin->message(),
++        mReaderWin->message()->parent()->identity() );
++   } else {
++     command = new KMForwardDigestCommand( this, mReaderWin->message() );
++   }
++   command->start();
++}
++
++//-----------------------------------------------------------------------------
+ void KMReaderMainWin::slotRedirectMsg()
+ {
+   KMCommand *command = new KMRedirectCommand( this, mReaderWin->message() );
+@@ -245,22 +258,34 @@
+ 					"mail_forward", actionCollection(),
+ 					"message_forward" );
+   connect( mForwardActionMenu, SIGNAL( activated() ), this,
+-           SLOT( slotForwardMsg() ) );
++           SLOT( slotForwardInlineMsg() ) );
+ 
+-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+-				actionCollection(), "message_forward_inline" );
+-  mForwardActionMenu->insert( mForwardAction );
+-
+   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+-				       "mail_forward", Key_F, this,
+-					SLOT(slotForwardAttachedMsg()), actionCollection(),
++                                        "mail_forward", Key_F, this,
++					SLOT(slotForwardAttachedMsg()),
++                                        actionCollection(),
+ 					"message_forward_as_attachment" );
+   mForwardActionMenu->insert( mForwardAttachedAction );
+ 
++  mForwardInlineAction = new KAction( i18n("&Inline..."),
++                                      "mail_forward", SHIFT+Key_F, this,
++                                      SLOT(slotForwardInlineMsg()),
++                                      actionCollection(),
++                                      "message_forward_inline" );
++  mForwardActionMenu->insert( mForwardInlineAction );
++
++  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
++                                      "mail_forward", 0, this,
++                                      SLOT(slotForwardDigestMsg()),
++                                      actionCollection(),
++                                      "message_forward_as_digest" );
++  mForwardActionMenu->insert( mForwardDigestAction );
++
+   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+-				 Key_E, this, SLOT(slotRedirectMsg()),
+-				 actionCollection(), "message_forward_redirect" );
++				 "mail_forward", Key_E, this,
++                                 SLOT(slotRedirectMsg()),
++				 actionCollection(),
++                                 "message_forward_redirect" );
+   mForwardActionMenu->insert( mRedirectAction );
+ 
+   mReplyActionMenu = new KActionMenu( i18n("Message->","&Reply"),
+@@ -355,7 +380,9 @@
+       return;
+     }
+ 
+-    if( !aMsg.parent()->isSent() && !aMsg.parent()->isDrafts() ) {
++    if ( ! ( aMsg.parent() && ( aMsg.parent()->isSent() || aMsg.parent()->isDrafts() ) ) ) {
++      // add the reply and forward actions only if we are not in a sent-mail or drafts
++      // folder
+       mReplyActionMenu->plug( menu );
+       mForwardActionMenu->plug( menu );
+       menu->insertSeparator();
+Index: kmail/kmsearchpattern.cpp
+===================================================================
+--- kmail/kmsearchpattern.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmsearchpattern.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -371,7 +371,7 @@
+     // I think only the "from"-field makes sense.
+     msgContents = msg->headerField( field() );
+     if ( msgContents.isEmpty() )
+-      return false;
++      return ( function() == FuncIsInAddressbook ) ? false : true;
+   }
+ 
+   // these two functions need the kmmessage therefore they don't call matchesInternal
+Index: kmail/searchwindow.cpp
+===================================================================
+--- kmail/searchwindow.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/searchwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -269,16 +269,27 @@
+                                         "mail_forward", ac,
+                                         "search_message_forward" );
+   connect( mForwardActionMenu, SIGNAL(activated()), this,
+-           SLOT(slotForwardMsg()) );
+-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+-                                0, this, SLOT(slotForwardMsg()),
+-                                ac, "search_message_forward_inline" );
+-  mForwardActionMenu->insert( mForwardAction );
++           SLOT(slotForwardInlineMsg()) );
+   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+-                                       "mail_forward", 0, this,
++                                        "mail_forward", 0, this,
+                                         SLOT(slotForwardAttachedMsg()), ac,
+                                         "search_message_forward_as_attachment" );
+   mForwardActionMenu->insert( mForwardAttachedAction );
++  mForwardInlineAction = new KAction( i18n("&Inline..."),
++                                      "mail_forward", 0, this,
++                                      SLOT(slotForwardInlineMsg()), ac,
++                                      "search_message_forward_inline" );
++  mForwardActionMenu->insert( mForwardInlineAction );
++  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
++                                      "mail_forward", 0, this,
++                                      SLOT(slotForwardDigestMsg()), ac,
++                                      "search_message_forward_as_digest" );
++  mForwardActionMenu->insert( mForwardDigestAction );
++  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
++                                      "mail_forward", 0, this,
++                                      SLOT(slotRedirectMsg()), ac,
++                                      "search_message_forward_redirect" );
++  mForwardActionMenu->insert( mRedirectAction );
+   mSaveAsAction = KStdAction::saveAs( this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
+   mSaveAtchAction = new KAction( i18n("Save Attachments..."), "attach", 0,
+                                  this, SLOT(slotSaveAttachments()), ac, "search_save_attachments" );
+@@ -291,7 +302,7 @@
+           this, SLOT(folderInvalidated(KMFolder*)));
+ 
+   connect(mCbxFolders, SIGNAL(folderChanged(KMFolder*)),
+-          this, SLOT(slotFolderActivated(KMFolder*)));
++          this, SLOT(slotFolderActivated()));
+ 
+ }
+ 
+@@ -328,33 +339,33 @@
+ //-----------------------------------------------------------------------------
+ void SearchWindow::updStatus(void)
+ {
+-    QString genMsg, detailMsg;
+-    int numMatches = 0, count = 0;
++    QString genMsg, detailMsg, procMsg;
++    int numMatches = 0, numProcessed = 0;
+     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
+     QString folderName;
+     if (search) {
+         numMatches = search->foundCount();
++        numProcessed = search->searchCount();
+         folderName = search->currentFolder();
+     }
+ 
+     if (mFolder && mFolder->search() && !mFolder->search()->running()) {
++        procMsg = i18n("%n message searched", "%n messages searched",
++                       numProcessed);
+         if(!mStopped) {
+-            genMsg = i18n("Done");
+-            detailMsg = i18n("%n match (%1)", "%n matches (%1)", numMatches)
+-                        .arg(i18n("%n message processed",
+-                                  "%n messages processed", count));
++            genMsg = i18n("Done.");
++            detailMsg = i18n("%n match in %1", "%n matches in %1",
++                             numMatches).arg(procMsg);
+         } else {
+-            genMsg = i18n("Search canceled");
+-            detailMsg = i18n("%n match so far (%1)",
+-                             "%n matches so far (%1)", numMatches)
+-                        .arg(i18n("%n message processed",
+-                                  "%n messages processed", count));
++            genMsg = i18n("Search canceled.");
++            detailMsg = i18n("%n match so far in %1", "%n matches so far in %1",
++                             numMatches).arg(procMsg);
+         }
+     } else {
++        procMsg = i18n("%n message", "%n messages", numProcessed);
+         genMsg = i18n("%n match", "%n matches", numMatches);
+-        detailMsg = i18n("Searching in %1 (message %2)")
+-                    .arg(folderName)
+-                    .arg(count);
++        detailMsg = i18n("Searching in %1. %2 searched so far")
++                    .arg(folderName).arg(procMsg);
+     }
+ 
+     mStatusBar->changeItem(genMsg, 0);
+@@ -377,10 +388,9 @@
+ 
+ 
+ //-----------------------------------------------------------------------------
+-void SearchWindow::slotFolderActivated( KMFolder* folder )
++void SearchWindow::slotFolderActivated()
+ {
+     mChkbxSpecificFolders->setChecked(true);
+-    mBtnSearch->setEnabled(folder);
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -705,6 +715,8 @@
+     mReplyAllAction->setEnabled( single_actions );
+     mReplyListAction->setEnabled( single_actions );
+     mPrintAction->setEnabled( single_actions );
++    mForwardDigestAction->setEnabled( !single_actions );
++    mRedirectAction->setEnabled( single_actions );
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -773,9 +785,9 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
+-void SearchWindow::slotForwardMsg()
++void SearchWindow::slotForwardInlineMsg()
+ {
+-    KMCommand *command = new KMForwardCommand(this, selectedMessages());
++    KMCommand *command = new KMForwardInlineCommand(this, selectedMessages());
+     command->start();
+ }
+ 
+@@ -787,6 +799,20 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
++void SearchWindow::slotForwardDigestMsg()
++{
++    KMCommand *command = new KMForwardDigestCommand(this, selectedMessages());
++    command->start();
++}
++
++//-----------------------------------------------------------------------------
++void SearchWindow::slotRedirectMsg()
++{
++    KMCommand *command = new KMRedirectCommand(this, message());
++    command->start();
++}
++
++//-----------------------------------------------------------------------------
+ void SearchWindow::slotSaveMsg()
+ {
+     KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand(this,
 Index: kmail/kmreaderwin.cpp
 ===================================================================
---- kmail/kmreaderwin.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kmail/kmreaderwin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kmail/kmreaderwin.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmreaderwin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -1103,6 +1103,13 @@
            break;
          }
@@ -63,9 +1645,19 @@ Index: kmail/kmreaderwin.cpp
    update( true );
 Index: kmail/kmmessage.cpp
 ===================================================================
---- kmail/kmmessage.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kmail/kmmessage.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
-@@ -706,6 +706,8 @@
+--- kmail/kmmessage.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmessage.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -86,7 +86,8 @@
+ 
+ //-----------------------------------------------------------------------------
+ KMMessage::KMMessage(DwMessage* aMsg)
+-  : mMsg(aMsg),
++  : KMMsgBase(),
++    mMsg(aMsg),
+     mNeedsAssembly(true),
+     mDecodeHTML(false),
+     mOverrideCodec(0),
+@@ -706,6 +707,8 @@
                                             const QTextCodec*& codec,
                                             bool& isHTML ) const
  {
@@ -74,7 +1666,15 @@ Index: kmail/kmmessage.cpp
    isHTML = false;
    // initialy parse the complete message to decrypt any encrypted parts
    {
-@@ -3819,7 +3821,7 @@
+@@ -736,6 +739,7 @@
+   const QTextCodec * codec = 0;
+ 
+   partNode * root = partNode::fromMessage( this );
++  if ( !root ) return QString::null;
+   parseTextStringFromDwPart( root, parsedString, codec, isHTML );
+   delete root;
+ 
+@@ -3819,7 +3823,7 @@
  //-----------------------------------------------------------------------------
  QCString KMMessage::charset() const
  {
@@ -83,10 +1683,749 @@ Index: kmail/kmmessage.cpp
      DwMediaType &mType=mMsg->Headers().ContentType();
      mType.Parse();
      DwParameter *param=mType.FirstParameter();
+@@ -3981,6 +3985,9 @@
+ //-----------------------------------------------------------------------------
+ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & data)
+ {
++  if ( !data.data() || !data.size() )
++    return;
++
+   DwString content( data.data(), data.size() );
+   if ( numBodyParts() > 0 &&
+        partSpecifier != "0" &&
+@@ -4006,7 +4013,7 @@
+     {
+       // update headers
+       // get rid of EOL
+-      content.resize( content.length()-2 );
++      content.resize( QMAX( content.length(), 2 ) - 2 );
+       // we have to delete the fields first as they might have been created by
+       // an earlier call to DwHeaders::FieldBody
+       mLastUpdated->Headers().DeleteAllFields();
+Index: kmail/kmaccount.cpp
+===================================================================
+--- kmail/kmaccount.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -377,7 +377,12 @@
+ {
+   if (mTimer)
+     mTimer->stop();
+-  kmkernel->acctMgr()->singleCheckMail(this, false);
++
++  if ( kmkernel ) {
++    AccountManager *acctmgr = kmkernel->acctMgr();
++    if ( acctmgr )
++      acctmgr->singleCheckMail(this, false);
++  }
+ }
+ 
+ //-----------------------------------------------------------------------------
+Index: kmail/kmcommands.cpp
+===================================================================
+--- kmail/kmcommands.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -847,7 +847,7 @@
+   if ( msg ) {
+     QCString str( msg->mboxMessageSeparator() );
+     str += KMFolderMbox::escapeFrom( msg->asString() );
+-    str += "\n";
++    str += '\n';
+     msg->setTransferInProgress(false);
+ 
+     mData = str;
+@@ -1124,143 +1124,72 @@
+ }
+ 
+ 
+-KMForwardCommand::KMForwardCommand( QWidget *parent,
++KMForwardInlineCommand::KMForwardInlineCommand( QWidget *parent,
+   const QPtrList<KMMsgBase> &msgList, uint identity )
+   : KMCommand( parent, msgList ),
+     mIdentity( identity )
+ {
+ }
+ 
+-KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
+-                                    uint identity )
++KMForwardInlineCommand::KMForwardInlineCommand( QWidget *parent,
++  KMMessage *msg, uint identity )
+   : KMCommand( parent, msg ),
+     mIdentity( identity )
+ {
+ }
+ 
+-KMCommand::Result KMForwardCommand::execute()
++KMCommand::Result KMForwardInlineCommand::execute()
+ {
+   QPtrList<KMMessage> msgList = retrievedMsgs();
+ 
+-  if (msgList.count() >= 2) {
+-    // ask if they want a mime digest forward
++  if (msgList.count() >= 2) { // Multiple forward
+ 
+-    if (KMessageBox::questionYesNo( parentWidget(),
+-                                    i18n("Forward selected messages as "
+-                                         "a MIME digest?"), QString::null, i18n("Send Digest"), i18n("Send") )
+-        == KMessageBox::Yes) {
+-      uint id = 0;
+-      KMMessage *fwdMsg = new KMMessage;
+-      KMMessagePart *msgPart = new KMMessagePart;
+-      QString msgPartText;
+-      int msgCnt = 0; // incase there are some we can't forward for some reason
++    uint id = 0;
++    QCString msgText = "";
++    QPtrList<KMMessage> linklist;
++    for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
++      // set the identity
++      if (id == 0)
++        id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
+ 
+-      // dummy header initialization; initialization with the correct identity
+-      // is done below
+-      fwdMsg->initHeader(id);
+-      fwdMsg->setAutomaticFields(true);
+-      fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
+-      QCString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+-      msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
+-                         " message is contained in the attachment(s).\n\n\n");
+-      // iterate through all the messages to be forwarded
+-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+-        // set the identity
+-        if (id == 0)
+-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+-        // set the part header
+-        msgPartText += "--";
+-        msgPartText += QString::fromLatin1( boundary );
+-        msgPartText += "\nContent-Type: MESSAGE/RFC822";
+-        msgPartText += QString("; CHARSET=%1").arg(msg->charset());
+-        msgPartText += "\n";
+-        DwHeaders dwh;
+-        dwh.MessageId().CreateDefault();
+-        msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
+-        msgPartText += QString("Content-Description: %1").arg(msg->subject());
+-        if (!msg->subject().contains("(fwd)"))
+-          msgPartText += " (fwd)";
+-        msgPartText += "\n\n";
+-        // remove headers that shouldn't be forwarded
+-        msg->removePrivateHeaderFields();
+-        msg->removeHeaderField("BCC");
+-        // set the part
+-        msgPartText += msg->headerAsString();
+-        msgPartText += "\n";
+-        msgPartText += msg->body();
+-        msgPartText += "\n";     // eot
+-        msgCnt++;
+-        fwdMsg->link(msg, KMMsgStatusForwarded);
+-      }
+-      if ( id == 0 )
+-        id = mIdentity; // use folder identity if no message had an id set
+-      fwdMsg->initHeader(id);
+-      msgPartText += "--";
+-      msgPartText += QString::fromLatin1( boundary );
+-      msgPartText += "--\n";
+-      QCString tmp;
+-      msgPart->setTypeStr("MULTIPART");
+-      tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
+-      msgPart->setSubtypeStr( tmp );
+-      msgPart->setName("unnamed");
+-      msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
+-      msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
+-      // THIS HAS TO BE AFTER setCte()!!!!
+-      msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
+-      KCursorSaver busy(KBusyPtr::busy());
+-      KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+-      win->addAttach(msgPart);
+-      win->show();
+-      return OK;
+-    } else {            // NO MIME DIGEST, Multiple forward
+-      uint id = 0;
+-      QCString msgText = "";
+-      QPtrList<KMMessage> linklist;
+-      for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+-        // set the identity
+-        if (id == 0)
+-          id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
++      msgText += msg->createForwardBody();
++      linklist.append( msg );
++    }
++    if ( id == 0 )
++      id = mIdentity; // use folder identity if no message had an id set
++    KMMessage *fwdMsg = new KMMessage;
++    fwdMsg->initHeader( id );
++    fwdMsg->setAutomaticFields( true );
++    fwdMsg->setCharset( "utf-8" );
++    fwdMsg->setBody( msgText );
+ 
+-        msgText += msg->createForwardBody();
+-        linklist.append(msg);
+-      }
+-      if ( id == 0 )
+-        id = mIdentity; // use folder identity if no message had an id set
+-      KMMessage *fwdMsg = new KMMessage;
+-      fwdMsg->initHeader(id);
+-      fwdMsg->setAutomaticFields(true);
+-      fwdMsg->setCharset("utf-8");
+-      fwdMsg->setBody(msgText);
++    for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() )
++      fwdMsg->link( msg, KMMsgStatusForwarded );
+ 
+-      for (KMMessage *msg = linklist.first(); msg; msg = linklist.next())
+-        fwdMsg->link(msg, KMMsgStatusForwarded);
++    KCursorSaver busy( KBusyPtr::busy() );
++    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
++    win->setCharset("");
++    win->show();
+ 
+-      KCursorSaver busy(KBusyPtr::busy());
++  } else { // forward a single message at most
++
++    KMMessage *msg = msgList.getFirst();
++    if ( !msg || !msg->codec() )
++      return Failed;
++
++    KCursorSaver busy( KBusyPtr::busy() );
++    KMMessage *fwdMsg = msg->createForward();
++
++    uint id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
++    if ( id == 0 )
++      id = mIdentity;
++    {
+       KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+-      win->setCharset("");
++      win->setCharset( fwdMsg->codec()->mimeName(), true );
++      win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+       win->show();
+-      return OK;
+     }
+   }
+-
+-  // forward a single message at most.
+-  KMMessage *msg = msgList.getFirst();
+-  if ( !msg || !msg->codec() )
+-    return Failed;
+-
+-  KCursorSaver busy(KBusyPtr::busy());
+-  KMMessage *fwdMsg = msg->createForward();
+-
+-  uint id = msg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+-  if ( id == 0 )
+-    id = mIdentity;
+-  {
+-    KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
+-    win->setCharset( fwdMsg->codec()->mimeName(), true );
+-    win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
+-    win->show();
+-  }
+-
+   return OK;
+ }
+ 
+@@ -1329,8 +1258,95 @@
+ }
+ 
+ 
++KMForwardDigestCommand::KMForwardDigestCommand( QWidget *parent,
++           const QPtrList<KMMsgBase> &msgList, uint identity, KMail::Composer *win )
++  : KMCommand( parent, msgList ), mIdentity( identity ),
++    mWin( QGuardedPtr<KMail::Composer>( win ))
++{
++}
++
++KMForwardDigestCommand::KMForwardDigestCommand( QWidget *parent,
++           KMMessage * msg, uint identity, KMail::Composer *win )
++  : KMCommand( parent, msg ), mIdentity( identity ),
++    mWin( QGuardedPtr< KMail::Composer >( win ))
++{
++}
++
++KMCommand::Result KMForwardDigestCommand::execute()
++{
++  QPtrList<KMMessage> msgList = retrievedMsgs();
++
++  if ( msgList.count() < 2 )
++    return Undefined; // must have more than 1 for a digest
++
++  uint id = 0;
++  KMMessage *fwdMsg = new KMMessage;
++  KMMessagePart *msgPart = new KMMessagePart;
++  QString msgPartText;
++  int msgCnt = 0; // incase there are some we can't forward for some reason
++
++  // dummy header initialization; initialization with the correct identity
++  // is done below
++  fwdMsg->initHeader( id );
++  fwdMsg->setAutomaticFields( true );
++  fwdMsg->mMsg->Headers().ContentType().CreateBoundary( 1 );
++  QCString boundary( fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
++  msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
++                     " message is contained in the attachment(s).\n\n\n");
++  // iterate through all the messages to be forwarded
++  for ( KMMessage *msg = msgList.first(); msg; msg = msgList.next() ) {
++    // set the identity
++    if ( id == 0 )
++      id = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt();
++    // set the part header
++    msgPartText += "--";
++    msgPartText += QString::fromLatin1( boundary );
++    msgPartText += "\nContent-Type: MESSAGE/RFC822";
++    msgPartText += QString( "; CHARSET=%1" ).arg( msg->charset() );
++    msgPartText += '\n';
++    DwHeaders dwh;
++    dwh.MessageId().CreateDefault();
++    msgPartText += QString( "Content-ID: %1\n" ).arg( dwh.MessageId().AsString().c_str() );
++    msgPartText += QString( "Content-Description: %1" ).arg( msg->subject() );
++    if ( !msg->subject().contains( "(fwd)" ) )
++      msgPartText += " (fwd)";
++    msgPartText += "\n\n";
++    // remove headers that shouldn't be forwarded
++    msg->removePrivateHeaderFields();
++    msg->removeHeaderField( "BCC" );
++    // set the part
++    msgPartText += msg->headerAsString();
++    msgPartText += '\n';
++    msgPartText += msg->body();
++    msgPartText += '\n';     // eot
++    msgCnt++;
++    fwdMsg->link( msg, KMMsgStatusForwarded );
++  }
++
++  if ( id == 0 )
++    id = mIdentity; // use folder identity if no message had an id set
++  fwdMsg->initHeader( id );
++  msgPartText += "--";
++  msgPartText += QString::fromLatin1( boundary );
++  msgPartText += "--\n";
++  QCString tmp;
++  msgPart->setTypeStr( "MULTIPART" );
++  tmp.sprintf( "Digest; boundary=\"%s\"", boundary.data() );
++  msgPart->setSubtypeStr( tmp );
++  msgPart->setName( "unnamed" );
++  msgPart->setCte( DwMime::kCte7bit );   // does it have to be 7bit?
++  msgPart->setContentDescription( QString( "Digest of %1 messages." ).arg( msgCnt ) );
++  // THIS HAS TO BE AFTER setCte()!!!!
++  msgPart->setBodyEncoded( QCString( msgPartText.ascii() ) );
++  KCursorSaver busy( KBusyPtr::busy() );
++  KMail::Composer * win = KMail::makeComposer( fwdMsg, id );
++  win->addAttach( msgPart );
++  win->show();
++  return OK;
++}
++
+ KMRedirectCommand::KMRedirectCommand( QWidget *parent,
+-  KMMessage *msg )
++                                      KMMessage *msg )
+   : KMCommand( parent, msg )
+ {
+ }
+@@ -1477,7 +1493,7 @@
+   int msgCountToFilter = msgList.count();
+   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+     int diff = msgCountToFilter - ++msgCount;
+-    if ( diff < 10 || !( msgCount % 20 ) ) {
++    if ( diff < 10 || !( msgCount % 20 ) || msgCount <= 10 ) {
+       QString statusMsg = i18n("Filtering message %1 of %2");
+       statusMsg = statusMsg.arg( msgCount ).arg( msgCountToFilter );
+       KPIM::BroadcastStatus::instance()->setStatusMsg( statusMsg );
+Index: kmail/messagecomposer.cpp
+===================================================================
+--- kmail/messagecomposer.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/messagecomposer.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -2155,9 +2155,11 @@
+   }
+ 
+   mSignature = signature;
+-  Q_ASSERT( !mSignature.isNull() ); // if you hit this, check gpg-agent is running, then blame gpgme.
+-  if ( mSignature.isNull() ) {
+-    KMessageBox::error( mComposeWin, i18n( "The signing operation failed for an unknown reason." ) );
++  if ( mSignature.isEmpty() ) {
++    KMessageBox::sorry( mComposeWin,
++                        i18n( "The signing operation failed. "
++                              "Please make sure that the gpg-agent program "
++                              "is running." ) );
+   }
+ }
+ 
+Index: kmail/kmfoldercachedimap.cpp
+===================================================================
+--- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1208,6 +1208,10 @@
+ 
+ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool cont)
+ {
++  if ( mSyncState == SYNC_STATE_INITIAL ){
++      kdDebug(5006) << "IMAP status changed but reset " << endl;
++      return; // we were reset
++  }
+   if ( folder->storage() == this ) {
+     --mStatusFlagsJobs;
+     if ( mStatusFlagsJobs == 0 || !cont ) // done or aborting
+@@ -2010,6 +2014,7 @@
+ // called by KMAcctCachedImap::killAllJobs
+ void KMFolderCachedImap::resetSyncState()
+ {
++  if ( mSyncState == SYNC_STATE_INITIAL ) return;
+   mSubfoldersForSync.clear();
+   mSyncState = SYNC_STATE_INITIAL;
+   close();
+Index: kmail/kmail_part.rc
+===================================================================
+--- kmail/kmail_part.rc	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmail_part.rc	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -2,7 +2,7 @@
+      the same menu entries at the same place in KMail and Kontact  -->
+ 
+ <!DOCTYPE kpartgui>
+-<kpartgui version="6" name="kmail_part" >
++<kpartgui version="7" name="kmail_part" >
+  <MenuBar>
+   <Menu noMerge="1" name="file" >
+    <text>&amp;File</text>
+@@ -117,6 +117,7 @@
+      <text>&amp;Forward</text>
+      <Action name="message_forward_as_attachment" />
+      <Action name="message_forward_inline" />
++     <Action name="message_forward_as_digest" />
+      <Action name="message_forward_redirect" />
+    </Menu>
+    <Action name="send_again" />
+Index: kmail/kmmainwidget.cpp
+===================================================================
+--- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1276,14 +1276,16 @@
+ 
+ 
+ //-----------------------------------------------------------------------------
+-void KMMainWidget::slotForwardMsg()
++void KMMainWidget::slotForwardInlineMsg()
+ {
+   KMMessageList* selected = mHeaders->selectedMsgs();
+   KMCommand *command = 0L;
+   if(selected && !selected->isEmpty()) {
+-    command = new KMForwardCommand( this, *selected, mFolder->identity() );
++    command = new KMForwardInlineCommand( this, *selected,
++                                          mFolder->identity() );
+   } else {
+-    command = new KMForwardCommand( this, mHeaders->currentMsg(), mFolder->identity() );
++    command = new KMForwardInlineCommand( this, mHeaders->currentMsg(),
++                                          mFolder->identity() );
+   }
+ 
+   command->start();
+@@ -1304,7 +1306,20 @@
+   command->start();
+ }
+ 
++//-----------------------------------------------------------------------------
++void KMMainWidget::slotForwardDigestMsg()
++{
++  KMMessageList* selected = mHeaders->selectedMsgs();
++  KMCommand *command = 0L;
++  if(selected && !selected->isEmpty()) {
++    command = new KMForwardDigestCommand( this, *selected, mFolder->identity() );
++  } else {
++    command = new KMForwardDigestCommand( this, mHeaders->currentMsg(), mFolder->identity() );
++  }
+ 
++  command->start();
++}
++
+ //-----------------------------------------------------------------------------
+ void KMMainWidget::slotEditMsg()
+ {
+@@ -2459,19 +2474,35 @@
+ 					"mail_forward", actionCollection(),
+ 					"message_forward" );
+   connect( mForwardActionMenu, SIGNAL(activated()), this,
+-	   SLOT(slotForwardMsg()) );
++	   SLOT(slotForwardInlineMsg()) );
+ 
+   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+ 				       "mail_forward", Key_F, this,
+-					SLOT(slotForwardAttachedMsg()), actionCollection(),
++					SLOT(slotForwardAttachedMsg()),
++                                        actionCollection(),
+ 					"message_forward_as_attachment" );
+   mForwardActionMenu->insert( forwardAttachedAction() );
+-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+-				actionCollection(), "message_forward_inline" );
++  mForwardInlineAction = new KAction( i18n("&Inline..."), "mail_forward",
++                                      SHIFT+Key_F, this,
++                                      SLOT(slotForwardInlineMsg()),
++                                      actionCollection(),
++                                      "message_forward_inline" );
+ 
+-  mForwardActionMenu->insert( forwardAction() );
++  mForwardActionMenu->insert( forwardInlineAction() );
++  mForwardDigestAction = new KAction( i18n("Message->Forward->","As Di&gest..."),
++                                      "mail_forward", 0, this,
++                                      SLOT(slotForwardDigestMsg()),
++                                      actionCollection(),
++                                      "message_forward_as_digest" );
++  mForwardActionMenu->insert( forwardDigestAction() );
++  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
++                                 "mail_forward", Key_E, this,
++                                 SLOT(slotRedirectMsg()),
++				 actionCollection(),
++                                 "message_forward_redirect" );
++  mForwardActionMenu->insert( redirectAction() );
+ 
++
+   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
+ 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
+ 
+@@ -2502,12 +2533,6 @@
+ 				  "reply_list" );
+   mReplyActionMenu->insert( mReplyListAction );
+ 
+-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
+-                                 "mail_forward",
+-				 Key_E, this, SLOT(slotRedirectMsg()),
+-				 actionCollection(), "message_forward_redirect" );
+-  mForwardActionMenu->insert( redirectAction() );
+-
+   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
+     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
+ 
+@@ -2572,13 +2597,13 @@
+   mToggleTodoAction = new KToggleAction(i18n("Mark Message as &To-do"), "mail_todo",
+                                  0, this, SLOT(slotSetMsgStatusTodo()),
+                                  actionCollection(), "status_todo");
+-  mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &To-do") );
++  mToggleTodoAction->setCheckedState( i18n("Remove &To-do Message Mark") );
+   mStatusMenu->insert( mToggleTodoAction );
+ 
+   mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
+                                  0, this, SLOT(slotSetMsgStatusSent()),
+                                  actionCollection(), "status_sent");
+-  mToggleSentAction->setCheckedState( i18n("Mark Message as Not &Sent") );
++  mToggleSentAction->setCheckedState( i18n("Remove &Sent Mark") );
+ 
+ 
+   //----- "Mark Thread" submenu
+@@ -2615,7 +2640,7 @@
+   mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &To-do"), "mail_todo",
+                                        0, this, SLOT(slotSetThreadStatusTodo()),
+                                        actionCollection(), "thread_todo");
+-  mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &To-do") );
++  mToggleThreadTodoAction->setCheckedState( i18n("Remove &To-do Thread Mark") );
+   mThreadStatusMenu->insert( mToggleThreadTodoAction );
+ 
+   //------- "Watch and ignore thread" actions
+@@ -2876,7 +2901,7 @@
+ void KMMainWidget::slotShowMsgSrc()
+ {
+   if ( mMsgView )
+-    mMsgView->setUpdateAttachment( false );  
++    mMsgView->setUpdateAttachment( false );
+   KMMessage *msg = mHeaders->currentMsg();
+   if ( !msg )
+     return;
+@@ -2959,6 +2984,10 @@
+       allSelectedInCommonThread = true;
+     }
+ 
++    QListViewItem *curItemParent = mHeaders->currentItem();
++    bool parent_thread = 0;
++    if ( curItemParent && curItemParent->firstChild() != 0 ) parent_thread = 1;
++
+     bool mass_actions = count >= 1;
+     bool thread_actions = mass_actions && allSelectedInCommonThread &&
+                           mHeaders->isThreaded();
+@@ -2993,8 +3022,9 @@
+     mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
+     mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
+     mFindInMessageAction->setEnabled( mass_actions );
+-    mForwardAction->setEnabled( mass_actions );
++    mForwardInlineAction->setEnabled( mass_actions );
+     mForwardAttachedAction->setEnabled( mass_actions );
++    mForwardDigestAction->setEnabled( count > 1 || parent_thread );
+ 
+     forwardMenu()->setEnabled( mass_actions );
+ 
+@@ -3014,7 +3044,7 @@
+ 
+     mSendAgainAction->setEnabled( single_actions &&
+              ( mHeaders->currentMsg() && mHeaders->currentMsg()->isSent() )
+-          || ( mFolder && mHeaders->currentMsg() && 
++          || ( mFolder && mHeaders->currentMsg() &&
+               ( kmkernel->folderIsDraftOrOutbox( mFolder )
+              || kmkernel->folderIsSentMailFolder( mFolder ) ) ) );
+     mSaveAsAction->setEnabled( mass_actions );
+Index: kmail/kmcommands.h
+===================================================================
+--- kmail/kmcommands.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmcommands.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -460,15 +460,15 @@
+   QString mSelection;
+ };
+ 
+-class KDE_EXPORT KMForwardCommand : public KMCommand
++class KDE_EXPORT KMForwardInlineCommand : public KMCommand
+ {
+   Q_OBJECT
+ 
+ public:
+-  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+-                    uint identity = 0 );
+-  KMForwardCommand( QWidget *parent, KMMessage * msg,
+-                    uint identity = 0 );
++  KMForwardInlineCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
++                          uint identity = 0 );
++  KMForwardInlineCommand( QWidget *parent, KMMessage * msg,
++                          uint identity = 0 );
+ 
+ private:
+   virtual Result execute();
+@@ -494,6 +494,23 @@
+   QGuardedPtr<KMail::Composer> mWin;
+ };
+ 
++class KDE_EXPORT KMForwardDigestCommand : public KMCommand
++{
++  Q_OBJECT
++
++public:
++  KMForwardDigestCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
++			    uint identity = 0, KMail::Composer *win = 0 );
++  KMForwardDigestCommand( QWidget *parent, KMMessage * msg,
++			    uint identity = 0, KMail::Composer *win = 0 );
++
++private:
++  virtual Result execute();
++
++  uint mIdentity;
++  QGuardedPtr<KMail::Composer> mWin;
++};
++
+ class KDE_EXPORT KMRedirectCommand : public KMCommand
+ {
+   Q_OBJECT
+Index: kmail/kmcomposewin.cpp
+===================================================================
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1466,8 +1466,9 @@
+   statusBar()->insertItem("", 0, 1);
+   statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
+ 
+-  statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
+-  statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
++  statusBar()->insertItem(i18n( " Spellcheck: %1 ").arg( "   " ), 3, 0, true );
++  statusBar()->insertItem(i18n( " Column: %1 ").arg("     "), 2, 0, true);
++  statusBar()->insertItem(i18n( " Line: %1 ").arg("     "), 1, 0, true);
+ }
+ 
+ 
+@@ -4125,8 +4126,16 @@
+ //-----------------------------------------------------------------------------
+ void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
+ {
+-  if ( mEditor->autoSpellChecking(on) == -1 )
++  if ( mEditor->autoSpellChecking(on) == -1 ) {
+     mAutoSpellCheckingAction->setChecked(false); // set it to false again
++  }
++
++  QString temp;
++  if ( on )
++    temp = i18n( "Spellcheck: on" );
++  else
++    temp = i18n( "Spellcheck: off" );
++  statusBar()->changeItem( temp, 3 );
+ }
+ //-----------------------------------------------------------------------------
+ void KMComposeWin::slotSpellcheck()
+@@ -4298,24 +4307,30 @@
+   }
+ 
+   QString edtText = mEditor->text();
+-  bool appendNewSig = true;
++
++  if ( mOldSigText.isEmpty() ) {
++    const KPIM::Identity &id =
++      kmkernel->
++      identityManager()->
++      identityForUoidOrDefault( mMsg->headerField( "X-KMail-Identity" ).
++                                stripWhiteSpace().toUInt() );
++    mOldSigText = id.signatureText();
++  }
++
+   // try to truncate the old sig
+-  if( !mOldSigText.isEmpty() )
+-  {
+-    if( edtText.endsWith( mOldSigText ) )
+-      edtText.truncate( edtText.length() - mOldSigText.length() );
+-    else
+-      appendNewSig = false;
++  QString sigStr = mOldSigText + "\\s*$";  // because extra spaces are appended
++  QRegExp rx( sigStr );                    // to the signature in some cases.
++  if ( edtText.contains( rx ) ) {          // hey, that rhymes!
++    edtText.remove( rx );
+   }
++
+   // now append the new sig
+   mOldSigText = ident.signatureText();
+-  if( appendNewSig )
+-  {
+-    if( (!mOldSigText.isEmpty()) &&
+-                   (GlobalSettings::self()->autoTextSignature()=="auto") )
+-      edtText.append( mOldSigText );
+-    mEditor->setText( edtText );
++  if( ( !mOldSigText.isEmpty() ) &&
++      ( GlobalSettings::self()->autoTextSignature() == "auto" ) ) {
++    edtText.append( mOldSigText );
+   }
++  mEditor->setText( edtText );
+ 
+   // disable certain actions if there is no PGP user identity set
+   // for this profile
+@@ -4599,27 +4614,29 @@
+ 
+ void KMComposeWin::fontChanged( const QFont &f )
+ {
+-  QFontDatabase *fontdb = new QFontDatabase();
++  QFont fontTemp = f;
++  fontTemp.setBold( true );
++  fontTemp.setItalic( true );
++  QFontInfo fontInfo( fontTemp );
+ 
+-  if ( fontdb->bold(f.family(), "Bold") ) {
+-    textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
+-    textBoldAction->setEnabled(true);
++  if ( fontInfo.bold() ) {
++    textBoldAction->setChecked( f.bold() );
++    textBoldAction->setEnabled( true ) ;
++  } else {
++    textBoldAction->setEnabled( false );
+   }
+-  else
+-    textBoldAction->setEnabled(false);
+ 
+-  if ( fontdb->italic(f.family(), "Italic") ) {
++  if ( fontInfo.italic() ) {
+     textItalicAction->setChecked( f.italic() );
+-    textItalicAction->setEnabled(true);
++    textItalicAction->setEnabled( true ) ;
++  } else {
++    textItalicAction->setEnabled( false );
+   }
+-  else
+-    textItalicAction->setEnabled(false);
+ 
+   textUnderAction->setChecked( f.underline() );
+ 
+   fontAction->setFont( f.family() );
+   fontSizeAction->setFontSize( f.pointSize() );
+-  delete fontdb;
+ }
+ 
+ void KMComposeWin::alignmentChanged( int a )
 Index: kmail/configuredialog.cpp
 ===================================================================
---- kmail/configuredialog.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kmail/configuredialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kmail/configuredialog.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/configuredialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -2309,6 +2309,13 @@
      }
      i++;
@@ -101,10 +2440,348 @@ Index: kmail/configuredialog.cpp
  }
  
  void AppearancePage::ReaderTab::doLoadFromGlobalSettings()
+Index: kmail/kmfolderimap.cpp
+===================================================================
+--- kmail/kmfolderimap.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfolderimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -112,7 +112,7 @@
+   if (mOpenCount > 0) mOpenCount--;
+   if (mOpenCount > 0 && !aForced) return;
+   if (isSelected() && !aForced) {
+-      kdWarning(5006) << "Trying to close the selected folder " << label() << 
++      kdWarning(5006) << "Trying to close the selected folder " << label() <<
+           " - ignoring!" << endl;
+       return;
+   }
+@@ -320,7 +320,7 @@
+   if ( !mAccount->hasCapability("uidplus") ) {
+     // Remember the status with the MD5 as key
+     // so it can be transfered to the new message
+-    mMetaDataMap.insert( aMsg->msgIdMD5(), 
++    mMetaDataMap.insert( aMsg->msgIdMD5(),
+         new KMMsgMetaData(aMsg->status(), serNum) );
+   }
+ 
+@@ -349,7 +349,7 @@
+     if ( !uidplus ) {
+       // Remember the status with the MD5 as key
+       // so it can be transfered to the new message
+-      mMetaDataMap.insert( msg->msgIdMD5(), 
++      mMetaDataMap.insert( msg->msgIdMD5(),
+           new KMMsgMetaData(msg->status(), msg->getMsgSerNum()) );
+     }
+     msg->setTransferInProgress( false );
+@@ -367,7 +367,7 @@
+ //-----------------------------------------------------------------------------
+ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
+ {
+-  QPtrList<KMMessage> list; 
++  QPtrList<KMMessage> list;
+   list.append(aMsg);
+   QValueList<int> index;
+   int ret = addMsg(list, index);
+@@ -458,7 +458,7 @@
+     // transfer from local folders or other accounts
+     QPtrListIterator<KMMessage> it( msgList );
+     KMMessage* msg;
+-    while ( ( msg = it.current() ) != 0 ) 
++    while ( ( msg = it.current() ) != 0 )
+     {
+       ++it;
+       if ( !msg->transferInProgress() )
+@@ -505,7 +505,7 @@
+       mMetaDataMap.insert( msg->msgIdMD5(), new KMMsgMetaData(msg->status()) );
+     }
+   }
+-  
++
+   QValueList<ulong> uids;
+   getUids(msgList, uids);
+   QStringList sets = makeSets(uids, false);
+@@ -611,7 +611,7 @@
+   // start personal namespace listing and send it directly to slotListResult
+   for ( QStringList::Iterator it = personal.begin(); it != personal.end(); ++it )
+   {
+-    KMail::ListJob* job = new KMail::ListJob( mAccount, type, this, 
++    KMail::ListJob* job = new KMail::ListJob( mAccount, type, this,
+ 	mAccount->addPathToNamespace( *it ) );
+     job->setNamespace( *it );
+     connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+@@ -632,7 +632,7 @@
+         this, SLOT(slotCheckNamespace(const QStringList&, const QStringList&,
+             const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
+     job->start();
+-  }  
++  }
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -644,13 +644,13 @@
+ {
+   kdDebug(5006) << "slotCheckNamespace - " << subfolderNames.join(",") << endl;
+ 
+-  // get a correct foldername: 
++  // get a correct foldername:
+   // strip / and make sure it does not contain the delimiter
+   QString name = jobData.path.mid( 1, jobData.path.length()-2 );
+   name.remove( mAccount->delimiterForNamespace( name ) );
+   if ( name.isEmpty() ) {
+     // happens when an empty namespace is defined
+-    slotListResult( subfolderNames, subfolderPaths, 
++    slotListResult( subfolderNames, subfolderPaths,
+         subfolderMimeTypes, subfolderAttributes, jobData );
+     return;
+   }
+@@ -658,9 +658,9 @@
+   folder()->createChildFolder();
+   KMFolderNode *node = 0;
+   for ( node = folder()->child()->first(); node;
+-        node = folder()->child()->next()) 
++        node = folder()->child()->next())
+   {
+-    if ( !node->isDir() && node->name() == name ) 
++    if ( !node->isDir() && node->name() == name )
+       break;
+   }
+   if ( subfolderNames.isEmpty() )
+@@ -680,9 +680,9 @@
+       kdDebug(5006) << "found namespace folder " << name << endl;
+       if ( !mAccount->listOnlyOpenFolders() )
+       {
+-        KMFolderImap* nsFolder = 
++        KMFolderImap* nsFolder =
+           static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+-        nsFolder->slotListResult( subfolderNames, subfolderPaths, 
++        nsFolder->slotListResult( subfolderNames, subfolderPaths,
+             subfolderMimeTypes, subfolderAttributes, jobData );
+       }
+     } else
+@@ -692,17 +692,17 @@
+       KMFolder *fld = folder()->child()->createFolder( name );
+       if ( fld ) {
+         KMFolderImap* f = static_cast<KMFolderImap*> ( fld->storage() );
+-        f->initializeFrom( this, mAccount->addPathToNamespace( name ), 
++        f->initializeFrom( this, mAccount->addPathToNamespace( name ),
+             "inode/directory" );
+         f->close();
+         if ( !mAccount->listOnlyOpenFolders() )
+         {
+-          f->slotListResult( subfolderNames, subfolderPaths, 
++          f->slotListResult( subfolderNames, subfolderPaths,
+               subfolderMimeTypes, subfolderAttributes, jobData );
+         }
+       }
+       kmkernel->imapFolderMgr()->contentsChanged();
+-    }  
++    }
+   }
+ }
+ 
+@@ -748,8 +748,8 @@
+                                    const ImapAccountBase::jobData& jobData )
+ {
+   mSubfolderState = imapFinished;
+-  //kdDebug(5006) << label() << ": folderNames=" << subfolderNames << " folderPaths=" 
+-  //<< subfolderPaths << " mimeTypes=" << subfolderMimeTypes << endl;  
++  //kdDebug(5006) << label() << ": folderNames=" << subfolderNames << " folderPaths="
++  //<< subfolderPaths << " mimeTypes=" << subfolderMimeTypes << endl;
+ 
+   // don't react on changes
+   kmkernel->imapFolderMgr()->quiet(true);
+@@ -770,9 +770,9 @@
+     KMFolderImap* parent = findParent( subfolderPaths.first(), subfolderNames.first() );
+     if ( parent )
+     {
+-      kdDebug(5006) << "KMFolderImap::slotListResult - pass listing to " 
++      kdDebug(5006) << "KMFolderImap::slotListResult - pass listing to "
+         << parent->label() << endl;
+-      parent->slotListResult( subfolderNames, subfolderPaths, 
++      parent->slotListResult( subfolderNames, subfolderPaths,
+           subfolderMimeTypes, subfolderAttributes, jobData );
+       // cleanup
+       QStringList list;
+@@ -798,13 +798,13 @@
+     // create folders if necessary
+     for ( node = folder()->child()->first(); node;
+           node = folder()->child()->next() ) {
+-      if ( !node->isDir() && node->name() == subfolderNames[i] ) 
++      if ( !node->isDir() && node->name() == subfolderNames[i] )
+         break;
+     }
+     if ( node ) {
+       f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+-    } 
+-    else if ( subfolderPaths[i].upper() != "/INBOX/" ) 
++    }
++    else if ( subfolderPaths[i].upper() != "/INBOX/" )
+     {
+       kdDebug(5006) << "create folder " << subfolderNames[i] << endl;
+       KMFolder *fld = folder()->child()->createFolder(subfolderNames[i]);
+@@ -829,12 +829,12 @@
+ 
+       f->initializeFrom( this, subfolderPaths[i], subfolderMimeTypes[i] );
+       f->setChildrenState( subfolderAttributes[i] );
+-      if ( mAccount->listOnlyOpenFolders() && 
+-           f->hasChildren() != FolderStorage::ChildrenUnknown ) 
++      if ( mAccount->listOnlyOpenFolders() &&
++           f->hasChildren() != FolderStorage::ChildrenUnknown )
+       {
+         settingsChanged = true;
+       }
+-      
++
+       if ( settingsChanged )
+       {
+         // tell the tree our information changed
+@@ -915,7 +915,7 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
+-void KMFolderImap::checkFolders( const QStringList& subfolderNames, 
++void KMFolderImap::checkFolders( const QStringList& subfolderNames,
+     const QString& myNamespace )
+ {
+   QPtrList<KMFolder> toRemove;
+@@ -928,14 +928,14 @@
+       KMFolderImap* imapFld = static_cast<KMFolderImap*>( fld->storage() );
+       // as more than one namespace can be listed in the root folder we need to make sure
+       // that the folder is within the current namespace
+-      bool isInNamespace = ( myNamespace.isEmpty() || 
++      bool isInNamespace = ( myNamespace.isEmpty() ||
+           myNamespace == mAccount->namespaceForFolder( imapFld ) );
+-      kdDebug(5006) << node->name() << " in namespace " << myNamespace << ":" << 
++      kdDebug(5006) << node->name() << " in namespace " << myNamespace << ":" <<
+         isInNamespace << endl;
+       // ignore some cases
+       QString name = node->name();
+-      bool ignore = ( ( this == mAccount->rootFolder() ) && 
+-          ( imapFld->imapPath() == "/INBOX/" || 
++      bool ignore = ( ( this == mAccount->rootFolder() ) &&
++          ( imapFld->imapPath() == "/INBOX/" ||
+             mAccount->isNamespaceFolder( name ) ||
+ 	    !isInNamespace ) );
+       // additional sanity check for broken folders
+@@ -960,7 +960,7 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
+-void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath, 
++void KMFolderImap::initializeFrom( KMFolderImap* parent, QString folderPath,
+                                    QString mimeType )
+ {
+   setAccount( parent->account() );
+@@ -1060,7 +1060,7 @@
+ //-----------------------------------------------------------------------------
+ ulong KMFolderImap::lastUid()
+ {
+-  if ( mLastUid > 0 ) 
++  if ( mLastUid > 0 )
+       return mLastUid;
+   open();
+   if (count() > 0)
+@@ -1083,7 +1083,7 @@
+   if (job->error()) {
+     if ( job->error() != KIO::ERR_ACCESS_DENIED ) {
+       // we suppress access denied messages because they are normally a result of
+-      // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that 
++      // explicitely set ACLs. Do not save this information (e.g. setNoContent) so that
+       // we notice when this changes
+       mAccount->handleJobError( job, i18n("Error while querying the server status.") );
+     }
+@@ -1095,19 +1095,19 @@
+     int a = cstr.find("X-uidValidity: ");
+     int b = cstr.find("\r\n", a);
+     QString uidv;
+-    if ( (b - a - 15) >= 0 ) 
++    if ( (b - a - 15) >= 0 )
+         uidv = cstr.mid(a + 15, b - a - 15);
+     a = cstr.find("X-Access: ");
+     b = cstr.find("\r\n", a);
+     QString access;
+-    if ( (b - a - 10) >= 0 ) 
++    if ( (b - a - 10) >= 0 )
+         access = cstr.mid(a + 10, b - a - 10);
+     mReadOnly = access == "Read only";
+     a = cstr.find("X-Count: ");
+     b = cstr.find("\r\n", a);
+     int exists = -1;
+     bool ok = false;
+-    if ( (b - a - 9) >= 0 ) 
++    if ( (b - a - 9) >= 0 )
+         exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
+     if ( !ok ) exists = -1;
+     QString startUid;
+@@ -1275,7 +1275,7 @@
+         uid = (*it).items.remove(uid);
+         if ( msgBase->getMsgSerNum() > 0 ) {
+           saveMsgMetaData( static_cast<KMMessage*>(msgBase) );
+-        }        
++        }
+       }
+       else break;  // happens only, if deleted mails reappear on the server
+     }
+@@ -1382,6 +1382,8 @@
+ //-----------------------------------------------------------------------------
+ void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
+ {
++  if ( !msg ) return;
++
+   const KMMsgStatus oldStatus = msg->status();
+   // Set flags if they are new
+   if ( (flags & 4) && (oldStatus & KMMsgStatusFlag) == 0 )
+@@ -1455,7 +1457,7 @@
+   (*it).cdata += QCString(data, data.size() + 1);
+   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
+   if ( pos == -1 ) {
+-    // if we do not find the pattern in the complete string we will not find 
++    // if we do not find the pattern in the complete string we will not find
+     // it in a substring.
+     return;
+   }
+@@ -1552,7 +1554,7 @@
+         if ( folder()->isSystemFolder() && imapPath() == "/INBOX/"
+             && kmkernel->filterMgr()->atLeastOneIncomingFilterAppliesTo( mAccount->id() ) )
+             mAccount->execFilters( msg->getMsgSerNum() );
+-        
++
+         if ( count() > 1 ) {
+           unGetMsg(count() - 1);
+         }
+@@ -2120,7 +2122,7 @@
+   // set the deleted flag for all messages in the folder
+   KURL url = mAccount->getUrl();
+   url.setPath( imapPath() + ";UID=1:*");
+-  if ( mAccount->makeConnection() == ImapAccountBase::Connected ) 
++  if ( mAccount->makeConnection() == ImapAccountBase::Connected )
+   {
+     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+@@ -2216,7 +2218,7 @@
+       createFolder( *it );
+     }
+   }
+-  mFoldersPendingCreation.clear();  
++  mFoldersPendingCreation.clear();
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -2268,10 +2270,10 @@
+ //-----------------------------------------------------------------------------
+ bool KMFolderImap::isMoveable() const
+ {
+-  return ( hasChildren() == HasNoChildren && 
++  return ( hasChildren() == HasNoChildren &&
+       !folder()->isSystemFolder() ) ? true : false;
+ }
+- 
++
+ //-----------------------------------------------------------------------------
+ const ulong KMFolderImap::serNumForUID( ulong uid )
+ {
 Index: kmail/configure.in.in
 ===================================================================
---- kmail/configure.in.in	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kmail/configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kmail/configure.in.in	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -6,8 +6,9 @@
  
  missing_indexlib=ignore
@@ -117,10 +2794,1249 @@ Index: kmail/configure.in.in
  	missing_indexlib=no
  	)
  
+Index: kmail/kmfoldersearch.cpp
+===================================================================
+--- kmail/kmfoldersearch.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfoldersearch.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -78,6 +78,7 @@
+     mRoot = 0;
+     mSearchPattern = 0;
+     mFoundCount = 0;
++    mSearchCount = 0;
+ 
+     mProcessNextBatchTimer = new QTimer();
+     connect(mProcessNextBatchTimer, SIGNAL(timeout()), this, SLOT(slotProcessNextBatch()));
+@@ -154,6 +155,7 @@
+     }
+ 
+     mFoundCount = 0;
++    mSearchCount = 0;
+     mRunning = true;
+     mRunByIndex = false;
+     // check if this query can be done with the index
+@@ -217,6 +219,7 @@
+                 account->ignoreJobsForFolder( folder );
+             }
+             folder->storage()->search( 0 );
++            mSearchCount += folder->count();
+             folder->close();
+         }
+     }
+@@ -282,6 +285,7 @@
+           SLOT( slotSearchFolderResult( KMFolder*, QValueList<Q_UINT32>,
+                                         const KMSearchPattern*, bool ) ) );
+       --mRemainingFolders;
++      mSearchCount += folder->count();
+       folder->close();
+       mOpenedFolders.remove( folder );
+       if ( mRemainingFolders <= 0 )
+@@ -940,18 +944,18 @@
+       unsigned int count = mFoldersCurrentlyBeingSearched[folder];
+       mFoldersCurrentlyBeingSearched.replace( folder, count+1 );
+     } else {
+-      connect( folder->storage(), 
++      connect( folder->storage(),
+               SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
+               this,
+-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
++              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
+                       const KMSearchPattern*, bool ) ) );
+       mFoldersCurrentlyBeingSearched.insert( folder, 1 );
+     }
+     folder->storage()->search( search()->searchPattern(), serNum );
+ }
+ 
+-void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder, 
+-                                               Q_UINT32 serNum, 
++void KMFolderSearch::slotSearchExamineMsgDone( KMFolder* folder,
++                                               Q_UINT32 serNum,
+                                                const KMSearchPattern* pattern,
+                                                bool matches )
+ {
+@@ -1103,10 +1107,10 @@
+       unsigned int count = mFoldersCurrentlyBeingSearched[aFolder];
+       mFoldersCurrentlyBeingSearched.replace( aFolder, count+1 );
+     } else {
+-      connect( aFolder->storage(), 
++      connect( aFolder->storage(),
+               SIGNAL( searchDone( KMFolder*, Q_UINT32, const KMSearchPattern*, bool ) ),
+               this,
+-              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32, 
++              SLOT( slotSearchExamineMsgDone( KMFolder*, Q_UINT32,
+                       const KMSearchPattern*, bool ) ) );
+       mFoldersCurrentlyBeingSearched.insert( aFolder, 1 );
+     }
+Index: kmail/kmfilterdlg.h
+===================================================================
+--- kmail/kmfilterdlg.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmfilterdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -124,12 +124,18 @@
+   /** Called when the user clicks the 'Delete' button. Deletes the
+       current filter. */
+   void slotDelete();
++  /** Called when the user clicks the 'Top' button. Moves the current
++      filter to the top line. */
++  void slotTop();
+   /** Called when the user clicks the 'Up' button. Moves the current
+       filter up one line. */
+   void slotUp();
+   /** Called when the user clicks the 'Down' button. Moves the current
+       filter down one line. */
+   void slotDown();
++  /** Called when the user clicks the 'Bottom' button. Moves the current
++      filter to the bottom line. */
++  void slotBottom();
+   /** Called when the user clicks the 'Rename' button. Pops up a
+       dialog prompting to enter the new name. */
+   void slotRename();
+@@ -140,14 +146,16 @@
+   /** The listbox displaying the filter list. */
+   QListBox *mListBox;
+   /** The various action buttons. */
+-  QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnUp, *mBtnDown, *mBtnRename;
++  QPushButton *mBtnNew, *mBtnCopy, *mBtnDelete, *mBtnRename;
++  QPushButton *mBtnTop, *mBtnUp, *mBtnDown, *mBtnBot;
+   /** The index of the currently selected item. */
+   int mIdxSelItem;
+   bool mShowLater;
+ private:
+   void enableControls();
+   void insertFilter( KMFilter* aFilter );
+-  void swapNeighbouringFilters( int untouchedOne, int movedOne);
++  void swapFilters( int from, int to );
++  void swapNeighbouringFilters( int untouchedOne, int movedOne );
+   bool bPopFilter;
+ };
+ 
+Index: kmail/kmmainwidget.h
+===================================================================
+--- kmail/kmmainwidget.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmmainwidget.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -112,8 +112,9 @@
+   KAction *replyListAction() const { return mReplyListAction; }
+   KActionMenu * replyMenu() const { return mReplyActionMenu; }
+   KActionMenu *forwardMenu() const { return mForwardActionMenu; }
+-  KAction *forwardAction() const { return mForwardAction; }
++  KAction *forwardInlineAction() const { return mForwardInlineAction; }
+   KAction *forwardAttachedAction() const { return mForwardAttachedAction; }
++  KAction *forwardDigestAction() const { return mForwardDigestAction; }
+   KAction *redirectAction() const { return mRedirectAction; }
+   KAction *noQuoteReplyAction() const { return mNoQuoteReplyAction; }
+   KActionMenu *filterMenu() const { return mFilterMenu; }
+@@ -373,8 +374,9 @@
+   void slotReplyAuthorToMsg();
+   void slotReplyListToMsg();
+   void slotReplyAllToMsg();
+-  void slotForwardMsg();
++  void slotForwardInlineMsg();
+   void slotForwardAttachedMsg();
++  void slotForwardDigestMsg();
+   void slotRedirectMsg();
+   void slotNoQuoteReplyToMsg();
+   void slotSubjectFilter();
+@@ -407,9 +409,10 @@
+     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
+   // Composition actions
+   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+-      *mReplyListAction,
+-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
+-      *mNoQuoteReplyAction;
++    *mReplyListAction,
++    *mForwardInlineAction, *mForwardAttachedAction, *mForwardDigestAction,
++    *mRedirectAction,
++    *mNoQuoteReplyAction;
+   KActionMenu *mReplyActionMenu;
+   KActionMenu *mForwardActionMenu;
+   // Filter actions
+Index: kmail/networkaccount.h
+===================================================================
+--- kmail/networkaccount.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/networkaccount.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -25,6 +25,8 @@
+ #ifndef __KMAIL_NETWORKACCOUNT_H__
+ #define __KMAIL_NETWORKACCOUNT_H__
+ 
++#include <qguardedptr.h>
++
+ #include "kmaccount.h"
+ 
+ #include "sieveconfig.h"
+@@ -125,7 +127,7 @@
+ 
+   protected:
+     KMail::SieveConfig mSieveConfig;
+-    KIO::Slave * mSlave;
++    QGuardedPtr<KIO::Slave> mSlave;
+     QString mLogin, mPasswd, mAuth, mHost;
+     unsigned short int mPort;
+     bool mStorePasswd : 1;
+Index: kmail/kmreadermainwin.h
+===================================================================
+--- kmail/kmreadermainwin.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmreadermainwin.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -43,8 +43,9 @@
+   void slotReplyAllToMsg();
+   void slotReplyAuthorToMsg();
+   void slotReplyListToMsg();
+-  void slotForwardMsg();
++  void slotForwardInlineMsg();
+   void slotForwardAttachedMsg();
++  void slotForwardDigestMsg();
+   void slotRedirectMsg();
+   void slotShowMsgSrc();
+ 
+@@ -60,8 +61,8 @@
+   QMap<int,KMFolder*> mMenuToFolder;
+   // a few actions duplicated from kmmainwidget
+   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
+-          *mReplyListAction, *mForwardAction,
+-          *mForwardAttachedAction, *mRedirectAction,
++          *mReplyListAction, *mForwardInlineAction,
++          *mForwardAttachedAction, *mForwardDigestAction, *mRedirectAction,
+           *mViewSourceAction;
+   KActionMenu *mReplyActionMenu;
+   KActionMenu *mForwardActionMenu;
+Index: kmail/kmsender.cpp
+===================================================================
+--- kmail/kmsender.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmail/kmsender.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -173,7 +173,7 @@
+   }
+ 
+   //Ensure the message is correctly and fully parsed
+-  
++
+   /* The above was added by Marc and seems to be necessary to ensure
+    * the mail is in a sane state before sending. The unGet makes the
+    * attached unencrypted version of the mail (if there is one ) disappear.
+@@ -331,10 +331,10 @@
+         imapSentFolder =
+           kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
+     }
+-    // No, or no usable sentFolder, and no, or no usable imapSentFolder, 
++    // No, or no usable sentFolder, and no, or no usable imapSentFolder,
+     // let's try the on in the identity
+     if ( ( sentFolder == 0 || sentFolder->isReadOnly() )
+-      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() ) 
++      && ( imapSentFolder == 0 || imapSentFolder->isReadOnly() )
+       && !id.fcc().isEmpty() )
+     {
+       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
+@@ -600,7 +600,7 @@
+   QStringList to, cc, bcc;
+   QString sender;
+   extractSenderToCCAndBcc( mCurrentMsg, &sender, &to, &cc, &bcc );
+-  
++
+   // MDNs are required to have an empty envelope from as per RFC2298.
+   if ( messageIsDispositionNotificationReport( mCurrentMsg ) && GlobalSettings::self()->sendMDNsWithEmptySender() )
+     sender = "<>";
+@@ -1052,13 +1052,15 @@
+   QString query = "headers=0&from=";
+   query += KURL::encode_string( sender );
+ 
+-  if ( !to.empty() )
+-    query += "&to=" + to.join( "&to=" );
+-  if ( !cc.empty() )
+-    query += "&cc=" + cc.join( "&cc=" );
+-  if ( !bcc.empty() )
+-    query += "&bcc=" + bcc.join( "&bcc=" );
++  QStringList::ConstIterator it;
+ 
++  for ( it = to.begin(); it != to.end(); ++it )
++    query += "&to=" + KURL::encode_string(*it);
++  for ( it = cc.begin(); it != cc.end(); ++it )
++    query += "&cc=" + KURL::encode_string(*it);
++  for ( it = bcc.begin(); it != bcc.end(); ++it )
++    query += "&bcc=" + KURL::encode_string(*it);
++
+   KMTransportInfo * ti = mSender->transportInfo();
+ 
+   if ( ti->specifyHostname )
+Index: indexlib/leafdata.cpp
+===================================================================
+--- indexlib/leafdata.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ indexlib/leafdata.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -117,6 +117,15 @@
+ 		unsigned nbytes = end().raw() - first.raw();
+ 		std::memmove( const_cast<unsigned char*>( first.raw() ), next.raw(), nbytes );
+ 		set_usedbytes( usedbytes() - nbytes );
++		unsigned char* iter = const_cast<unsigned char*>( first.raw() );
++		for ( ; iter < end().raw(); ++iter) {
++			if (*iter) --*iter;
++			else {
++				++iter;
++				byte_io::write<uint32_t>(iter,byte_io::read<uint32_t>(iter)-1);
++				iter += byte_io::byte_lenght<uint32_t>();
++			}
++		}
+ 	}
+ }
+ 
+Index: indexlib/memreference.h
+===================================================================
+--- indexlib/memreference.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ indexlib/memreference.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -85,12 +85,24 @@
+ }
+ 
+ template <typename T>
++memory_reference<T> operator --( memory_reference<T> ref ) {
++	return ref = ref - 1;
++}
++
++template <typename T>
+ T operator ++( memory_reference<T> ref, int ) {
+ 	T v = ref;
+ 	ref = ref + 1;
+ 	return v;
+ }
+ 
++template <typename T>
++T operator --( memory_reference<T> ref, int ) {
++	T v = ref;
++	ref = ref - 1;
++	return v;
++}
++
+ template <typename T, typename U>
+ memory_reference<T> operator -= ( memory_reference<T> ref, U v ) {
+ 	return ref = ref - v;
+Index: indexlib/tests/stringarray-test.cpp
+===================================================================
+--- indexlib/tests/stringarray-test.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ indexlib/tests/stringarray-test.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -12,17 +12,16 @@
+ }
+ 
+ void test_size() {
+-	cleanup();
+ 	stringarray test( fname );
+ 	test.add( "one" );
+ 	test.add( "one" );
+ 	test.add( "one" );
+ 	test.add( "one" );
+ 	//BOOST_CHECK_EQUAL( test.size(), 4 );
++	cleanup();
+ }
+ 
+ void test_put_recover() {
+-	cleanup();
+ 	stringarray test( fname );
+ 	BOOST_CHECK_EQUAL( test.add( "one" ), 0 );
+ 	BOOST_CHECK_EQUAL( test.add( "two" ), 1 );
+@@ -34,10 +33,10 @@
+ 	BOOST_CHECK_EQUAL( test.get( 2 ), "three" );
+ 	BOOST_CHECK_EQUAL( test.get( 3 ), "four" );
+ 
++	cleanup();
+ }
+ 
+ void test_persistent() {
+-	cleanup();
+ 	{
+ 		stringarray test( fname );
+ 		BOOST_CHECK_EQUAL( test.add( "one" ), 0 );
+@@ -55,10 +54,10 @@
+ 		BOOST_CHECK_EQUAL( test.get( 3 ), "four" );
+ 
+ 	}
++	cleanup();
+ }
+ 
+ void cstr() {
+-	cleanup();
+ 	stringarray test( fname );
+ 
+ 	test.add( "one" );
+@@ -72,10 +71,10 @@
+ 	BOOST_CHECK( !strcmp( test.get_cstr( 2 ), "three" ) );
+ 	BOOST_CHECK( !strcmp( test.get_cstr( 3 ), "four" ) );
+ 
++	cleanup();
+ }
+ 
+ void erase() {
+-	cleanup();
+ 	stringarray test( fname );
+ 
+ 	test.add( "one" );
+@@ -87,8 +86,10 @@
+ 	BOOST_CHECK_EQUAL( test.get( 0 ), "one" );
+ 	BOOST_CHECK_EQUAL( test.get( 1 ), "three" );
+ 	BOOST_CHECK_EQUAL( test.size(), 3u );
++	cleanup();
+ }
+ 
++
+ test_suite* get_suite() {
+ 	test_suite* test = BOOST_TEST_SUITE( "Memvector tests" );
+ 	test->add( BOOST_TEST_CASE( &test_size ) );
+Index: indexlib/tests/ifile-test.cpp
+===================================================================
+--- indexlib/tests/ifile-test.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ indexlib/tests/ifile-test.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,15 +1,34 @@
+ #include <boost/test/unit_test.hpp>
+ #include "ifile.h"
++#include <string>
++#include <stdarg.h>
+ 
+ using namespace ::boost::unit_test;
+ namespace ifile_test {
+-using indexlib::detail::ifile;
++//using indexlib::detail::ifile;
+ const char* fname = "ifile-test-delete-me";
+ void cleanup() {
+ 	ifile::remove( fname );
+ }
+ 
+ inline
++bool check_results( const ifile& ifi, const char* str, ... ) {
++	const char* s;
++	va_list args;
++	va_start( args, str );
++	std::vector<unsigned> res = ifi.search( str )->list();
++	unsigned i = 0;
++
++	while ( s = va_arg( args, const char* ) ) {
++		if ( i == res.size() ) return false;
++		if ( std::string( s ) != ifi.lookup_docname( res[ i++ ] ) ) return false;
++	}
++	va_end( args );
++	return i == res.size();
++}
++
++
++inline
+ unsigned count_results( const ifile& ifi, const char* str ) {
+ 	return ifi.search( str )->list().size();
+ }
+@@ -107,14 +126,29 @@
+ 	BOOST_CHECK_EQUAL( count_results( ifi, "something two" ), 2u );
+ }
+ 
++void remove_doc() {
++	cleanup();
++	ifile ifi( fname );
++	ifi.add( "one two three four", "0" );
++	ifi.add( "two three four", "1" );
++	ifi.add( "three four five", "2" );
++	ifi.remove_doc( "1" );
++
++	BOOST_CHECK( check_results( ifi, "one", "0", NULL ) );
++	BOOST_CHECK( check_results( ifi, "two", "0", NULL ) );
++	BOOST_CHECK( check_results( ifi, "three", "0", "2", NULL ) );
++	BOOST_CHECK_EQUAL( count_results( ifi, "four" ), 0u );
++}
++
+ test_suite* get_suite() {
+ 	test_suite* test = BOOST_TEST_SUITE( "Ifile tests" );
+ 	test->add( BOOST_TEST_CASE( &simple ) );
+ 	test->add( BOOST_TEST_CASE( &ndocs ) );
+ 	test->add( BOOST_TEST_CASE( &space ) );
+-	test->add( BOOST_TEST_CASE( &numbers ) );
++	//test->add( BOOST_TEST_CASE( &numbers ) );
+ 	test->add( BOOST_TEST_CASE( &partial ) );
+ 	test->add( BOOST_TEST_CASE( &several ) );
++	test->add( BOOST_TEST_CASE( &remove) );
+ 	return test;
+ }
+ 
+Index: doc/kmail/menus.docbook
+===================================================================
+--- doc/kmail/menus.docbook	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ doc/kmail/menus.docbook	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -926,16 +926,24 @@
+ </menuchoice>
+ </term>
+ <listitem>
+-<para>Forwards the message to a new recipient. Using <guimenuitem>Inline</guimenuitem>,
+-the message's text and some important header fields will be copied to the body of the new message
+-with a text marking the forwarded part. Attachments will be forwarded
+-as attachments of the new message. Using <guimenuitem>As Attachment</guimenuitem>
+-the message and its attachments will become an attachment of the new message. The original message
+-headers will be included in the forwarded message, too.
+-<guimenuitem>Redirect</guimenuitem> works like forward, except that the message stays the same (even
+-the <guilabel>From:</guilabel> field). The user who redirected the message is added in special
+-header fields (<literal>Redirect-From</literal>, <literal>Redirect-Date</literal>, <literal>Redirect-To</literal>,
+-&etc;).</para>
++<para>Forwards the message to a new recipient.
++Using <guimenuitem>As Attachment</guimenuitem> the message and its attachments
++will become an attachment of the new message. The original message headers will
++be included in the forwarded message, too.
++
++Using <guimenuitem>Inline</guimenuitem>, the message's text and some important
++header fields will be copied to the body of the new message with a text marking
++the forwarded part. Attachments will be forwarded as attachments of the new
++message.
++
++<guimenuitem>As Digest</guimenuitem> concatenates the messages together as a
++MIME digest attachment.
++
++<guimenuitem>Redirect</guimenuitem> works like forward, except that the message
++stays the same (even the <guilabel>From:</guilabel> field). The user who
++redirected the message is added in special header fields (<literal>Redirect-From</literal>,
++<literal>Redirect-Date</literal>, <literal>Redirect-To</literal>, &etc;).
++</para>
+ </listitem>
+ </varlistentry>
+ 
+Index: kalarm/alarmevent.cpp
+===================================================================
+--- kalarm/alarmevent.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/alarmevent.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  alarmevent.cpp  -  represents calendar alarms and events
+  *  Program:  kalarm
+- *  Copyright (c) 2001-2006 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -71,6 +71,7 @@
+ static const QString TEMPL_AFTER_TIME_CATEGORY = QString::fromLatin1("TMPLAFTTIME;");
+ static const QString KMAIL_SERNUM_CATEGORY     = QString::fromLatin1("KMAIL:");
+ static const QString KORGANIZER_CATEGORY       = QString::fromLatin1("KORG");
++static const QString DEFER_CATEGORY            = QString::fromLatin1("DEFER;");
+ static const QString ARCHIVE_CATEGORY          = QString::fromLatin1("SAVE");
+ static const QString ARCHIVE_CATEGORIES        = QString::fromLatin1("SAVE:");
+ static const QString LOG_CATEGORY              = QString::fromLatin1("LOG:");
+@@ -167,6 +168,7 @@
+ 	mDisplayingFlags         = event.mDisplayingFlags;
+ 	mReminderMinutes         = event.mReminderMinutes;
+ 	mArchiveReminderMinutes  = event.mArchiveReminderMinutes;
++	mDeferDefaultMinutes     = event.mDeferDefaultMinutes;
+ 	mRevision                = event.mRevision;
+ 	mRemainingRecurrences    = event.mRemainingRecurrences;
+ 	mAlarmCount              = event.mAlarmCount;
+@@ -211,12 +213,14 @@
+ 	mAutoClose              = false;
+ 	mArchiveRepeatAtLogin   = false;
+ 	mArchiveReminderMinutes = 0;
++	mDeferDefaultMinutes    = 0;
+ 	mLateCancel             = 0;
+ 	mKMailSerialNumber      = 0;
+ 	mBgColour               = QColor(255, 255, 255);    // missing/invalid colour - return white background
+ 	mFgColour               = QColor(0, 0, 0);          // and black foreground
+ 	mDefaultFont            = true;
+ 	mEnabled                = true;
++	bool ok;
+ 	bool floats = false;
+ 	const QStringList& cats = event.categories();
+ 	for (unsigned int i = 0;  i < cats.count();  ++i)
+@@ -273,23 +277,26 @@
+ 				}
+ 			}
+ 		}
++		else if (cats[i].startsWith(DEFER_CATEGORY))
++		{
++			mDeferDefaultMinutes = static_cast<int>(cats[i].mid(DEFER_CATEGORY.length()).toUInt(&ok));
++			if (!ok)
++				mDeferDefaultMinutes = 0;    // invalid parameter
++		}
+ 		else if (cats[i].startsWith(TEMPL_AFTER_TIME_CATEGORY))
+ 		{
+-			bool ok;
+ 			mTemplateAfterTime = static_cast<int>(cats[i].mid(TEMPL_AFTER_TIME_CATEGORY.length()).toUInt(&ok));
+ 			if (!ok)
+ 				mTemplateAfterTime = -1;    // invalid parameter
+ 		}
+ 		else if (cats[i].startsWith(LATE_CANCEL_CATEGORY))
+ 		{
+-			bool ok;
+ 			mLateCancel = static_cast<int>(cats[i].mid(LATE_CANCEL_CATEGORY.length()).toUInt(&ok));
+ 			if (!ok  ||  !mLateCancel)
+ 				mLateCancel = 1;    // invalid parameter defaults to 1 minute
+ 		}
+ 		else if (cats[i].startsWith(AUTO_CLOSE_CATEGORY))
+ 		{
+-			bool ok;
+ 			mLateCancel = static_cast<int>(cats[i].mid(AUTO_CLOSE_CATEGORY.length()).toUInt(&ok));
+ 			if (!ok  ||  !mLateCancel)
+ 				mLateCancel = 1;    // invalid parameter defaults to 1 minute
+@@ -694,6 +701,7 @@
+ 	mKMailSerialNumber      = 0;
+ 	mReminderMinutes        = 0;
+ 	mArchiveReminderMinutes = 0;
++	mDeferDefaultMinutes    = 0;
+ 	mRepeatInterval         = 0;
+ 	mRepeatCount            = 0;
+ 	mArchiveRepeatAtLogin   = false;
+@@ -977,6 +985,8 @@
+ 		cats.append(LOG_CATEGORY + mLogFile);
+ 	if (mLateCancel)
+ 		cats.append(QString("%1%2").arg(mAutoClose ? AUTO_CLOSE_CATEGORY : LATE_CANCEL_CATEGORY).arg(mLateCancel));
++	if (mDeferDefaultMinutes)
++		cats.append(QString("%1%2").arg(DEFER_CATEGORY).arg(mDeferDefaultMinutes));
+ 	if (!mTemplateName.isEmpty()  &&  mTemplateAfterTime >= 0)
+ 		cats.append(QString("%1%2").arg(TEMPL_AFTER_TIME_CATEGORY).arg(mTemplateAfterTime));
+ 	if (mArchive  &&  !original)
+@@ -2869,6 +2879,7 @@
+ 	}
+ 	else if (mDeferral == CANCEL_DEFERRAL)
+ 		kdDebug(5950) << "-- mDeferral:cancel:\n";
++	kdDebug(5950) << "-- mDeferDefaultMinutes:" << mDeferDefaultMinutes << ":\n";
+ 	if (mDisplaying)
+ 	{
+ 		kdDebug(5950) << "-- mDisplayingTime:" << mDisplayingTime.toString() << ":\n";
+Index: kalarm/messagewin.cpp
+===================================================================
+--- kalarm/messagewin.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -146,6 +146,7 @@
+ 	  mVolume(event.soundVolume()),
+ 	  mFadeVolume(event.fadeVolume()),
+ 	  mFadeSeconds(QMIN(event.fadeSeconds(), 86400)),
++	  mDefaultDeferMinutes(event.deferDefaultMinutes()),
+ 	  mAlarmType(alarm.type()),
+ 	  mAction(event.action()),
+ 	  mKMailSerialNumber(event.kmailSerialNumber()),
+@@ -671,6 +672,7 @@
+ #endif
+ 		config->writeEntry(QString::fromLatin1("Speak"), mSpeak);
+ 		config->writeEntry(QString::fromLatin1("Height"), height());
++		config->writeEntry(QString::fromLatin1("DeferMins"), mDefaultDeferMinutes);
+ 		config->writeEntry(QString::fromLatin1("NoDefer"), mNoDefer);
+ 		config->writeEntry(QString::fromLatin1("KMailSerial"), mKMailSerialNumber);
+ 	}
+@@ -685,33 +687,34 @@
+ */
+ void MessageWin::readProperties(KConfig* config)
+ {
+-	mInvalid           = config->readBoolEntry(QString::fromLatin1("Invalid"), false);
+-	mEventID           = config->readEntry(QString::fromLatin1("EventID"));
+-	mAlarmType         = KAAlarm::Type(config->readNumEntry(QString::fromLatin1("AlarmType")));
+-	mMessage           = config->readEntry(QString::fromLatin1("Message"));
+-	mAction            = KAEvent::Action(config->readNumEntry(QString::fromLatin1("Type")));
+-	mFont              = config->readFontEntry(QString::fromLatin1("Font"));
+-	mBgColour          = config->readColorEntry(QString::fromLatin1("BgColour"));
+-	mFgColour          = config->readColorEntry(QString::fromLatin1("FgColour"));
+-	mConfirmAck        = config->readBoolEntry(QString::fromLatin1("ConfirmAck"));
++	mInvalid             = config->readBoolEntry(QString::fromLatin1("Invalid"), false);
++	mEventID             = config->readEntry(QString::fromLatin1("EventID"));
++	mAlarmType           = KAAlarm::Type(config->readNumEntry(QString::fromLatin1("AlarmType")));
++	mMessage             = config->readEntry(QString::fromLatin1("Message"));
++	mAction              = KAEvent::Action(config->readNumEntry(QString::fromLatin1("Type")));
++	mFont                = config->readFontEntry(QString::fromLatin1("Font"));
++	mBgColour            = config->readColorEntry(QString::fromLatin1("BgColour"));
++	mFgColour            = config->readColorEntry(QString::fromLatin1("FgColour"));
++	mConfirmAck          = config->readBoolEntry(QString::fromLatin1("ConfirmAck"));
+ 	QDateTime invalidDateTime;
+-	QDateTime dt       = config->readDateTimeEntry(QString::fromLatin1("Time"), &invalidDateTime);
+-	bool dateOnly      = config->readBoolEntry(QString::fromLatin1("DateOnly"));
++	QDateTime dt         = config->readDateTimeEntry(QString::fromLatin1("Time"), &invalidDateTime);
++	bool dateOnly        = config->readBoolEntry(QString::fromLatin1("DateOnly"));
+ 	mDateTime.set(dt, dateOnly);
+-	mCloseTime         = config->readDateTimeEntry(QString::fromLatin1("Expiry"), &invalidDateTime);
++	mCloseTime           = config->readDateTimeEntry(QString::fromLatin1("Expiry"), &invalidDateTime);
+ #ifndef WITHOUT_ARTS
+-	mAudioFile         = config->readPathEntry(QString::fromLatin1("AudioFile"));
+-	mVolume            = static_cast<float>(config->readNumEntry(QString::fromLatin1("Volume"))) / 100;
+-	mFadeVolume        = -1;
+-	mFadeSeconds       = 0;
++	mAudioFile           = config->readPathEntry(QString::fromLatin1("AudioFile"));
++	mVolume              = static_cast<float>(config->readNumEntry(QString::fromLatin1("Volume"))) / 100;
++	mFadeVolume          = -1;
++	mFadeSeconds         = 0;
+ 	if (!mAudioFile.isEmpty())
+ 		mAudioRepeat = true;
+ #endif
+-	mSpeak             = config->readBoolEntry(QString::fromLatin1("Speak"));
+-	mRestoreHeight     = config->readNumEntry(QString::fromLatin1("Height"));
+-	mNoDefer           = config->readBoolEntry(QString::fromLatin1("NoDefer"));
+-	mKMailSerialNumber = config->readUnsignedLongNumEntry(QString::fromLatin1("KMailSerial"));
+-	mShowEdit          = false;
++	mSpeak               = config->readBoolEntry(QString::fromLatin1("Speak"));
++	mRestoreHeight       = config->readNumEntry(QString::fromLatin1("Height"));
++	mDefaultDeferMinutes = config->readNumEntry(QString::fromLatin1("DeferMins"));
++	mNoDefer             = config->readBoolEntry(QString::fromLatin1("NoDefer"));
++	mKMailSerialNumber   = config->readUnsignedLongNumEntry(QString::fromLatin1("KMailSerial"));
++	mShowEdit            = false;
+ 	if (mAlarmType != KAAlarm::INVALID_ALARM)
+ 	{
+ 		// Recreate the event from the calendar file (if possible)
+@@ -1505,18 +1508,22 @@
+ {
+ 	mDeferDlg = new DeferAlarmDlg(i18n("Defer Alarm"), QDateTime::currentDateTime().addSecs(60),
+ 	                              false, this, "deferDlg");
++	if (mDefaultDeferMinutes > 0)
++		mDeferDlg->setDeferMinutes(mDefaultDeferMinutes);
+ 	mDeferDlg->setLimit(mEventID);
+ 	if (!Preferences::modalMessages())
+ 		lower();
+ 	if (mDeferDlg->exec() == QDialog::Accepted)
+ 	{
+-		DateTime dateTime = mDeferDlg->getDateTime();
++		DateTime dateTime  = mDeferDlg->getDateTime();
++		int      delayMins = mDeferDlg->deferMinutes();
+ 		const Event* kcalEvent = mEventID.isNull() ? 0 : AlarmCalendar::activeCalendar()->event(mEventID);
+ 		if (kcalEvent)
+ 		{
+ 			// The event still exists in the calendar file.
+ 			KAEvent event(*kcalEvent);
+ 			bool repeat = event.defer(dateTime, (mAlarmType & KAAlarm::REMINDER_ALARM), true);
++			event.setDeferDefaultMinutes(delayMins);
+ 			KAlarm::updateEvent(event, 0, true, !repeat);
+ 		}
+ 		else
+@@ -1536,6 +1543,7 @@
+ 				event.setArchive();
+ 				event.setEventID(mEventID);
+ 			}
++			event.setDeferDefaultMinutes(delayMins);
+ 			// Add the event back into the calendar file, retaining its ID
+ 			// and not updating KOrganizer
+ 			KAlarm::addEvent(event, 0, true, false);
+Index: kalarm/editdlg.cpp
+===================================================================
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  editdlg.cpp  -  dialogue to create or modify an alarm or alarm template
+  *  Program:  kalarm
+- *  Copyright (c) 2001-2006 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -1060,7 +1060,7 @@
+ 		mSavedEmailAttach += mEmailAttachList->text(i);
+ 	mSavedEmailBcc         = mEmailBcc->isChecked();
+ 	if (mTimeWidget)
+-		mSavedDateTime = mTimeWidget->getDateTime(false, false);
++		mSavedDateTime = mTimeWidget->getDateTime(0, false, false);
+ 	mSavedLateCancel       = mLateCancel->minutes();
+ 	mSavedAutoClose        = mLateCancel->isAutoClose();
+ 	if (mShowInKorganizer)
+@@ -1094,7 +1094,7 @@
+ 			return true;
+ 	}
+ 	else
+-		if (mSavedDateTime != mTimeWidget->getDateTime(false, false))
++		if (mSavedDateTime != mTimeWidget->getDateTime(0, false, false))
+ 			return true;
+ 	if (mSavedTypeRadio        != mActionGroup->selected()
+ 	||  mSavedLateCancel       != mLateCancel->minutes()
+@@ -1403,7 +1403,7 @@
+ 	else
+ 	{
+ 		QWidget* errWidget;
+-		mAlarmDateTime = mTimeWidget->getDateTime(!(timedRecurrence || repeated), false, &errWidget);
++		mAlarmDateTime = mTimeWidget->getDateTime(0, !(timedRecurrence || repeated), false, &errWidget);
+ 		if (errWidget)
+ 		{
+ 			// It's more than just an existing deferral being changed, so the time matters
+@@ -1573,7 +1573,7 @@
+ 		return;
+ 	bool limit = true;
+ 	int repeatCount = mSimpleRepetition->count();
+-	DateTime start = mTimeWidget->getDateTime(!repeatCount, !mExpiredRecurrence);
++	DateTime start = mTimeWidget->getDateTime(0, !repeatCount, !mExpiredRecurrence);
+ 	if (!start.isValid())
+ 	{
+ 		if (!mExpiredRecurrence)
+@@ -1655,7 +1655,7 @@
+ 	if (!mReadOnly  &&  !mTemplate)
+ 	{
+ 		QDateTime now = QDateTime::currentDateTime();
+-		mAlarmDateTime = mTimeWidget->getDateTime(false, false);
++		mAlarmDateTime = mTimeWidget->getDateTime(0, false, false);
+ 		bool expired = (mAlarmDateTime.dateTime() < now);
+ 		if (mRecurSetDefaultEndDate)
+ 		{
+@@ -1684,7 +1684,7 @@
+ 		bool atLogin = (mRecurrenceEdit->repeatType() == RecurrenceEdit::AT_LOGIN);
+ 		if (atLogin)
+ 		{
+-			mAlarmDateTime = mTimeWidget->getDateTime(false, false);
++			mAlarmDateTime = mTimeWidget->getDateTime(0, false, false);
+ 			mRecurrenceEdit->setEndDateTime(mAlarmDateTime.dateTime());
+ 		}
+ 		mReminder->enableOnceOnly(recurs && !atLogin);
+Index: kalarm/deferdlg.h
+===================================================================
+--- kalarm/deferdlg.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/deferdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  deferdlg.h  -  dialogue to defer an alarm
+  *  Program:  kalarm
+- *  Copyright (C) 2002 - 2004 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2002-2004,2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -35,7 +35,9 @@
+ 		              bool cancelButton, QWidget* parent = 0, const char* name = 0);
+ 		void             setLimit(const DateTime&);
+ 		DateTime         setLimit(const QString& eventID);
+-		const DateTime&  getDateTime() const  { return mAlarmDateTime; }
++		const DateTime&  getDateTime() const   { return mAlarmDateTime; }
++		void             setDeferMinutes(int mins);
++		int              deferMinutes() const  { return mDeferMinutes; }
+ 
+ 	protected slots:
+ 		virtual void     slotOk();
+@@ -50,6 +52,7 @@
+ 		DateTime         mAlarmDateTime;
+ 		DateTime         mLimitDateTime;   // latest date/time allowed for deferral
+ 		QString          mLimitEventID;    // event from whose recurrences to derive the limit date/time for deferral
++		int              mDeferMinutes;    // number of minutes deferral selected, or 0 if date/time entered
+ };
+ 
+ #endif // DEFERDLG_H
+Index: kalarm/alarmevent.h
+===================================================================
+--- kalarm/alarmevent.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/alarmevent.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  alarmevent.h  -  represents calendar alarms and events
+  *  Program:  kalarm
+- *  Copyright (c) 2001-2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -353,6 +353,7 @@
+ 		bool               defer(const DateTime&, bool reminder, bool adjustRecurrence = false);
+ 		void               cancelDefer();
+ 		void               cancelCancelledDeferral();
++		void               setDeferDefaultMinutes(int minutes)               { mDeferDefaultMinutes = minutes;  mUpdated = true; }
+ 		bool               setDisplaying(const KAEvent&, KAAlarm::Type, const QDateTime&);
+ 		void               reinstateFromDisplaying(const KAEvent& dispEvent);
+ 		void               setArchive()                                      { mArchive = true;  mUpdated = true; }
+@@ -389,6 +390,7 @@
+ 		int                reminderArchived() const       { return mArchiveReminderMinutes; }
+ 		DateTime           deferDateTime() const          { return mDeferralTime; }
+ 		DateTime           deferralLimit(DeferLimitType* = 0) const;
++		int                deferDefaultMinutes() const    { return mDeferDefaultMinutes; }
+ 		DateTime           nextDateTime(bool includeReminders = true) const;
+ 		const QString&     messageFileOrCommand() const   { return mText; }
+ 		QString            logFile() const                { return mLogFile; }
+@@ -484,6 +486,7 @@
+ 		int                mDisplayingFlags;  // type of alarm which is currently being displayed
+ 		int                mReminderMinutes;  // how long in advance reminder is to be, or 0 if none
+ 		int                mArchiveReminderMinutes;  // original reminder period if now expired, or 0 if none
++		int                mDeferDefaultMinutes; // default number of minutes for deferral dialogue, or 0 to select time control
+ 		int                mRevision;         // SEQUENCE: revision number of the original alarm, or 0
+ 		KARecurrence*      mRecurrence;       // RECUR: recurrence specification, or 0 if none
+ 		int                mRemainingRecurrences; // remaining number of alarm recurrences including initial time, -1 to repeat indefinitely
+Index: kalarm/messagewin.h
+===================================================================
+--- kalarm/messagewin.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/messagewin.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  messagewin.h  -  displays an alarm message
+  *  Program:  kalarm
+- *  Copyright (c) 2001 - 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -105,6 +105,7 @@
+ 		float               mVolume;
+ 		float               mFadeVolume;
+ 		int                 mFadeSeconds;
++		int                 mDefaultDeferMinutes;
+ 		KAAlarm::Type       mAlarmType;
+ 		KAEvent::Action     mAction;
+ 		unsigned long       mKMailSerialNumber; // if email text, message's KMail serial number, else 0
+Index: kalarm/alarmtimewidget.h
+===================================================================
+--- kalarm/alarmtimewidget.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/alarmtimewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  alarmtimewidget.h  -  alarm date/time entry widget
+  *  Program:  kalarm
+- *  Copyright (C) 2001 - 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -42,7 +42,7 @@
+ 		};
+ 		AlarmTimeWidget(const QString& groupBoxTitle, int mode, QWidget* parent = 0, const char* name = 0);
+ 		AlarmTimeWidget(int mode, QWidget* parent = 0, const char* name = 0);
+-		DateTime         getDateTime(bool checkExpired = true, bool showErrorMessage = true, QWidget** errorWidget = 0) const;
++		DateTime         getDateTime(int* minsFromNow = 0, bool checkExpired = true, bool showErrorMessage = true, QWidget** errorWidget = 0) const;
+ 		void             setDateTime(const DateTime&);
+ 		void             setMinDateTimeIsCurrent();
+ 		void             setMinDateTime(const QDateTime& = QDateTime());
+@@ -51,7 +51,7 @@
+ 		void             setReadOnly(bool);
+ 		bool             anyTime() const               { return mAnyTime; }
+ 		void             enableAnyTime(bool enable);
+-		void             selectTimeFromNow();
++		void             selectTimeFromNow(int minutes = 0);
+ 		QSize            sizeHint() const              { return minimumSizeHint(); }
+ 
+ 		static QString   i18n_w_TimeFromNow();     // text of 'Time from now:' radio button, with 'w' shortcut
+Index: kalarm/alarmtimewidget.cpp
+===================================================================
+--- kalarm/alarmtimewidget.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/alarmtimewidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -53,7 +53,7 @@
+ 
+ 
+ /******************************************************************************
+-*  Construct a widget with a group box and title.
++* Construct a widget with a group box and title.
+ */
+ AlarmTimeWidget::AlarmTimeWidget(const QString& groupBoxTitle, int mode, QWidget* parent, const char* name)
+ 	: ButtonGroup(groupBoxTitle, parent, name),
+@@ -65,7 +65,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Construct a widget without a group box or title.
++* Construct a widget without a group box or title.
+ */
+ AlarmTimeWidget::AlarmTimeWidget(int mode, QWidget* parent, const char* name)
+ 	: ButtonGroup(parent, name),
+@@ -202,21 +202,27 @@
+ /******************************************************************************
+ * Select the "Time from now" radio button.
+ */
+-void AlarmTimeWidget::selectTimeFromNow()
++void AlarmTimeWidget::selectTimeFromNow(int minutes)
+ {
+ 	mAfterTimeRadio->setChecked(true);
+ 	slotButtonSet(1);
++	if (minutes > 0)
++		mDelayTimeEdit->setValue(minutes);
+ }
+ 
+ /******************************************************************************
+-*  Fetch the entered date/time.
+-*  If 'checkExpired' is true and the entered value <= current time, an error occurs.
+-*  In this case, if 'showErrorMessage' is true, output an error message.
+-*  'errorWidget' if non-null, is set to point to the widget containing the error.
+-*  Reply = invalid date/time if error.
++* Fetch the entered date/time.
++* If 'checkExpired' is true and the entered value <= current time, an error occurs.
++* If 'minsFromNow' is non-null, it is set to the number of minutes' delay selected,
++* or to zero if a date/time was entered.
++* In this case, if 'showErrorMessage' is true, output an error message.
++* 'errorWidget' if non-null, is set to point to the widget containing the error.
++* Reply = invalid date/time if error.
+ */
+-DateTime AlarmTimeWidget::getDateTime(bool checkExpired, bool showErrorMessage, QWidget** errorWidget) const
++DateTime AlarmTimeWidget::getDateTime(int* minsFromNow, bool checkExpired, bool showErrorMessage, QWidget** errorWidget) const
+ {
++	if (minsFromNow)
++		*minsFromNow = 0;
+ 	if (errorWidget)
+ 		*errorWidget = 0;
+ 	QTime nowt = QTime::currentTime();
+@@ -281,12 +287,15 @@
+ 				*errorWidget = mDelayTimeEdit;
+ 			return DateTime();
+ 		}
+-		return now.addSecs(mDelayTimeEdit->value() * 60);
++		int delayMins = mDelayTimeEdit->value();
++		if (minsFromNow)
++			*minsFromNow = delayMins;
++		return now.addSecs(delayMins * 60);
+ 	}
+ }
+ 
+ /******************************************************************************
+-*  Set the date/time.
++* Set the date/time.
+ */
+ void AlarmTimeWidget::setDateTime(const DateTime& dt)
+ {
+@@ -313,7 +322,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the minimum date/time to track the current time.
++* Set the minimum date/time to track the current time.
+ */
+ void AlarmTimeWidget::setMinDateTimeIsCurrent()
+ {
+@@ -325,8 +334,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the minimum date/time, adjusting the entered date/time if necessary.
+-*  If 'dt' is invalid, any current minimum date/time is cleared.
++* Set the minimum date/time, adjusting the entered date/time if necessary.
++* If 'dt' is invalid, any current minimum date/time is cleared.
+ */
+ void AlarmTimeWidget::setMinDateTime(const QDateTime& dt)
+ {
+@@ -337,8 +346,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the maximum date/time, adjusting the entered date/time if necessary.
+-*  If 'dt' is invalid, any current maximum date/time is cleared.
++* Set the maximum date/time, adjusting the entered date/time if necessary.
++* If 'dt' is invalid, any current maximum date/time is cleared.
+ */
+ void AlarmTimeWidget::setMaxDateTime(const DateTime& dt)
+ {
+@@ -354,8 +363,8 @@
+ }
+ 
+ /******************************************************************************
+-*  If the minimum and maximum date/times fall on the same date, set the minimum
+-*  and maximum times in the time edit box.
++* If the minimum and maximum date/times fall on the same date, set the minimum
++* and maximum times in the time edit box.
+ */
+ void AlarmTimeWidget::setMaxMinTimeIf(const QDateTime& now)
+ {
+@@ -387,8 +396,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the maximum value for the delay time edit box, depending on the maximum
+-*  value for the date/time.
++* Set the maximum value for the delay time edit box, depending on the maximum
++* value for the date/time.
+ */
+ void AlarmTimeWidget::setMaxDelayTime(const QDateTime& now)
+ {
+@@ -407,7 +416,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the status for whether a time is specified, or just a date.
++* Set the status for whether a time is specified, or just a date.
+ */
+ void AlarmTimeWidget::setAnyTime()
+ {
+@@ -418,7 +427,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Enable/disable the "any time" checkbox.
++* Enable/disable the "any time" checkbox.
+ */
+ void AlarmTimeWidget::enableAnyTime(bool enable)
+ {
+@@ -434,8 +443,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Called every minute to update the alarm time data entry fields.
+-*  If the maximum date/time has been reached, a 'pastMax()' signal is emitted.
++* Called every minute to update the alarm time data entry fields.
++* If the maximum date/time has been reached, a 'pastMax()' signal is emitted.
+ */
+ void AlarmTimeWidget::slotTimer()
+ {
+@@ -481,8 +490,8 @@
+ 
+ 
+ /******************************************************************************
+-*  Called when the At or After time radio button states have been set.
+-*  Updates the appropriate edit box.
++* Called when the At or After time radio button states have been set.
++* Updates the appropriate edit box.
+ */
+ void AlarmTimeWidget::slotButtonSet(int)
+ {
+@@ -501,7 +510,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Called after the mAnyTimeCheckBox checkbox has been toggled.
++* Called after the mAnyTimeCheckBox checkbox has been toggled.
+ */
+ void AlarmTimeWidget::slotAnyTimeToggled(bool on)
+ {
+@@ -510,8 +519,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Called when the date or time edit box values have changed.
+-*  Updates the time delay edit box accordingly.
++* Called when the date or time edit box values have changed.
++* Updates the time delay edit box accordingly.
+ */
+ void AlarmTimeWidget::dateTimeChanged()
+ {
+@@ -527,8 +536,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Called when the delay time edit box value has changed.
+-*  Updates the Date and Time edit boxes accordingly.
++* Called when the delay time edit box value has changed.
++* Updates the Date and Time edit boxes accordingly.
+ */
+ void AlarmTimeWidget::delayTimeChanged(int minutes)
+ {
+Index: kalarm/deferdlg.cpp
+===================================================================
+--- kalarm/deferdlg.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kalarm/deferdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -1,7 +1,7 @@
+ /*
+  *  deferdlg.cpp  -  dialogue to defer an alarm
+  *  Program:  kalarm
+- *  Copyright (C) 2002 - 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2002-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -63,11 +63,11 @@
+ 
+ 
+ /******************************************************************************
+-*  Called when the OK button is clicked.
++* Called when the OK button is clicked.
+ */
+ void DeferAlarmDlg::slotOk()
+ {
+-	mAlarmDateTime = mTimeWidget->getDateTime();
++	mAlarmDateTime = mTimeWidget->getDateTime(&mDeferMinutes);
+ 	if (!mAlarmDateTime.isValid())
+ 		return;
+ 	KAEvent::DeferLimitType limitType;
+@@ -116,16 +116,24 @@
+ }
+ 
+ /******************************************************************************
+-*  Called the maximum date/time for the date/time edit widget has been passed.
++* Select the 'Time from now' radio button and preset its value.
+ */
++void DeferAlarmDlg::setDeferMinutes(int minutes)
++{
++	mTimeWidget->selectTimeFromNow(minutes);
++}
++
++/******************************************************************************
++* Called the maximum date/time for the date/time edit widget has been passed.
++*/
+ void DeferAlarmDlg::slotPastLimit()
+ {
+ 	enableButtonOK(false);
+ }
+ 
+ /******************************************************************************
+-*  Set the time limit for deferral based on the next occurrence of the alarm
+-*  with the specified ID.
++* Set the time limit for deferral based on the next occurrence of the alarm
++* with the specified ID.
+ */
+ void DeferAlarmDlg::setLimit(const DateTime& limit)
+ {
+@@ -135,8 +143,8 @@
+ }
+ 
+ /******************************************************************************
+-*  Set the time limit for deferral based on the next occurrence of the alarm
+-*  with the specified ID.
++* Set the time limit for deferral based on the next occurrence of the alarm
++* with the specified ID.
+ */
+ DateTime DeferAlarmDlg::setLimit(const QString& eventID)
+ {
+@@ -154,7 +162,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Called when the Cancel Deferral button is clicked.
++* Called when the Cancel Deferral button is clicked.
+ */
+ void DeferAlarmDlg::slotUser1()
+ {
+@@ -163,7 +171,7 @@
+ }
+ 
+ /******************************************************************************
+-*  Called when the Cancel button is clicked.
++* Called when the Cancel button is clicked.
+ */
+ void DeferAlarmDlg::slotCancel()
+ {
+Index: kmailcvt/filter_lnotes.cxx
+===================================================================
+--- kmailcvt/filter_lnotes.cxx	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmailcvt/filter_lnotes.cxx	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -124,7 +124,6 @@
+                             addMessage_fastImport( inf, folder, tempfile->name() );
+ 
+                         tempfile->unlink();
+-                        delete tempfile;
+                         state = 0;
+ 
+                         int currentPercentage = (int) ( ( (float) f.at() / filenameInfo.size() ) * 100 );
+Index: kmailcvt/filter_mbox.cxx
+===================================================================
+--- kmailcvt/filter_mbox.cxx	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kmailcvt/filter_mbox.cxx	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -77,21 +77,34 @@
+                 * get Unicode/UTF-email but KMail can't detect the correct charset.
+                 */
+                 QCString seperate;
++		QString x_status_flag = "";
+ 
+-                if(!first_msg)
++		/* check if the first line start with "From " (and not "From: ") and discard the line 
++		 * in this case because some IMAP servers (e.g. Cyrus) don't accept this header line */
++                if(!first_msg && ((seperate = input.data()).left(5) != "From "))
+                     tmp.file()->writeBlock( input, l );
++
+                 l = mbox.readLine( input.data(),MAX_LINE); // read the first line, prevent "From "
+-                tmp.file()->writeBlock( input, l );
+ 
++		if ((seperate = input.data()).left(5) != "From ")
++	                tmp.file()->writeBlock( input, l );
++
+                 while ( ! mbox.atEnd() &&  (l = mbox.readLine(input.data(),MAX_LINE)) && ((seperate = input.data()).left(5) != "From ")) {
+-                       tmp.file()->writeBlock( input, l );
+-                       
+-                       // workaround to fix hang if a corrupted mbox contains some 
+-                       // binary data, for more see bug #106796
+-                       if (mbox.at() == filepos)
+-                           mbox.at(mbox.size());
+-                       else 
+-                           filepos = mbox.at();
++			tmp.file()->writeBlock( input, l );
++
++			if ((seperate = input.data()).left(10) == "X-Status: ") {
++				x_status_flag = seperate;
++				x_status_flag.remove("X-Status: ");
++				x_status_flag = x_status_flag.stripWhiteSpace();
++				// qDebug("x_status_flag: %s", x_status_flag.latin1() );		
++			}
++
++			// workaround to fix hang if a corrupted mbox contains some 
++			// binary data, for more see bug #106796
++			if (mbox.at() == filepos)
++			   mbox.at(mbox.size());
++			else 
++			   filepos = mbox.at();
+                 }
+                 tmp.close();
+                 first_msg = false;
+@@ -101,9 +114,9 @@
+                 * addMessage_fastImport == new function, faster and no check for duplicates
+                 */
+                 if(info->removeDupMsg)
+-                    addMessage( info, folderName, tmp.name() );
++                    addMessage( info, folderName, tmp.name(), x_status_flag );
+                 else
+-                    addMessage_fastImport( info, folderName, tmp.name() );
++                    addMessage_fastImport( info, folderName, tmp.name(), x_status_flag );
+ 
+                 tmp.unlink();
+                 int currentPercentage = (int) ( ( (float) mbox.at() / filenameInfo.size() ) * 100 );
 Index: kaddressbook/xxport/kde2_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/kde2_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/kde2_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/kde2_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/kde2_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -65,7 +65,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចូល​សៀវភៅ​អាសយដ្ឋាន KDE 2 ចាស់ៗ
  Comment[lt]=Priedas senosios KDE 2 adresų knygelės importui
@@ -130,10 +4046,84 @@ Index: kaddressbook/xxport/kde2_xxport.desktop
  Comment[nds]=Moduul för't Importeren vun KDE2-Adressböker
  Comment[nl]=Plugin voor het importeren van het oude KDE 2-adresboek
  Comment[nn]=Programtillegg for å importera den gamle KDE 2 adresseboka
+Index: kaddressbook/xxport/gnokii_xxport.cpp
+===================================================================
+--- kaddressbook/xxport/gnokii_xxport.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/gnokii_xxport.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -124,6 +124,8 @@
+ 
+ static QString businit(void)
+ {
++	GNOKII_DEBUG( "Using new gnokii version." );
++
+ 	GNOKII_DEBUG( QString("Compiled with libgnokii version 0x%1\n").arg(QString::number(LIBGNOKII_VERSION,16)) );
+ 	GNOKII_DEBUG( QString("Using libgnokii runtime version 0x%1\n").arg(QString::number(gn_lib_version(),16)) );
+ 
+@@ -437,15 +439,16 @@
+ 		s = phonenumber->number();
+ 		if (s.isEmpty()) continue;
+ 		gn_phonebook_number_type type;
+-		switch (phonenumber->type() & ~KABC::PhoneNumber::Pref) {
+-			case KABC::PhoneNumber::Home:	type = GN_PHONEBOOK_NUMBER_Home;	break;
+-			case KABC::PhoneNumber::Voice:
+-			case KABC::PhoneNumber::Work:	type = GN_PHONEBOOK_NUMBER_Work;	break;
+-			case KABC::PhoneNumber::Pager:
+-			case KABC::PhoneNumber::Cell:	type = GN_PHONEBOOK_NUMBER_Mobile;	break;
+-			case KABC::PhoneNumber::Fax:	type = GN_PHONEBOOK_NUMBER_Fax;		break;
+-			default:			type = GN_PHONEBOOK_NUMBER_General;	break;
+-		}
++		int pn_type = phonenumber->type();
++		if ((pn_type & KABC::PhoneNumber::Cell))
++			type = GN_PHONEBOOK_NUMBER_Mobile;
++		else if ((pn_type & KABC::PhoneNumber::Fax))
++			type = GN_PHONEBOOK_NUMBER_Fax;
++		else if ((pn_type & KABC::PhoneNumber::Home))
++			type = GN_PHONEBOOK_NUMBER_Home;
++		else if ((pn_type & KABC::PhoneNumber::Work))
++			type = GN_PHONEBOOK_NUMBER_Work;
++		else type = GN_PHONEBOOK_NUMBER_General;
+ 		gn_lib_set_pb_subentry(state, -1 /* index to append entry */,
+ 			GN_PHONEBOOK_ENTRY_Number, type, makeValidPhone(s).ascii());
+ 		/*subentry->id = phone_location<<8+entry.subentries_count;*/
+@@ -810,6 +813,8 @@
+ 	gn_error error;
+ 	char *aux;
+ 
++	GNOKII_DEBUG( "Using old gnokii version." );
++
+ #if defined(LIBGNOKII_VERSION)
+ 	if (gn_cfg_read_default()<0)
+ #else
+@@ -1207,15 +1212,16 @@
+ 		if (s.isEmpty()) continue;
+ 		subentry->entry_type  = GN_PHONEBOOK_ENTRY_Number;
+ 		gn_phonebook_number_type type;
+-		switch (phonenumber->type() & ~KABC::PhoneNumber::Pref) {
+-			case KABC::PhoneNumber::Home:	type = GN_PHONEBOOK_NUMBER_Home;	break;
+-			case KABC::PhoneNumber::Voice:
+-			case KABC::PhoneNumber::Work:	type = GN_PHONEBOOK_NUMBER_Work;	break;
+-			case KABC::PhoneNumber::Pager:
+-			case KABC::PhoneNumber::Cell:	type = GN_PHONEBOOK_NUMBER_Mobile;	break;
+-			case KABC::PhoneNumber::Fax:	type = GN_PHONEBOOK_NUMBER_Fax;		break;
+-			default:			type = GN_PHONEBOOK_NUMBER_General;	break;
+-		}
++		int pn_type = phonenumber->type();
++		if ((pn_type & KABC::PhoneNumber::Cell))
++			type = GN_PHONEBOOK_NUMBER_Mobile;
++		else if ((pn_type & KABC::PhoneNumber::Fax))
++			type = GN_PHONEBOOK_NUMBER_Fax;
++		else if ((pn_type & KABC::PhoneNumber::Home))
++			type = GN_PHONEBOOK_NUMBER_Home;
++		else if ((pn_type & KABC::PhoneNumber::Work))
++			type = GN_PHONEBOOK_NUMBER_Work;
++		else type = GN_PHONEBOOK_NUMBER_General;
+ 		subentry->number_type = type;
+ 		strncpy(subentry->data.number, makeValidPhone(s).ascii(), sizeof(subentry->data.number)-1);
+ 		subentry->id = phone_location<<8+entry.subentries_count;
 Index: kaddressbook/xxport/csv_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/csv_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/csv_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/csv_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/csv_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -64,7 +64,7 @@
  Comment[km]=កម្មវិធី ជំនួយ​ដើម្បី​នាំចូល និង នាំចេញ​ទំនាក់ទំនង​ក្នុង​ទ្រង់ទ្រាយ​ជា CSV ។
  Comment[lt]=Priedas, skirtas kontaktų eksportui ir importui CSV formatu
@@ -145,8 +4135,8 @@ Index: kaddressbook/xxport/csv_xxport.desktop
  Comment[nn]=Programtillegg for å importera og eksportera kontaktar i CSV-format
 Index: kaddressbook/xxport/vcard_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/vcard_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/vcard_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/vcard_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/vcard_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -67,7 +67,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចូល និង នាំចេញ​ទំនាក់ទំនង​ក្នុង​ទ្រង់ទ្រាយ​ជា vCard
  Comment[lt]=Įskiepis kontaktų importavimui ir eksportavimui vCard formatu
@@ -158,8 +4148,8 @@ Index: kaddressbook/xxport/vcard_xxport.desktop
  Comment[nn]=Programtillegg for å importera og eksportera kontaktar i vCard-format
 Index: kaddressbook/xxport/pab_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/pab_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/pab_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/pab_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/pab_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -22,7 +22,7 @@
  Name[km]=កម្មវិធី​ជំនួយ KAB MS Exchange Personal Addressbook XXPort
  Name[lt]=KAB MS Exchange asmeninės adresų knygelės XXPort priedas
@@ -180,8 +4170,8 @@ Index: kaddressbook/xxport/pab_xxport.desktop
  Comment[nn]=Programtillegg for å imortera MS Exchange personleg adressebok
 Index: kaddressbook/xxport/opera_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/opera_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/opera_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/opera_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/opera_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -65,7 +65,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចូល​ទំនាក់ទំនង​របស់ Opera
  Comment[lt]=Priedas Opera kontaktų importui
@@ -193,8 +4183,8 @@ Index: kaddressbook/xxport/opera_xxport.desktop
  Comment[nn]=Programtillegg for å imortera Opera-kontaktar
 Index: kaddressbook/xxport/gnokii_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/gnokii_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/gnokii_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/gnokii_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/gnokii_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -23,7 +23,7 @@
  Name[km]=កម្មវិធី​ជំនួយ KAB Mobile Phone XXPort
  Name[lt]=KAB mobilaus telefono XXPort priedas
@@ -215,8 +4205,8 @@ Index: kaddressbook/xxport/gnokii_xxport.desktop
  Comment[nn]=Programtillegg for å importera og eksportera adressebokoppføringar i mobiltelefon
 Index: kaddressbook/xxport/bookmark_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/bookmark_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/bookmark_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/bookmark_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/bookmark_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -64,7 +64,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចេញ​អាសយដ្ឋាន​បណ្ដាញ​របស់​ទំនាក់ទំនង ជា​ចំណាំ
  Comment[lt]=Priedas skirtas žiniatinklio adresų kontaktuose eksportavimui į žymeles
@@ -228,8 +4218,8 @@ Index: kaddressbook/xxport/bookmark_xxport.desktop
  Comment[nn]=Programtillegg for å eksportera nettadresser av kontaktar som bokmerker
 Index: kaddressbook/xxport/ldif_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/ldif_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/ldif_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/ldif_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/ldif_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -66,7 +66,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចូល និង នាំចេញ​ទំនាក់ទំនង​ក្នុង​ទ្រង់ទ្រាយ​ជា Netscape និង Mozilla LDIF
  Comment[lt]=Priedas, skirtas kontaktų importavimui ir eksportavimui Netscape ir Mozilla LDIFF formatu
@@ -241,8 +4231,8 @@ Index: kaddressbook/xxport/ldif_xxport.desktop
  Comment[nn]=Programtillegg for å importera og eksportera kontaktar i Netscape og Mozilla LDIF-format
 Index: kaddressbook/xxport/eudora_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/eudora_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/xxport/eudora_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/xxport/eudora_xxport.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/xxport/eudora_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -65,7 +65,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​នាំចូល និង នាំចេញ​ទំនាក់ទំនង​របស់ Eudora
  Comment[lt]=Priedas Eudora kontaktų importui ir eksportui
@@ -254,8 +4244,8 @@ Index: kaddressbook/xxport/eudora_xxport.desktop
  Comment[nn]=Programtillegg for å importera og eksportera Eudora-kontaktar
 Index: kaddressbook/features/distributionlist.desktop
 ===================================================================
---- kaddressbook/features/distributionlist.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/features/distributionlist.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/features/distributionlist.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/features/distributionlist.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -26,7 +26,7 @@
  Name[km]=កម្មវិធី​ជំនួយ​បញ្ជី​ចែកចាយ​របស់ KAB
  Name[lt]=KAB platinimo sąrašo priedas
@@ -276,8 +4266,8 @@ Index: kaddressbook/features/distributionlist.desktop
  Comment[nn]=Programtillegg for handtering av distibusjonsliste
 Index: kaddressbook/features/resourceselection.desktop
 ===================================================================
---- kaddressbook/features/resourceselection.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/features/resourceselection.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/features/resourceselection.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/features/resourceselection.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -68,7 +68,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​ដើម្បី​គ្រប់គ្រង​សៀវភៅ​អាសយដ្ឋាន
  Comment[lt]=Priedas adresų knygelių tvarkymui
@@ -289,8 +4279,8 @@ Index: kaddressbook/features/resourceselection.desktop
  Comment[nn]=Programtillegg for handtering av adressebøker
 Index: kaddressbook/features/resourceselection.cpp
 ===================================================================
---- kaddressbook/features/resourceselection.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kaddressbook/features/resourceselection.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kaddressbook/features/resourceselection.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kaddressbook/features/resourceselection.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -191,6 +191,7 @@
    }
  
@@ -299,10 +4289,23 @@ Index: kaddressbook/features/resourceselection.cpp
  
    KRES::ConfigDialog dlg( this, QString( "contact" ), resource );
  
+Index: Makefile.am.in
+===================================================================
+--- Makefile.am.in	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ Makefile.am.in	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -38,7 +38,7 @@
+ COMPILE_BEFORE_knotes = libkdepim
+ COMPILE_BEFORE_konsolekalendar = libkdepim
+ 
+-AUTOMAKE_OPTIONS = foreign 1.5
++AUTOMAKE_OPTIONS = foreign 1.6.1
+ DISTCLEANFILES = inst-apps
+ 
+ MAINTAINERCLEANFILES = subdirs configure.in acinclude.m4 SUBDIRS
 Index: kitchensync/multisynk/konnectorpair.cpp
 ===================================================================
---- kitchensync/multisynk/konnectorpair.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kitchensync/multisynk/konnectorpair.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kitchensync/multisynk/konnectorpair.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kitchensync/multisynk/konnectorpair.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -29,6 +29,7 @@
    : mManager( new KonnectorManager ), mConfig( 0 )
  {
@@ -313,8 +4316,8 @@ Index: kitchensync/multisynk/konnectorpair.cpp
  KonnectorPair::~KonnectorPair()
 Index: libkcal/resourcecachedconfig.cpp
 ===================================================================
---- libkcal/resourcecachedconfig.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ libkcal/resourcecachedconfig.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- libkcal/resourcecachedconfig.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ libkcal/resourcecachedconfig.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -52,7 +52,7 @@
             SLOT( slotIntervalStateChanged( int ) ) );
    QHBox *intervalBox = new QHBox( mGroup );
@@ -336,7 +4339,7 @@ Index: libkcal/resourcecachedconfig.cpp
 Index: libkcal/libical/zoneinfo/America/Argentina/Jujuy.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/America/Argentina/Jujuy.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/America/Argentina/Jujuy.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/America/Argentina/Jujuy.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -355,7 +4358,7 @@ Index: libkcal/libical/zoneinfo/America/Argentina/Jujuy.ics
 Index: libkcal/libical/zoneinfo/America/Argentina/Cordoba.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/America/Argentina/Cordoba.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/America/Argentina/Cordoba.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/America/Argentina/Cordoba.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -374,7 +4377,7 @@ Index: libkcal/libical/zoneinfo/America/Argentina/Cordoba.ics
 Index: libkcal/libical/zoneinfo/America/Argentina/Catamarca.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/America/Argentina/Catamarca.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/America/Argentina/Catamarca.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/America/Argentina/Catamarca.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -393,7 +4396,7 @@ Index: libkcal/libical/zoneinfo/America/Argentina/Catamarca.ics
 Index: libkcal/libical/zoneinfo/America/Argentina/Mendoza.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/America/Argentina/Mendoza.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/America/Argentina/Mendoza.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/America/Argentina/Mendoza.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -412,7 +4415,7 @@ Index: libkcal/libical/zoneinfo/America/Argentina/Mendoza.ics
 Index: libkcal/libical/zoneinfo/America/Argentina/Buenos_Aires.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/America/Argentina/Buenos_Aires.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/America/Argentina/Buenos_Aires.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/America/Argentina/Buenos_Aires.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -428,10 +4431,37 @@ Index: libkcal/libical/zoneinfo/America/Argentina/Buenos_Aires.ics
 +END:STANDARD
 +END:VTIMEZONE
 +END:VCALENDAR
+Index: libkcal/libical/zoneinfo/America/Toronto.ics
+===================================================================
+--- libkcal/libical/zoneinfo/America/Toronto.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
++++ libkcal/libical/zoneinfo/America/Toronto.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -0,0 +1,22 @@
++BEGIN:VCALENDAR
++PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
++VERSION:2.0
++BEGIN:VTIMEZONE
++TZID:/softwarestudio.org/Olson_20011030_5/America/Toronto
++X-LIC-LOCATION:America/Toronto
++BEGIN:STANDARD
++TZOFFSETFROM:-0400
++TZOFFSETTO:-0500
++TZNAME:EST
++DTSTART:19701025T020000
++RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
++END:STANDARD
++BEGIN:DAYLIGHT
++TZOFFSETFROM:-0500
++TZOFFSETTO:-0400
++TZNAME:EDT
++DTSTART:19700405T020000
++RRULE:FREQ=YEARLY;BYMONTH=4;BYDAY=1SU
++END:DAYLIGHT
++END:VTIMEZONE
++END:VCALENDAR
 Index: libkcal/libical/zoneinfo/zones.tab
 ===================================================================
---- libkcal/libical/zoneinfo/zones.tab	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ libkcal/libical/zoneinfo/zones.tab	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- libkcal/libical/zoneinfo/zones.tab	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ libkcal/libical/zoneinfo/zones.tab	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -55,6 +55,11 @@
  +0181200 -0630400 America/Anguilla
  +0170300 -0614800 America/Antigua
@@ -444,7 +4474,15 @@ Index: libkcal/libical/zoneinfo/zones.tab
  +0123000 -0685800 America/Aruba
  -0251600 -0574000 America/Asuncion
  +0130600 -0593700 America/Barbados
-@@ -220,19 +225,17 @@
+@@ -162,6 +167,7 @@
+ +0763400 -0684700 America/Thule
+ +0482300 -0891500 America/Thunder_Bay
+ +0323200 -1170100 America/Tijuana
+++0433900 -0792300 America/Toronto
+ +0182700 -0643700 America/Tortola
+ +0491600 -1230700 America/Vancouver
+ +0604300 -1350300 America/Whitehorse
+@@ -220,19 +226,17 @@
  +0013300 +1102000 Asia/Kuching
  +0292000 +0475900 Asia/Kuwait
  +0221400 +1133500 Asia/Macao
@@ -468,7 +4506,7 @@ Index: libkcal/libical/zoneinfo/zones.tab
 Index: libkcal/libical/zoneinfo/Asia/Macau.ics
 ===================================================================
 --- libkcal/libical/zoneinfo/Asia/Macau.ics	(.../tags/KDE/3.5.4/kdepim)	(revision 0)
-+++ libkcal/libical/zoneinfo/Asia/Macau.ics	(.../branches/KDE/3.5/kdepim)	(revision 570934)
++++ libkcal/libical/zoneinfo/Asia/Macau.ics	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -0,0 +1,14 @@
 +BEGIN:VCALENDAR
 +PRODID:-//Ximian//NONSGML Evolution Olson-VTIMEZONE Converter//EN
@@ -484,10 +4522,34 @@ Index: libkcal/libical/zoneinfo/Asia/Macau.ics
 +END:STANDARD
 +END:VTIMEZONE
 +END:VCALENDAR
+Index: libkcal/resourcecached.h
+===================================================================
+--- libkcal/resourcecached.h	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ libkcal/resourcecached.h	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -121,19 +121,11 @@
+     int saveInterval() const;
+ 
+     /**
+-      Set time of last load.
+-    */
+-    void setLastLoad( const QDateTime & );
+-    /**
+       Return time of last load.
+     */
+     QDateTime lastLoad() const;
+ 
+     /**
+-      Set time of last save.
+-    */
+-    void setLastSave( const QDateTime & );
+-    /**
+       Return time of last save.
+     */
+     QDateTime lastSave() const;
 Index: kpilot/conduits/vcalconduit/todo-conduit.desktop
 ===================================================================
---- kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kpilot/conduits/vcalconduit/todo-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -69,7 +69,7 @@
  Name[nds]=Opgaven (KOrganizer)
  Name[nl]=Taken (KOrganizer)
@@ -499,8 +4561,8 @@ Index: kpilot/conduits/vcalconduit/todo-conduit.desktop
  Name[ru]=Задачи (KOrganizer)
 Index: kpilot/conduits/vcalconduit/vcal-conduit.desktop
 ===================================================================
---- kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kpilot/conduits/vcalconduit/vcal-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -29,7 +29,7 @@
  Name[nds]=Kalenner (KOrganizer)
  Name[nl]=Agenda (KOrganizer)
@@ -512,8 +4574,8 @@ Index: kpilot/conduits/vcalconduit/vcal-conduit.desktop
  Name[ru]=Календарь (KOrganizer)
 Index: kontact/plugins/newsticker/kcmkontactknt.cpp
 ===================================================================
---- kontact/plugins/newsticker/kcmkontactknt.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ kontact/plugins/newsticker/kcmkontactknt.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- kontact/plugins/newsticker/kcmkontactknt.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ kontact/plugins/newsticker/kcmkontactknt.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -79,7 +79,7 @@
  
    mTitle->setText( title );
@@ -523,10 +4585,23 @@ Index: kontact/plugins/newsticker/kcmkontactknt.cpp
    connect( mTitle, SIGNAL( textChanged( const QString& ) ),
             this, SLOT( modified() ) );
    connect( mURL, SIGNAL( textChanged( const QString& ) ),
+Index: ktnef/gui/ktnef.desktop
+===================================================================
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -63,7 +63,7 @@
+ Comment[hu]=Nézegetőprogram TNEF-fájlokhoz
+ Comment[is]=Sýnir/lesari fyrir TNEF skrár
+ Comment[it]=Un visualizzatore/estrattore di file TNEF
+-Comment[ja]=TNEF ファイル用のビューア/extractor
++Comment[ja]=TNEF ファイルのためのビューア/展開ツール
+ Comment[km]=កម្មវិធី​មើល និង ស្រង់​ឯកសារ TNEF
+ Comment[lt]=TNEF bylų žiūryklė - išpakuotojas
+ Comment[ms]=Pemapar/pengekstrak untuk fail TNEF 
 Index: korganizer/kogroupwareprefspage.ui
 ===================================================================
---- korganizer/kogroupwareprefspage.ui	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/kogroupwareprefspage.ui	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/kogroupwareprefspage.ui	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/kogroupwareprefspage.ui	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -84,6 +84,9 @@
                                  <property name="name">
                                      <cstring>publishDelay</cstring>
@@ -537,10 +4612,33 @@ Index: korganizer/kogroupwareprefspage.ui
                                  <property name="whatsThis" stdset="0">
                                      <string>Configure minimum the interval of time in minutes between each upload here. This configuration is only effective in case you choose to publish your information automatically.</string>
                                  </property>
+@@ -591,6 +594,22 @@
+         <slot>slotChanged()</slot>
+     </connection>
+ </connections>
++<tabstops>
++    <tabstop>groupwareTab</tabstop>
++    <tabstop>publishEnable</tabstop>
++    <tabstop>publishDelay</tabstop>
++    <tabstop>publishDays</tabstop>
++    <tabstop>publishUrl</tabstop>
++    <tabstop>publishUser</tabstop>
++    <tabstop>publishPassword</tabstop>
++    <tabstop>publishSavePassword</tabstop>
++    <tabstop>retrieveEnable</tabstop>
++    <tabstop>fullDomainRetrieval</tabstop>
++    <tabstop>retrieveUrl</tabstop>
++    <tabstop>retrieveUser</tabstop>
++    <tabstop>retrievePassword</tabstop>
++    <tabstop>retrieveSavePassword</tabstop>
++</tabstops>
+ <includes>
+     <include location="global" impldecl="in declaration">kdepimmacros.h</include>
+     <include location="local" impldecl="in implementation">kogroupwareprefspage.ui.h</include>
 Index: korganizer/plugins/projectview/projectview.desktop
 ===================================================================
---- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -77,7 +77,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​នេះ​ផ្ដល់​នូវ​ទិដ្ឋភាព​រៀបចំ​គម្រោង​សម្រាប់ korganizer (ដូចជា ទិដ្ឋភាព​ការងារ​ត្រូវ​ធ្វើ ឬ ទិដ្ឋភាព​ខែ​ជាដើម) ។ បើ​អ្នក​ធ្វើ​ឲ្យ​កម្មវិធី​ជំនួយ​នេះ​ប្រើ​បាន អ្នក​នឹង​អាច​ប្ដូរ​ទិដ្ឋភាព​គម្រោង ហើយ​មើល​ព្រឹត្តិការណ៍​របស់​អ្នក​ដូចជា​នៅ​ក្នុងកម្មវិធី​រៀបចំ​គម្រោង​អញ្ចឹង​ដែរ ។
  Comment[lt]=Šis priedas pateikia KOrganizaer projekto planavimo vaizdą (panašiai kaip darbų ar mėnesio vaizdai). Jei įjungsite šį įskiepį, galėsite peršokti į projekto vaizdą ir peržiūrėti savo darbų sąrašą kaip projektą.
@@ -552,8 +4650,8 @@ Index: korganizer/plugins/projectview/projectview.desktop
  Comment[nn]=Dette programtillegget lagar ei prosjektplanvising for KOrganizer (slik som oppgåve- eller månadsvisingane). Dersom du brukar dette programtillegget, kan du visa oppgåvelista som i ein prosjektplanleggjar.
 Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
 ===================================================================
---- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -56,7 +56,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​នេះ​អនុញ្ញាត​ឲ្យ​អ្នក​បោះពុម្ព​បញ្ជី​នៃ​ព្រឹត្តិការណ៍ និង ការងារ​ត្រូវ​ធ្វើ​បន្តបន្ទាប់
  Comment[lt]=Šis priedas leidžia spausdinti sąrašą visų artėjančių įvykių ir darbų.
@@ -565,8 +4663,8 @@ Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
  Comment[nn]=Dette programtillegget lèt deg skriva ut ei liste over alle dei komande hendingane og oppføringane i hugselista.
 Index: korganizer/plugins/printing/journal/journalprint.desktop
 ===================================================================
---- korganizer/plugins/printing/journal/journalprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/printing/journal/journalprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/printing/journal/journalprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/printing/journal/journalprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -56,7 +56,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​នេះ​អនុញ្ញាត​ឲ្យ​អ្នក​បោះពុម្ព​ធាតុ​ទិនានុប្បវត្តិ (ធាតុ​កំណត់ហេតុ​ប្រចាំ​ថ្ងៃ) ។
  Comment[lt]=Šis priedas leidžia spausdinti dienyno įrašus.
@@ -578,8 +4676,8 @@ Index: korganizer/plugins/printing/journal/journalprint.desktop
  Comment[nn]=Dette programtillegget lèt deg skriva ut dagboksoppføringar.
 Index: korganizer/plugins/printing/list/listprint.desktop
 ===================================================================
---- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -56,7 +56,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​នេះ​អនុញ្ញាត​ឲ្យ​អ្នក​បោះពុម្ព​ព្រឹត្តិការណ៍ និង ការងារ​ត្រូវ​ធ្វើក្នុង​ទម្រង់​ជា​បញ្ជី ។
  Comment[lt]=Šis priedas leidžia spausdinti įvykius ir darbus sąrašo forma.
@@ -591,8 +4689,8 @@ Index: korganizer/plugins/printing/list/listprint.desktop
  Comment[nn]=Dette programtillegget lèt deg skriva ut hendingar og hugselister på listeform.
 Index: korganizer/plugins/timespanview/timespanview.desktop
 ===================================================================
---- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -56,7 +56,7 @@
  Comment[km]=កម្មវិធី​ជំនួយ​នេះ​ផ្ដល់​នូវ​ទិដ្ឋភាព​រយៈពេល​សម្រាប់ korganizer (ដូចជា ទិដ្ឋភាព​ការងារ​ត្រូវ​ធ្វើ ឬ ទិដ្ឋភាព​ខែ​ជាដើម) ។ បើ​អ្នក​ធ្វើ​ឲ្យ​កម្មវិធី​ជំនួយ​នេះ​ប្រើ​បាន អ្នក​នឹង​អាច​ប្ដូរ​ទិដ្ឋភាព​រយៈពេល ហើយ​មើល​ព្រឹត្តិការណ៍​របស់​អ្នក​ដូចជា​នៅ​ក្នុងដ្យាក្រាម Gantt អញ្ចឹង​ដែរ ។
  Comment[lt]=Šis priedas korganizer programoje sudaro galimybę apžvelgti laiko tarpą (pvz., darbų arba mėnesio peržiūra). Įgalinus šį priedą galėsite persijungti į laiko tarpo peržiūrą ir žiūrėti įvykius tarsi Gantt diagramoje.
@@ -604,8 +4702,8 @@ Index: korganizer/plugins/timespanview/timespanview.desktop
  Comment[pl]=Ta wtyczka tworzy widok zakresu czasu w KOrganizerze (tak jak widok zadań do zrobienia lub widok miesiąca). Po włączeniu tej wtyczki możliwe jest przełączenie się na widok zakresu czasu i przeglądanie zdarzeń jak na diagramie Gantta.
 Index: korganizer/plugins/hebrew/configdialog.cpp
 ===================================================================
---- korganizer/plugins/hebrew/configdialog.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/plugins/hebrew/configdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/plugins/hebrew/configdialog.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/plugins/hebrew/configdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -26,7 +26,7 @@
  #include <kstandarddirs.h>
  #include <ksimpleconfig.h>
@@ -617,8 +4715,8 @@ Index: korganizer/plugins/hebrew/configdialog.cpp
    QFrame *topFrame = plainPage();
 Index: korganizer/korganizer_configfreebusy.desktop
 ===================================================================
---- korganizer/korganizer_configfreebusy.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/korganizer_configfreebusy.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/korganizer_configfreebusy.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/korganizer_configfreebusy.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
 @@ -39,7 +39,7 @@
  Name[nds]=Free/Bunnen
  Name[nl]=Vrij/bezet
@@ -630,8 +4728,17 @@ Index: korganizer/korganizer_configfreebusy.desktop
  Name[ru]=Занятое время
 Index: korganizer/korganizer.desktop
 ===================================================================
---- korganizer/korganizer.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 570934)
-+++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 570934)
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -25,7 +25,7 @@
+ Comment[hu]=Határidőnapló és eseményszervező
+ Comment[is]=Dagbók og skipulag
+ Comment[it]=Programma di calendario e di agenda
+-Comment[ja]=カレンダー、スケジュールプログラム
++Comment[ja]=カレンダーとスケジュール管理プログラム
+ Comment[km]=កម្មវិធី​ប្រតិទិន និង កាលវិភាគ
+ Comment[lt]=Kalendoriaus ir planavimo programa
+ Comment[lv]=Kalendāra un Plānošanas Programma
 @@ -35,7 +35,7 @@
  Comment[nb]=Et kalender- og tidsplanleggingsprogram
  Comment[nds]=Kalenner un Tietplaner
@@ -641,6 +4748,81 @@ Index: korganizer/korganizer.desktop
  Comment[nso]=Lenaneo la Peakanyo ya Tshupamabaka
  Comment[pl]=Kalendarz i terminarz
  Comment[pt]=Calendário e Programa de Escalonamento
+Index: korganizer/resourceview.cpp
+===================================================================
+--- korganizer/resourceview.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/resourceview.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -452,7 +452,7 @@
+ void ResourceView::editResource()
+ {
+   ResourceItem *item = currentItem();
+-
++  if (!item) return;
+   ResourceCalendar *resource = item->resource();
+ 
+   KRES::ConfigDialog dlg( this, QString("calendar"), resource,
+Index: korganizer/freebusymanager.cpp
+===================================================================
+--- korganizer/freebusymanager.cpp	(.../tags/KDE/3.5.4/kdepim)	(revision 581794)
++++ korganizer/freebusymanager.cpp	(.../branches/KDE/3.5/kdepim)	(revision 581794)
+@@ -51,7 +51,9 @@
+ #include <kdebug.h>
+ #include <kmessagebox.h>
+ #include <ktempfile.h>
++#include <kio/jobclasses.h>
+ #include <kio/netaccess.h>
++#include <kio/scheduler.h>
+ #include <kapplication.h>
+ #include <kconfig.h>
+ #include <klocale.h>
+@@ -71,11 +73,12 @@
+                                           const char *name )
+   : QObject( manager, name ), mManager( manager ), mEmail( email )
+ {
+-  KIO::Job *job = KIO::get( url, false, false );
++  KIO::TransferJob *job = KIO::get( url, false, false );
+   connect( job, SIGNAL( result( KIO::Job * ) ),
+            SLOT( slotResult( KIO::Job * ) ) );
+   connect( job, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
+            SLOT( slotData( KIO::Job *, const QByteArray & ) ) );
++  KIO::Scheduler::scheduleJob( job );
+ }
+ 
+ FreeBusyDownloadJob::~FreeBusyDownloadJob()
+@@ -361,7 +364,7 @@
+ 
+   KURL sourceURL = freeBusyUrl( email );
+ 
+-  kdDebug(5850) << "FreeBusyManager::retrieveFreeBusy(): url: " << sourceURL.url()
++  kdDebug(5850) << "FreeBusyManager::processRetrieveQueue(): url: " << sourceURL.url()
+             << endl;
+ 
+   if ( !sourceURL.isValid() ) {
+@@ -397,6 +400,7 @@
+   cfg.setGroup( email );
+   QString url = cfg.readEntry( "url" );
+   if ( !url.isEmpty() ) {
++    kdDebug(5850) << "found cached url: " << url << endl; 
+     return KURL( url );
+   }
+   // Try with the url configurated by preferred email in kaddressbook
+@@ -445,7 +449,7 @@
+       << email << '\'' << endl;
+     return KURL();
+ }
+-
++  kdDebug(5850) << "Server FreeBusy url: " << sourceURL.url() << endl;
+   if ( KOPrefs::instance()->mFreeBusyFullDomainRetrieval )
+     sourceURL.setFileName( email + ".ifb" );
+   else
+@@ -453,6 +457,7 @@
+   sourceURL.setUser( KOPrefs::instance()->mFreeBusyRetrieveUser );
+   sourceURL.setPass( KOPrefs::instance()->mFreeBusyRetrievePassword );
+ 
++  kdDebug(5850) << "Results in generated: " << sourceURL.url() << endl;
+   return sourceURL;
+ }
+ 
 
 Property changes on: .
 ___________________________________________________________________
