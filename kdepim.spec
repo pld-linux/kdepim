@@ -2,7 +2,7 @@
 # - subpackages for akregator, korganizer(?)
 # Conditional build:
 %bcond_without	apidocs		# do not prepare API documentation
-%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
 					# & '--fvisibility-inlines-hidden'
 					# to g++
 #
@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.4
-Release:	1
+Release:	2
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
