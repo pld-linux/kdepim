@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.4
-Release:	6
+Release:	7
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -483,48 +483,33 @@ libksieve, libmimelib.
 %setup -q
 %patch100 -p0
 %patch0 -p1
-#%patch1 -p1
+%patch1 -p1
 %patch3 -p1
 %patch4 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	korganizer/korganizer.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/kpilot/kpilotdaemon.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/kpilot/kpilot.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kpilot/conduits/docconduit/kpalmdoc.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;ContactManagement;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kaddressbook/kaddressbook.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kontact/src/Kontact.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Email;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kmail/KMail.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Network;News;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	knode/KNode.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
 	kmobile/kmobile.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	-e 's/Terminal=0/Terminal=false/' \
 	kandy/src/kandy.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Utility;Applet;/' \
 	knotes/knotes.desktop
-%{__sed} -i -e 's/Terminal=0/Terminal=false/' \
-	karm/support/karm.desktop \
-	knotes/knotes.desktop \
-	konsolekalendar/konsolekalendar.desktop \
-	korn/KOrn.desktop
 %{__sed} -i -e '/\[Desktop Entry\]/aEncoding=UTF-8' \
-	-e 's/Terminal=0/Terminal=false/' \
 	ktnef/gui/ktnef.desktop
 for f in `find . -name \*.desktop`; do
 	if grep -q '^Categories=.*[^;]$' $f; then
