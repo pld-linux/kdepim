@@ -38,16 +38,7 @@ BuildRequires:	docbook-dtd42-xml
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	ed
 BuildRequires:	flex
-%{?with_hidden_visibility:BuildRequires:	gcc-c++ >= 5:4.#
-#%{_mandir}/man1/akregator.1*
-#%{_mandir}/man1/ical2vcal.1*
-#%{_mandir}/man1/kdeopt*.1*
-#%{_mandir}/man1/kitchensync*.1*
-#%{_mandir}/man1/korga*.1*
-#%exclude %{_mandir}/man1/korganizerIn.1*
-#%{_mandir}/man1/kontact*.1*
-#%{_mandir}/man1/ksync*.1*
-#%{_mandir}/man1/*wizard.1*1.0-0.20051206r108118.1}
+%{?with_hidden_visibility:BuildRequires:	gcc-c++ >= 5:4.1.0-0.20051206r108118.1}
 BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
