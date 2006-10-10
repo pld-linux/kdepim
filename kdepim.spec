@@ -17,13 +17,13 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.5
-Release:	1
+Release:	0.2
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	3f2127f74cb496899bb3f1f6f702353b
-#Patch100:	%{name}-branch.diff
+Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch3:		%{name}-kmail-vcardviewer.patch
@@ -481,7 +481,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-#%patch100 -p0
+%patch100 -p0
 %patch0 -p1
 %patch1 -p1
 %patch3 -p1
@@ -512,9 +512,6 @@ libksieve, libmimelib.
 %{__sed} -i -e '/\[Desktop Entry\]/aEncoding=UTF-8' \
 	ktnef/gui/ktnef.desktop
 for f in `find . -name \*.desktop`; do
-	if grep -q '^Categories=.*[^;]$' $f; then
-		sed -i -e 's/\(^Categories=.*$\)/\1;/' $f
-	fi
 	if grep -q '\[ven\]' $f; then
 		sed -i -e 's/\[ven\]/[ve]/' $f
 	fi
@@ -556,27 +553,11 @@ rm -rf $RPM_BUILD_ROOT
 rm -f *.lang
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
-	kde_htmldir=%{_kdedocdir} \
-	kde_libs_htmldir=%{_kdedocdir}
-
-# Debian manpages
-install -d $RPM_BUILD_ROOT%{_mandir}/man1
-#cd debian/man
-#if [ -f alarmd.sgml ]; then
-#	%{__sed} -i -e 's/alarmd/kalarmd/' -e 's/ALARMD/KALARMD/' alarmd.sgml
-#	mv -f alarmd.sgml kalarmd.sgml
-#fi
-#for f in *.man ; do
-#	base="$(basename $f .man)"
-#	install ${base}.man $RPM_BUILD_ROOT%{_mandir}/man1/${base}.1
-#done
-#cd -
+	kde_htmldir=%{_kdedocdir}
 
 %find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
-#%find_lang	kalarmd		--with-kde
-#cat kalarmd.lang >> kalarm.lang
 %find_lang	kandy		--with-kde
 %find_lang	karm		--with-kde
 %find_lang	kmail		--with-kde
@@ -599,7 +580,6 @@ cat kwatchgnupg.lang >> kmail.lang
 cat akregator.lang	>> %{name}.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
-#cat kalarmd.lang	>> %{name}.lang
 # TODO
 cat multisynk.lang	>> %{name}.lang
 
@@ -866,19 +846,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
 %{_iconsdir}/*/*/actions/*rss*
-
+#
 %{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
 %{_iconsdir}/crystalsvg/22x22/actions/button_more.png
-#
-#%{_mandir}/man1/akregator.1*
-#%{_mandir}/man1/ical2vcal.1*
-#%{_mandir}/man1/kdeopt*.1*
-#%{_mandir}/man1/kitchensync*.1*
-#%{_mandir}/man1/korga*.1*
-#%exclude %{_mandir}/man1/korganizerIn.1*
-#%{_mandir}/man1/kontact*.1*
-#%{_mandir}/man1/ksync*.1*
-#%{_mandir}/man1/*wizard.1*
 
 %files devel
 %defattr(644,root,root,755)
