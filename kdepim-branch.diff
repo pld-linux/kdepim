@@ -1,7 +1,7 @@
 Index: akregator/src/librss/loader.h
 ===================================================================
---- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -227,7 +227,7 @@
  	 * 'OutputRetriever' will make it execute the script
  	 * '/home/myself/some-script.py' and assume whatever that script prints to
@@ -11,10 +11,75 @@ Index: akregator/src/librss/loader.h
  	 *
  	 * No matter what kind of retrieval algorithm you employ, your
  	 * 'slotLoadingComplete' method might look like this:
+Index: akregator/src/eventsrc
+===================================================================
+--- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -15,7 +15,7 @@
+ Name[es]=Origen añadido
+ Name[et]=Kanal lisatud
+ Name[eu]=Iturria gehituta
+-Name[fa]=خوراندن اضافه شده‌
++Name[fa]=خوراندن اضافه‌شده
+ Name[fi]=Syöte lisätty
+ Name[fr]=Flux ajouté
+ Name[ga]=Cuireadh fotha leis
+Index: kmobile/devices/gammu/libkmobile_gammu.desktop
+===================================================================
+--- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -14,7 +14,7 @@
+ Name[es]=Teléfono móvil u organizador (gammu)
+ Name[et]=Mobiiltelefon või Organizer (gammu)
+ Name[eu]=Mugikorra edo antolatzailea (gammu)
+-Name[fa]=تلفن همراه یا سازمان دهنده (gammu)
++Name[fa]=تلفن همراه یا سازمان‌دهنده (gammu)
+ Name[fi]=Matkapuhelin tai organisaattori (gammu)
+ Name[fr]=Téléphone portable ou organiseur (gammu)
+ Name[ga]=Fón Póca nó Eagraí (gammu)
+Index: certmanager/lib/libkleopatrarc.desktop
+===================================================================
+--- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -99,7 +99,7 @@
+ Name[es]=Clave revocada
+ Name[et]=Tühistatud võti
+ Name[eu]=Errebokatutako gakoa
+-Name[fa]=کلید لغو شده‌
++Name[fa]=کلید لغو‌شده‌
+ Name[fi]=Peruutettu avain
+ Name[fr]=Clé révoquée
+ Name[he]=מפתח לא קביל
+Index: kmail/application_octetstream.desktop
+===================================================================
+--- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -39,7 +39,7 @@
+ Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
+ Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
+ Comment[eu]=Gorputz-zati formateatzaile plugin bat aplikazio/zortikote-jarioentzat
+-Comment[fa]=یک وصلۀ قالب دهندۀ بخش بدنه برای کاربرد/octet-stream
++Comment[fa]=یک وصلۀ قالب‌دهندۀ بخش بدنه برای کاربرد/octet-stream
+ Comment[fi]=Muokkainliitännäinen application/octet-stream-muodolle
+ Comment[fr]=Un module formateur de corps pour application (flux d'octets)
+ Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
+Index: kmail/kmail_config_composer.desktop
+===================================================================
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -70,7 +70,7 @@
+ Comment[es]=Frases y comportamiento general
+ Comment[et]=Väljendid ja üldine käitumine
+ Comment[eu]=Esaldiak eta portamolde orokorra
+-Comment[fa]=عبارات و رفتار کلی
++Comment[fa]=عبارات و رفتار عمومی
+ Comment[fi]=Ilmaukset ja yleiset asetukset
+ Comment[fr]=Phrases et comportement général
+ Comment[gl]=Frases e comportamento xeral
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -2247,9 +2247,15 @@
    if ( !Wallet::isEnabled() || walletOpenFailed )
      return 0;
@@ -35,8 +100,8 @@ Index: kmail/kmkernel.cpp
      walletOpenFailed = true;
 Index: kmail/kmcomposewin.h
 ===================================================================
---- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -398,8 +398,8 @@
    void slotAttachRemove();
    void slotAttachSave();
@@ -70,8 +135,8 @@ Index: kmail/kmcomposewin.h
    bool mLastSignActionState, mLastEncryptActionState;
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -333,7 +333,7 @@
  
    connect( mAtmListView,
@@ -135,8 +200,8 @@ Index: kmail/kmcomposewin.cpp
      }
 Index: kmail/Mainpage.dox
 ===================================================================
---- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -793,7 +793,7 @@
  
    - @em BodyPartFormatter
@@ -148,8 +213,8 @@ Index: kmail/Mainpage.dox
  	some default processor. BodyPartFormatters are meant to be
 Index: knode/articlewidget.h
 ===================================================================
---- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -145,7 +145,7 @@
        FancyFormatting = 2,
        AllowROT13 = 4
@@ -161,8 +226,8 @@ Index: knode/articlewidget.h
      static QString imgToDataUrl( const QImage &image, const char* fmt );
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -327,6 +327,7 @@
  #else
    KABC::DistributionList *list = mManager->list( oldName );
@@ -173,8 +238,8 @@ Index: kaddressbook/features/distributionlistwidget.cpp
  
 Index: libkdepim/categoryeditdialog.cpp
 ===================================================================
---- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -76,6 +76,7 @@
    }
    mWidget->mButtonRemove->setEnabled( categoriesExist );
@@ -185,8 +250,8 @@ Index: libkdepim/categoryeditdialog.cpp
  void CategoryEditDialog::slotTextChanged(const QString &text)
 Index: libkcal/libical/src/libical/sspm.c
 ===================================================================
---- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -1171,7 +1171,7 @@
  			     char *src,
  			     size_t *size)
@@ -198,8 +263,8 @@ Index: libkcal/libical/src/libical/sspm.c
      int valid_data = 0;
 Index: libkcal/htmlexport.h
 ===================================================================
---- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -37,7 +37,7 @@
  namespace KCal {
  
@@ -211,8 +276,8 @@ Index: libkcal/htmlexport.h
  {
 Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
 ===================================================================
---- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -99,7 +99,7 @@
                                      <bool>true</bool>
                                  </property>
@@ -222,10 +287,75 @@ Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
                                  </property>
                              </widget>
                              <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
+Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
+===================================================================
+--- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -47,7 +47,7 @@
+ Comment[es]=Este conducto sincroniza las notas de su agenda electrónica con el directorio local.
+ Comment[et]=See kanal sünkroniseerib pihuarvutis ja arvutis olevad memod.
+ Comment[eu]=Kanal honek zure agendako oharrak direktorio lokal batekin sinkronizatzen ditu.
+-Comment[fa]=این لوله، memo‌های دستی خود را با یک فهرست راهنمای محلی همگام‌سازی کنید.
++Comment[fa]=این لوله، memo‌های دستی خود را با یک فهرست راهنمای محلی همگام‌سازی می‌کند.
+ Comment[fi]=Tämä yhdyskäytävä synkronoi taskutietokoneen muistiot paikalliseen kansioon.
+ Comment[fr]=Ce canal synchronise les mémos du Palm avec ceux de KDE.
+ Comment[hu]=Ezzel a csatolóval egy kézi számítógép memóit lehet szinkronizálni a helyi címjegyzékkel.
+Index: kontact/plugins/akregator/akregatorplugin.desktop
+===================================================================
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -65,7 +65,7 @@
+ Name[es]=Orígenes
+ Name[et]=Kanalid
+ Name[eu]=Iturriak
+-Name[fa]=خوراندن
++Name[fa]=خوراندنها
+ Name[fi]=Syötteet
+ Name[fr]=Flux
+ Name[ga]=Fothaí
+Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
+===================================================================
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -64,7 +64,7 @@
+ Name[es]=Orígenes
+ Name[et]=Kanalid
+ Name[eu]=Iturriak
+-Name[fa]=خوراندن
++Name[fa]=خوراندنها
+ Name[fi]=Syötteet
+ Name[fr]=Flux
+ Name[ga]=Fothaí
+Index: kontact/interfaces/kontactplugin.desktop
+===================================================================
+--- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -15,7 +15,7 @@
+ Name[es]=Plugin Kontact
+ Name[et]=Kontacti plugin
+ Name[eu]=Kontact plugin-a
+-Name[fa]=وصلۀ 
++Name[fa]=وصلۀ Kontact
+ Name[fi]=Kontact-liitännäinen
+ Name[fr]=Module Kontact
+ Name[ga]=Breiseán Kontact
+Index: ktnef/gui/ktnef.desktop
+===================================================================
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -57,7 +57,7 @@
+ Comment[es]=A visor/extractor para archivos TNEF
+ Comment[et]=TNEF-failide näitaja/ekstraktija
+ Comment[eu]=TNEF fitxategien ikustaile/erauzlea
+-Comment[fa]=یک مشاهده‌گر/استخراجگر برای پرونده‌های TNEF
++Comment[fa]=یک مشاهده‌گر/استخراج‌گر برای پرونده‌های TNEF
+ Comment[fi]=Näytin/purkaja TNEF-tiedostoille
+ Comment[fr]=Pour afficher / extraire des fichiers TNEF
+ Comment[hi]=टीएनईएफ फ़ाइलों के लिए एक प्रदर्शक/एक्सट्रेक्टर
 Index: korganizer/korganizer.kcfg
 ===================================================================
---- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 594231)
-+++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 594231)
+--- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 594434)
 @@ -74,7 +74,7 @@
  
      <entry type="Bool" key="Html With Save">
@@ -243,6 +373,19 @@ Name: svn:ignore
 Makefile.in
 
 
+Index: korganizer/korganizer_configgroupautomation.desktop
+===================================================================
+--- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
++++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+@@ -25,7 +25,7 @@
+ Name[es]=Automatización del grupo
+ Name[et]=Grupitöö
+ Name[eu]=Talde automatizazioa
+-Name[fa]=خودکار سازی گروه
++Name[fa]=خودکارسازی گروه
+ Name[fi]=Ryhmän automatisointi
+ Name[fr]=Automatisation des groupes
+ Name[gl]=Automatización de Grupo
 
 Property changes on: .
 ___________________________________________________________________
