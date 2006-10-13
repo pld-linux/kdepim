@@ -1,7 +1,7 @@
 Index: akregator/src/librss/loader.h
 ===================================================================
---- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -227,7 +227,7 @@
  	 * 'OutputRetriever' will make it execute the script
  	 * '/home/myself/some-script.py' and assume whatever that script prints to
@@ -13,8 +13,8 @@ Index: akregator/src/librss/loader.h
  	 * 'slotLoadingComplete' method might look like this:
 Index: akregator/src/eventsrc
 ===================================================================
---- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -15,7 +15,7 @@
  Name[es]=Origen añadido
  Name[et]=Kanal lisatud
@@ -26,8 +26,8 @@ Index: akregator/src/eventsrc
  Name[ga]=Cuireadh fotha leis
 Index: kmobile/devices/gammu/libkmobile_gammu.desktop
 ===================================================================
---- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -14,7 +14,7 @@
  Name[es]=Teléfono móvil u organizador (gammu)
  Name[et]=Mobiiltelefon või Organizer (gammu)
@@ -39,8 +39,8 @@ Index: kmobile/devices/gammu/libkmobile_gammu.desktop
  Name[ga]=Fón Póca nó Eagraí (gammu)
 Index: certmanager/lib/libkleopatrarc.desktop
 ===================================================================
---- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -99,7 +99,7 @@
  Name[es]=Clave revocada
  Name[et]=Tühistatud võti
@@ -52,8 +52,8 @@ Index: certmanager/lib/libkleopatrarc.desktop
  Name[he]=מפתח לא קביל
 Index: kmail/application_octetstream.desktop
 ===================================================================
---- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -39,7 +39,7 @@
  Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
  Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
@@ -65,8 +65,8 @@ Index: kmail/application_octetstream.desktop
  Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
 Index: kmail/kmail_config_composer.desktop
 ===================================================================
---- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -70,7 +70,7 @@
  Comment[es]=Frases y comportamiento general
  Comment[et]=Väljendid ja üldine käitumine
@@ -78,9 +78,89 @@ Index: kmail/kmail_config_composer.desktop
  Comment[gl]=Frases e comportamento xeral
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
-@@ -2247,9 +2247,15 @@
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -192,6 +192,7 @@
+ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
+ {
+   QString to, cc, bcc, subj, body;
++  QCStringList customHeaders;
+   KURL messageFile;
+   KURL::List attachURLs;
+   bool mailto = false;
+@@ -252,6 +253,8 @@
+          attachURLs += KURL( QString::fromLocal8Bit( *it ) );
+   }
+ 
++  customHeaders = args->getOptionList("header");
++
+   if (args->isSet("composer"))
+     mailto = true;
+ 
+@@ -302,7 +305,7 @@
+     viewMessage( messageFile );
+   else
+     action( mailto, checkMail, to, cc, bcc, subj, body, messageFile,
+-            attachURLs );
++            attachURLs, customHeaders );
+   return true;
+ }
+ 
+@@ -366,7 +369,8 @@
+                             const QString &bcc, const QString &subject,
+                             const QString &body, int hidden,
+                             const KURL &messageFile,
+-                            const KURL::List &attachURLs)
++                            const KURL::List &attachURLs,
++                            const QCStringList &customHeaders)
+ {
+   kdDebug(5006) << "KMKernel::openComposer called" << endl;
+   KMMessage *msg = new KMMessage;
+@@ -389,6 +393,23 @@
+   else if (!body.isEmpty())
+     msg->setBody(body.utf8());
+ 
++  if (!customHeaders.isEmpty())
++  {
++    for ( QCStringList::ConstIterator it = customHeaders.begin() ; it != customHeaders.end() ; ++it )
++      if ( !(*it).isEmpty() )
++      {
++        const int pos = (*it).find( ':' );
++        if ( pos > 0 )
++        {
++          QCString header, value;
++          header = (*it).left( pos ).stripWhiteSpace();
++          value = (*it).mid( pos+1 ).stripWhiteSpace();
++          if ( !header.isEmpty() && !value.isEmpty() )
++            msg->setHeaderField( header, value );
++        }
++      }
++  }
++
+   KMail::Composer * cWin = KMail::makeComposer( msg );
+   cWin->setCharset("", TRUE);
+   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
+@@ -1802,14 +1823,15 @@
+                       const QString &cc, const QString &bcc,
+                       const QString &subj, const QString &body,
+                       const KURL &messageFile,
+-                      const KURL::List &attachURLs)
++                      const KURL::List &attachURLs,
++                      const QCStringList &customHeaders)
+ {
+-  if (mailto)
+-    openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);
++  if ( mailto )
++    openComposer( to, cc, bcc, subj, body, 0, messageFile, attachURLs, customHeaders );
+   else
+     openReader( check );
+ 
+-  if (check)
++  if ( check )
+     checkMail();
+   //Anything else?
+ }
+@@ -2247,9 +2269,15 @@
    if ( !Wallet::isEnabled() || walletOpenFailed )
      return 0;
  
@@ -100,8 +180,8 @@ Index: kmail/kmkernel.cpp
      walletOpenFailed = true;
 Index: kmail/kmcomposewin.h
 ===================================================================
---- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -398,8 +398,8 @@
    void slotAttachRemove();
    void slotAttachSave();
@@ -135,8 +215,8 @@ Index: kmail/kmcomposewin.h
    bool mLastSignActionState, mLastEncryptActionState;
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -333,7 +333,7 @@
  
    connect( mAtmListView,
@@ -198,10 +278,45 @@ Index: kmail/kmcomposewin.cpp
      if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
        QFile::remove(url.path());
      }
+Index: kmail/kmkernel.h
+===================================================================
+--- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -96,10 +96,19 @@
+   /** returns id of composer if more are opened */
+   int openComposer (const QString &to, const QString &cc, const QString &bcc,
+                     const QString &subject, const QString &body, int hidden,
+-                    const KURL &messageFile, const KURL::List &attachURLs);
++                    const KURL &messageFile, const KURL::List &attachURLs,
++                    const QCStringList &customHeaders);
+   /** For backward compatibility */
+   int openComposer (const QString &to, const QString &cc, const QString &bcc,
+                     const QString &subject, const QString &body, int hidden,
++                    const KURL &messageFile, const KURL::List &attachURLs)
++  {
++    QCStringList noCustomHeaders;
++    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, attachURLs, noCustomHeaders);
++  }
++  /** For backward compatibility */
++  int openComposer (const QString &to, const QString &cc, const QString &bcc,
++                    const QString &subject, const QString &body, int hidden,
+                     const KURL &messageFile, const KURL& attachURL)
+   {
+     return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List(attachURL));
+@@ -245,7 +254,8 @@
+   void setFirstInstance(bool value) { the_firstInstance = value; }
+   void action (bool mailto, bool check, const QString &to, const QString &cc,
+                const QString &bcc, const QString &subj, const QString &body,
+-	       const KURL &messageFile, const KURL::List &attach);
++               const KURL &messageFile, const KURL::List &attach,
++               const QCStringList &customHeaders);
+   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
+ 			     bool overwrite = FALSE);
+   bool folderIsDraftOrOutbox(const KMFolder *);
 Index: kmail/Mainpage.dox
 ===================================================================
---- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -793,7 +793,7 @@
  
    - @em BodyPartFormatter
@@ -213,8 +328,8 @@ Index: kmail/Mainpage.dox
  	some default processor. BodyPartFormatters are meant to be
 Index: knode/articlewidget.h
 ===================================================================
---- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -145,7 +145,7 @@
        FancyFormatting = 2,
        AllowROT13 = 4
@@ -226,8 +341,8 @@ Index: knode/articlewidget.h
      static QString imgToDataUrl( const QImage &image, const char* fmt );
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -327,6 +327,7 @@
  #else
    KABC::DistributionList *list = mManager->list( oldName );
@@ -236,10 +351,23 @@ Index: kaddressbook/features/distributionlistwidget.cpp
    updateNameCombo();
  #endif
  
+Index: libkholidays/holidays/Makefile.am
+===================================================================
+--- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -11,7 +11,7 @@
+                 holiday_nl \
+                 holiday_no holiday_nz holiday_pl holiday_pt holiday_py \
+                 holiday_quebec \
+-                holiday_ro holiday_ru \ 
++                holiday_ro holiday_ru \
+ 		holiday_se holiday_si holiday_th holiday_us \
+                 holiday_uy holiday_ie \
+                 holiday_Suedtirol
 Index: libkdepim/categoryeditdialog.cpp
 ===================================================================
---- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -76,6 +76,7 @@
    }
    mWidget->mButtonRemove->setEnabled( categoriesExist );
@@ -250,8 +378,8 @@ Index: libkdepim/categoryeditdialog.cpp
  void CategoryEditDialog::slotTextChanged(const QString &text)
 Index: libkcal/libical/src/libical/sspm.c
 ===================================================================
---- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -1171,7 +1171,7 @@
  			     char *src,
  			     size_t *size)
@@ -263,8 +391,8 @@ Index: libkcal/libical/src/libical/sspm.c
      int valid_data = 0;
 Index: libkcal/htmlexport.h
 ===================================================================
---- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -37,7 +37,7 @@
  namespace KCal {
  
@@ -276,8 +404,8 @@ Index: libkcal/htmlexport.h
  {
 Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
 ===================================================================
---- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -99,7 +99,7 @@
                                      <bool>true</bool>
                                  </property>
@@ -289,8 +417,8 @@ Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
                              <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
 Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
 ===================================================================
---- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -47,7 +47,7 @@
  Comment[es]=Este conducto sincroniza las notas de su agenda electrónica con el directorio local.
  Comment[et]=See kanal sünkroniseerib pihuarvutis ja arvutis olevad memod.
@@ -302,8 +430,8 @@ Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
  Comment[hu]=Ezzel a csatolóval egy kézi számítógép memóit lehet szinkronizálni a helyi címjegyzékkel.
 Index: kontact/plugins/akregator/akregatorplugin.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -65,7 +65,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -315,8 +443,8 @@ Index: kontact/plugins/akregator/akregatorplugin.desktop
  Name[ga]=Fothaí
 Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -64,7 +64,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -328,8 +456,8 @@ Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
  Name[ga]=Fothaí
 Index: kontact/interfaces/kontactplugin.desktop
 ===================================================================
---- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -15,7 +15,7 @@
  Name[es]=Plugin Kontact
  Name[et]=Kontacti plugin
@@ -341,8 +469,8 @@ Index: kontact/interfaces/kontactplugin.desktop
  Name[ga]=Breiseán Kontact
 Index: ktnef/gui/ktnef.desktop
 ===================================================================
---- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -57,7 +57,7 @@
  Comment[es]=A visor/extractor para archivos TNEF
  Comment[et]=TNEF-failide näitaja/ekstraktija
@@ -352,10 +480,23 @@ Index: ktnef/gui/ktnef.desktop
  Comment[fi]=Näytin/purkaja TNEF-tiedostoille
  Comment[fr]=Pour afficher / extraire des fichiers TNEF
  Comment[hi]=टीएनईएफ फ़ाइलों के लिए एक प्रदर्शक/एक्सट्रेक्टर
+Index: korganizer/Makefile.am
+===================================================================
+--- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -171,7 +171,7 @@
+ 	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.h"` -o $(podir)/korganizer.pot
+ 	rm -f tips.cpp
+ 
+-xdg_apps_DATA = korganizer.desktop
++xdg_apps_DATA = korganizer.desktop korganizer-import.desktop
+ 
+ kde_kcfg_DATA = korganizer.kcfg
+ 
 Index: korganizer/korganizer.kcfg
 ===================================================================
---- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -74,7 +74,7 @@
  
      <entry type="Bool" key="Html With Save">
@@ -373,10 +514,30 @@ Name: svn:ignore
 Makefile.in
 
 
+Index: korganizer/korganizer.desktop
+===================================================================
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -1,6 +1,5 @@
+ [Desktop Entry]
+ Encoding=UTF-8
+-MimeType=text/calendar;text/x-vcalendar;
+ Comment=Calendar and Scheduling Program
+ Comment[af]=Kalender en Skedulering Program
+ Comment[ar]=برنامج الجدولة والتقويم
+@@ -61,7 +60,7 @@
+ Comment[zh_CN]=日历和日程安排程序
+ Comment[zh_TW]=行事曆與排程軟體
+ Comment[zu]=Ikhalenda kanye Neprogramu Yokugcina isikhathi
+-Exec=korganizer --import %u
++Exec=korganizer
+ Icon=korganizer
+ Path=
+ DocPath=korganizer/index.html
 Index: korganizer/korganizer_configgroupautomation.desktop
 ===================================================================
---- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 594434)
-+++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 594434)
+--- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
++++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
 @@ -25,7 +25,7 @@
  Name[es]=Automatización del grupo
  Name[et]=Grupitöö
@@ -386,6 +547,148 @@ Index: korganizer/korganizer_configgroupautomation.desktop
  Name[fi]=Ryhmän automatisointi
  Name[fr]=Automatisation des groupes
  Name[gl]=Automatización de Grupo
+Index: korganizer/korganizer-import.desktop
+===================================================================
+--- korganizer/korganizer-import.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 0)
++++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+@@ -0,0 +1,137 @@
++[Desktop Entry]
++Encoding=UTF-8
++MimeType=text/calendar;text/x-vcalendar;
++Comment=Calendar and Scheduling Program
++Comment[af]=Kalender en Skedulering Program
++Comment[ar]=برنامج الجدولة والتقويم
++Comment[bg]=Програма за календар и разписание
++Comment[bs]=Kalendar i rokovnik
++Comment[ca]=Un programa de calendari i planificació
++Comment[cs]=Kalendářový a plánovací program
++Comment[cy]=Rhaglen Galendr a Drefnlennu
++Comment[da]=Kalender- og planlægningsprogram
++Comment[de]=Ein Kalender und Zeitplaner
++Comment[el]=Πρόγραμμα ημερολογίου και προγραμματισμού
++Comment[eo]=Kalendara kaj plana programo
++Comment[es]=Calendario y planificador
++Comment[et]=Kalendri ja ajakava haldamise rakendus
++Comment[eu]=Egutegi eta antolaketa progrmaa
++Comment[fa]=تقویم و برنامۀ زمان‌بندی
++Comment[fi]=Kalenteri ja ajanhallintaohjelma
++Comment[fr]=Calendrier et agenda personnel
++Comment[gl]=Programa de Calendario e Axenda
++Comment[he]=תוכניות לוח שנה ותזמון משימות
++Comment[hi]=कैलेन्डर तथा समय-सारणी प्रोग्राम
++Comment[hr]=Kalendar i rokovnik
++Comment[hu]=Határidőnapló és eseményszervező
++Comment[is]=Dagbók og skipulag
++Comment[it]=Programma di calendario e di agenda
++Comment[ja]=カレンダーとスケジュール管理プログラム
++Comment[km]=កម្មវិធី​ប្រតិទិន និង កាលវិភាគ
++Comment[lt]=Kalendoriaus ir planavimo programa
++Comment[lv]=Kalendāra un Plānošanas Programma
++Comment[mk]=Календар и роковник
++Comment[ms]=Kalendar dan Program Penjadualan 
++Comment[mt]=Programm b' kalendarju w skeda
++Comment[nb]=Et kalender- og tidsplanleggingsprogram
++Comment[nds]=Kalenner un Tietplaner
++Comment[nl]=Agenda- en afsprakenprogramma
++Comment[nn]=Kalender- og planleggingsprogram
++Comment[nso]=Lenaneo la Peakanyo ya Tshupamabaka
++Comment[pl]=Kalendarz i terminarz
++Comment[pt]=Calendário e Programa de Escalonamento
++Comment[pt_BR]=Programa de Calendário e Agenda
++Comment[ro]=Program de planificare şi calendar
++Comment[ru]=Календарь и личное расписание
++Comment[se]=Kaleandar- ja plánenprográmma
++Comment[sk]=Kalendár a plánovací program
++Comment[sl]=Program za koledar in razporejanje
++Comment[sr]=Календарски и планерски програм
++Comment[sr@Latn]=Kalendarski i planerski program
++Comment[sv]=Kalender- och schemaläggningsprogram
++Comment[ta]=நாள்காட்டி மற்றும் திட்ட நிரல்
++Comment[tg]=Тақвимот ва ҷадвали шахсӣ
++Comment[th]=โปรแกรมจัดการปฏิทินและตารางการนัดหมาย
++Comment[tr]=Takvim ve Zamanlama Programı
++Comment[uk]=Програма календаря та розкладу
++Comment[uz]=Календар ва режалаштириш дастури
++Comment[ven]=Khalenda na mbekanyamushumo ya u shedula
++Comment[vi]=Chương trình lịch và kế hoạch
++Comment[xh]=Ikhalenda no Dweliso lwenkqubo Yokucwangcisa
++Comment[zh_CN]=日历和日程安排程序
++Comment[zh_TW]=行事曆與排程軟體
++Comment[zu]=Ikhalenda kanye Neprogramu Yokugcina isikhathi
++Exec=korganizer --import %u
++Icon=korganizer
++Path=
++DocPath=korganizer/index.html
++Type=Application
++Terminal=false
++Name=KOrganizer
++Name[af]=Korganizer
++Name[ar]=منظم كيدي
++Name[be]=K Арганізатар
++Name[cy]=KTrefnydd
++Name[eo]=Organizilo
++Name[hi]=के-आर्गेनाइज़र
++Name[lv]=KOrganaizers
++Name[mk]=Организатор
++Name[nso]=KMokopanyi
++Name[pl]=Organizator
++Name[sv]=Korganizer
++Name[ta]=கேஅமைப்பாளர்
++Name[ven]=Mulugisi wa K
++Name[zh_TW]=KOrganizer 行事曆
++GenericName=Personal Organizer
++GenericName[be]=Пэрсанальны арганізатар
++GenericName[bg]=Организатор
++GenericName[bs]=Lični organizer
++GenericName[ca]=Organitzador personal
++GenericName[cs]=Osobní organizér
++GenericName[cy]=Trefnydd Personol
++GenericName[da]=Personlig organisering
++GenericName[de]=Persönliche Daten organisieren
++GenericName[el]=Προσωπικός οργανωτής
++GenericName[en_GB]=Personal Organiser
++GenericName[es]=Organizador personal
++GenericName[et]=Personaalne ajaarvestus
++GenericName[eu]=Antolatzaile pertsonala
++GenericName[fa]=سازمان‌دهندۀ شخصی‌
++GenericName[fi]=Henkilökohtainen ajanhallintaohjelma
++GenericName[fr]=Organiseur personnel
++GenericName[gl]=Organizador Persoal
++GenericName[he]=מנהל זמן אישי
++GenericName[hi]=निजी प्रबंधक
++GenericName[hu]=Határidőnapló
++GenericName[is]=Persónuleg skipulagsbók
++GenericName[it]=Organizzatore personale
++GenericName[ja]=個人向けスケジュール管理
++GenericName[km]=កម្មវិធី​រៀបចំ​ផ្ទាល់​ខ្លួន
++GenericName[lt]=Asmeninės informacijos tvarkyklė
++GenericName[ms]=Penyusun Peribadi
++GenericName[nb]=Personlig planlegger
++GenericName[nds]=Persöönlich Mötenkalenner
++GenericName[nl]=Persoonlijke organizer
++GenericName[nn]=Personleg organiserar
++GenericName[pl]=Osobisty organizator
++GenericName[pt]=Organizador Pessoal
++GenericName[pt_BR]=Organizador Pessoal
++GenericName[ro]=Organizator personal
++GenericName[ru]=Персональный органайзер
++GenericName[sk]=Osobný plánovač
++GenericName[sl]=Osebni organizator
++GenericName[sr]=Лични планер
++GenericName[sr@Latn]=Lični planer
++GenericName[sv]=Filofax
++GenericName[ta]=தனிப்பயன் அமைப்பாளர்
++GenericName[tg]=Органайзери инфиродӣ
++GenericName[tr]=Kişisel Bilgi Yöneticisi
++GenericName[uk]=Персональний тижневик
++GenericName[uz]=Шахсий органайзер
++GenericName[zh_CN]=个人日程安排
++GenericName[zh_TW]=個人行程組織軟體
++ServiceTypes=Browser/View,DCOP/Organizer
++X-KDE-Library=libkorganizerpart
++X-KDE-StartupNotify=true
++X-DCOP-ServiceType=Unique
++X-DCOP-ServiceName=korganizer
 
 Property changes on: .
 ___________________________________________________________________
