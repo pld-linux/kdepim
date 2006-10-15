@@ -17,7 +17,7 @@ Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.5
-Release:	0.1
+Release:	0.5
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -64,7 +64,6 @@ Obsoletes:	akregator
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
 Obsoletes:	kdepim-korganizer
-Obsoletes:	kdepim-korganizer-libs
 Obsoletes:	kdepim-kresources
 Obsoletes:	kdepim-ksync
 #Obsoletes:	kdepim-libkcal
@@ -777,6 +776,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
 %{_datadir}/apps/ksync
+%{_datadir}/apps/kdepim
 %{_datadir}/apps/multisynk
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
@@ -839,6 +839,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/multisynk.desktop
 %{_desktopdir}/kde/groupwarewizard.desktop
+%{_desktopdir}/kde/korganizer-import.desktop
 %{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/*/*/apps/multisynk.png
