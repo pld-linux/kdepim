@@ -1,7 +1,7 @@
 Index: akregator/src/librss/loader.h
 ===================================================================
---- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -227,7 +227,7 @@
  	 * 'OutputRetriever' will make it execute the script
  	 * '/home/myself/some-script.py' and assume whatever that script prints to
@@ -11,10 +11,23 @@ Index: akregator/src/librss/loader.h
  	 *
  	 * No matter what kind of retrieval algorithm you employ, your
  	 * 'slotLoadingComplete' method might look like this:
+Index: akregator/src/akregator.desktop
+===================================================================
+--- akregator/src/akregator.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -23,7 +23,7 @@
+ GenericName[hu]=RSS hírolvasó
+ GenericName[is]=RSS fréttaforrit
+ GenericName[it]=Lettore Fonti RSS
+-GenericName[ja]=RSS ニュースリーダ
++GenericName[ja]=RSS ニュースリーダー
+ GenericName[km]=កម្មវិធី​អាន​មតិព័ត៌មាន RSS
+ GenericName[lt]=RSS kanalų skaityklė
+ GenericName[ms]= Pembaca Suapan RSS 
 Index: akregator/src/eventsrc
 ===================================================================
---- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -15,7 +15,7 @@
  Name[es]=Origen añadido
  Name[et]=Kanal lisatud
@@ -26,8 +39,8 @@ Index: akregator/src/eventsrc
  Name[ga]=Cuireadh fotha leis
 Index: kmobile/devices/gammu/libkmobile_gammu.desktop
 ===================================================================
---- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -14,7 +14,7 @@
  Name[es]=Teléfono móvil u organizador (gammu)
  Name[et]=Mobiiltelefon või Organizer (gammu)
@@ -39,8 +52,8 @@ Index: kmobile/devices/gammu/libkmobile_gammu.desktop
  Name[ga]=Fón Póca nó Eagraí (gammu)
 Index: certmanager/lib/libkleopatrarc.desktop
 ===================================================================
---- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -99,7 +99,7 @@
  Name[es]=Clave revocada
  Name[et]=Tühistatud võti
@@ -50,10 +63,93 @@ Index: certmanager/lib/libkleopatrarc.desktop
  Name[fi]=Peruutettu avain
  Name[fr]=Clé révoquée
  Name[he]=מפתח לא קביל
+Index: libkmime/kmime_message.cpp
+===================================================================
+--- libkmime/kmime_message.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkmime/kmime_message.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -62,6 +62,10 @@
+   if( (h=to(false))!=0 )
+     newHead+=h->as7BitString()+"\n";
+ 
++  //Cc
++  if( (h=cc(false))!=0 )
++    newHead+=h->as7BitString()+"\n";
++
+   //Reply-To
+   if( (h=replyTo(false))!=0 )
+     newHead+=h->as7BitString()+"\n";
+@@ -78,6 +82,10 @@
+   if( (h=organization(false))!=0 )
+     newHead+=h->as7BitString()+"\n";
+ 
++  //UserAgent
++  if( (h=userAgent(false))!=0 )
++    newHead+=h->as7BitString()+"\n";
++
+   //Mime-Version
+   newHead+="MIME-Version: 1.0\n";
+ 
+Index: libkmime/kmime_newsarticle.h
+===================================================================
+--- libkmime/kmime_newsarticle.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkmime/kmime_newsarticle.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -43,7 +43,6 @@
+   virtual KMime::Headers::Newsgroups* newsgroups(bool create=true)      { KMime::Headers::Newsgroups *p=0; return getHeaderInstance(p, create); }
+   virtual KMime::Headers::FollowUpTo* followUpTo(bool create=true)      { KMime::Headers::FollowUpTo *p=0; return getHeaderInstance(p, create); }
+   virtual KMime::Headers::Lines* lines(bool create=true)                { if(!create && l_ines.isEmpty()) return 0; return &l_ines; }
+-  virtual KMime::Headers::UserAgent* userAgent(bool create=true)        { KMime::Headers::UserAgent *p=0; return getHeaderInstance(p, create); }
+ 
+ 
+ protected:
+Index: libkmime/kmime_message.h
+===================================================================
+--- libkmime/kmime_message.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkmime/kmime_message.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -51,6 +51,7 @@
+   virtual KMime::Headers::CC* cc(bool create=true)                      { KMime::Headers::CC *p=0; return getHeaderInstance(p, create); }
+   virtual KMime::Headers::BCC* bcc(bool create=true)                    { KMime::Headers::BCC *p=0; return getHeaderInstance(p, create); }
+   virtual KMime::Headers::References* references(bool create=true)      { KMime::Headers::References *p=0; return getHeaderInstance(p, create); }
++  virtual KMime::Headers::UserAgent* userAgent(bool create=true)        { KMime::Headers::UserAgent *p=0; return getHeaderInstance(p, create); }
+   
+ protected:
+   //hardcoded headers
+Index: kmail/kmfilterdlg.cpp
+===================================================================
+--- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -226,6 +226,7 @@
+       gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
+       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
+       gl->addMultiCellWidget( mKeyButton, 7, 7, 3, 3 );
++      mKeyButton->setEnabled( false );
+       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
+       gl->addMultiCellWidget( mConfigureToolbar, 8, 8, 0, 3 );
+       mConfigureToolbar->setEnabled( false );
+@@ -497,6 +498,7 @@
+ {
+   if ( mFilter ) {
+     mFilter->setConfigureShortcut( aChecked );
++    mKeyButton->setEnabled( aChecked );
+     mConfigureToolbar->setEnabled( aChecked );
+     mFilterActionIconButton->setEnabled( aChecked );
+     mFilterActionLabel->setEnabled( aChecked );
+Index: kmail/expirejob.cpp
+===================================================================
+--- kmail/expirejob.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/expirejob.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -125,7 +125,7 @@
+     const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
+     if (mb == 0)
+       continue;
+-    if ( mb->isImportant()
++    if ( ( mb->isImportant() || mb->isTodo() )
+       && GlobalSettings::self()->excludeImportantMailFromExpiry() )
+        continue;
+ 
 Index: kmail/application_octetstream.desktop
 ===================================================================
---- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -39,7 +39,7 @@
  Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
  Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
@@ -65,8 +161,8 @@ Index: kmail/application_octetstream.desktop
  Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
 Index: kmail/kmail_config_composer.desktop
 ===================================================================
---- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -70,7 +70,7 @@
  Comment[es]=Frases y comportamiento general
  Comment[et]=Väljendid ja üldine käitumine
@@ -76,10 +172,263 @@ Index: kmail/kmail_config_composer.desktop
  Comment[fi]=Ilmaukset ja yleiset asetukset
  Comment[fr]=Phrases et comportement général
  Comment[gl]=Frases e comportamento xeral
+Index: kmail/kmfoldercachedimap.cpp
+===================================================================
+--- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -75,6 +75,7 @@
+ #include <globalsettings.h>
+ 
+ #define UIDCACHE_VERSION 1
++#define MAIL_LOSS_DEBUGGING 0
+ 
+ static QString incidencesForToString( KMFolderCachedImap::IncidencesFor r ) {
+   switch (r) {
+@@ -150,10 +151,22 @@
+     mFolderRemoved( false ),
+     /*mHoldSyncs( false ),*/ mRecurse( true ),
+     mStatusChangedLocally( false ), mAnnotationFolderTypeChanged( false ),
+-    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true )
++    mIncidencesForChanged( false ), mPersonalNamespacesCheckDone( true ),
++    mFoundAnIMAPDigest( false )
+ {
+   setUidValidity("");
+-  readUidCache();
++  // if we fail to read a uid file but there is one, nuke it
++  if ( readUidCache() == -1 ) {
++    if ( QFile::exists( uidCacheLocation() ) ) {
++        KMessageBox::error( 0,
++        i18n( "The UID cache file for folder %1 could not be read. There "
++              "could be a problem with file system permission, or it is corrupted."
++              ).arg( folder->prettyURL() ) );
++        // try to unlink it, in case it was corruped. If it couldn't be read 
++        // because of permissions, this will fail, which is fine
++        unlink( QFile::encodeName( uidCacheLocation() ) );
++    }
++  }
+ 
+   mProgress = 0;
+ }
+@@ -306,7 +319,7 @@
+   if( uidValidity().isEmpty() || uidValidity() == "INVALID" ) {
+     // No info from the server yet, remove the file.
+     if( QFile::exists( uidCacheLocation() ) )
+-      unlink( QFile::encodeName( uidCacheLocation() ) );
++      return unlink( QFile::encodeName( uidCacheLocation() ) );
+     return 0;
+   }
+ 
+@@ -317,17 +330,23 @@
+     str << uidValidity() << endl;
+     str << lastUid() << endl;
+     uidcache.flush();
+-    fsync( uidcache.handle() ); /* this is probably overkill */
+-    uidcache.close();
+-    return 0;
+-  } else {
+-    return errno; /* does QFile set errno? */
++    if ( uidcache.status() == IO_Ok ) {
++      fsync( uidcache.handle() ); /* this is probably overkill */
++      uidcache.close();
++      if ( uidcache.status() == IO_Ok )
++        return 0;
++    }
+   }
++  KMessageBox::error( 0,
++        i18n( "The UID cache file for folder %1 could not be written. There "
++              "could be a problem with file system permission." ).arg( folder()->prettyURL() ) );
++
++  return -1;
+ }
+ 
+ void KMFolderCachedImap::reloadUidMap()
+ {
+-  kdDebug(5006) << "Reloading Uid Map " << endl;
++  //kdDebug(5006) << "Reloading Uid Map " << endl;
+   uidMap.clear();
+   open();
+   for( int i = 0; i < count(); ++i ) {
+@@ -448,7 +467,8 @@
+ {
+   killTimer( uidWriteTimer );
+   uidWriteTimer = -1;
+-  writeUidCache();
++  if ( writeUidCache() == -1 )
++    unlink( QFile::encodeName( uidCacheLocation() ) );
+ }
+ 
+ ulong KMFolderCachedImap::lastUid()
+@@ -467,10 +487,22 @@
+   QMap<ulong,int>::Iterator it = uidMap.find( uid );
+   if( it != uidMap.end() ) {
+     KMMsgBase *msg = getMsgBase( *it );
++#ifdef MAIL_LOSS_DEBUGGING
++    kdDebug(5006) << "UID " << uid << " is supposed to be in the map" << endl;
++    kdDebug(5006) << "UID's index is to be " << *it << endl;
++    kdDebug(5006) << "There is a message there? " << (msg != 0) << endl;
++    if ( msg ) {
++      kdDebug(5006) << "Its UID is: " << msg->UID() << endl;
++    }
++#endif
++
+     if( msg && msg->UID() == uid )
+       return msg;
++    kdDebug(5006) << "########## Didn't find uid: " << uid << "in cache athough it's supposed to be there!" << endl;
+   } else {
++#ifdef MAIL_LOSS_DEBUGGING
+     kdDebug(5006) << "Didn't find uid: " << uid << "in cache!" << endl;
++#endif
+   }
+   // Not found by now
+  // if( mapReloaded )
+@@ -482,8 +514,10 @@
+   if( it != uidMap.end() )
+     // Since the uid map is just rebuilt, no need for the sanity check
+     return getMsgBase( *it );
++#ifdef MAIL_LOSS_DEBUGGING
+   else
+     kdDebug(5006) << "Reloaded, but stil didn't find uid: " << uid << endl;
++#endif
+   // Then it's not here
+   return 0;
+ }
+@@ -841,9 +875,14 @@
+            to be deleted on the server has been deleted, adjust our local notion of the
+            highes uid seen thus far. */
+         slotUpdateLastUid();
+-        if( mLastUid == 0 && uidWriteTimer == -1 )
++        if( mLastUid == 0 && uidWriteTimer == -1 ) {
+           // This is probably a new and empty folder. Write the UID cache
+-          writeUidCache();
++          if ( writeUidCache() == -1 ) {
++            resetSyncState();
++            emit folderComplete( this, false );
++            return;
++          }
++        }
+       }
+     }
+ 
+@@ -1209,9 +1248,10 @@
+ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool cont)
+ {
+   if ( mSyncState == SYNC_STATE_INITIAL ){
+-      kdDebug(5006) << "IMAP status changed but reset " << endl;
++      //kdDebug(5006) << "IMAP status changed but reset " << endl;
+       return; // we were reset
+   }
++  //kdDebug(5006) << "IMAP status changed for folder: " << folder->prettyURL() << endl;
+   if ( folder->storage() == this ) {
+     --mStatusFlagsJobs;
+     if ( mStatusFlagsJobs == 0 || !cont ) // done or aborting
+@@ -1220,6 +1260,7 @@
+     if ( mStatusFlagsJobs == 0 && cont ) {
+       mProgress += 5;
+       serverSyncInternal();
++      //kdDebug(5006) << "Proceeding with mailcheck." << endl;
+     }
+   }
+ }
+@@ -1288,15 +1329,24 @@
+   // them one by one because the index list can get resized under
+   // us. So use msg pointers instead
+ 
++  QStringList uids;
+   QMap<ulong,int>::const_iterator it = uidMap.constBegin();
+   for( ; it != uidMap.end(); it++ ) {
+     ulong uid ( it.key() );
+-    if( uid!=0 && !uidsOnServer.find( uid ) )
++    if( uid!=0 && !uidsOnServer.find( uid ) ) {
++      uids << QString::number( uid );
+       msgsForDeletion.append( getMsg( *it ) );
++    }
+   }
+ 
+   if( !msgsForDeletion.isEmpty() ) {
+-    removeMsg( msgsForDeletion );
++#ifdef MAIL_LOSS_DEBUGGING
++      if ( KMessageBox::warningYesNo(
++             0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
++                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>" )
++             .arg( folder()->prettyURL() ).arg( uids.join(",") ) ) == KMessageBox::Yes )
++#endif
++        removeMsg( msgsForDeletion );
+   }
+ 
+   /* Delete messages from the server that we dont have anymore */
+@@ -1370,6 +1420,8 @@
+   uidsForDeletionOnServer.clear();
+   mMsgsForDownload.clear();
+   mUidsForDownload.clear();
++  // listing is only considered successful if saw a syntactically correct imapdigest
++  mFoundAnIMAPDigest = false;
+ 
+   CachedImapJob* job = new CachedImapJob( FolderJob::tListMessages, this );
+   connect( job, SIGNAL( result(KMail::FolderJob *) ),
+@@ -1415,6 +1467,7 @@
+       setReadOnly( access == "Read only" );
+     }
+     (*it).cdata.remove(0, pos);
++    mFoundAnIMAPDigest = true;
+   }
+   pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+   // Start with something largish when rebuilding the cache
+@@ -1432,7 +1485,7 @@
+       if( uid != 0 ) {
+         if ( uidsOnServer.count() == uidsOnServer.size() ) {
+           uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
+-          kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
++          //kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
+         }
+         uidsOnServer.insert( uid, &v );
+       }
+@@ -1451,7 +1504,9 @@
+         KMMsgBase *existingMessage = findByUID(uid);
+         if( !existingMessage ) {
+           if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
+-            // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
++#ifdef MAIL_LOSS_DEBUGGING
++            kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
++#endif
+             uidsForDeletionOnServer << uid;
+           } else {
+             redownload = true;
+@@ -1490,6 +1545,13 @@
+ void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet )
+ {
+   mProgress += 10;
++  if ( !job->error() && !mFoundAnIMAPDigest ) {
++      kdWarning(5006) << "######## Folderlisting did not complete, but there was no error! "
++          "Aborting sync of folder: " << folder()->prettyURL() << endl;
++#ifdef MAIL_LOSS_DEBUGGING
++      kmkernel->emergencyExit( i18n("Folder listing failed in interesting ways." ) );
++#endif
++  }
+   if( job->error() ) { // error listing messages but the user chose to continue
+     mContentState = imapNoInformation;
+     mSyncState = SYNC_STATE_HANDLE_INBOX; // be sure not to continue in this folder
+@@ -1741,7 +1803,7 @@
+   KMFolderNode *node;
+   bool root = ( this == mAccount->rootFolder() );
+   if ( root && !mAccount->hasInbox() ) {
+-    kdDebug(5006) << "check INBOX" << endl;
++    //kdDebug(5006) << "check INBOX" << endl;
+     // create the INBOX
+     for (node = folder()->child()->first(); node; node = folder()->child()->next())
+       if (!node->isDir() && node->name() == "INBOX") break;
+@@ -2216,7 +2278,7 @@
+ void
+ KMFolderCachedImap::slotAnnotationChanged( const QString& entry, const QString& attribute, const QString& value )
+ {
+-  kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
++  //kdDebug(5006) << k_funcinfo << entry << " " << attribute << " " << value << endl;
+   if ( entry == KOLAB_FOLDERTYPE )
+     mAnnotationFolderTypeChanged = false;
+   else if ( entry == KOLAB_INCIDENCESFOR ) {
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -192,6 +192,7 @@
  bool KMKernel::handleCommandLine( bool noArgsOpensReader )
  {
@@ -178,10 +527,97 @@ Index: kmail/kmkernel.cpp
  
    if ( !mWallet ) {
      walletOpenFailed = true;
+Index: kmail/headerstyle.cpp
+===================================================================
+--- kmail/headerstyle.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/headerstyle.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -527,6 +527,40 @@
+       userHTML = "&nbsp;";
+     }
+ 
++    if( photoURL.isEmpty() ) {
++      // no photo, look for a Face header
++      QString faceheader = message->headerField( "Face" );
++      if ( !faceheader.isEmpty() ) {
++        QImage faceimage;
++
++        kdDebug( 5006 ) << "Found Face: header" << endl;
++
++        QCString facestring = faceheader.utf8();
++        // Spec says header should be less than 998 bytes
++        // Face: is 5 characters
++        if ( facestring.length() < 993 ) {
++          QByteArray facearray;
++          KCodecs::base64Decode(facestring, facearray);
++    
++          QImage faceimage;
++          if ( faceimage.loadFromData( facearray, "png" ) ) {
++            // Spec says image must be 48x48 pixels
++            if ( (48 == faceimage.width()) && (48 == faceimage.height()) ) {
++              photoURL = imgToDataUrl( faceimage );
++              photoWidth = 48;
++              photoHeight = 48;
++            } else {
++              kdDebug( 5006 ) << "Face: header image is" << faceimage.width() << "by" << faceimage.height() <<"not 48x48 Pixels" << endl;
++            }
++          } else {
++            kdDebug( 5006 ) << "Failed to load decoded png from Face: header" << endl;
++          }
++        } else {
++          kdDebug( 5006 ) << "Face: header too long at " << facestring.length() << endl;
++        }
++      }
++    }
++
+     if( photoURL.isEmpty() )
+     {
+       // no photo, look for a X-Face header
+Index: kmail/kmfoldercachedimap.h
+===================================================================
+--- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -445,6 +445,11 @@
+       mLastUid. See above for details. */
+   ulong mTentativeHighestUid;
+ 
++  /** Used to determine whether listing messages yielded a sensible result.
++   * Only then is the deletion o messages (which relies on succesful
++   * listing) attempted, during the sync.  */
++  bool mFoundAnIMAPDigest;
++
+   int mUserRights;
+   ACLList mACLList;
+ 
+Index: kmail/kmmainwidget.cpp
+===================================================================
+--- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -846,6 +846,10 @@
+     }
+   }
+ 
++  // update folder menus in case some mail got filtered to trash/current folder
++  // and we can enable "empty trash/move all to trash" action etc.
++  updateFolderMenu();
++
+   if ( !showNotification )
+     return;
+ 
+@@ -1013,6 +1017,10 @@
+     BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
+ 
+   updateMessageActions();
++
++  // Disable empty trash/move all to trash action - we've just deleted/moved all folder
++  // contents.
++  mEmptyFolderAction->setEnabled( false );
+ }
+ 
+ 
 Index: kmail/kmcomposewin.h
 ===================================================================
---- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -398,8 +398,8 @@
    void slotAttachRemove();
    void slotAttachSave();
@@ -204,7 +640,22 @@ Index: kmail/kmcomposewin.h
  
    /**
     * View the attachment with the given index.
-@@ -688,7 +688,7 @@
+@@ -649,6 +649,14 @@
+    */
+   static bool validateAddresses( QWidget * parent, const QString & addresses );
+ 
++  /**
++   * Sets the transport combobox to @p transport. If @p transport is empty
++   * then the combobox remains unchanged. If @p transport is neither a known transport
++   * nor a custom transport then the combobox is set to the default transport.
++   * @param transport the transport the combobox should be set to
++   */
++  void setTransport( const QString & transport );
++
+ private slots:
+    /**
+     * Compress an attachemnt with the given index
+@@ -688,7 +696,7 @@
    QPtrList<QListViewItem> mAtmItemList;
    QPtrList<KMMessagePart> mAtmList;
    QPopupMenu *mAttachMenu;
@@ -215,8 +666,8 @@ Index: kmail/kmcomposewin.h
    bool mLastSignActionState, mLastEncryptActionState;
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -333,7 +333,7 @@
  
    connect( mAtmListView,
@@ -226,7 +677,81 @@ Index: kmail/kmcomposewin.cpp
    connect( mAtmListView,
             SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
             SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
-@@ -2898,6 +2898,8 @@
+@@ -620,18 +620,11 @@
+   while ( transportHistory.count() > (uint)GlobalSettings::self()->maxTransportEntries() )
+     transportHistory.remove( transportHistory.last() );
+   mTransport->insertStringList( transportHistory );
+-  if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
+-  {
+-    for (int i = 0; i < mTransport->count(); i++)
+-      if (mTransport->text(i) == currentTransport)
+-        mTransport->setCurrentItem(i);
+-    mTransport->setEditText( currentTransport );
++  mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
++  if ( mBtnTransport->isChecked() ) {
++    setTransport( currentTransport );
+   }
+ 
+-  if ( !mBtnTransport->isChecked() ) {
+-    mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
+-  }
+-
+   QString fccName = "";
+   if ( mBtnFcc->isChecked() ) {
+     fccName = GlobalSettings::self()->previousFcc();
+@@ -1659,6 +1652,37 @@
+ }
+ 
+ //-----------------------------------------------------------------------------
++void KMComposeWin::setTransport( const QString & transport )
++{
++  kdDebug(5006) << "KMComposeWin::setTransport( \"" << transport << "\" )" << endl;
++  // Don't change the transport combobox if transport is empty
++  if ( transport.isEmpty() )
++    return;
++
++  bool transportFound = false;
++  for ( int i = 0; i < mTransport->count(); ++i ) {
++    if ( mTransport->text(i) == transport ) {
++      transportFound = true;
++      mTransport->setCurrentItem(i);
++      kdDebug(5006) << "transport found, it's no. " << i << " in the list" << endl;
++      break;
++    }
++  }
++  if ( !transportFound ) { // unknown transport
++    kdDebug(5006) << "unknown transport \"" << transport << "\"" << endl;
++    if ( transport.startsWith("smtp://") || transport.startsWith("smtps://") ||
++         transport.startsWith("file://") ) {
++      // set custom transport
++      mTransport->setEditText( transport );
++    }
++    else {
++      // neither known nor custom transport -> use default transport
++      mTransport->setCurrentText( GlobalSettings::self()->defaultTransport() );
++    }
++  }
++}
++
++//-----------------------------------------------------------------------------
+ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
+                           bool allowDecryption, bool isModified)
+ {
+@@ -1778,12 +1802,7 @@
+ 
+   QString transport = newMsg->headerField("X-KMail-Transport");
+   if (!mBtnTransport->isChecked() && !transport.isEmpty())
+-  {
+-    for (int i = 0; i < mTransport->count(); i++)
+-      if (mTransport->text(i) == transport)
+-        mTransport->setCurrentItem(i);
+-    mTransport->setEditText( transport );
+-  }
++    setTransport( transport );
+ 
+   if (!mBtnFcc->isChecked())
+   {
+@@ -2898,6 +2917,8 @@
  
       mOpenId = mAttachMenu->insertItem(i18n("to open", "Open"), this,
                               SLOT(slotAttachOpen()));
@@ -235,7 +760,7 @@ Index: kmail/kmcomposewin.cpp
       mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                               SLOT(slotAttachView()));
       mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-@@ -3142,12 +3144,23 @@
+@@ -3142,12 +3163,23 @@
    int i = 0;
    for ( QPtrListIterator<QListViewItem> it(mAtmItemList); *it; ++it, ++i ) {
      if ( (*it)->isSelected() ) {
@@ -260,7 +785,7 @@ Index: kmail/kmcomposewin.cpp
  bool KMComposeWin::inlineSigningEncryptionSelected() {
    if ( !mSignAction->isChecked() && !mEncryptAction->isChecked() )
      return false;
-@@ -3175,7 +3188,7 @@
+@@ -3175,7 +3207,7 @@
  }
  
  //-----------------------------------------------------------------------------
@@ -269,7 +794,7 @@ Index: kmail/kmcomposewin.cpp
  {
    KMMessagePart* msgPart = mAtmList.at(index);
    const QString contentTypeStr =
-@@ -3202,7 +3215,7 @@
+@@ -3202,7 +3234,7 @@
    KService::Ptr offer =
      KServiceTypeProfile::preferredService( mimetype->name(), "Application" );
  
@@ -278,10 +803,60 @@ Index: kmail/kmcomposewin.cpp
      if ( ( !KRun::displayOpenWithDialog( url, autoDelete ) ) && autoDelete ) {
        QFile::remove(url.path());
      }
+@@ -4280,24 +4312,11 @@
+     if ( transp.isEmpty() )
+     {
+       mMsg->removeHeaderField("X-KMail-Transport");
+-      transp = mTransport->text(0);
++      transp = GlobalSettings::self()->defaultTransport();
+     }
+     else
+       mMsg->setHeaderField("X-KMail-Transport", transp);
+-    bool found = false;
+-    int i;
+-    for (i = 0; i < mTransport->count(); i++) {
+-      if (mTransport->text(i) == transp) {
+-        found = true;
+-        mTransport->setCurrentItem(i);
+-        break;
+-      }
+-    }
+-    if (found == false) {
+-      if (i == mTransport->maxCount()) mTransport->setMaxCount(i + 1);
+-      mTransport->insertItem(transp,i);
+-      mTransport->setCurrentItem(i);
+-    }
++    setTransport( transp );
+   }
+ 
+   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
+Index: kmail/popaccount.cpp
+===================================================================
+--- kmail/popaccount.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -489,12 +489,12 @@
+     mUidlFinished = TRUE;
+ 
+     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
+-         mUidsOfNextSeenMsgsDict.isEmpty() && !idsOfMsgs.isEmpty() ) {
+-      KMessageBox::sorry(0, i18n("Your POP3 server does not support the UIDL "
+-      "command: this command is required to determine, in a reliable way, "
+-      "which of the mails on the server KMail has already seen before;\n"
+-      "the feature to leave the mails on the server will therefore not "
+-      "work properly."));
++        mUidsOfNextSeenMsgsDict.isEmpty() && !idsOfMsgs.isEmpty() ) {
++      KMessageBox::sorry(0, i18n("Your POP3 server (Account: %1) does not support "
++      "the UIDL command: this command is required to determine, in a reliable way, " 
++      "which of the mails on the server KMail has already seen before;\n" 
++      "the feature to leave the mails on the server will therefore not " 
++      "work properly.").arg(NetworkAccount::name()) );
+       // An attempt to work around buggy pop servers, these seem to be popular.
+       mUidsOfNextSeenMsgsDict = mUidsOfSeenMsgsDict;
+     }
 Index: kmail/kmkernel.h
 ===================================================================
---- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -96,10 +96,19 @@
    /** returns id of composer if more are opened */
    int openComposer (const QString &to, const QString &cc, const QString &bcc,
@@ -315,8 +890,8 @@ Index: kmail/kmkernel.h
    bool folderIsDraftOrOutbox(const KMFolder *);
 Index: kmail/Mainpage.dox
 ===================================================================
---- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -793,7 +793,7 @@
  
    - @em BodyPartFormatter
@@ -328,8 +903,8 @@ Index: kmail/Mainpage.dox
  	some default processor. BodyPartFormatters are meant to be
 Index: knode/articlewidget.h
 ===================================================================
---- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -145,7 +145,7 @@
        FancyFormatting = 2,
        AllowROT13 = 4
@@ -339,10 +914,2639 @@ Index: knode/articlewidget.h
      QString toHtmlString( const QString &line, int flags = ParseURL );
      /// convert the given image into a data:/ URL
      static QString imgToDataUrl( const QImage &image, const char* fmt );
+Index: knode/KNode.desktop
+===================================================================
+--- knode/KNode.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -42,7 +42,7 @@
+ GenericName[id]=Pembaca Berita
+ GenericName[is]=Fréttaforrit
+ GenericName[it]=Lettore newsgroup
+-GenericName[ja]=ニュースリーダ
++GenericName[ja]=ニュースリーダー
+ GenericName[km]=កម្មវិធី​អាន​ព័ត៌មាន
+ GenericName[lt]=Naujienų skaityklė
+ GenericName[lv]=Ziņu Lasītājs
+Index: doc/kalarm/editwindow.png
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = image/png
+Index: kalarm/messagewin.cpp
+===================================================================
+--- kalarm/messagewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1437,18 +1437,18 @@
+ 		if (AlarmCalendar::activeCalendar()->event(mEventID))
+ 		{
+ 			// The old alarm hasn't expired yet, so replace it
+-			status = KAlarm::modifyEvent(mEvent, event, 0);
++			status = KAlarm::modifyEvent(mEvent, event, 0, &editDlg);
+ 			Undo::saveEdit(mEvent, event);
+ 		}
+ 		else
+ 		{
+ 			// The old event has expired, so simply create a new one
+-			status = KAlarm::addEvent(event, 0);
++			status = KAlarm::addEvent(event, 0, &editDlg);
+ 			Undo::saveAdd(event);
+ 		}
+ 
+ 		if (status == KAlarm::UPDATE_KORG_ERR)
+-			KAlarm::displayKOrgUpdateError(this, KAlarm::KORG_ERR_MODIFY, 1);
++			KAlarm::displayKOrgUpdateError(&editDlg, KAlarm::KORG_ERR_MODIFY, 1);
+ 		KAlarm::outputAlarmWarnings(&editDlg, &event);
+ 
+ 		// Close the alarm window
+@@ -1524,7 +1524,7 @@
+ 			KAEvent event(*kcalEvent);
+ 			bool repeat = event.defer(dateTime, (mAlarmType & KAAlarm::REMINDER_ALARM), true);
+ 			event.setDeferDefaultMinutes(delayMins);
+-			KAlarm::updateEvent(event, 0, true, !repeat);
++			KAlarm::updateEvent(event, 0, true, !repeat, mDeferDlg);
+ 		}
+ 		else
+ 		{
+@@ -1546,7 +1546,7 @@
+ 			event.setDeferDefaultMinutes(delayMins);
+ 			// Add the event back into the calendar file, retaining its ID
+ 			// and not updating KOrganizer
+-			KAlarm::addEvent(event, 0, true, false);
++			KAlarm::addEvent(event, 0, true, false, mDeferDlg);
+ 			if (kcalEvent)
+ 			{
+ 				event.setUid(KAEvent::EXPIRED);
+Index: kalarm/undo.cpp
+===================================================================
+--- kalarm/undo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/undo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -57,7 +57,7 @@
+ 		virtual UndoItem* restore() = 0;
+ 		virtual bool      deleteID(const QString& /*id*/)  { return false; }
+ 
+-		enum Error   { ERR_NONE, ERR_PROG, ERR_NOT_FOUND, ERR_CREATE, ERR_EXPIRED };
++		enum Error   { ERR_NONE, ERR_PROG, ERR_NOT_FOUND, ERR_CREATE, ERR_TEMPLATE, ERR_EXPIRED };
+ 		enum Warning { WARN_NONE, WARN_KORG_ADD, WARN_KORG_MODIFY, WARN_KORG_DELETE };
+ 		static int        mLastId;
+ 		static Error      mRestoreError;         // error code valid only if restore() returns 0
+@@ -337,7 +337,7 @@
+ 	{
+ 		case UndoItem::ERR_NONE:
+ 		{
+-			KAlarm::UpdateError errcode;
++			KAlarm::KOrgUpdateError errcode;
+ 			switch (UndoItem::mRestoreWarning)
+ 			{
+ 				case UndoItem::WARN_KORG_ADD:     errcode = KAlarm::KORG_ERR_ADD;  break;
+@@ -352,6 +352,7 @@
+ 		}
+ 		case UndoItem::ERR_NOT_FOUND:  err = i18n("Alarm not found");  break;
+ 		case UndoItem::ERR_CREATE:     err = i18n("Error recreating alarm");  break;
++		case UndoItem::ERR_TEMPLATE:   err = i18n("Error recreating alarm template");  break;
+ 		case UndoItem::ERR_EXPIRED:    err = i18n("Cannot reactivate expired alarm");  break;
+ 		case UndoItem::ERR_PROG:       err = i18n("Program error");  break;
+ 		default:                       err = i18n("Unknown error");  break;
+@@ -733,14 +734,24 @@
+ 			if (setArchive)
+ 				event.setArchive();
+ 			// Archive it if it has already triggered
+-			if (KAlarm::deleteEvent(event, true) == KAlarm::UPDATE_KORG_ERR)
++			switch (KAlarm::deleteEvent(event, true))
+ 			{
+-				mRestoreWarning = WARN_KORG_DELETE;
+-				++mRestoreWarningCount;
++				case KAlarm::UPDATE_ERROR:
++				case KAlarm::UPDATE_FAILED:
++				case KAlarm::SAVE_FAILED:
++					mRestoreError = ERR_CREATE;
++					break;
++				case KAlarm::UPDATE_KORG_ERR:
++					mRestoreWarning = WARN_KORG_DELETE;
++					++mRestoreWarningCount;
++					break;
++				default:
++					break;
+ 			}
+ 			break;
+ 		case KAEvent::TEMPLATE:
+-			KAlarm::deleteTemplate(event);
++			if (KAlarm::deleteTemplate(event) != KAlarm::UPDATE_OK)
++				mRestoreError = ERR_TEMPLATE;
+ 			break;
+ 		case KAEvent::EXPIRED:    // redoing the deletion of an expired alarm
+ 			KAlarm::deleteEvent(event);
+@@ -814,14 +825,24 @@
+ 	switch (calendar())
+ 	{
+ 		case KAEvent::ACTIVE:
+-			if (KAlarm::modifyEvent(newEvent, *mOldEvent, 0) == KAlarm::UPDATE_KORG_ERR)
++			switch (KAlarm::modifyEvent(newEvent, *mOldEvent, 0))
+ 			{
+-				mRestoreWarning = WARN_KORG_MODIFY;
+-				++mRestoreWarningCount;
++				case KAlarm::UPDATE_ERROR:
++				case KAlarm::UPDATE_FAILED:
++				case KAlarm::SAVE_FAILED:
++					mRestoreError = ERR_CREATE;
++					break;
++				case KAlarm::UPDATE_KORG_ERR:
++					mRestoreWarning = WARN_KORG_MODIFY;
++					++mRestoreWarningCount;
++					break;
++				default:
++					break;
+ 			}
+ 			break;
+ 		case KAEvent::TEMPLATE:
+-			KAlarm::updateTemplate(*mOldEvent, 0);
++			if (KAlarm::updateTemplate(*mOldEvent, 0) != KAlarm::UPDATE_OK)
++				mRestoreError = ERR_TEMPLATE;
+ 			break;
+ 		case KAEvent::EXPIRED:    // editing of expired events is not allowed
+ 		default:
+@@ -890,6 +911,8 @@
+ 						++mRestoreWarningCount;
+ 						break;
+ 					case KAlarm::UPDATE_ERROR:
++					case KAlarm::UPDATE_FAILED:
++					case KAlarm::SAVE_FAILED:
+ 						mRestoreError = ERR_EXPIRED;
+ 						return 0;
+ 					case KAlarm::UPDATE_OK:
+@@ -905,6 +928,8 @@
+ 						++mRestoreWarningCount;
+ 						break;
+ 					case KAlarm::UPDATE_ERROR:
++					case KAlarm::UPDATE_FAILED:
++					case KAlarm::SAVE_FAILED:
+ 						mRestoreError = ERR_CREATE;
+ 						return 0;
+ 					case KAlarm::UPDATE_OK:
+@@ -913,7 +938,7 @@
+ 			}
+ 			break;
+ 		case KAEvent::TEMPLATE:
+-			if (!KAlarm::addTemplate(*mEvent, 0))
++			if (KAlarm::addTemplate(*mEvent, 0) != KAlarm::UPDATE_OK)
+ 			{
+ 				mRestoreError = ERR_CREATE;
+ 				return 0;
+Index: kalarm/preferences.h
+===================================================================
+--- kalarm/preferences.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/preferences.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  preferences.h  -  program preference settings
+  *  Program:  kalarm
+- *  Copyright (C) 2001 - 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -60,7 +60,6 @@
+ 		static const QFont&      messageFont()                    { return mMessageFont; }
+ 		static const QTime&      startOfDay()                     { return mStartOfDay; }
+ 		static bool              hasStartOfDayChanged()           { return mStartOfDayChanged; }
+-		static bool              autostartDaemon()                { return mAutostartDaemon; }
+ 		static bool              runInSystemTray()                { return mRunInSystemTray; }
+ 		static bool              disableAlarmsIfStopped()         { return mDisableAlarmsIfStopped; }
+ 		static bool              quitWarn()                       { return notifying(QUIT_WARN); }
+@@ -90,7 +89,6 @@
+ 		static QColor            disabledColour()                 { return mDisabledColour; }
+ 		static QColor            expiredColour()                  { return mExpiredColour; }
+ 		static int               expiredKeepDays()                { return mExpiredKeepDays; }
+-		static bool              defaultSound()                   { return mDefaultSound; }
+ 		static SoundPicker::Type defaultSoundType()               { return mDefaultSoundType; }
+ 		static const QString&    defaultSoundFile()               { return mDefaultSoundFile; }
+ 		static float             defaultSoundVolume()             { return mDefaultSoundVolume; }
+@@ -123,7 +121,6 @@
+ 		static const QColor                     default_defaultFgColour;
+ 		static const QFont&                     default_messageFont()  { return mDefault_messageFont; };
+ 		static const QTime                      default_startOfDay;
+-		static const bool                       default_autostartDaemon;
+ 		static const bool                       default_runInSystemTray;
+ 		static const bool                       default_disableAlarmsIfStopped;
+ 		static const bool                       default_quitWarn;
+@@ -154,7 +151,6 @@
+ 		static const int                        default_defaultLateCancel;
+ 		static const bool                       default_defaultAutoClose;
+ 		static const bool                       default_defaultCopyToKOrganizer;
+-		static const bool                       default_defaultSound;
+ 		static const SoundPicker::Type          default_defaultSoundType;
+ 		static const bool                       default_defaultSoundRepeat;
+ 		static const bool                       default_defaultConfirmAck;
+@@ -201,7 +197,6 @@
+ 		static QColor              mDefaultBgColour;
+ 		static QFont               mMessageFont;
+ 		static QTime               mStartOfDay;
+-		static bool                mAutostartDaemon;
+ 		static bool                mRunInSystemTray;
+ 		static bool                mDisableAlarmsIfStopped;
+ 		static bool                mAutostartTrayIcon;
+@@ -229,7 +224,6 @@
+ 		static int                 mDefaultLateCancel;
+ 		static bool                mDefaultAutoClose;
+ 		static bool                mDefaultCopyToKOrganizer;
+-		static bool                mDefaultSound;
+ 		static SoundPicker::Type   mDefaultSoundType;
+ 		static bool                mDefaultSoundRepeat;
+ 		static bool                mDefaultConfirmAck;
+@@ -245,7 +239,6 @@
+ 		// Change tracking
+ 		static QTime               mOldStartOfDay;       // previous start-of-day time
+ 		static bool                mStartOfDayChanged;   // start-of-day check value doesn't tally with mStartOfDay
+-		static bool                mOldAutostartDaemon;  // previous daemon autostart value
+ };
+ 
+ #endif // PREFERENCES_H
+Index: kalarm/editdlg.cpp
+===================================================================
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -163,7 +163,7 @@
+  */
+ EditAlarmDlg::EditAlarmDlg(bool Template, const QString& caption, QWidget* parent, const char* name,
+                            const KAEvent* event, bool readOnly)
+-	: KDialogBase(parent, name, true, caption,
++	: KDialogBase(parent, (name ? name : Template ? "TemplEditDlg" : "EditDlg"), true, caption,
+ 	              (readOnly ? Cancel|Try : Template ? Ok|Cancel|Try : Ok|Cancel|Try|Default),
+ 	              (readOnly ? Cancel : Ok)),
+ 	  mMainPageShown(false),
+@@ -225,8 +225,9 @@
+ 	mActionGroup = new ButtonGroup(i18n("Action"), mainPage, "actionGroup");
+ 	connect(mActionGroup, SIGNAL(buttonSet(int)), SLOT(slotAlarmTypeChanged(int)));
+ 	topLayout->addWidget(mActionGroup, 1);
+-	QGridLayout* grid = new QGridLayout(mActionGroup, 3, 5, marginHint(), spacingHint());
+-	grid->addRowSpacing(0, fontMetrics().lineSpacing()/2);
++	QBoxLayout* layout = new QVBoxLayout(mActionGroup, marginHint(), spacingHint());
++	layout->addSpacing(fontMetrics().lineSpacing()/2);
++	QGridLayout* grid = new QGridLayout(layout, 1, 5);
+ 
+ 	// Message radio button
+ 	mMessageRadio = new RadioButton(i18n("Te&xt"), mActionGroup, "messageButton");
+@@ -260,14 +261,11 @@
+ 	grid->addWidget(mEmailRadio, 1, 6);
+ 
+ 	initDisplayAlarms(mActionGroup);
++	layout->addWidget(mDisplayAlarmsFrame);
+ 	initCommand(mActionGroup);
++	layout->addWidget(mCommandFrame);
+ 	initEmail(mActionGroup);
+-	mAlarmTypeStack = new QWidgetStack(mActionGroup);
+-	grid->addMultiCellWidget(mAlarmTypeStack, 2, 2, 0, 6);
+-	grid->setRowStretch(2, 1);
+-	mAlarmTypeStack->addWidget(mDisplayAlarmsFrame, 0);
+-	mAlarmTypeStack->addWidget(mCommandFrame, 1);
+-	mAlarmTypeStack->addWidget(mEmailFrame, 2);
++	layout->addWidget(mEmailFrame);
+ 
+ 	// Deferred date/time: visible only for a deferred recurring event.
+ 	mDeferGroup = new QGroupBox(1, Qt::Vertical, i18n("Deferred Alarm"), mainPage, "deferGroup");
+@@ -282,7 +280,7 @@
+ 	QWhatsThis::add(mDeferChangeButton, i18n("Change the alarm's deferred time, or cancel the deferral"));
+ 	mDeferGroup->addSpace(0);
+ 
+-	QBoxLayout* layout = new QHBoxLayout(topLayout);
++	layout = new QHBoxLayout(topLayout);
+ 
+ 	// Date and time entry
+ 	if (mTemplate)
+@@ -367,7 +365,6 @@
+ 	      i18n("How often the alarm recurs.\nThe times shown are those configured in the Recurrence tab and in the Simple Repetition dialog."));
+ 	box->setFixedHeight(box->sizeHint().height());
+ 	layout->addWidget(box);
+-	layout->addStretch();
+ 
+ 	// Simple repetition button
+ 	mSimpleRepetition = new RepetitionButton(i18n("Simple Repetition"), true, mainPage);
+@@ -390,13 +387,21 @@
+ 	mLateCancel = new LateCancelSelector(true, mainPage);
+ 	topLayout->addWidget(mLateCancel, 0, Qt::AlignAuto);
+ 
++	// Acknowledgement confirmation required - default = no confirmation
++	layout = new QHBoxLayout(topLayout, 0);
++	mConfirmAck = createConfirmAckCheckbox(mainPage);
++	mConfirmAck->setFixedSize(mConfirmAck->sizeHint());
++	layout->addWidget(mConfirmAck);
++	layout->addSpacing(2*spacingHint());
++	layout->addStretch();
++
+ 	if (theApp()->korganizerEnabled())
+ 	{
+ 		// Show in KOrganizer checkbox
+ 		mShowInKorganizer = new CheckBox(i18n_ShowInKOrganizer(), mainPage);
+ 		mShowInKorganizer->setFixedSize(mShowInKorganizer->sizeHint());
+ 		QWhatsThis::add(mShowInKorganizer, i18n("Check to copy the alarm into KOrganizer's calendar"));
+-		topLayout->addWidget(mShowInKorganizer);
++		layout->addWidget(mShowInKorganizer);
+ 	}
+ 
+ 	setButtonWhatsThis(Ok, i18n("Schedule the alarm at the specified time."));
+@@ -458,7 +463,7 @@
+ 	mBgColourChoose->setFixedSize(mBgColourChoose->sizeHint());
+ 	connect(mBgColourChoose, SIGNAL(highlighted(const QColor&)), SLOT(slotBgColourSelected(const QColor&)));
+ 	layout->addWidget(box);
+-	layout->addSpacing(2*KDialog::spacingHint());
++	layout->addSpacing(2*spacingHint());
+ 	layout->addStretch();
+ 
+ 	// Font and colour choice drop-down list
+@@ -468,16 +473,11 @@
+ 	layout->addWidget(mFontColourButton);
+ 
+ 	// Sound checkbox and file selector
++	layout = new QHBoxLayout(frameLayout);
+ 	mSoundPicker = new SoundPicker(mDisplayAlarmsFrame);
+ 	mSoundPicker->setFixedSize(mSoundPicker->sizeHint());
+-	frameLayout->addWidget(mSoundPicker, 0, Qt::AlignAuto);
+-
+-	// Acknowledgement confirmation required - default = no confirmation
+-	layout = new QHBoxLayout(frameLayout);
+-	mConfirmAck = createConfirmAckCheckbox(mDisplayAlarmsFrame);
+-	mConfirmAck->setFixedSize(mConfirmAck->sizeHint());
+-	layout->addWidget(mConfirmAck);
+-	layout->addSpacing(2*KDialog::spacingHint());
++	layout->addWidget(mSoundPicker);
++	layout->addSpacing(2*spacingHint());
+ 	layout->addStretch();
+ 
+ 	if (ShellProcess::authorised())    // don't display if shell commands not allowed (e.g. kiosk mode)
+@@ -789,11 +789,12 @@
+ 		mSimpleRepetition->set(event->repeatInterval(), event->repeatCount());
+ 		mRecurrenceText->setText(recurText(*event));
+ 		mRecurrenceEdit->set(*event);   // must be called after mTimeWidget is set up, to ensure correct date-only enabling
+-		SoundPicker::Type soundType = event->speak()                                ? SoundPicker::SPEAK
+-		                            : event->beep() || event->audioFile().isEmpty() ? SoundPicker::BEEP
+-		                            :                                                 SoundPicker::PLAY_FILE;
+-		mSoundPicker->set((soundType != SoundPicker::BEEP || event->beep()), soundType, event->audioFile(),
+-		                  event->soundVolume(), event->fadeVolume(), event->fadeSeconds(), event->repeatSound());
++		SoundPicker::Type soundType = event->speak()                ? SoundPicker::SPEAK
++		                            : event->beep()                 ? SoundPicker::BEEP
++		                            : !event->audioFile().isEmpty() ? SoundPicker::PLAY_FILE
++		                            :                                 SoundPicker::NONE;
++		mSoundPicker->set(soundType, event->audioFile(), event->soundVolume(),
++		                  event->fadeVolume(), event->fadeSeconds(), event->repeatSound());
+ 		CmdLogType logType = event->commandXterm()       ? EXEC_IN_TERMINAL
+ 		                   : !event->logFile().isEmpty() ? LOG_TO_FILE
+ 		                   :                               DISCARD_OUTPUT;
+@@ -843,7 +844,7 @@
+ 		slotRecurFrequencyChange();      // update the Recurrence text
+ 		mReminder->setMinutes(0, false);
+ 		mReminder->enableOnceOnly(mRecurrenceEdit->isTimedRepeatType());   // must be called after mRecurrenceEdit is set up
+-		mSoundPicker->set(Preferences::defaultSound(), Preferences::defaultSoundType(), Preferences::defaultSoundFile(),
++		mSoundPicker->set(Preferences::defaultSoundType(), Preferences::defaultSoundFile(),
+ 		                  Preferences::defaultSoundVolume(), -1, 0, Preferences::defaultSoundRepeat());
+ 		mCmdTypeScript->setChecked(Preferences::defaultCmdScript());
+ 		mCmdLogFileEdit->setText(Preferences::defaultCmdLogFile());    // set file name before setting radio button
+@@ -1031,8 +1032,7 @@
+ 		mSavedTemplateAfterTime = mTemplateTimeAfter->value();
+ 	}
+ 	mSavedTypeRadio        = mActionGroup->selected();
+-	mSavedSound            = mSoundPicker->sound();
+-	mSavedSoundType        = mSoundPicker->type();
++	mSavedSoundType        = mSoundPicker->sound();
+ 	mSavedSoundFile        = mSoundPicker->file();
+ 	mSavedSoundVolume      = mSoundPicker->volume(mSavedSoundFadeVolume, mSavedSoundFadeSeconds);
+ 	mSavedRepeatSound      = mSoundPicker->repeat();
+@@ -1106,7 +1106,7 @@
+ 		return true;
+ 	if (mMessageRadio->isOn()  ||  mFileRadio->isOn())
+ 	{
+-		if (mSavedSound      != mSoundPicker->sound()
++		if (mSavedSoundType  != mSoundPicker->sound()
+ 		||  mSavedConfirmAck != mConfirmAck->isChecked()
+ 		||  mSavedFont       != mFontColourButton->font()
+ 		||  mSavedFgColour   != mFontColourButton->fgColour()
+@@ -1121,24 +1121,19 @@
+ 			||  mSavedPostAction != mSpecialActionsButton->postAction())
+ 				return true;
+ 		}
+-		if (mSavedSound)
++		if (mSavedSoundType == SoundPicker::PLAY_FILE)
+ 		{
+-			if (mSavedSoundType != mSoundPicker->type())
++			if (mSavedSoundFile != mSoundPicker->file())
+ 				return true;
+-			if (mSavedSoundType == SoundPicker::PLAY_FILE)
++			if (!mSavedSoundFile.isEmpty())
+ 			{
+-				if (mSavedSoundFile != mSoundPicker->file())
++				float fadeVolume;
++				int   fadeSecs;
++				if (mSavedRepeatSound != mSoundPicker->repeat()
++				||  mSavedSoundVolume != mSoundPicker->volume(fadeVolume, fadeSecs)
++				||  mSavedSoundFadeVolume != fadeVolume
++				||  mSavedSoundFadeSeconds != fadeSecs)
+ 					return true;
+-				if (!mSavedSoundFile.isEmpty())
+-				{
+-					float fadeVolume;
+-					int   fadeSecs;
+-					if (mSavedRepeatSound != mSoundPicker->repeat()
+-					||  mSavedSoundVolume != mSoundPicker->volume(fadeVolume, fadeSecs)
+-					||  mSavedSoundFadeVolume != fadeVolume
+-					||  mSavedSoundFadeSeconds != fadeSecs)
+-						return true;
+-				}
+ 			}
+ 		}
+ 	}
+@@ -1297,8 +1292,8 @@
+ 	bool displayAlarm = mMessageRadio->isOn() || mFileRadio->isOn();
+ 	bool cmdAlarm     = mCommandRadio->isOn();
+ 	bool emailAlarm   = mEmailRadio->isOn();
+-	return (displayAlarm && mSoundPicker->beep()                                 ? KAEvent::BEEP : 0)
+-	     | (displayAlarm && mSoundPicker->speak()                                ? KAEvent::SPEAK : 0)
++	return (displayAlarm && mSoundPicker->sound() == SoundPicker::BEEP           ? KAEvent::BEEP : 0)
++	     | (displayAlarm && mSoundPicker->sound() == SoundPicker::SPEAK          ? KAEvent::SPEAK : 0)
+ 	     | (displayAlarm && mSoundPicker->repeat()                               ? KAEvent::REPEAT_SOUND : 0)
+ 	     | (displayAlarm && mConfirmAck->isChecked()                             ? KAEvent::CONFIRM_ACK : 0)
+ 	     | (displayAlarm && mLateCancel->isAutoClose()                           ? KAEvent::AUTO_CLOSE : 0)
+@@ -1599,7 +1594,7 @@
+ 
+ 	bool deferred = mDeferDateTime.isValid();
+ 	DeferAlarmDlg deferDlg(i18n("Defer Alarm"), (deferred ? mDeferDateTime : DateTime(now.addSecs(60))),
+-	                       deferred, this, "deferDlg");
++	                       deferred, this, "EditDeferDlg");
+ 	if (limit)
+ 	{
+ 		// Don't allow deferral past the next recurrence
+@@ -1832,10 +1827,13 @@
+ 		mFilePadding->hide();
+ 		mTextMessageEdit->show();
+ 		mFontColourButton->show();
++		mSoundPicker->showSpeak(true);
++		mDisplayAlarmsFrame->show();
++		mCommandFrame->hide();
++		mEmailFrame->hide();
+ 		mReminder->show();
+-		mSoundPicker->showSpeak(true);
++		mConfirmAck->show();
+ 		setButtonWhatsThis(Try, i18n("Display the alarm message now"));
+-		mAlarmTypeStack->raiseWidget(mDisplayAlarmsFrame);
+ 		focus = mTextMessageEdit;
+ 		displayAlarm = true;
+ 	}
+@@ -1845,27 +1843,36 @@
+ 		mFileBox->show();
+ 		mFilePadding->show();
+ 		mFontColourButton->hide();
++		mSoundPicker->showSpeak(false);
++		mDisplayAlarmsFrame->show();
++		mCommandFrame->hide();
++		mEmailFrame->hide();
+ 		mReminder->show();
+-		mSoundPicker->showSpeak(false);
++		mConfirmAck->show();
+ 		setButtonWhatsThis(Try, i18n("Display the file now"));
+-		mAlarmTypeStack->raiseWidget(mDisplayAlarmsFrame);
+ 		mFileMessageEdit->setNoSelect();
+ 		focus = mFileMessageEdit;
+ 		displayAlarm = true;
+ 	}
+ 	else if (mCommandRadio->isOn())
+ 	{
++		mDisplayAlarmsFrame->hide();
++		mCommandFrame->show();
++		mEmailFrame->hide();
+ 		mReminder->hide();
++		mConfirmAck->hide();
+ 		setButtonWhatsThis(Try, i18n("Execute the specified command now"));
+-		mAlarmTypeStack->raiseWidget(mCommandFrame);
+ 		mCmdCommandEdit->setNoSelect();
+ 		focus = mCmdCommandEdit;
+ 	}
+ 	else if (mEmailRadio->isOn())
+ 	{
++		mDisplayAlarmsFrame->hide();
++		mCommandFrame->hide();
++		mEmailFrame->show();
+ 		mReminder->hide();
++		mConfirmAck->hide();
+ 		setButtonWhatsThis(Try, i18n("Send the email to the specified addressees now"));
+-		mAlarmTypeStack->raiseWidget(mEmailFrame);
+ 		mEmailToEdit->setNoSelect();
+ 		focus = mEmailToEdit;
+ 	}
+Index: kalarm/functions.h
+===================================================================
+--- kalarm/functions.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -45,14 +45,20 @@
+ 
+ /** Return codes from fileType() */
+ enum FileType { Unknown, TextPlain, TextFormatted, TextApplication, Image };
+-/** Return codes from calendar update functions */
++/** Return codes from calendar update functions.
++ *  The codes are ordered by severity.
++ */
+ enum UpdateStatus {
+ 	UPDATE_OK,          // update succeeded
+-	UPDATE_ERROR,       // update failed completely
+-	UPDATE_KORG_ERR     // update succeeded, but KOrganizer update failed
++	UPDATE_KORG_ERR,    // update succeeded, but KOrganizer update failed
++	UPDATE_ERROR,       // update failed partially
++	UPDATE_FAILED,      // update failed completely
++	SAVE_FAILED         // calendar was updated in memory, but save failed
+ };
++/** Error codes supplied as parameter to displayUpdateError() */
++enum UpdateError { ERR_ADD, ERR_REACTIVATE, ERR_TEMPLATE };
+ /** Error codes supplied as parameter to displayKOrgUpdateError() */
+-enum UpdateError { KORG_ERR_ADD, KORG_ERR_MODIFY, KORG_ERR_DELETE };
++enum KOrgUpdateError { KORG_ERR_ADD, KORG_ERR_MODIFY, KORG_ERR_DELETE };
+ 
+ 
+ /** Display a main window with the specified event selected */
+@@ -88,18 +94,19 @@
+ QString             runKMail(bool minimise);
+ bool                runProgram(const QCString& program, const QCString& windowName, QCString& dcopName, QString& errorMessage);
+ 
+-UpdateStatus        addEvent(KAEvent&, AlarmListView* selectionView, bool useEventID = false, bool allowKOrgUpdate = true);
++UpdateStatus        addEvent(KAEvent&, AlarmListView* selectionView, bool useEventID = false, bool allowKOrgUpdate = true, QWidget* errmsgParent = 0);
+ bool                addExpiredEvent(KAEvent&);
+-bool                addTemplate(KAEvent&, TemplateListView* selectionView);
+-UpdateStatus        modifyEvent(KAEvent& oldEvent, const KAEvent& newEvent, AlarmListView* selectionView);
+-void                updateEvent(KAEvent&, AlarmListView* selectionView, bool archiveOnDelete = true, bool incRevision = true);
+-void                updateTemplate(const KAEvent&, TemplateListView* selectionView);
+-UpdateStatus        deleteEvent(KAEvent&, bool archive = true);
+-void                deleteTemplate(const KAEvent&);
++UpdateStatus        addTemplate(KAEvent&, TemplateListView* selectionView, QWidget* errmsgParent = 0);
++UpdateStatus        modifyEvent(KAEvent& oldEvent, const KAEvent& newEvent, AlarmListView* selectionView, QWidget* errmsgParent = 0);
++UpdateStatus        updateEvent(KAEvent&, AlarmListView* selectionView, bool archiveOnDelete = true, bool incRevision = true, QWidget* errmsgParent = 0);
++UpdateStatus        updateTemplate(const KAEvent&, TemplateListView* selectionView, QWidget* errmsgParent = 0);
++UpdateStatus        deleteEvent(KAEvent&, bool archive = true, QWidget* errmsgParent = 0);
++UpdateStatus        deleteTemplate(const KAEvent&);
+ void                deleteDisplayEvent(const QString& eventID);
+ UpdateStatus        reactivateEvent(KAEvent&, AlarmListView* selectionView, bool useEventID = false);
+-void                enableEvent(KAEvent&, AlarmListView* selectionView, bool enable);
+-void                displayKOrgUpdateError(QWidget* parent, UpdateError, int nAlarms);
++UpdateStatus        enableEvent(KAEvent&, AlarmListView* selectionView, bool enable);
++void                displayUpdateError(QWidget* parent, UpdateStatus, UpdateError, int nAlarms);
++void                displayKOrgUpdateError(QWidget* parent, KOrgUpdateError, int nAlarms);
+ 
+ QString             stripAccel(const QString&);
+ 
+Index: kalarm/alarmcalendar.h
+===================================================================
+--- kalarm/alarmcalendar.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/alarmcalendar.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -43,16 +43,16 @@
+ 		bool                  open();
+ 		int                   load();
+ 		bool                  reload();
+-		void                  save();
++		bool                  save();
+ 		void                  close();
+ 		void                  startUpdate();
+-		void                  endUpdate();
++		bool                  endUpdate();
+ 		KCal::Event*          event(const QString& uniqueID);
+ 		KCal::Event::List     events();
+ 		KCal::Event::List     eventsWithAlarms(const QDateTime& from, const QDateTime& to);
+ 		KCal::Event*          addEvent(KAEvent&, bool useEventID = false);
+ 		void                  updateEvent(const KAEvent&);
+-		void                  deleteEvent(const QString& eventID, bool save = false);
++		bool                  deleteEvent(const QString& eventID, bool save = false);
+ 		void                  emitEmptyStatus();
+ 		void                  purgeAll()                          { purge(0); }
+ 		void                  setPurgeDays(int days);
+Index: kalarm/soundpicker.h
+===================================================================
+--- kalarm/soundpicker.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/soundpicker.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  soundpicker.h  -  widget to select a sound file or a beep
+  *  Program:  kalarm
+- *  Copyright (C) 2002, 2004, 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2002,2004-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -25,10 +25,9 @@
+ #include <qstring.h>
+ #include <kurl.h>
+ 
+-class ButtonGroup;
+-class CheckBox;
++class QHBox;
++class ComboBox;
+ class PushButton;
+-class RadioButton;
+ 
+ 
+ class SoundPicker : public QFrame
+@@ -36,19 +35,19 @@
+ 		Q_OBJECT
+ 	public:
+ 		/** Sound options which can be selected for when the alarm is displayed.
++		 *  @li NONE      - silence.
+ 		 *  @li BEEP      - a beep will be sounded.
+-		 *  @li SPEAK     - the message will be spoken.
+ 		 *  @li PLAY_FILE - a sound file will be played.
++		 *  @li SPEAK     - the message text will be spoken.
+ 		 */
+-		enum Type { BEEP = 1, SPEAK, PLAY_FILE };
++		enum Type { NONE = 0, BEEP, PLAY_FILE, SPEAK };
+ 		/** Constructor.
+ 		 *  @param parent The parent object of this widget.
+ 		 *  @param name The name of this widget.
+ 		 */
+ 		SoundPicker(QWidget* parent, const char* name = 0);
+ 		/** Initialises the widget's state.
+-		 *  @param sound    True to enable sound.
+-		 *  @param defaultType The default option to select when sound is enabled.
++		 *  @param type     The option to select.
+ 		 *  @param filename The full path or URL of the sound file to select. If the 'file' option is
+ 		 *                  not initially selected, @p filename provides the default should 'file'
+ 		 *                  later be selected by the user.
+@@ -65,7 +64,7 @@
+ 		 *                  selected, @p repeat provides the default should 'file' later be selected by
+ 		 *                  the user.
+ 		 */
+-		void           set(bool sound, Type defaultType, const QString& filename, float volume, float fadeVolume, int fadeSeconds, bool repeat);
++		void           set(Type type, const QString& filename, float volume, float fadeVolume, int fadeSeconds, bool repeat);
+ 		/** Returns true if the widget is read only for the user. */
+ 		bool           isReadOnly() const          { return mReadOnly; }
+ 		/** Sets whether the widget can be changed the user.
+@@ -76,14 +75,8 @@
+ 		 *  If it is to be hidden and it is currently selected, sound is turned off.
+ 		 */
+ 		void           showSpeak(bool show);
+-		/** Returns true if sound is selected. */
+-		bool           sound() const;
+ 		/** Returns the selected option. */
+-		Type           type() const;
+-		/** Returns true if 'beep' is selected. */
+-		bool           beep() const;
+-		/** Returns true if 'speak' is selected. */
+-		bool           speak() const;
++		Type           sound() const;
+ 		/** If the 'file' option is selected, returns the URL of the chosen file.
+ 		 *  Otherwise returns a null string.
+ 		 */
+@@ -112,28 +105,21 @@
+ 		 */
+ 		static QString browseFile(QString& initialDir, const QString& initialFile = QString::null);
+ 
+-		static QString i18n_Sound();       // plain text of Sound checkbox
+-		static QString i18n_s_Sound();     // text of Sound checkbox, with 'S' shortcut
+-		static QString i18n_Beep();        // plain text of Beep radio button
+-		static QString i18n_b_Beep();      // text of Beep radio button, with 'B' shortcut
+-		static QString i18n_Speak();       // plain text of Speak radio button
+-		static QString i18n_p_Speak();     // text of Speak radio button, with 'P' shortcut
+-		static QString i18n_File();        // plain text of File radio button
++		static QString i18n_Sound();       // plain text of Sound label
++		static QString i18n_None();        // plain text of None combo box item
++		static QString i18n_Beep();        // plain text of Beep combo box item
++		static QString i18n_Speak();       // plain text of Speak combo box item
++		static QString i18n_File();        // plain text of File combo box item
+ 
+ 
+ 	private slots:
+-		void           slotSoundToggled(bool on);
+-		void           slotTypeChanged(int id);
++		void           slotTypeSelected(int id);
+ 		void           slotPickFile();
+-		void           setLastType();
+ 
+ 	private:
+ 
+-		CheckBox*      mCheckbox;
+-		ButtonGroup*   mTypeGroup;
+-		RadioButton*   mBeepRadio;
+-		RadioButton*   mSpeakRadio;
+-		RadioButton*   mFileRadio;
++		ComboBox*      mTypeCombo;
++		QHBox*         mTypeBox;
+ 		PushButton*    mFilePicker;
+ 		QString        mDefaultDir;
+ 		QString        mFile;         // sound file to play when alarm is triggered
+@@ -141,7 +127,7 @@
+ 		float          mFadeVolume;   // initial volume for file, or < 0 for no fading
+ 		int            mFadeSeconds;  // fade interval in seconds
+ 		Type           mLastType;     // last selected sound option
+-		bool           mRevertType;   // reverting to last selected sound option
++		bool           mSpeakShowing; // Speak option is shown in combo box
+ 		bool           mRepeat;       // repeat the sound file
+ 		bool           mReadOnly;
+ };
+Index: kalarm/preferences.cpp
+===================================================================
+--- kalarm/preferences.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/preferences.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  preferences.cpp  -  program preference settings
+  *  Program:  kalarm
+- *  Copyright (C) 2001 - 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -46,7 +46,6 @@
+ const QColor                     Preferences::default_defaultFgColour(Qt::black);
+ QFont                            Preferences::mDefault_messageFont;    // initialised in constructor
+ const QTime                      Preferences::default_startOfDay(0, 0);
+-const bool                       Preferences::default_autostartDaemon         = true;
+ const bool                       Preferences::default_runInSystemTray         = true;
+ const bool                       Preferences::default_disableAlarmsIfStopped  = true;
+ const bool                       Preferences::default_quitWarn                = true;
+@@ -72,7 +71,6 @@
+ const int                        Preferences::default_defaultLateCancel       = 0;
+ const bool                       Preferences::default_defaultAutoClose        = false;
+ const bool                       Preferences::default_defaultCopyToKOrganizer = false;
+-const bool                       Preferences::default_defaultSound            = false;
+ const bool                       Preferences::default_defaultSoundRepeat      = false;
+ const SoundPicker::Type          Preferences::default_defaultSoundType        = SoundPicker::BEEP;
+ const bool                       Preferences::default_defaultConfirmAck       = false;
+@@ -99,7 +97,6 @@
+ QColor                     Preferences::mDefaultBgColour;
+ QFont                      Preferences::mMessageFont;
+ QTime                      Preferences::mStartOfDay;
+-bool                       Preferences::mAutostartDaemon;
+ bool                       Preferences::mRunInSystemTray;
+ bool                       Preferences::mDisableAlarmsIfStopped;
+ bool                       Preferences::mAutostartTrayIcon;
+@@ -130,7 +127,6 @@
+ int                        Preferences::mDefaultLateCancel;
+ bool                       Preferences::mDefaultAutoClose;
+ bool                       Preferences::mDefaultCopyToKOrganizer;
+-bool                       Preferences::mDefaultSound;
+ SoundPicker::Type          Preferences::mDefaultSoundType;
+ bool                       Preferences::mDefaultSoundRepeat;
+ bool                       Preferences::mDefaultConfirmAck;
+@@ -145,7 +141,6 @@
+ // Change tracking
+ QTime                      Preferences::mOldStartOfDay;
+ bool                       Preferences::mStartOfDayChanged;
+-bool                       Preferences::mOldAutostartDaemon;
+ 
+ 
+ static const QString defaultFeb29RecurType    = QString::fromLatin1("Mar1");
+@@ -186,7 +181,6 @@
+ static const QString DEF_AUTO_CLOSE           = QString::fromLatin1("DefAutoClose");
+ static const QString DEF_CONFIRM_ACK          = QString::fromLatin1("DefConfirmAck");
+ static const QString DEF_COPY_TO_KORG         = QString::fromLatin1("DefCopyKOrg");
+-static const QString DEF_SOUND                = QString::fromLatin1("DefSound");
+ static const QString DEF_SOUND_TYPE           = QString::fromLatin1("DefSoundType");
+ static const QString DEF_SOUND_FILE           = QString::fromLatin1("DefSoundFile");
+ static const QString DEF_SOUND_VOLUME         = QString::fromLatin1("DefSoundVolume");
+@@ -199,10 +193,6 @@
+ static const QString DEF_REMIND_UNITS         = QString::fromLatin1("DefRemindUnits");
+ static const QString DEF_PRE_ACTION           = QString::fromLatin1("DefPreAction");
+ static const QString DEF_POST_ACTION          = QString::fromLatin1("DefPostAction");
+-// Obsolete - compatibility with pre-1.2.1
+-static const QString EMAIL_ADDRESS            = QString::fromLatin1("EmailAddress");
+-static const QString EMAIL_USE_CONTROL_CENTRE = QString::fromLatin1("EmailUseControlCenter");
+-static const QString EMAIL_BCC_USE_CONTROL_CENTRE = QString::fromLatin1("EmailBccUseControlCenter");
+ 
+ // Values for EmailFrom entry
+ static const QString FROM_CONTROL_CENTRE      = QString::fromLatin1("@ControlCenter");
+@@ -329,9 +319,8 @@
+ 	mDefaultAutoClose         = config->readBoolEntry(DEF_AUTO_CLOSE, default_defaultAutoClose);
+ 	mDefaultConfirmAck        = config->readBoolEntry(DEF_CONFIRM_ACK, default_defaultConfirmAck);
+ 	mDefaultCopyToKOrganizer  = config->readBoolEntry(DEF_COPY_TO_KORG, default_defaultCopyToKOrganizer);
+-	mDefaultSound             = config->readBoolEntry(DEF_SOUND, default_defaultSound);
+ 	int soundType             = config->readNumEntry(DEF_SOUND_TYPE, default_defaultSoundType);
+-	mDefaultSoundType         = (soundType < SoundPicker::BEEP || soundType > SoundPicker::PLAY_FILE)
++	mDefaultSoundType         = (soundType < 0 || soundType > SoundPicker::SPEAK)
+ 	                          ? default_defaultSoundType : (SoundPicker::Type)soundType;
+ 	mDefaultSoundVolume       = static_cast<float>(config->readDoubleNumEntry(DEF_SOUND_VOLUME, default_defaultSoundVolume));
+ #ifdef WITHOUT_ARTS
+@@ -356,8 +345,6 @@
+ 	                          ? default_defaultReminderUnits : (TimePeriod::Units)reminderUnits;
+ 	mDefaultPreAction         = config->readEntry(DEF_PRE_ACTION, default_defaultPreAction);
+ 	mDefaultPostAction        = config->readEntry(DEF_POST_ACTION, default_defaultPostAction);
+-	mAutostartDaemon          = Daemon::autoStart(default_autostartDaemon);
+-	mOldAutostartDaemon       = mAutostartDaemon;
+ 	mInstance->emitPreferencesChanged();
+ 	mStartOfDayChanged = (mStartOfDay != mOldStartOfDay);
+ 	if (mStartOfDayChanged)
+@@ -409,7 +396,6 @@
+ 	config->writeEntry(DEF_AUTO_CLOSE, mDefaultAutoClose);
+ 	config->writeEntry(DEF_CONFIRM_ACK, mDefaultConfirmAck);
+ 	config->writeEntry(DEF_COPY_TO_KORG, mDefaultCopyToKOrganizer);
+-	config->writeEntry(DEF_SOUND, mDefaultSound);
+ 	config->writeEntry(DEF_SOUND_TYPE, mDefaultSoundType);
+ 	config->writePathEntry(DEF_SOUND_FILE, mDefaultSoundFile);
+ 	config->writeEntry(DEF_SOUND_VOLUME, static_cast<double>(mDefaultSoundVolume));
+@@ -425,12 +411,6 @@
+ 	config->writeEntry(DEF_POST_ACTION, mDefaultPostAction);
+ 	if (syncToDisc)
+ 		config->sync();
+-	if (mAutostartDaemon != mOldAutostartDaemon)
+-	{
+-		// The alarm daemon autostart setting has changed.
+-		Daemon::enableAutoStart(mAutostartDaemon);
+-		mOldAutostartDaemon = mAutostartDaemon;
+-	}
+ 	mInstance->emitPreferencesChanged();
+ 	if (mStartOfDay != mOldStartOfDay)
+ 	{
+@@ -565,42 +545,55 @@
+ 	KConfig* config = KGlobal::config();
+ 	config->setGroup(GENERAL_SECTION);
+ 	int version = KAlarm::getVersionNumber(config->readEntry(VERSION_NUM));
+-	if (version >= KAlarm::Version(1,3,0))
++	if (version >= KAlarm::Version(1,4,6))
+ 		return;     // config format is up to date
+ 
+-	bool sync = false;
+-	QMap<QString, QString> entries = config->entryMap(GENERAL_SECTION);
+-	if (entries.find(EMAIL_FROM) == entries.end()
+-	&&  entries.find(EMAIL_USE_CONTROL_CENTRE) != entries.end())
+-	{
+-		// Preferences were written by KAlarm pre-1.2.1
+-		config->setGroup(GENERAL_SECTION);
+-		bool useCC = false;
+-		bool bccUseCC = false;
+-		const bool default_emailUseControlCentre    = true;
+-		const bool default_emailBccUseControlCentre = true;
+-		useCC = config->readBoolEntry(EMAIL_USE_CONTROL_CENTRE, default_emailUseControlCentre);
+-		// EmailBccUseControlCenter was missing in preferences written by KAlarm pre-0.9.5
+-		bccUseCC = config->hasKey(EMAIL_BCC_USE_CONTROL_CENTRE)
+-		         ? config->readBoolEntry(EMAIL_BCC_USE_CONTROL_CENTRE, default_emailBccUseControlCentre)
+-			 : useCC;
+-		config->writeEntry(EMAIL_FROM, (useCC ? FROM_CONTROL_CENTRE : config->readEntry(EMAIL_ADDRESS)));
+-		config->writeEntry(EMAIL_BCC_ADDRESS, (bccUseCC ? FROM_CONTROL_CENTRE : config->readEntry(EMAIL_BCC_ADDRESS)));
+-		config->deleteEntry(EMAIL_ADDRESS);
+-		config->deleteEntry(EMAIL_BCC_USE_CONTROL_CENTRE);
+-		config->deleteEntry(EMAIL_USE_CONTROL_CENTRE);
+-		sync = true;
+-	}
+-	// Convert KAlarm 1.2 preferences
+-	static const QString DEF_CMD_XTERM = QString::fromLatin1("DefCmdXterm");
++	// Convert KAlarm 1.4.5 preferences
++	static const QString DEF_SOUND = QString::fromLatin1("DefSound");
+ 	config->setGroup(DEFAULTS_SECTION);
+-	if (config->hasKey(DEF_CMD_XTERM))
++	bool sound = config->readBoolEntry(DEF_SOUND, false);
++	if (!sound)
++		config->writeEntry(DEF_SOUND_TYPE, SoundPicker::NONE);
++	config->deleteEntry(DEF_SOUND);
++
++	if (version < KAlarm::Version(1,3,0))
+ 	{
+-		config->writeEntry(DEF_CMD_LOG_TYPE,
+-			(config->readBoolEntry(DEF_CMD_XTERM, false) ? EditAlarmDlg::EXEC_IN_TERMINAL : EditAlarmDlg::DISCARD_OUTPUT));
+-		config->deleteEntry(DEF_CMD_XTERM);
+-		sync = true;
++		// Convert KAlarm pre-1.3 preferences
++		static const QString EMAIL_ADDRESS             = QString::fromLatin1("EmailAddress");
++		static const QString EMAIL_USE_CTRL_CENTRE     = QString::fromLatin1("EmailUseControlCenter");
++		static const QString EMAIL_BCC_USE_CTRL_CENTRE = QString::fromLatin1("EmailBccUseControlCenter");
++		QMap<QString, QString> entries = config->entryMap(GENERAL_SECTION);
++		if (entries.find(EMAIL_FROM) == entries.end()
++		&&  entries.find(EMAIL_USE_CTRL_CENTRE) != entries.end())
++		{
++			// Preferences were written by KAlarm pre-1.2.1
++			config->setGroup(GENERAL_SECTION);
++			bool useCC = false;
++			bool bccUseCC = false;
++			const bool default_emailUseControlCentre    = true;
++			const bool default_emailBccUseControlCentre = true;
++			useCC = config->readBoolEntry(EMAIL_USE_CTRL_CENTRE, default_emailUseControlCentre);
++			// EmailBccUseControlCenter was missing in preferences written by KAlarm pre-0.9.5
++			bccUseCC = config->hasKey(EMAIL_BCC_USE_CTRL_CENTRE)
++			         ? config->readBoolEntry(EMAIL_BCC_USE_CTRL_CENTRE, default_emailBccUseControlCentre)
++				 : useCC;
++			config->writeEntry(EMAIL_FROM, (useCC ? FROM_CONTROL_CENTRE : config->readEntry(EMAIL_ADDRESS)));
++			config->writeEntry(EMAIL_BCC_ADDRESS, (bccUseCC ? FROM_CONTROL_CENTRE : config->readEntry(EMAIL_BCC_ADDRESS)));
++			config->deleteEntry(EMAIL_ADDRESS);
++			config->deleteEntry(EMAIL_BCC_USE_CTRL_CENTRE);
++			config->deleteEntry(EMAIL_USE_CTRL_CENTRE);
++		}
++		// Convert KAlarm 1.2 preferences
++		static const QString DEF_CMD_XTERM = QString::fromLatin1("DefCmdXterm");
++		config->setGroup(DEFAULTS_SECTION);
++		if (config->hasKey(DEF_CMD_XTERM))
++		{
++			config->writeEntry(DEF_CMD_LOG_TYPE,
++				(config->readBoolEntry(DEF_CMD_XTERM, false) ? EditAlarmDlg::EXEC_IN_TERMINAL : EditAlarmDlg::DISCARD_OUTPUT));
++			config->deleteEntry(DEF_CMD_XTERM);
++		}
+ 	}
+-	if (sync)
+-		config->sync();
++	config->setGroup(GENERAL_SECTION);
++	config->writeEntry(VERSION_NUM, KALARM_VERSION);
++	config->sync();
+ }
+Index: kalarm/templatedlg.cpp
+===================================================================
+--- kalarm/templatedlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/templatedlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  templatedlg.cpp  -  dialogue to create, edit and delete alarm templates
+  *  Program:  kalarm
+- *  Copyright (c) 2004-2006 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2004-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -144,14 +144,14 @@
+ */
+ void TemplateDlg::createTemplate(const KAEvent* event, QWidget* parent, TemplateListView* view)
+ {
+-	EditAlarmDlg editDlg(true, i18n("New Alarm Template"), parent, "editDlg", event);
++	EditAlarmDlg editDlg(true, i18n("New Alarm Template"), parent, 0, event);
+ 	if (editDlg.exec() == QDialog::Accepted)
+ 	{
+ 		KAEvent event;
+ 		editDlg.getEvent(event);
+ 
+ 		// Add the template to the displayed lists and to the calendar file
+-		KAlarm::addTemplate(event, view);
++		KAlarm::addTemplate(event, view, &editDlg);
+ 		Undo::saveAdd(event);
+ 	}
+ }
+@@ -166,7 +166,7 @@
+ 	if (item)
+ 	{
+ 		KAEvent event = item->event();
+-		EditAlarmDlg editDlg(true, i18n("Edit Alarm Template"), this, "editDlg", &event);
++		EditAlarmDlg editDlg(true, i18n("Edit Alarm Template"), this, 0, &event);
+ 		if (editDlg.exec() == QDialog::Accepted)
+ 		{
+ 			KAEvent newEvent;
+@@ -175,7 +175,7 @@
+ 			newEvent.setEventID(id);
+ 
+ 			// Update the event in the displays and in the calendar file
+-			KAlarm::updateTemplate(newEvent, mTemplateList);
++			KAlarm::updateTemplate(newEvent, mTemplateList, &editDlg);
+ 			Undo::saveEdit(event, newEvent);
+ 		}
+ 	}
+@@ -195,16 +195,29 @@
+ 		    != KMessageBox::Continue)
+ 		return;
+ 
++	int warnErr = 0;
++	KAlarm::UpdateStatus status = KAlarm::UPDATE_OK;
+ 	QValueList<KAEvent> events;
+ 	AlarmCalendar::templateCalendar()->startUpdate();    // prevent multiple saves of the calendar until we're finished
+ 	for (QValueList<EventListViewItemBase*>::Iterator it = items.begin();  it != items.end();  ++it)
+ 	{
+ 		TemplateListViewItem* item = (TemplateListViewItem*)(*it);
+ 		events.append(item->event());
+-		KAlarm::deleteTemplate(item->event());
++		KAlarm::UpdateStatus st = KAlarm::deleteTemplate(item->event());
++		if (st != KAlarm::UPDATE_OK)
++		{
++			status = st;
++			++warnErr;
++		}
+ 	}
+-	AlarmCalendar::templateCalendar()->endUpdate();    // save the calendar now
++	if (!AlarmCalendar::templateCalendar()->endUpdate())    // save the calendar now
++	{
++		status = KAlarm::SAVE_FAILED;
++		warnErr = items.count();
++	}
+ 	Undo::saveDeletes(events);
++	if (warnErr)
++		displayUpdateError(this, status, KAlarm::ERR_TEMPLATE, warnErr);
+ }
+ 
+ /******************************************************************************
+Index: kalarm/kalarm.h
+===================================================================
+--- kalarm/kalarm.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -26,7 +26,7 @@
+ #include <config.h>
+ #endif
+ 
+-#define KALARM_VERSION "1.4.5"
++#define KALARM_VERSION "1.4.6"
+ #define KALARM_NAME "KAlarm"
+ 
+ #include <kdeversion.h>
+Index: kalarm/mainwindow.cpp
+===================================================================
+--- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -114,7 +114,7 @@
+ }
+ 
+ MainWindow::MainWindow(bool restored)
+-	: MainWindowBase(0, 0, WGroupLeader | WStyle_ContextHelp | WDestructiveClose),
++	: MainWindowBase(0, "MainWin", WGroupLeader | WStyle_ContextHelp | WDestructiveClose),
+ 	  mMinuteTimerActive(false),
+ 	  mHiddenTrayParent(false),
+ 	  mShowExpired(Preferences::showExpiredAlarms()),
+@@ -567,7 +567,7 @@
+ */
+ void MainWindow::executeNew(MainWindow* win, const KAEvent* evnt, KAEvent::Action action, const AlarmText& text)
+ {
+-	EditAlarmDlg editDlg(false, i18n("New Alarm"), win, "editDlg", evnt);
++	EditAlarmDlg editDlg(false, i18n("New Alarm"), win, 0, evnt);
+ 	if (!text.isEmpty())
+ 		editDlg.setAction(action, text);
+ 	if (editDlg.exec() == QDialog::Accepted)
+@@ -576,8 +576,8 @@
+ 		editDlg.getEvent(event);
+ 
+ 		// Add the alarm to the displayed lists and to the calendar file
+-		if (KAlarm::addEvent(event, (win ? win->mListView : 0)) == KAlarm::UPDATE_KORG_ERR)
+-			KAlarm::displayKOrgUpdateError(win, KAlarm::KORG_ERR_ADD, 1);
++		if (KAlarm::addEvent(event, (win ? win->mListView : 0), &editDlg) == KAlarm::UPDATE_KORG_ERR)
++			KAlarm::displayKOrgUpdateError(&editDlg, KAlarm::KORG_ERR_ADD, 1);
+ 		Undo::saveAdd(event);
+ 
+ 		KAlarm::outputAlarmWarnings(&editDlg, &event);
+@@ -637,7 +637,7 @@
+ */
+ void MainWindow::executeEdit(KAEvent& event, MainWindow* win)
+ {
+-	EditAlarmDlg editDlg(false, i18n("Edit Alarm"), win, "editDlg", &event);
++	EditAlarmDlg editDlg(false, i18n("Edit Alarm"), win, 0, &event);
+ 	if (editDlg.exec() == QDialog::Accepted)
+ 	{
+ 		KAEvent newEvent;
+@@ -648,12 +648,13 @@
+ 		if (changeDeferral)
+ 		{
+ 			// The only change has been to an existing deferral
+-			KAlarm::updateEvent(newEvent, view, true, false);   // keep the same event ID
++			if (KAlarm::updateEvent(newEvent, view, true, false, &editDlg) != KAlarm::UPDATE_OK)   // keep the same event ID
++				return;   // failed to save event
+ 		}
+ 		else
+ 		{
+-			if (KAlarm::modifyEvent(event, newEvent, view) == KAlarm::UPDATE_KORG_ERR)
+-				KAlarm::displayKOrgUpdateError(win, KAlarm::KORG_ERR_MODIFY, 1);
++			if (KAlarm::modifyEvent(event, newEvent, view, &editDlg) == KAlarm::UPDATE_KORG_ERR)
++				KAlarm::displayKOrgUpdateError(&editDlg, KAlarm::KORG_ERR_MODIFY, 1);
+ 		}
+ 		Undo::saveEdit(event, newEvent);
+ 
+@@ -673,7 +674,7 @@
+ 		KAEvent event = item->event();
+ 		EditAlarmDlg editDlg(false, (event.expired() ? i18n("Expired Alarm") + " [" + i18n("read-only") + "]"
+ 		                                             : i18n("View Alarm")),
+-		                     this, "editDlg", &event, true);
++		                     this, 0, &event, true);
+ 		editDlg.exec();
+ 	}
+ }
+@@ -697,6 +698,7 @@
+ 			return;
+ 	}
+ 
++	int warnErr = 0;
+ 	int warnKOrg = 0;
+ 	QValueList<KAEvent> events;
+ 	AlarmCalendar::activeCalendar()->startUpdate();    // prevent multiple saves of the calendars until we're finished
+@@ -708,14 +710,28 @@
+ 
+ 		// Delete the event from the calendar and displays
+ 		events.append(event);
+-		if (KAlarm::deleteEvent(event) == KAlarm::UPDATE_KORG_ERR)
+-			++warnKOrg;
++		switch (KAlarm::deleteEvent(event))
++		{
++			case KAlarm::UPDATE_ERROR:
++			case KAlarm::UPDATE_FAILED:
++			case KAlarm::SAVE_FAILED:
++				++warnErr;
++				break;
++			case KAlarm::UPDATE_KORG_ERR:
++				++warnKOrg;
++				break;
++			default:
++				break;
++		}
+ 	}
+-	AlarmCalendar::activeCalendar()->endUpdate();      // save the calendars now
++	if (!AlarmCalendar::activeCalendar()->endUpdate())      // save the calendars now
++		warnErr = items.count();
+ 	AlarmCalendar::expiredCalendar()->endUpdate();
+ 	Undo::saveDeletes(events);
+ 
+-	if (warnKOrg)
++	if (warnErr)
++		KAlarm::displayUpdateError(this, KAlarm::UPDATE_FAILED, KAlarm::ERR_ADD, warnErr);
++	else if (warnKOrg)
+ 		KAlarm::displayKOrgUpdateError(this, KAlarm::KORG_ERR_DELETE, warnKOrg);
+ }
+ 
+@@ -725,6 +741,7 @@
+ */
+ void MainWindow::slotReactivate()
+ {
++	int warnErr = 0;
+ 	int warnKOrg = 0;
+ 	QValueList<KAEvent> events;
+ 	QValueList<EventListViewItemBase*> items = mListView->selectedItems();
+@@ -737,14 +754,28 @@
+ 		AlarmListViewItem* item = (AlarmListViewItem*)(*it);
+ 		KAEvent event = item->event();
+ 		events.append(event);
+-		if (KAlarm::reactivateEvent(event, mListView, true) == KAlarm::UPDATE_KORG_ERR)
+-			++warnKOrg;
++		switch (KAlarm::reactivateEvent(event, mListView, true))
++		{
++			case KAlarm::UPDATE_ERROR:
++			case KAlarm::UPDATE_FAILED:
++			case KAlarm::SAVE_FAILED:
++				++warnErr;
++				break;
++			case KAlarm::UPDATE_KORG_ERR:
++				++warnKOrg;
++				break;
++			default:
++				break;
++		}
+ 	}
+-	AlarmCalendar::activeCalendar()->endUpdate();      // save the calendars now
++	if (!AlarmCalendar::activeCalendar()->endUpdate())      // save the calendars now
++		warnErr = items.count();
+ 	AlarmCalendar::expiredCalendar()->endUpdate();
+ 	Undo::saveReactivates(events);
+ 
+-	if (warnKOrg)
++	if (warnErr)
++		KAlarm::displayUpdateError(this, KAlarm::UPDATE_FAILED, KAlarm::ERR_REACTIVATE, warnErr);
++	else if (warnKOrg)
+ 		KAlarm::displayKOrgUpdateError(this, KAlarm::KORG_ERR_ADD, warnKOrg);
+ }
+ 
+@@ -755,6 +786,7 @@
+ void MainWindow::slotEnable()
+ {
+ 	bool enable = mActionEnableEnable;    // save since changed in response to KAlarm::enableEvent()
++	int warnErr = 0;
+ 	QValueList<EventListViewItemBase*> items = mListView->selectedItems();
+ 	AlarmCalendar::activeCalendar()->startUpdate();    // prevent multiple saves of the calendars until we're finished
+ 	for (QValueList<EventListViewItemBase*>::Iterator it = items.begin();  it != items.end();  ++it)
+@@ -763,9 +795,13 @@
+ 		KAEvent event = item->event();
+ 
+ 		// Enable the alarm in the displayed lists and in the calendar file
+-		KAlarm::enableEvent(event, mListView, enable);
++		if (KAlarm::enableEvent(event, mListView, enable) != KAlarm::UPDATE_OK)
++			++warnErr;
+ 	}
+-	AlarmCalendar::activeCalendar()->endUpdate();      // save the calendars now
++	if (!AlarmCalendar::activeCalendar()->endUpdate())      // save the calendars now
++		warnErr = items.count();
++	if (warnErr)
++		KAlarm::displayUpdateError(this, KAlarm::UPDATE_FAILED, KAlarm::ERR_ADD, warnErr);
+ }
+ 
+ /******************************************************************************
+@@ -830,14 +866,28 @@
+ 		if (events.count())
+ 		{
+ 			mListView->clearSelection();
++			int warnErr = 0;
+ 			int warnKOrg = 0;
+ 			for (QValueList<KAEvent>::Iterator ev = events.begin();  ev != events.end();  ++ev)
+ 			{
+ 				// Add alarm to the displayed lists and to the calendar file
+-				if (KAlarm::addEvent(*ev, mListView) == KAlarm::UPDATE_KORG_ERR)
+-					++warnKOrg;
++				switch (KAlarm::addEvent(*ev, mListView))
++				{
++					case KAlarm::UPDATE_ERROR:
++					case KAlarm::UPDATE_FAILED:
++					case KAlarm::SAVE_FAILED:
++						++warnErr;
++						break;
++					case KAlarm::UPDATE_KORG_ERR:
++						++warnKOrg;
++						break;
++					default:
++						break;
++				}
+ 			}
+-			if (warnKOrg)
++			if (warnErr)
++				KAlarm::displayUpdateError(this, KAlarm::UPDATE_FAILED, KAlarm::ERR_ADD, warnErr);
++			else if (warnKOrg)
+ 				KAlarm::displayKOrgUpdateError(this, KAlarm::KORG_ERR_ADD, warnKOrg);
+ 			KAlarm::outputAlarmWarnings(&dlg);
+ 		}
+Index: kalarm/editdlg.h
+===================================================================
+--- kalarm/editdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/editdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  editdlg.h  -  dialogue to create or modify an alarm or alarm template
+  *  Program:  kalarm
+- *  Copyright (c) 2001-2006 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -233,7 +233,6 @@
+ 		int                 mSavedTemplateAfterTime; // mTemplateAfterTime value
+ 		QButton*            mSavedTypeRadio;      // mMessageRadio, etc
+ 		SoundPicker::Type   mSavedSoundType;      // mSoundPicker sound type
+-		bool                mSavedSound;          // mSoundPicker sound status
+ 		bool                mSavedRepeatSound;    // mSoundPicker repeat status
+ 		QString             mSavedSoundFile;      // mSoundPicker sound file
+ 		float               mSavedSoundVolume;    // mSoundPicker volume
+Index: kalarm/prefdlg.h
+===================================================================
+--- kalarm/prefdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  prefdlg.h  -  program preferences dialog
+  *  Program:  kalarm
+- *  Copyright (c) 2001-2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2001-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -28,6 +28,7 @@
+ 
+ #include "preferences.h"
+ #include "recurrenceedit.h"
++#include "soundpicker.h"
+ 
+ class QButtonGroup;
+ class QCheckBox;
+@@ -126,8 +127,7 @@
+ 		QRadioButton*  mRunOnDemand;
+ 		QCheckBox*     mDisableAlarmsIfStopped;
+ 		QCheckBox*     mQuitWarn;
+-		QCheckBox*     mAutostartTrayIcon1;
+-		QCheckBox*     mAutostartTrayIcon2;
++		QCheckBox*     mAutostartTrayIcon;
+ 		QCheckBox*     mConfirmAlarmDeletion;
+ 		QCheckBox*     mKeepExpired;
+ 		QCheckBox*     mPurgeExpired;
+@@ -192,8 +192,6 @@
+ 		void         slotBrowseSoundFile();
+ 
+ 	private:
+-		void         setSoundType(SoundPicker::Type);
+-
+ 		QCheckBox*      mAutoClose;
+ 		QCheckBox*      mConfirmAck;
+ 		QComboBox*      mReminderUnits;
+@@ -201,10 +199,7 @@
+ 		QCheckBox*      mCmdScript;
+ 		QCheckBox*      mCmdXterm;
+ 		QCheckBox*      mEmailBcc;
+-		QRadioButton*   mBeep;
+-		QRadioButton*   mSpeak;
+-		QRadioButton*   mFile;
+-		QCheckBox*      mSound;
++		QComboBox*      mSound;
+ 		QLabel*         mSoundFileLabel;
+ 		QLineEdit*      mSoundFile;
+ 		QPushButton*    mSoundFileBrowse;
+@@ -214,6 +209,7 @@
+ 		QComboBox*      mRecurPeriod;
+ 		QButtonGroup*   mFeb29;
+ 
++		static int soundIndex(SoundPicker::Type);
+ 		static int recurIndex(RecurrenceEdit::RepeatType);
+ };
+ 
+Index: kalarm/Changelog
+===================================================================
+--- kalarm/Changelog	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,5 +1,12 @@
+ KAlarm
+ 
++=== Version 1.4.6 --- 21 October 2006 ===
++Fix "Start alarm monitoring at login" value shown in preferences dialogue.
++Fix deselecting "Start alarm monitoring at login" when daemon not running.
++Tidy up preferences dialogue Run mode options.
++Tidy up alarm edit/preferences dialogue sound type options into a combo box.
++Add context help for sound file fade options.
++
+ === Version 1.4.5 (KDE 3.5.5) --- 29 September 2006 ===
+ Improve edit dialogue layout (Reminder controls moved to below Time box).
+ 
+Index: kalarm/daemon.h
+===================================================================
+--- kalarm/daemon.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/daemon.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -46,7 +46,7 @@
+ 		static bool      reregister()            { return registerWith(true); }
+ 		static bool      reset();
+ 		static bool      stop();
+-		static bool      autoStart(bool defaultSetting);
++		static bool      autoStart();
+ 		static void      enableAutoStart(bool enable);
+ 		static void      setAlarmsEnabled()      { mInstance->setAlarmsEnabled(true); }
+ 		static void      checkStatus()           { checkIfRunning(); }
+Index: kalarm/sounddlg.cpp
+===================================================================
+--- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  sounddlg.cpp  -  sound file selection and configuration dialog
+  *  Program:  kalarm
+- *  Copyright (c) 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2005 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -134,7 +134,7 @@
+ 	label->setBuddy(mFadeTime);
+ 	label = new QLabel(i18n("seconds"), mFadeBox);
+ 	label->setFixedSize(label->sizeHint());
+-	QWhatsThis::add(box, i18n("Enter how many seconds to fade the sound before reaching the set volume."));
++	QWhatsThis::add(mFadeBox, i18n("Enter how many seconds to fade the sound before reaching the set volume."));
+ 
+ 	// Fade slider
+ 	mFadeVolumeBox = new QHBox(group);
+@@ -147,7 +147,7 @@
+ 	mFadeSlider->setTickInterval(10);
+ 	mFadeSlider->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
+ 	label->setBuddy(mFadeSlider);
+-	QWhatsThis::add(box, i18n("Choose the initial volume for playing the sound file."));
++	QWhatsThis::add(mFadeVolumeBox, i18n("Choose the initial volume for playing the sound file."));
+ 
+ 	// Restore the dialogue size from last time
+ 	QSize s;
+Index: kalarm/prefdlg.cpp
+===================================================================
+--- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -48,6 +48,7 @@
+ 
+ #include "alarmcalendar.h"
+ #include "alarmtimewidget.h"
++#include "daemon.h"
+ #include "editdlg.h"
+ #include "fontcolour.h"
+ #include "functions.h"
+@@ -91,7 +92,7 @@
+ =============================================================================*/
+ 
+ KAlarmPrefDlg::KAlarmPrefDlg()
+-	: KDialogBase(IconList, i18n("Preferences"), Help | Default | Ok | Apply | Cancel, Ok, 0, 0, true, true)
++	: KDialogBase(IconList, i18n("Preferences"), Help | Default | Ok | Apply | Cancel, Ok, 0, "PrefDlg", true, true)
+ {
+ 	setIconListAllVisible(true);
+ 
+@@ -225,26 +226,25 @@
+ 	// Get alignment to use in QGridLayout (AlignAuto doesn't work correctly there)
+ 	int alignment = QApplication::reverseLayout() ? Qt::AlignRight : Qt::AlignLeft;
+ 
+-	// Autostart alarm daemon
+-	QHBox* itemBox = new QHBox(mPage);   // this is to allow left adjustment
+-	mAutostartDaemon = new QCheckBox(i18n("Start alarm monitoring at lo&gin"), itemBox, "startDaemon");
+-	mAutostartDaemon->setFixedSize(mAutostartDaemon->sizeHint());
+-	connect(mAutostartDaemon, SIGNAL(clicked()), SLOT(slotAutostartDaemonClicked()));
+-	QWhatsThis::add(mAutostartDaemon,
+-	      i18n("Automatically start alarm monitoring whenever you start KDE, by running the alarm daemon (%1).\n\n"
+-	           "This option should always be checked unless you intend to discontinue use of KAlarm.")
+-	          .arg(QString::fromLatin1(DAEMON_APP_NAME)));
+-	itemBox->setStretchFactor(new QWidget(itemBox), 1);    // left adjust the controls
+-
+ 	QGroupBox* group = new QButtonGroup(i18n("Run Mode"), mPage, "modeGroup");
+-	QGridLayout* grid = new QGridLayout(group, 6, 3, KDialog::marginHint(), KDialog::spacingHint());
++	QGridLayout* grid = new QGridLayout(group, 6, 2, KDialog::marginHint(), KDialog::spacingHint());
+ 	grid->setColStretch(2, 1);
+ 	grid->addColSpacing(0, indentWidth());
+ 	grid->addColSpacing(1, indentWidth());
+ 	grid->addRowSpacing(0, fontMetrics().lineSpacing()/2);
+-	int row = 1;
+ 
+-	// Run-in-system-tray radio button has an ID of 0
++	// Run-on-demand radio button
++	mRunOnDemand = new QRadioButton(i18n("&Run only on demand"), group, "runDemand");
++	mRunOnDemand->setFixedSize(mRunOnDemand->sizeHint());
++	connect(mRunOnDemand, SIGNAL(toggled(bool)), SLOT(slotRunModeToggled(bool)));
++	QWhatsThis::add(mRunOnDemand,
++	      i18n("Check to run KAlarm only when required.\n\n"
++	           "Notes:\n"
++	           "1. Alarms are displayed even when KAlarm is not running, since alarm monitoring is done by the alarm daemon.\n"
++	           "2. With this option selected, the system tray icon can be displayed or hidden independently of KAlarm."));
++	grid->addMultiCellWidget(mRunOnDemand, 1, 1, 0, 2, alignment);
++
++	// Run-in-system-tray radio button
+ 	mRunInSystemTray = new QRadioButton(i18n("Run continuously in system &tray"), group, "runTray");
+ 	mRunInSystemTray->setFixedSize(mRunInSystemTray->sizeHint());
+ 	connect(mRunInSystemTray, SIGNAL(toggled(bool)), SLOT(slotRunModeToggled(bool)));
+@@ -254,58 +254,42 @@
+ 	           "1. With this option selected, closing the system tray icon will quit KAlarm.\n"
+ 	           "2. You do not need to select this option in order for alarms to be displayed, since alarm monitoring is done by the alarm daemon."
+ 	           " Running in the system tray simply provides easy access and a status indication."));
+-	grid->addMultiCellWidget(mRunInSystemTray, row, row, 0, 2, alignment);
+-	++row;
++	grid->addMultiCellWidget(mRunInSystemTray, 2, 2, 0, 2, alignment);
+ 
+-	mAutostartTrayIcon1 = new QCheckBox(i18n("Autostart at &login"), group, "autoTray");
+-	mAutostartTrayIcon1->setFixedSize(mAutostartTrayIcon1->sizeHint());
+-#ifdef AUTOSTART_BY_KALARMD
+-	connect(mAutostartTrayIcon1, SIGNAL(toggled(bool)), SLOT(slotAutostartToggled(bool)));
+-#endif
+-	QWhatsThis::add(mAutostartTrayIcon1,
+-	      i18n("Check to run KAlarm whenever you start KDE."));
+-	grid->addMultiCellWidget(mAutostartTrayIcon1, row, row, 1, 2, alignment);
+-	++row;
+-
++	// Run continuously options
+ 	mDisableAlarmsIfStopped = new QCheckBox(i18n("Disa&ble alarms while not running"), group, "disableAl");
+ 	mDisableAlarmsIfStopped->setFixedSize(mDisableAlarmsIfStopped->sizeHint());
+ 	connect(mDisableAlarmsIfStopped, SIGNAL(toggled(bool)), SLOT(slotDisableIfStoppedToggled(bool)));
+ 	QWhatsThis::add(mDisableAlarmsIfStopped,
+ 	      i18n("Check to disable alarms whenever KAlarm is not running. Alarms will only appear while the system tray icon is visible."));
+-	grid->addMultiCellWidget(mDisableAlarmsIfStopped, row, row, 1, 2, alignment);
+-	++row;
++	grid->addMultiCellWidget(mDisableAlarmsIfStopped, 3, 3, 1, 2, alignment);
+ 
+ 	mQuitWarn = new QCheckBox(i18n("Warn before &quitting"), group, "disableAl");
+ 	mQuitWarn->setFixedSize(mQuitWarn->sizeHint());
+ 	QWhatsThis::add(mQuitWarn,
+ 	      i18n("Check to display a warning prompt before quitting KAlarm."));
+-	grid->addWidget(mQuitWarn, row, 2, alignment);
+-	++row;
++	grid->addWidget(mQuitWarn, 4, 2, alignment);
+ 
+-	// Run-on-demand radio button has an ID of 3
+-	mRunOnDemand = new QRadioButton(i18n("&Run only on demand"), group, "runDemand");
+-	mRunOnDemand->setFixedSize(mRunOnDemand->sizeHint());
+-	connect(mRunOnDemand, SIGNAL(toggled(bool)), SLOT(slotRunModeToggled(bool)));
+-	QWhatsThis::add(mRunOnDemand,
+-	      i18n("Check to run KAlarm only when required.\n\n"
+-	           "Notes:\n"
+-	           "1. Alarms are displayed even when KAlarm is not running, since alarm monitoring is done by the alarm daemon.\n"
+-	           "2. With this option selected, the system tray icon can be displayed or hidden independently of KAlarm."));
+-	grid->addMultiCellWidget(mRunOnDemand, row, row, 0, 2, alignment);
+-	++row;
+-
+-	mAutostartTrayIcon2 = new QCheckBox(i18n("Autostart system tray &icon at login"), group, "autoRun");
+-	mAutostartTrayIcon2->setFixedSize(mAutostartTrayIcon2->sizeHint());
++	mAutostartTrayIcon = new QCheckBox(i18n("Autostart at &login"), group, "autoTray");
+ #ifdef AUTOSTART_BY_KALARMD
+-	connect(mAutostartTrayIcon2, SIGNAL(toggled(bool)), SLOT(slotAutostartToggled(bool)));
++	connect(mAutostartTrayIcon, SIGNAL(toggled(bool)), SLOT(slotAutostartToggled(bool)));
+ #endif
+-	QWhatsThis::add(mAutostartTrayIcon2,
+-	      i18n("Check to display the system tray icon whenever you start KDE."));
+-	grid->addMultiCellWidget(mAutostartTrayIcon2, row, row, 1, 2, alignment);
++	grid->addMultiCellWidget(mAutostartTrayIcon, 5, 5, 0, 2, alignment);
++
++	// Autostart alarm daemon
++	mAutostartDaemon = new QCheckBox(i18n("Start alarm monitoring at lo&gin"), group, "startDaemon");
++	mAutostartDaemon->setFixedSize(mAutostartDaemon->sizeHint());
++	connect(mAutostartDaemon, SIGNAL(clicked()), SLOT(slotAutostartDaemonClicked()));
++	QWhatsThis::add(mAutostartDaemon,
++	      i18n("Automatically start alarm monitoring whenever you start KDE, by running the alarm daemon (%1).\n\n"
++	           "This option should always be checked unless you intend to discontinue use of KAlarm.")
++	          .arg(QString::fromLatin1(DAEMON_APP_NAME)));
++	grid->addMultiCellWidget(mAutostartDaemon, 6, 6, 0, 2, alignment);
++
+ 	group->setFixedHeight(group->sizeHint().height());
+ 
+ 	// Start-of-day time
+-	itemBox = new QHBox(mPage);
++	QHBox* itemBox = new QHBox(mPage);
+ 	QHBox* box = new QHBox(itemBox);   // this is to control the QWhatsThis text display area
+ 	box->setSpacing(KDialog::spacingHint());
+ 	QLabel* label = new QLabel(i18n("&Start of day for date-only alarms:"), box);
+@@ -370,7 +354,7 @@
+ 	      i18n("Choose which application to use when a command alarm is executed in a terminal window"));
+ 	grid = new QGridLayout(group, 1, 3, KDialog::marginHint(), KDialog::spacingHint());
+ 	grid->addRowSpacing(0, fontMetrics().lineSpacing()/2);
+-	row = 0;
++	int row = 0;
+ 
+ 	mXtermType = new QButtonGroup(group);
+ 	mXtermType->hide();
+@@ -413,14 +397,13 @@
+ 
+ void MiscPrefTab::restore()
+ {
+-	mAutostartDaemon->setChecked(Preferences::mAutostartDaemon);
++	mAutostartDaemon->setChecked(Daemon::autoStart());
+ 	bool systray = Preferences::mRunInSystemTray;
+ 	mRunInSystemTray->setChecked(systray);
+ 	mRunOnDemand->setChecked(!systray);
+ 	mDisableAlarmsIfStopped->setChecked(Preferences::mDisableAlarmsIfStopped);
+ 	mQuitWarn->setChecked(Preferences::quitWarn());
+-	mAutostartTrayIcon1->setChecked(Preferences::mAutostartTrayIcon);
+-	mAutostartTrayIcon2->setChecked(Preferences::mAutostartTrayIcon);
++	mAutostartTrayIcon->setChecked(Preferences::mAutostartTrayIcon);
+ 	mConfirmAlarmDeletion->setChecked(Preferences::confirmAlarmDeletion());
+ 	mStartOfDay->setValue(Preferences::mStartOfDay);
+ 	setExpiredControls(Preferences::mExpiredKeepDays);
+@@ -468,12 +451,14 @@
+ 	Preferences::mDisableAlarmsIfStopped = mDisableAlarmsIfStopped->isChecked();
+ 	if (mQuitWarn->isEnabled())
+ 		Preferences::setQuitWarn(mQuitWarn->isChecked());
+-	Preferences::mAutostartTrayIcon = systray ? mAutostartTrayIcon1->isChecked() : mAutostartTrayIcon2->isChecked();
++	Preferences::mAutostartTrayIcon = mAutostartTrayIcon->isChecked();
+ #ifdef AUTOSTART_BY_KALARMD
+-	Preferences::mAutostartDaemon = mAutostartDaemon->isChecked() || Preferences::mAutostartTrayIcon;
++	bool newAutostartDaemon = mAutostartDaemon->isChecked() || Preferences::mAutostartTrayIcon;
+ #else
+-	Preferences::mAutostartDaemon = mAutostartDaemon->isChecked();
++	bool newAutostartDaemon = mAutostartDaemon->isChecked();
+ #endif
++	if (newAutostartDaemon != Daemon::autoStart())
++		Daemon::enableAutoStart(newAutostartDaemon);
+ 	Preferences::setConfirmAlarmDeletion(mConfirmAlarmDeletion->isChecked());
+ 	int sod = mStartOfDay->value();
+ 	Preferences::mStartOfDay.setHMS(sod/60, sod%60, 0);
+@@ -485,14 +470,13 @@
+ 
+ void MiscPrefTab::setDefaults()
+ {
+-	mAutostartDaemon->setChecked(Preferences::default_autostartDaemon);
++	mAutostartDaemon->setChecked(true);
+ 	bool systray = Preferences::default_runInSystemTray;
+ 	mRunInSystemTray->setChecked(systray);
+ 	mRunOnDemand->setChecked(!systray);
+ 	mDisableAlarmsIfStopped->setChecked(Preferences::default_disableAlarmsIfStopped);
+ 	mQuitWarn->setChecked(Preferences::default_quitWarn);
+-	mAutostartTrayIcon1->setChecked(Preferences::default_autostartTrayIcon);
+-	mAutostartTrayIcon2->setChecked(Preferences::default_autostartTrayIcon);
++	mAutostartTrayIcon->setChecked(Preferences::default_autostartTrayIcon);
+ 	mConfirmAlarmDeletion->setChecked(Preferences::default_confirmAlarmDeletion);
+ 	mStartOfDay->setValue(Preferences::default_startOfDay);
+ 	setExpiredControls(Preferences::default_expiredKeepDays);
+@@ -513,9 +497,10 @@
+ 
+ void MiscPrefTab::slotRunModeToggled(bool)
+ {
+-	bool systray = (mRunInSystemTray->isOn());
+-	mAutostartTrayIcon2->setEnabled(!systray);
+-	mAutostartTrayIcon1->setEnabled(systray);
++	bool systray = mRunInSystemTray->isOn();
++	mAutostartTrayIcon->setText(systray ? i18n("Autostart at &login") : i18n("Autostart system tray &icon at login"));
++	QWhatsThis::add(mAutostartTrayIcon, (systray ? i18n("Check to run KAlarm whenever you start KDE.")
++	                                             : i18n("Check to display the system tray icon whenever you start KDE.")));
+ 	mDisableAlarmsIfStopped->setEnabled(systray);
+ 	slotDisableIfStoppedToggled(true);
+ }
+@@ -527,8 +512,7 @@
+ void MiscPrefTab::slotAutostartToggled(bool)
+ {
+ #ifdef AUTOSTART_BY_KALARMD
+-	bool autostart = mRunInSystemTray->isChecked() ? mAutostartTrayIcon1->isChecked() : mAutostartTrayIcon2->isChecked();
+-	mAutostartDaemon->setEnabled(!autostart);
++	mAutostartDaemon->setEnabled(!mAutostartTrayIcon->isChecked());
+ #endif
+ }
+ 
+@@ -926,37 +910,25 @@
+ 	layout = new QVBoxLayout(bgroup, KDialog::marginHint(), KDialog::spacingHint());
+ 	layout->addSpacing(groupTopMargin);
+ 
+-	mSound = new QCheckBox(SoundPicker::i18n_s_Sound(), bgroup, "defSound");
++	QBoxLayout* hlayout = new QHBoxLayout(layout, KDialog::spacingHint());
++	mSound = new QComboBox(false, bgroup, "defSound");
++	mSound->insertItem(SoundPicker::i18n_None());         // index 0
++	mSound->insertItem(SoundPicker::i18n_Beep());         // index 1
++	mSound->insertItem(SoundPicker::i18n_File());         // index 2
++	if (theApp()->speechEnabled())
++		mSound->insertItem(SoundPicker::i18n_Speak());  // index 3
+ 	mSound->setMinimumSize(mSound->sizeHint());
+ 	QWhatsThis::add(mSound, defsetting.arg(SoundPicker::i18n_Sound()));
+-	layout->addWidget(mSound, 0, Qt::AlignAuto);
++	hlayout->addWidget(mSound);
++	hlayout->addStretch(1);
+ 
+-	box = new QHBox(bgroup);
+-	box->setSpacing(KDialog::spacingHint());
+-	layout->addWidget(box, 0, Qt::AlignAuto);
++#ifndef WITHOUT_ARTS
++	mSoundRepeat = new QCheckBox(i18n("Repea&t sound file"), bgroup, "defRepeatSound");
++	mSoundRepeat->setMinimumSize(mSoundRepeat->sizeHint());
++	QWhatsThis::add(mSoundRepeat, i18n("sound file \"Repeat\" checkbox", "The default setting for sound file \"%1\" in the alarm edit dialog.").arg(SoundDlg::i18n_Repeat()));
++	hlayout->addWidget(mSoundRepeat);
++#endif
+ 
+-	mBeep = new QRadioButton(SoundPicker::i18n_b_Beep(), box, "defBeep");
+-	bgroup->insert(mBeep);
+-	mBeep->setMinimumSize(mBeep->sizeHint());
+-	QWhatsThis::add(mBeep,
+-	      soundSetting.arg(SoundPicker::i18n_Beep()).arg(SoundPicker::i18n_Sound()));
+-	mFile = new QRadioButton(SoundPicker::i18n_File(), box, "defFile");
+-	bgroup->insert(mFile);
+-	mFile->setMinimumSize(mFile->sizeHint());
+-	QWhatsThis::add(mFile,
+-	      soundSetting.arg(SoundPicker::i18n_File()).arg(SoundPicker::i18n_Sound()));
+-	if (theApp()->speechEnabled())
+-	{
+-		mSpeak = new QRadioButton(SoundPicker::i18n_Speak(), box, "defSpeak");
+-		mSpeak->setMinimumSize(mSpeak->sizeHint());
+-		QWhatsThis::add(mSpeak,
+-		      soundSetting.arg(SoundPicker::i18n_Speak()).arg(SoundPicker::i18n_Sound()));
+-		bgroup->insert(mSpeak);
+-	}
+-	else
+-		mSpeak = 0;
+-	box->setStretchFactor(new QWidget(box), 1);    // left adjust the controls
+-
+ 	box = new QHBox(bgroup);   // this is to control the QWhatsThis text display area
+ 	box->setSpacing(KDialog::spacingHint());
+ 	mSoundFileLabel = new QLabel(i18n("Sound &file:"), box);
+@@ -972,13 +944,6 @@
+ 	      i18n("Enter the default sound file to use in the alarm edit dialog."));
+ 	box->setFixedHeight(box->sizeHint().height());
+ 	layout->addWidget(box);
+-
+-#ifndef WITHOUT_ARTS
+-	mSoundRepeat = new QCheckBox(i18n("Repea&t sound file"), bgroup, "defRepeatSound");
+-	mSoundRepeat->setMinimumSize(mSoundRepeat->sizeHint());
+-	QWhatsThis::add(mSoundRepeat, i18n("sound file \"Repeat\" checkbox", "The default setting for sound file \"%1\" in the alarm edit dialog.").arg(SoundDlg::i18n_Repeat()));
+-	layout->addWidget(mSoundRepeat, 0, Qt::AlignAuto);
+-#endif
+ 	bgroup->setFixedHeight(bgroup->sizeHint().height());
+ 
+ 	// COMMAND ALARMS
+@@ -1076,8 +1041,7 @@
+ 	mConfirmAck->setChecked(Preferences::mDefaultConfirmAck);
+ 	mReminderUnits->setCurrentItem(Preferences::mDefaultReminderUnits);
+ 	mSpecialActionsButton->setActions(Preferences::mDefaultPreAction, Preferences::mDefaultPostAction);
+-	mSound->setChecked(Preferences::mDefaultSound);
+-	setSoundType(Preferences::mDefaultSoundType);
++	mSound->setCurrentItem(soundIndex(Preferences::mDefaultSoundType));
+ 	mSoundFile->setText(Preferences::mDefaultSoundFile);
+ #ifndef WITHOUT_ARTS
+ 	mSoundRepeat->setChecked(Preferences::mDefaultSoundRepeat);
+@@ -1098,11 +1062,15 @@
+ 	Preferences::mDefaultReminderUnits    = static_cast<TimePeriod::Units>(mReminderUnits->currentItem());
+ 	Preferences::mDefaultPreAction        = mSpecialActionsButton->preAction();
+ 	Preferences::mDefaultPostAction       = mSpecialActionsButton->postAction();
+-	Preferences::mDefaultSound            = mSound->isChecked();
++	switch (mSound->currentItem())
++	{
++		case 3:  Preferences::mDefaultSoundType = SoundPicker::SPEAK;      break;
++		case 2:  Preferences::mDefaultSoundType = SoundPicker::PLAY_FILE;  break;
++		case 1:  Preferences::mDefaultSoundType = SoundPicker::BEEP;       break;
++		case 0:
++		default: Preferences::mDefaultSoundType = SoundPicker::NONE;       break;
++	}
+ 	Preferences::mDefaultSoundFile        = mSoundFile->text();
+-	Preferences::mDefaultSoundType        = mSpeak && mSpeak->isOn() ? SoundPicker::SPEAK
+-	                                      : mFile->isOn()            ? SoundPicker::PLAY_FILE
+-	                                      :                            SoundPicker::BEEP;
+ #ifndef WITHOUT_ARTS
+ 	Preferences::mDefaultSoundRepeat      = mSoundRepeat->isChecked();
+ #endif
+@@ -1133,8 +1101,7 @@
+ 	mConfirmAck->setChecked(Preferences::default_defaultConfirmAck);
+ 	mReminderUnits->setCurrentItem(Preferences::default_defaultReminderUnits);
+ 	mSpecialActionsButton->setActions(Preferences::default_defaultPreAction, Preferences::default_defaultPostAction);
+-	mSound->setChecked(Preferences::default_defaultSound);
+-	setSoundType(Preferences::default_defaultSoundType);
++	mSound->setCurrentItem(soundIndex(Preferences::default_defaultSoundType));
+ 	mSoundFile->setText(Preferences::default_defaultSoundFile);
+ #ifndef WITHOUT_ARTS
+ 	mSoundRepeat->setChecked(Preferences::default_defaultSoundRepeat);
+@@ -1156,6 +1123,18 @@
+ 		mSoundFile->setText(url);
+ }
+ 
++int EditPrefTab::soundIndex(SoundPicker::Type type)
++{
++	switch (type)
++	{
++		case SoundPicker::SPEAK:      return 3;
++		case SoundPicker::PLAY_FILE:  return 2;
++		case SoundPicker::BEEP:       return 1;
++		case SoundPicker::NONE:
++		default:                      return 0;
++	}
++}
++
+ int EditPrefTab::recurIndex(RecurrenceEdit::RepeatType type)
+ {
+ 	switch (type)
+@@ -1171,30 +1150,9 @@
+ 	}
+ }
+ 
+-void EditPrefTab::setSoundType(SoundPicker::Type type)
+-{
+-	switch (type)
+-	{
+-		case SoundPicker::PLAY_FILE:
+-			mFile->setChecked(true);
+-			break;
+-		case SoundPicker::SPEAK:
+-			if (mSpeak)
+-			{
+-				mSpeak->setChecked(true);
+-				break;
+-			}
+-			// fall through to BEEP
+-		case SoundPicker::BEEP:
+-		default:
+-			mBeep->setChecked(true);
+-			break;
+-	}
+-}
+-
+ QString EditPrefTab::validate()
+ {
+-	if (mFile->isOn()  &&  mSoundFile->text().isEmpty())
++	if (mSound->currentItem() == SoundPicker::PLAY_FILE  &&  mSoundFile->text().isEmpty())
+ 	{
+ 		mSoundFile->setFocus();
+ 		return i18n("You must enter a sound file when %1 is selected as the default sound type").arg(SoundPicker::i18n_File());;
+Index: kalarm/daemon.cpp
+===================================================================
+--- kalarm/daemon.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/daemon.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -374,24 +374,23 @@
+ 	// Tell the alarm daemon in case it is running.
+ 	AlarmDaemonIface_stub s(DAEMON_APP_NAME, DAEMON_DCOP_OBJECT);
+ 	s.enableAutoStart(enable);
+-	if (!s.ok())
+-	{
+-		// Failure - the daemon probably isn't running, so rewrite its config file for it
+-		KConfig adconfig(locate("config", DAEMON_APP_NAME"rc"));
+-		adconfig.setGroup(QString::fromLatin1(DAEMON_AUTOSTART_SECTION));
+-		adconfig.writeEntry(QString::fromLatin1(DAEMON_AUTOSTART_KEY), enable);
+-		adconfig.sync();
+-	}
++
++	// The return status doesn't report failure even if the daemon isn't running,
++	// so in case of failure, rewrite the config file in any case.
++	KConfig adconfig(locate("config", DAEMON_APP_NAME"rc"));
++	adconfig.setGroup(QString::fromLatin1(DAEMON_AUTOSTART_SECTION));
++	adconfig.writeEntry(QString::fromLatin1(DAEMON_AUTOSTART_KEY), enable);
++	adconfig.sync();
+ }
+ 
+ /******************************************************************************
+ * Read the alarm daemon's autostart-at-login setting.
+ */
+-bool Daemon::autoStart(bool defaultAutoStart)
++bool Daemon::autoStart()
+ {
+ 	KConfig adconfig(locate("config", DAEMON_APP_NAME"rc"));
+ 	adconfig.setGroup(QString::fromLatin1(DAEMON_AUTOSTART_SECTION));
+-	return adconfig.readBoolEntry(QString::fromLatin1(DAEMON_AUTOSTART_KEY), defaultAutoStart);
++	return adconfig.readBoolEntry(QString::fromLatin1(DAEMON_AUTOSTART_KEY), true);
+ }
+ 
+ /******************************************************************************
+Index: kalarm/functions.cpp
+===================================================================
+--- kalarm/functions.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -127,27 +127,37 @@
+ * event in that listView instance.
+ * 'event' is updated with the actual event ID.
+ */
+-UpdateStatus addEvent(KAEvent& event, AlarmListView* selectionView, bool useEventID, bool allowKOrgUpdate)
++UpdateStatus addEvent(KAEvent& event, AlarmListView* selectionView, bool useEventID, bool allowKOrgUpdate, QWidget* errmsgParent)
+ {
+ 	kdDebug(5950) << "KAlarm::addEvent(): " << event.id() << endl;
++	UpdateStatus status = UPDATE_OK;
+ 	if (!theApp()->checkCalendarDaemon())    // ensure calendar is open and daemon started
+-		return UPDATE_ERROR;
+-
+-	// Save the event details in the calendar file, and get the new event ID
+-	AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+-	cal->addEvent(event, useEventID);
+-	cal->save();
+-
+-	UpdateStatus ret = UPDATE_OK;
+-	if (allowKOrgUpdate  &&  event.copyToKOrganizer())
++		return UPDATE_FAILED;
++	else
+ 	{
+-		if (!sendToKOrganizer(event))    // tell KOrganizer to show the event
+-			ret = UPDATE_KORG_ERR;
++		// Save the event details in the calendar file, and get the new event ID
++		AlarmCalendar* cal = AlarmCalendar::activeCalendar();
++		if (!cal->addEvent(event, useEventID))
++			status = UPDATE_FAILED;
++		else if (!cal->save())
++			status = SAVE_FAILED;
+ 	}
++	if (status == UPDATE_OK)
++	{
++		if (allowKOrgUpdate  &&  event.copyToKOrganizer())
++		{
++			if (!sendToKOrganizer(event))    // tell KOrganizer to show the event
++				status = UPDATE_KORG_ERR;
++		}
+ 
+-	// Update the window lists
+-	AlarmListView::addEvent(event, selectionView);
+-	return ret;
++		// Update the window lists
++		AlarmListView::addEvent(event, selectionView);
++		return status;
++	}
++
++	if (errmsgParent)
++		displayUpdateError(errmsgParent, status, ERR_ADD, 1);
++	return status;
+ }
+ 
+ /******************************************************************************
+@@ -181,21 +191,29 @@
+ * event in that listView instance.
+ * 'event' is updated with the actual event ID.
+ */
+-bool addTemplate(KAEvent& event, TemplateListView* selectionView)
++UpdateStatus addTemplate(KAEvent& event, TemplateListView* selectionView, QWidget* errmsgParent)
+ {
+ 	kdDebug(5950) << "KAlarm::addTemplate(): " << event.id() << endl;
++	UpdateStatus status = UPDATE_OK;
+ 
+ 	// Add the template to the calendar file
+ 	AlarmCalendar* cal = AlarmCalendar::templateCalendarOpen();
+-	if (!cal)
+-		return false;
+-	cal->addEvent(event);
+-	cal->save();
+-	cal->emitEmptyStatus();
++	if (!cal  ||  !cal->addEvent(event))
++		status = UPDATE_FAILED;
++	else if (!cal->save())
++		status = SAVE_FAILED;
++	else
++	{
++		cal->emitEmptyStatus();
+ 
+-	// Update the window lists
+-	TemplateListView::addEvent(event, selectionView);
+-	return true;
++		// Update the window lists
++		TemplateListView::addEvent(event, selectionView);
++		return UPDATE_OK;
++	}
++
++	if (errmsgParent)
++		displayUpdateError(errmsgParent, status, ERR_TEMPLATE, 1);
++	return status;
+ }
+ 
+ /******************************************************************************
+@@ -205,15 +223,18 @@
+ * If 'selectionView' is non-null, the selection highlight is moved to the
+ * modified event in that listView instance.
+ */
+-UpdateStatus modifyEvent(KAEvent& oldEvent, const KAEvent& newEvent, AlarmListView* selectionView)
++UpdateStatus modifyEvent(KAEvent& oldEvent, const KAEvent& newEvent, AlarmListView* selectionView, QWidget* errmsgParent)
+ {
+ 	kdDebug(5950) << "KAlarm::modifyEvent(): '" << oldEvent.id() << endl;
+ 
++	UpdateStatus status = UPDATE_OK;
+ 	if (!newEvent.valid())
+-		return deleteEvent(oldEvent, true);
++	{
++		deleteEvent(oldEvent, true);
++		status = UPDATE_FAILED;
++	}
+ 	else
+ 	{
+-		UpdateStatus ret = UPDATE_OK;
+ 		if (oldEvent.copyToKOrganizer())
+ 		{
+ 			// Tell KOrganizer to delete its old event.
+@@ -224,20 +245,28 @@
+ 
+ 		// Update the event in the calendar file, and get the new event ID
+ 		AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+-		cal->deleteEvent(oldEvent.id());
+-		cal->addEvent(const_cast<KAEvent&>(newEvent), true);
+-		cal->save();
++		if (!cal->deleteEvent(oldEvent.id())
++		||  !cal->addEvent(const_cast<KAEvent&>(newEvent), true))
++			status = UPDATE_FAILED;
++		else if (!cal->save())
++			status = SAVE_FAILED;
++		if (status == UPDATE_OK)
++		{
++			if (newEvent.copyToKOrganizer())
++			{
++				if (!sendToKOrganizer(newEvent))    // tell KOrganizer to show the new event
++					status = UPDATE_KORG_ERR;
++			}
+ 
+-		if (newEvent.copyToKOrganizer())
+-		{
+-			if (!sendToKOrganizer(newEvent))    // tell KOrganizer to show the new event
+-				ret = UPDATE_KORG_ERR;
++			// Update the window lists
++			AlarmListView::modifyEvent(oldEvent.id(), newEvent, selectionView);
++			return status;
+ 		}
++	}
+ 
+-		// Update the window lists
+-		AlarmListView::modifyEvent(oldEvent.id(), newEvent, selectionView);
+-		return ret;
+-	}
++	if (errmsgParent)
++		displayUpdateError(errmsgParent, status, ERR_ADD, 1);
++	return status;
+ }
+ 
+ /******************************************************************************
+@@ -249,7 +278,7 @@
+ * The event is not updated in KOrganizer, since this function is called when an
+ * existing alarm is rescheduled (due to recurrence or deferral).
+ */
+-void updateEvent(KAEvent& event, AlarmListView* selectionView, bool archiveOnDelete, bool incRevision)
++UpdateStatus updateEvent(KAEvent& event, AlarmListView* selectionView, bool archiveOnDelete, bool incRevision, QWidget* errmsgParent)
+ {
+ 	kdDebug(5950) << "KAlarm::updateEvent(): " << event.id() << endl;
+ 
+@@ -262,11 +291,17 @@
+ 			event.incrementRevision();    // ensure alarm daemon sees the event has changed
+ 		AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+ 		cal->updateEvent(event);
+-		cal->save();
++		if (!cal->save())
++		{
++			if (errmsgParent)
++				displayUpdateError(errmsgParent, SAVE_FAILED, ERR_ADD, 1);
++			return SAVE_FAILED;
++		}
+ 
+ 		// Update the window lists
+ 		AlarmListView::modifyEvent(event, selectionView);
+ 	}
++	return UPDATE_OK;
+ }
+ 
+ /******************************************************************************
+@@ -274,23 +309,34 @@
+ * If 'selectionView' is non-null, the selection highlight is moved to the
+ * updated event in that listView instance.
+ */
+-void updateTemplate(const KAEvent& event, TemplateListView* selectionView)
++UpdateStatus updateTemplate(const KAEvent& event, TemplateListView* selectionView, QWidget* errmsgParent)
+ {
++	UpdateStatus status = UPDATE_OK;
+ 	AlarmCalendar* cal = AlarmCalendar::templateCalendarOpen();
+-	if (cal)
++	if (!cal)
++		status = UPDATE_FAILED;
++	else
+ 	{
+ 		cal->updateEvent(event);
+-		cal->save();
++		if (!cal->save())
++			status = SAVE_FAILED;
++		else
++		{
++			TemplateListView::modifyEvent(event.id(), event, selectionView);
++			return UPDATE_OK;
++		}
++	}
+ 
+-		TemplateListView::modifyEvent(event.id(), event, selectionView);
+-	}
++	if (errmsgParent)
++		displayUpdateError(errmsgParent, SAVE_FAILED, ERR_TEMPLATE, 1);
++	return status;
+ }
+ 
+ /******************************************************************************
+ * Delete an alarm from the calendar file and from every main window instance.
+ * If the event is archived, the event's ID is changed to an expired ID if necessary.
+ */
+-UpdateStatus deleteEvent(KAEvent& event, bool archive)
++UpdateStatus deleteEvent(KAEvent& event, bool archive, QWidget* errmsgParent)
+ {
+ 	QString id = event.id();
+ 	kdDebug(5950) << "KAlarm::deleteEvent(): " << id << endl;
+@@ -298,14 +344,15 @@
+ 	// Update the window lists
+ 	AlarmListView::deleteEvent(id);
+ 
+-	UpdateStatus ret = UPDATE_OK;
++	UpdateStatus status = UPDATE_OK;
++	AlarmCalendar* cal;
+ 
+ 	// Delete the event from the calendar file
+ 	if (KAEvent::uidStatus(id) == KAEvent::EXPIRED)
+ 	{
+-		AlarmCalendar* cal = AlarmCalendar::expiredCalendarOpen();
+-		if (cal)
+-			cal->deleteEvent(id, true);   // save calendar after deleting
++		cal = AlarmCalendar::expiredCalendarOpen();
++		if (!cal)
++			status = UPDATE_FAILED;
+ 	}
+ 	else
+ 	{
+@@ -315,33 +362,40 @@
+ 			// delete it. Note that an error could occur if the user
+ 			// manually deleted it from KOrganizer since it was set up.
+ 			if (!deleteFromKOrganizer(event.id()))
+-				ret = UPDATE_KORG_ERR;
++				status = UPDATE_KORG_ERR;
+ 		}
+ 		if (archive  &&  event.toBeArchived())
+ 			addExpiredEvent(event);     // this changes the event ID to an expired ID
+-		AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+-		cal->deleteEvent(id, true);    // save calendar after deleting
++		cal = AlarmCalendar::activeCalendar();
+ 	}
+-	return ret;
++	if (status != UPDATE_FAILED)
++	{
++		if (!cal->deleteEvent(id, true))   // save calendar after deleting
++			status = SAVE_FAILED;
++	}
++	if (status > UPDATE_KORG_ERR  &&  errmsgParent)
++		displayUpdateError(errmsgParent, SAVE_FAILED, ERR_ADD, 1);
++	return status;
+ }
+ 
+ /******************************************************************************
+ * Delete a template from the calendar file and from every template list view.
+ */
+-void deleteTemplate(const KAEvent& event)
++UpdateStatus deleteTemplate(const KAEvent& event)
+ {
+ 	QString id = event.id();
+ 
+ 	// Delete the template from the calendar file
+ 	AlarmCalendar* cal = AlarmCalendar::templateCalendarOpen();
+-	if (cal)
+-	{
+-		cal->deleteEvent(id, true);    // save calendar after deleting
+-		cal->emitEmptyStatus();
+-	}
++	if (!cal)
++		return UPDATE_FAILED;
++	if (!cal->deleteEvent(id, true))    // save calendar after deleting
++		return SAVE_FAILED;
++	cal->emitEmptyStatus();
+ 
+ 	// Update the window lists
+ 	TemplateListView::deleteEvent(id);
++	return UPDATE_OK;
+ }
+ 
+ /******************************************************************************
+@@ -382,14 +436,16 @@
+ 
+ 			// Save the event details in the calendar file, and get the new event ID
+ 			AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+-			cal->addEvent(event, useEventID);
+-			cal->save();
++			if (!cal->addEvent(event, useEventID))
++				return UPDATE_FAILED;
++			if (!cal->save())
++				return SAVE_FAILED;
+ 
+-			UpdateStatus ret = UPDATE_OK;
++			UpdateStatus status = UPDATE_OK;
+ 			if (event.copyToKOrganizer())
+ 			{
+ 				if (!sendToKOrganizer(event))    // tell KOrganizer to show the event
+-					ret = UPDATE_KORG_ERR;
++					status = UPDATE_KORG_ERR;
+ 			}
+ 
+ 			// Update the window lists
+@@ -398,10 +454,10 @@
+ 			cal = AlarmCalendar::expiredCalendarOpen();
+ 			if (cal)
+ 				cal->deleteEvent(id, true);   // save calendar after deleting
+-			return ret;
++			return status;
+ 		}
+ 	}
+-	return UPDATE_ERROR;
++	return UPDATE_FAILED;
+ }
+ 
+ /******************************************************************************
+@@ -410,7 +466,7 @@
+ * If 'selectionView' is non-null, the selection highlight is moved to the
+ * updated event in that listView instance.
+ */
+-void enableEvent(KAEvent& event, AlarmListView* selectionView, bool enable)
++UpdateStatus enableEvent(KAEvent& event, AlarmListView* selectionView, bool enable)
+ {
+ 	kdDebug(5950) << "KAlarm::enableEvent(" << enable << "): " << event.id() << endl;
+ 
+@@ -421,7 +477,8 @@
+ 		// Update the event in the calendar file
+ 		AlarmCalendar* cal = AlarmCalendar::activeCalendar();
+ 		cal->updateEvent(event);
+-		cal->save();
++		if (!cal->save())
++			return SAVE_FAILED;
+ 
+ 		// If we're disabling a display alarm, close any message window
+ 		if (!enable  &&  event.displayAction())
+@@ -433,12 +490,36 @@
+ 		// Update the window lists
+ 		AlarmListView::modifyEvent(event, selectionView);
+ 	}
++	return UPDATE_OK;
+ }
+ 
+ /******************************************************************************
++* Display an error message about an error saving an event.
++*/
++void displayUpdateError(QWidget* parent, UpdateStatus, UpdateError code, int nAlarms)
++{
++	QString errmsg;
++	switch (code)
++	{
++		case ERR_ADD:
++			errmsg = (nAlarms > 1) ? i18n("Error saving alarms")
++			                       : i18n("Error saving alarm");
++			break;
++		case ERR_REACTIVATE:
++			errmsg = (nAlarms > 1) ? i18n("Error saving reactivated alarms")
++			                       : i18n("Error saving reactivated alarm");
++			break;
++		case ERR_TEMPLATE:
++			errmsg = i18n("Error saving alarm template");
++			break;
++	}
++	KMessageBox::error(parent, errmsg);
++}
++
++/******************************************************************************
+ * Display an error message corresponding to a specified alarm update error code.
+ */
+-void displayKOrgUpdateError(QWidget* parent, UpdateError code, int nAlarms)
++void displayKOrgUpdateError(QWidget* parent, KOrgUpdateError code, int nAlarms)
+ {
+ 	QString errmsg;
+ 	switch (code)
+Index: kalarm/alarmcalendar.cpp
+===================================================================
+--- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -578,26 +578,30 @@
+ * Flag the end of a group of calendar update calls.
+ * The calendar is saved if appropriate.
+ */
+-void AlarmCalendar::endUpdate()
++bool AlarmCalendar::endUpdate()
+ {
+ 	if (mUpdateCount > 0)
+ 		--mUpdateCount;
+ 	if (!mUpdateCount)
+ 	{
+ 		if (mUpdateSave)
+-			saveCal();
++			return saveCal();
+ 	}
++	return true;
+ }
+ 
+ /******************************************************************************
+ * Save the calendar, or flag it for saving if in a group of calendar update calls.
+ */
+-void AlarmCalendar::save()
++bool AlarmCalendar::save()
+ {
+ 	if (mUpdateCount)
++	{
+ 		mUpdateSave = true;
++		return true;
++	}
+ 	else
+-		saveCal();
++		return saveCal();
+ }
+ 
+ #if 0
+@@ -780,7 +784,7 @@
+ * Delete the specified event from the calendar, if it exists.
+ * The calendar is then optionally saved.
+ */
+-void AlarmCalendar::deleteEvent(const QString& eventID, bool saveit)
++bool AlarmCalendar::deleteEvent(const QString& eventID, bool saveit)
+ {
+ 	if (mOpen)
+ 	{
+@@ -791,12 +795,13 @@
+ 			if (mType == KAEvent::ACTIVE)
+ 				Daemon::savingEvent(eventID);
+ 			if (saveit)
+-				save();
+-			return;
++				return save();
++			return true;
+ 		}
+ 	}
+ 	if (mType == KAEvent::ACTIVE)
+ 		Daemon::eventHandled(eventID, false);
++	return false;
+ }
+ 
+ /******************************************************************************
+Index: kalarm/soundpicker.cpp
+===================================================================
+--- kalarm/soundpicker.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/soundpicker.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  soundpicker.cpp  -  widget to select a sound file or a beep
+  *  Program:  kalarm
+- *  Copyright (C) 2002, 2004, 2005 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2002,2004-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -18,13 +18,13 @@
+  *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+  */
+ 
+-#include <config.h>
+ #include "kalarm.h"
+ 
+ #include <qlayout.h>
+ #include <qregexp.h>
+ #include <qtooltip.h>
+ #include <qtimer.h>
++#include <qlabel.h>
+ #include <qhbox.h>
+ #include <qwhatsthis.h>
+ 
+@@ -38,12 +38,10 @@
+ #endif
+ #include <kdebug.h>
+ 
+-#include "buttongroup.h"
+-#include "checkbox.h"
++#include "combobox.h"
+ #include "functions.h"
+ #include "kalarmapp.h"
+ #include "pushbutton.h"
+-#include "radiobutton.h"
+ #include "sounddlg.h"
+ #include "soundpicker.moc"
+ 
+@@ -51,75 +49,46 @@
+ // Collect these widget labels together to ensure consistent wording and
+ // translations across different modules.
+ QString SoundPicker::i18n_Sound()       { return i18n("An audio sound", "Sound"); }
+-QString SoundPicker::i18n_s_Sound()     { return i18n("An audio sound", "&Sound"); }
++QString SoundPicker::i18n_None()        { return i18n("None"); }
+ QString SoundPicker::i18n_Beep()        { return i18n("Beep"); }
+-QString SoundPicker::i18n_b_Beep()      { return i18n("&Beep"); }
+ QString SoundPicker::i18n_Speak()       { return i18n("Speak"); }
+-QString SoundPicker::i18n_p_Speak()     { return i18n("S&peak"); }
+-QString SoundPicker::i18n_File()        { return i18n("File"); }
++QString SoundPicker::i18n_File()        { return i18n("Sound file"); }
+ 
+ 
+ SoundPicker::SoundPicker(QWidget* parent, const char* name)
+-	: QFrame(parent, name),
+-	  mRevertType(false)
++	: QFrame(parent, name)
+ {
+-	// Sound checkbox
+ 	setFrameStyle(QFrame::NoFrame);
+-	QHBoxLayout* soundLayout = new QHBoxLayout(this, 0, 2*KDialog::spacingHint());
+-	soundLayout->setAlignment(Qt::AlignVCenter);
+-	mCheckbox = new CheckBox(i18n_s_Sound(), this);
+-	mCheckbox->setFixedSize(mCheckbox->sizeHint());
+-	connect(mCheckbox, SIGNAL(toggled(bool)), SLOT(slotSoundToggled(bool)));
+-	QWhatsThis::add(mCheckbox,
+-	      i18n("Check to enable sound when the message is displayed. Select the type of sound from the displayed options."));
+-	soundLayout->addWidget(mCheckbox);
++	QHBoxLayout* soundLayout = new QHBoxLayout(this, 0, KDialog::spacingHint());
++	mTypeBox = new QHBox(this);    // this is to control the QWhatsThis text display area
++	mTypeBox->setSpacing(KDialog::spacingHint());
+ 
+-	// Sound type
+-	mTypeGroup = new ButtonGroup(this);
+-	mTypeGroup->hide();
+-	connect(mTypeGroup, SIGNAL(buttonSet(int)), SLOT(slotTypeChanged(int)));
++	QLabel* label = new QLabel(i18n("An audio sound", "&Sound:"), mTypeBox);
++	label->setFixedSize(label->sizeHint());
+ 
+-	// Beep radio button
+-	mBeepRadio = new RadioButton(i18n_Beep(), this, "beepButton");
+-	mBeepRadio->setFixedSize(mBeepRadio->sizeHint());
+-	QWhatsThis::add(mBeepRadio, i18n("If checked, a beep will sound when the alarm is displayed."));
+-	mTypeGroup->insert(mBeepRadio, BEEP);
+-	soundLayout->addWidget(mBeepRadio);
++	// Sound type combo box
++	// The order of combo box entries must correspond with the 'Type' enum.
++	mTypeCombo = new ComboBox(false, mTypeBox);
++	mTypeCombo->insertItem(i18n_None());     // index NONE
++	mTypeCombo->insertItem(i18n_Beep());     // index BEEP
++	mTypeCombo->insertItem(i18n_File());     // index PLAY_FILE
++	mSpeakShowing = !theApp()->speechEnabled();
++	showSpeak(!mSpeakShowing);              // index SPEAK (only displayed if appropriate)
++	connect(mTypeCombo, SIGNAL(activated(int)), SLOT(slotTypeSelected(int)));
++	label->setBuddy(mTypeCombo);
++	soundLayout->addWidget(mTypeBox);
+ 
+-	// File radio button
+-	QHBox* box = new QHBox(this);
+-	mFileRadio = new RadioButton(i18n_File(), box, "audioFileButton");
+-	mFileRadio->setFixedSize(mFileRadio->sizeHint());
+-	QWhatsThis::add(mFileRadio, i18n("If checked, a sound file will be played when the alarm is displayed."));
+-	mTypeGroup->insert(mFileRadio, PLAY_FILE);
+-
+ 	// Sound file picker button
+-	mFilePicker = new PushButton(box);
++	mFilePicker = new PushButton(this);
+ 	mFilePicker->setPixmap(SmallIcon("playsound"));
+ 	mFilePicker->setFixedSize(mFilePicker->sizeHint());
+ 	connect(mFilePicker, SIGNAL(clicked()), SLOT(slotPickFile()));
+ 	QWhatsThis::add(mFilePicker, i18n("Configure a sound file to play when the alarm is displayed."));
+-	box->setFixedSize(box->sizeHint());
+-	soundLayout->addWidget(box);
+-	box->setFocusProxy(mFileRadio);
++	soundLayout->addWidget(mFilePicker);
+ 
+-	// Speak radio button
+-	mSpeakRadio = new RadioButton(i18n_p_Speak(), this, "speakButton");
+-	mSpeakRadio->setFixedSize(mSpeakRadio->sizeHint());
+-	QWhatsThis::add(mSpeakRadio, i18n("If checked, the message will be spoken when the alarm is displayed."));
+-	mTypeGroup->insert(mSpeakRadio, SPEAK);
+-	soundLayout->addWidget(mSpeakRadio);
+-
+-	if (!theApp()->speechEnabled())
+-		mSpeakRadio->hide();     // speech capability is not installed
+-
+-	setTabOrder(mCheckbox, mBeepRadio);
+-	setTabOrder(mBeepRadio, mFileRadio);
+-	setTabOrder(mFileRadio, mFilePicker);
+-	setTabOrder(mFilePicker, mSpeakRadio);
+-
+ 	// Initialise the file picker button state and tooltip
+-	slotSoundToggled(false);
++	mTypeCombo->setCurrentItem(NONE);
++	mFilePicker->setEnabled(false);
+ }
+ 
+ /******************************************************************************
+@@ -127,13 +96,10 @@
+ */
+ void SoundPicker::setReadOnly(bool readOnly)
+ {
+-	mCheckbox->setReadOnly(readOnly);
+-	mBeepRadio->setReadOnly(readOnly);
+-	mFileRadio->setReadOnly(readOnly);
++	mTypeCombo->setReadOnly(readOnly);
+ #ifdef WITHOUT_ARTS
+ 	mFilePicker->setReadOnly(readOnly);
+ #endif
+-	mSpeakRadio->setReadOnly(readOnly);
+ 	mReadOnly = readOnly;
+ }
+ 
+@@ -143,58 +109,40 @@
+ void SoundPicker::showSpeak(bool show)
+ {
+ 	if (!theApp()->speechEnabled())
+-		return;     // speech capability is not installed
+-
+-	bool shown = !mSpeakRadio->isHidden();
+-	if (show  &&  !shown)
+-		mSpeakRadio->show();
+-	else if (!show  &&  shown)
++		show = false;    // speech capability is not installed
++	if (show == mSpeakShowing)
++		return;    // no change
++	QString whatsThis = "<p>" + i18n("Choose a sound to play when the message is displayed.")
++	                  + "<br>" + i18n("%1: the message is displayed silently.").arg("<b>" + i18n_None() + "</b>")
++	                  + "<br>" + i18n("%1: a simple beep is sounded.").arg("<b>" + i18n_Beep() + "</b>")
++	                  + "<br>" + i18n("%1: an audio file is played. You will be prompted to choose the file and set play options.").arg("<b>" + i18n_File() + "</b>");
++	if (!show  &&  mTypeCombo->currentItem() == SPEAK)
++		mTypeCombo->setCurrentItem(NONE);
++	mTypeCombo->removeItem(SPEAK);    // precaution in case of mix-ups
++	if (show)
+ 	{
+-		if (mSpeakRadio->isOn())
+-			mCheckbox->setChecked(false);
+-		mSpeakRadio->hide();
++		mTypeCombo->insertItem(i18n_Speak());
++		whatsThis += "<br>" + i18n("%1: the message text is spoken.").arg("<b>" + i18n_Speak() + "</b>") + "</p>";
+ 	}
++	QWhatsThis::add(mTypeBox, whatsThis + "</p>");
++	mSpeakShowing = show;
+ }
+ 
+ /******************************************************************************
+-* Return whether sound is selected.
+-*/
+-bool SoundPicker::sound() const
+-{
+-	return mCheckbox->isChecked();
+-}
+-
+-/******************************************************************************
+ * Return the currently selected option.
+ */
+-SoundPicker::Type SoundPicker::type() const
++SoundPicker::Type SoundPicker::sound() const
+ {
+-	return static_cast<SoundPicker::Type>(mTypeGroup->selectedId());
++	return static_cast<SoundPicker::Type>(mTypeCombo->currentItem());
+ }
+ 
+ /******************************************************************************
+-* Return whether beep is selected.
++* Return the selected sound file, if the File option is selected.
++* Returns null string if File is not currently selected.
+ */
+-bool SoundPicker::beep() const
+-{
+-	return mCheckbox->isChecked()  &&  mBeepRadio->isOn();
+-}
+-
+-/******************************************************************************
+-* Return whether speech is selected.
+-*/
+-bool SoundPicker::speak() const
+-{
+-	return mCheckbox->isChecked()  &&  !mSpeakRadio->isHidden()  &&  mSpeakRadio->isOn();
+-}
+-
+-/******************************************************************************
+-* Return the selected sound file, if the main checkbox is checked.
+-* Returns null string if beep is currently selected.
+-*/
+ QString SoundPicker::file() const
+ {
+-	return mCheckbox->isChecked() && mFileRadio->isOn() ? mFile : QString::null;
++	return (mTypeCombo->currentItem() == PLAY_FILE) ? mFile : QString::null;
+ }
+ 
+ /******************************************************************************
+@@ -203,7 +151,7 @@
+ */
+ float SoundPicker::volume(float& fadeVolume, int& fadeSeconds) const
+ {
+-	if (mCheckbox->isChecked() && mFileRadio->isOn() && !mFile.isEmpty())
++	if (mTypeCombo->currentItem() == PLAY_FILE  &&  !mFile.isEmpty())
+ 	{
+ 		fadeVolume  = mFadeVolume;
+ 		fadeSeconds = mFadeSeconds;
+@@ -223,49 +171,34 @@
+ */
+ bool SoundPicker::repeat() const
+ {
+-	return mCheckbox->isChecked() && mFileRadio->isOn() && !mFile.isEmpty() && mRepeat;
++	return mTypeCombo->currentItem() == PLAY_FILE  &&  !mFile.isEmpty()  &&  mRepeat;
+ }
+ 
+ /******************************************************************************
+ * Initialise the widget's state.
+ */
+-void SoundPicker::set(bool sound, SoundPicker::Type defaultType, const QString& f, float volume, float fadeVolume, int fadeSeconds, bool repeat)
++void SoundPicker::set(SoundPicker::Type type, const QString& f, float volume, float fadeVolume, int fadeSeconds, bool repeat)
+ {
+-	if (defaultType == PLAY_FILE  &&  f.isEmpty())
+-		defaultType = BEEP;
+-	mLastType    = static_cast<Type>(0);
++	if (type == PLAY_FILE  &&  f.isEmpty())
++		type = BEEP;
+ 	mFile        = f;
+ 	mVolume      = volume;
+ 	mFadeVolume  = fadeVolume;
+ 	mFadeSeconds = fadeSeconds;
+ 	mRepeat      = repeat;
+ 	QToolTip::add(mFilePicker, mFile);
+-	mCheckbox->setChecked(sound);
+-	mTypeGroup->setButton(defaultType);
++	mTypeCombo->setCurrentItem(type);  // this doesn't trigger slotTypeSelected()
++	mFilePicker->setEnabled(type == PLAY_FILE);
++	mLastType = type;
+ }
+ 
+ /******************************************************************************
+-* Called when the sound checkbox is toggled.
+-*/
+-void SoundPicker::slotSoundToggled(bool on)
+-{
+-	mBeepRadio->setEnabled(on);
+-	mSpeakRadio->setEnabled(on);
+-	mFileRadio->setEnabled(on);
+-	mFilePicker->setEnabled(on && mFileRadio->isOn());
+-	if (on  &&  mSpeakRadio->isHidden()  &&  mSpeakRadio->isOn())
+-		mBeepRadio->setChecked(true);
+-	if (on)
+-		mBeepRadio->setFocus();
+-}
+-
+-/******************************************************************************
+ * Called when the sound option is changed.
+ */
+-void SoundPicker::slotTypeChanged(int id)
++void SoundPicker::slotTypeSelected(int id)
+ {
+ 	Type newType = static_cast<Type>(id);
+-	if (newType == mLastType  ||  mRevertType)
++	if (newType == mLastType)
+ 		return;
+ 	if (mLastType == PLAY_FILE)
+ 		mFilePicker->setEnabled(false);
+@@ -277,7 +210,7 @@
+ 			if (mFile.isEmpty())
+ 				return;    // revert to previously selected type
+ 		}
+-		mFilePicker->setEnabled(mCheckbox->isChecked());
++		mFilePicker->setEnabled(true);
+ 	}
+ 	mLastType = newType;
+ }
+@@ -317,23 +250,12 @@
+ 	QToolTip::add(mFilePicker, mFile);
+ 	if (mFile.isEmpty())
+ 	{
+-		// No audio file is selected, so revert to 'beep'.
+-		// But wait a moment until setting the radio button, or it won't work.
+-		mRevertType = true;   // prevent sound dialogue popping up twice
+-		QTimer::singleShot(0, this, SLOT(setLastType()));
++		// No audio file is selected, so revert to previously selected option
++		mTypeCombo->setCurrentItem(mLastType);
+ 	}
+ }
+ 
+ /******************************************************************************
+-* Select the previously selected sound type.
+-*/
+-void SoundPicker::setLastType()
+-{
+-	mTypeGroup->setButton(mLastType);
+-	mRevertType = false;
+-}
+-
+-/******************************************************************************
+ * Display a dialogue to choose a sound file, initially highlighting any
+ * specified file. 'initialFile' must be a full path name or URL.
+ * 'defaultDir' is updated to the directory containing the chosen file.
+@@ -351,7 +273,8 @@
+ #ifdef WITHOUT_ARTS
+ 	QString filter = QString::fromLatin1("*.wav *.mp3 *.ogg|%1\n*|%2").arg(i18n("Sound Files")).arg(i18n("All Files"));
+ #else
+-	QString filter = KDE::PlayObjectFactory::mimeTypes().join(" ");
++	QStringList filters = KDE::PlayObjectFactory::mimeTypes();
++	QString filter = filters.join(" ");
+ #endif
+ 	return KAlarm::browseFile(i18n("Choose Sound File"), defaultDir, initialFile, filter, KFile::ExistingOnly, 0, "pickSoundFile");
+ }
+Index: kalarm/birthdaydlg.cpp
+===================================================================
+--- kalarm/birthdaydlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kalarm/birthdaydlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -1,7 +1,7 @@
+ /*
+  *  birthdaydlg.cpp  -  dialog to pick birthdays from address book
+  *  Program:  kalarm
+- *  Copyright (c) 2002-2006 by David Jarvie <software@astrojar.org.uk>
++ *  Copyright © 2002-2006 by David Jarvie <software@astrojar.org.uk>
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -71,7 +71,7 @@
+ 
+ 
+ BirthdayDlg::BirthdayDlg(QWidget* parent)
+-	: KDialogBase(KDialogBase::Plain, i18n("Import Birthdays From KAddressBook"), Ok|Cancel, Ok, parent),
++	: KDialogBase(KDialogBase::Plain, i18n("Import Birthdays From KAddressBook"), Ok|Cancel, Ok, parent, "BirthdayDlg"),
+ 	  mSpecialActionsButton(0)
+ {
+ 	QWidget* topWidget = plainPage();
+@@ -194,7 +194,7 @@
+ 	mBgColourChoose->setColour(Preferences::defaultBgColour());     // set colour before setting alarm type buttons
+ 	mLateCancel->setMinutes(Preferences::defaultLateCancel(), true, TimePeriod::DAYS);
+ 	mConfirmAck->setChecked(Preferences::defaultConfirmAck());
+-	mSoundPicker->set(Preferences::defaultSound(), Preferences::defaultSoundType(), Preferences::defaultSoundFile(),
++	mSoundPicker->set(Preferences::defaultSoundType(), Preferences::defaultSoundFile(),
+ 	                  Preferences::defaultSoundVolume(), -1, 0, Preferences::defaultSoundRepeat());
+ 	if (mSpecialActionsButton)
+ 		mSpecialActionsButton->setActions(Preferences::defaultPreAction(), Preferences::defaultPostAction());
+@@ -352,11 +352,11 @@
+ 	config->writeEntry(QString::fromLatin1("BirthdaySuffix"), mSuffix->text());
+ 	config->sync();
+ 
+-	mFlags = (mSoundPicker->beep()             ? KAEvent::BEEP : 0)
+-	       | (mSoundPicker->repeat()           ? KAEvent::REPEAT_SOUND : 0)
+-	       | (mConfirmAck->isChecked()         ? KAEvent::CONFIRM_ACK : 0)
+-	       | (mFontColourButton->defaultFont() ? KAEvent::DEFAULT_FONT : 0)
+-	       |                                     KAEvent::ANY_TIME;
++	mFlags = (mSoundPicker->sound() == SoundPicker::BEEP ? KAEvent::BEEP : 0)
++	       | (mSoundPicker->repeat()                     ? KAEvent::REPEAT_SOUND : 0)
++	       | (mConfirmAck->isChecked()                   ? KAEvent::CONFIRM_ACK : 0)
++	       | (mFontColourButton->defaultFont()           ? KAEvent::DEFAULT_FONT : 0)
++	       |                                               KAEvent::ANY_TIME;
+ 	KDialogBase::slotOk();
+ }
+ 
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -327,6 +327,7 @@
  #else
    KABC::DistributionList *list = mManager->list( oldName );
@@ -353,8 +3557,8 @@ Index: kaddressbook/features/distributionlistwidget.cpp
  
 Index: libkholidays/holidays/Makefile.am
 ===================================================================
---- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -11,7 +11,7 @@
                  holiday_nl \
                  holiday_no holiday_nz holiday_pl holiday_pt holiday_py \
@@ -366,8 +3570,8 @@ Index: libkholidays/holidays/Makefile.am
                  holiday_Suedtirol
 Index: libkdepim/categoryeditdialog.cpp
 ===================================================================
---- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -76,6 +76,7 @@
    }
    mWidget->mButtonRemove->setEnabled( categoriesExist );
@@ -376,10 +3580,68 @@ Index: libkdepim/categoryeditdialog.cpp
  }
  
  void CategoryEditDialog::slotTextChanged(const QString &text)
+Index: libkdepim/addresseelineedit.cpp
+===================================================================
+--- libkdepim/addresseelineedit.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkdepim/addresseelineedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -660,6 +660,8 @@
+             completionBox->setCurrentItem( item );
+             completionBox->setSelected( item, wasSelected );
+             completionBox->blockSignals( false );
++          } else {
++            completionBox->clearSelection();
+           }
+         }
+         else // completion box not visible yet -> show it
+@@ -821,7 +823,7 @@
+       // to ignore. If so, go one further
+       QListBoxItem *itemAbove = completionBox()->item( currentIndex - 1 );
+       if ( itemAbove && !itemAbove->text().startsWith( s_completionItemIndentString ) ) {
+-        // there is a header above is, check if there is even further up
++        // there is a header above us, check if there is even further up
+         // and if so go one up, so it'll be selected
+         if ( currentIndex > 1 && completionBox()->item( currentIndex - 2 ) ) {
+           //kdDebug() << "EVENTFILTER: Key_Up -> skipping " << currentIndex - 1 << endl;
+@@ -831,6 +833,7 @@
+             // nothing to skip to, let's stay where we are, but make sure the
+             // first header becomes visible, if we are the first real entry
+             completionBox()->ensureVisible( 0, 0 );
++            completionBox()->setSelected( currentIndex, true );
+         }
+         return true;
+       }
+@@ -845,9 +848,14 @@
+           completionBox()->setSelected( currentIndex + 2, true );
+         } else {
+           // nothing to skip to, let's stay where we are
++          completionBox()->setSelected( currentIndex, true );
+         }
+         return true;
+       }
++      // special case of the last and only item in the list needing selection
++      if ( !itemBelow && currentIndex == 1 ) {
++        completionBox()->setSelected( currentIndex, true );
++      }
+       // special case of the initial selection, which is unfortunately a header.
+       // Setting it to selected tricks KCompletionBox into not treating is special
+       // and selecting making it current, instead of the one below.
+Index: libkcal/localdir.desktop
+===================================================================
+--- libkcal/localdir.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkcal/localdir.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -34,7 +34,7 @@
+ Name[pt]=Calendário numa Directoria Local
+ Name[pt_BR]=Calendário em Diretório Local
+ Name[ro]=Calendar în director local
+-Name[ru]=Календарь в локальном каталоге
++Name[ru]=Календарь в локальной папке
+ Name[sk]=Kalendár v lokálnom priečinku
+ Name[sl]=Koledar v krajevnem imeniku
+ Name[sr]=Календар у локалном директоријуму
 Index: libkcal/libical/src/libical/sspm.c
 ===================================================================
---- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -1171,7 +1171,7 @@
  			     char *src,
  			     size_t *size)
@@ -391,8 +3653,8 @@ Index: libkcal/libical/src/libical/sspm.c
      int valid_data = 0;
 Index: libkcal/htmlexport.h
 ===================================================================
---- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -37,7 +37,7 @@
  namespace KCal {
  
@@ -404,8 +3666,8 @@ Index: libkcal/htmlexport.h
  {
 Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
 ===================================================================
---- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -99,7 +99,7 @@
                                      <bool>true</bool>
                                  </property>
@@ -417,8 +3679,8 @@ Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
                              <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
 Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
 ===================================================================
---- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -47,7 +47,7 @@
  Comment[es]=Este conducto sincroniza las notas de su agenda electrónica con el directorio local.
  Comment[et]=See kanal sünkroniseerib pihuarvutis ja arvutis olevad memod.
@@ -428,10 +3690,23 @@ Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
  Comment[fi]=Tämä yhdyskäytävä synkronoi taskutietokoneen muistiot paikalliseen kansioon.
  Comment[fr]=Ce canal synchronise les mémos du Palm avec ceux de KDE.
  Comment[hu]=Ezzel a csatolóval egy kézi számítógép memóit lehet szinkronizálni a helyi címjegyzékkel.
+Index: kpilot/conduits/docconduit/doc_conduit.desktop
+===================================================================
+--- kpilot/conduits/docconduit/doc_conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kpilot/conduits/docconduit/doc_conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+@@ -17,7 +17,7 @@
+ Comment[hu]=Szöveges fájlok hozzáadása a kézi számítógéphez, DOC-olvasók számára.
+ Comment[is]=Bætir textaskrám, sem hægt er að lesa í DOC lesara, við lófatölvuna þína.
+ Comment[it]=Aggiunge file di testo al tuo Pilot, adatti per lettori DOC.
+-Comment[ja]=テキストファイルを DOC リーダに適した形式でハンドヘルドに追加します。
++Comment[ja]=テキストファイルを DOC リーダーに適した形式でハンドヘルドに追加します。
+ Comment[km]=បន្ថែម​ឯកសារ​អត្ថបទ​ទៅ​ឧបករណ៍​យួរ​ដៃ​របស់​អ្នក (សមស្រប​សម្រាប់​កម្មវិធី​អាន DOC) ។
+ Comment[lt]=Prideda teksto bylas prie Jūsų nešiojamos knygelės, tinka DOC skaityklėms.
+ Comment[ms]=Menambah fail teks ke komputer telapak, sesuai dengan pembaca DOC.
 Index: kontact/plugins/akregator/akregatorplugin.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -65,7 +65,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -443,8 +3718,8 @@ Index: kontact/plugins/akregator/akregatorplugin.desktop
  Name[ga]=Fothaí
 Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -64,7 +64,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -456,8 +3731,8 @@ Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
  Name[ga]=Fothaí
 Index: kontact/interfaces/kontactplugin.desktop
 ===================================================================
---- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -15,7 +15,7 @@
  Name[es]=Plugin Kontact
  Name[et]=Kontacti plugin
@@ -469,8 +3744,8 @@ Index: kontact/interfaces/kontactplugin.desktop
  Name[ga]=Breiseán Kontact
 Index: ktnef/gui/ktnef.desktop
 ===================================================================
---- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -57,7 +57,7 @@
  Comment[es]=A visor/extractor para archivos TNEF
  Comment[et]=TNEF-failide näitaja/ekstraktija
@@ -482,8 +3757,8 @@ Index: ktnef/gui/ktnef.desktop
  Comment[hi]=टीएनईएफ फ़ाइलों के लिए एक प्रदर्शक/एक्सट्रेक्टर
 Index: korganizer/Makefile.am
 ===================================================================
---- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -171,7 +171,7 @@
  	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.h"` -o $(podir)/korganizer.pot
  	rm -f tips.cpp
@@ -495,8 +3770,8 @@ Index: korganizer/Makefile.am
  
 Index: korganizer/korganizer.kcfg
 ===================================================================
---- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -74,7 +74,7 @@
  
      <entry type="Bool" key="Html With Save">
@@ -506,6 +3781,33 @@ Index: korganizer/korganizer.kcfg
        <default>false</default>
      </entry>
      <entry type="Enum" key="Destination" name="Destination">
+@@ -158,7 +158,7 @@
+   <group name="Views">
+     <entry type="Int" key="Hour Size">
+       <label>Hour size</label>
+-      <whatsthis>Select on this spin box the the height of the hour rows in the schedule view.</whatsthis>
++      <whatsthis>Select on this spin box the height of the hour rows in the schedule view.</whatsthis>
+       <default>10</default>
+       <min>4</min>
+       <max>30</max>
+@@ -272,7 +272,7 @@
+ 
+     <entry type="Int" key="Next X Days">
+       <label>Next x days</label>
+-      <whatsthis>Select on this spin box the number of &quot;x&quot; days to be displayed in the next days view. To access the  the next &quot;x&quot; days view, choose the the &quot;Next X Days&quot; menu item from the &quot;View&quot; menu.</whatsthis>
++      <whatsthis>Select on this spin box the number of &quot;x&quot; days to be displayed in the next days view. To access the  the next &quot;x&quot; days view, choose the &quot;Next X Days&quot; menu item from the &quot;View&quot; menu.</whatsthis>
+       <default>3</default>
+     </entry>
+ 
+@@ -315,7 +315,7 @@
+     </entry>
+     <entry type="Bool" key="Use Groupware Communication">
+       <label>Use Groupware communication</label>
+-      <whatsthis>Check this box to enable automatic generation of mails when creating, updating or deleting events (or to-dos) involving other attendees. You should check this box if you you want to use the groupware functionality (e.g. Configuring Kontact as a KDE Kolab client).</whatsthis>
++      <whatsthis>Check this box to enable automatic generation of mails when creating, updating or deleting events (or to-dos) involving other attendees. You should check this box if you want to use the groupware functionality (e.g. Configuring Kontact as a KDE Kolab client).</whatsthis>
+       <default>true</default>
+     </entry>
+ 
 
 Property changes on: korganizer/pixmaps
 ___________________________________________________________________
@@ -516,8 +3818,8 @@ Makefile.in
 
 Index: korganizer/korganizer.desktop
 ===================================================================
---- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -1,6 +1,5 @@
  [Desktop Entry]
  Encoding=UTF-8
@@ -536,8 +3838,8 @@ Index: korganizer/korganizer.desktop
  DocPath=korganizer/index.html
 Index: korganizer/korganizer_configgroupautomation.desktop
 ===================================================================
---- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 595263)
-+++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
+--- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
++++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -25,7 +25,7 @@
  Name[es]=Automatización del grupo
  Name[et]=Grupitöö
@@ -550,7 +3852,7 @@ Index: korganizer/korganizer_configgroupautomation.desktop
 Index: korganizer/korganizer-import.desktop
 ===================================================================
 --- korganizer/korganizer-import.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 0)
-+++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 595263)
++++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
 @@ -0,0 +1,137 @@
 +[Desktop Entry]
 +Encoding=UTF-8
