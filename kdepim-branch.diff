@@ -1,7 +1,7 @@
 Index: akregator/src/librss/loader.h
 ===================================================================
---- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -227,7 +227,7 @@
  	 * 'OutputRetriever' will make it execute the script
  	 * '/home/myself/some-script.py' and assume whatever that script prints to
@@ -13,8 +13,8 @@ Index: akregator/src/librss/loader.h
  	 * 'slotLoadingComplete' method might look like this:
 Index: akregator/src/akregator.desktop
 ===================================================================
---- akregator/src/akregator.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- akregator/src/akregator.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -23,7 +23,7 @@
  GenericName[hu]=RSS hírolvasó
  GenericName[is]=RSS fréttaforrit
@@ -26,8 +26,8 @@ Index: akregator/src/akregator.desktop
  GenericName[ms]= Pembaca Suapan RSS 
 Index: akregator/src/eventsrc
 ===================================================================
---- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -15,7 +15,7 @@
  Name[es]=Origen añadido
  Name[et]=Kanal lisatud
@@ -39,8 +39,8 @@ Index: akregator/src/eventsrc
  Name[ga]=Cuireadh fotha leis
 Index: kmobile/devices/gammu/libkmobile_gammu.desktop
 ===================================================================
---- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -14,7 +14,7 @@
  Name[es]=Teléfono móvil u organizador (gammu)
  Name[et]=Mobiiltelefon või Organizer (gammu)
@@ -52,8 +52,8 @@ Index: kmobile/devices/gammu/libkmobile_gammu.desktop
  Name[ga]=Fón Póca nó Eagraí (gammu)
 Index: certmanager/lib/libkleopatrarc.desktop
 ===================================================================
---- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -99,7 +99,7 @@
  Name[es]=Clave revocada
  Name[et]=Tühistatud võti
@@ -65,8 +65,8 @@ Index: certmanager/lib/libkleopatrarc.desktop
  Name[he]=מפתח לא קביל
 Index: libkmime/kmime_message.cpp
 ===================================================================
---- libkmime/kmime_message.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkmime/kmime_message.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkmime/kmime_message.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkmime/kmime_message.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -62,6 +62,10 @@
    if( (h=to(false))!=0 )
      newHead+=h->as7BitString()+"\n";
@@ -91,8 +91,8 @@ Index: libkmime/kmime_message.cpp
  
 Index: libkmime/kmime_newsarticle.h
 ===================================================================
---- libkmime/kmime_newsarticle.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkmime/kmime_newsarticle.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkmime/kmime_newsarticle.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkmime/kmime_newsarticle.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -43,7 +43,6 @@
    virtual KMime::Headers::Newsgroups* newsgroups(bool create=true)      { KMime::Headers::Newsgroups *p=0; return getHeaderInstance(p, create); }
    virtual KMime::Headers::FollowUpTo* followUpTo(bool create=true)      { KMime::Headers::FollowUpTo *p=0; return getHeaderInstance(p, create); }
@@ -103,8 +103,8 @@ Index: libkmime/kmime_newsarticle.h
  protected:
 Index: libkmime/kmime_message.h
 ===================================================================
---- libkmime/kmime_message.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkmime/kmime_message.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkmime/kmime_message.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkmime/kmime_message.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -51,6 +51,7 @@
    virtual KMime::Headers::CC* cc(bool create=true)                      { KMime::Headers::CC *p=0; return getHeaderInstance(p, create); }
    virtual KMime::Headers::BCC* bcc(bool create=true)                    { KMime::Headers::BCC *p=0; return getHeaderInstance(p, create); }
@@ -115,8 +115,8 @@ Index: libkmime/kmime_message.h
    //hardcoded headers
 Index: kmail/kmfilterdlg.cpp
 ===================================================================
---- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -226,6 +226,7 @@
        gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
        mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
@@ -135,8 +135,8 @@ Index: kmail/kmfilterdlg.cpp
      mFilterActionLabel->setEnabled( aChecked );
 Index: kmail/expirejob.cpp
 ===================================================================
---- kmail/expirejob.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/expirejob.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/expirejob.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/expirejob.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -125,7 +125,7 @@
      const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
      if (mb == 0)
@@ -148,8 +148,8 @@ Index: kmail/expirejob.cpp
  
 Index: kmail/application_octetstream.desktop
 ===================================================================
---- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -39,7 +39,7 @@
  Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
  Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
@@ -161,9 +161,17 @@ Index: kmail/application_octetstream.desktop
  Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
 Index: kmail/kmail_config_composer.desktop
 ===================================================================
---- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
-@@ -70,7 +70,7 @@
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -13,6 +13,7 @@
+ X-KDE-CfgDlgHierarchy=KMail
+ 
+ Name=Composer
++Name[ar]=المحرر
+ Name[bg]=Редактор
+ Name[br]=Skridaozer
+ Name[bs]=Sastavljač
+@@ -70,7 +71,7 @@
  Comment[es]=Frases y comportamiento general
  Comment[et]=Väljendid ja üldine käitumine
  Comment[eu]=Esaldiak eta portamolde orokorra
@@ -172,10 +180,77 @@ Index: kmail/kmail_config_composer.desktop
  Comment[fi]=Ilmaukset ja yleiset asetukset
  Comment[fr]=Phrases et comportement général
  Comment[gl]=Frases e comportamento xeral
+Index: kmail/kmail_config_identity.desktop
+===================================================================
+--- kmail/kmail_config_identity.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmail_config_identity.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -13,6 +13,7 @@
+ X-KDE-CfgDlgHierarchy=KMail
+ 
+ Name=Identities
++Name[ar]=الهويات
+ Name[be]=Увасабленьні
+ Name[bg]=Самоличност
+ Name[br]=Anvelezhioù
+@@ -60,6 +61,7 @@
+ Name[zh_CN]=身份
+ Name[zh_TW]=身份
+ Comment=Manage Identities
++Comment[ar]=تدبير الهويات
+ Comment[be]=Кіраваньне увасабленьнямі
+ Comment[bg]=Настройки на самоличността
+ Comment[br]=Merañ an anvelezhioù
+Index: kmail/kmcommands.cpp
+===================================================================
+--- kmail/kmcommands.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -811,22 +811,28 @@
+     assert( idx >= 0 );
+     msg = p->getMsg(idx);
+ 
+-    if (msg->transferInProgress()) {
+-      QByteArray data = QByteArray();
+-      mJob->sendAsyncData( data );
+-    }
+-    msg->setTransferInProgress( true );
+-    if (msg->isComplete() ) {
+-      slotMessageRetrievedForSaving(msg);
+-    } else {
++    if ( msg ) {
++      if ( msg->transferInProgress() ) {
++        QByteArray data = QByteArray();
++        mJob->sendAsyncData( data );
++      }
++      msg->setTransferInProgress( true );
++      if (msg->isComplete() ) {
++        slotMessageRetrievedForSaving( msg );
++      } else {
+       // retrieve Message first
+-      if (msg->parent()  && !msg->isComplete() ) {
+-        FolderJob *job = msg->parent()->createJob(msg);
+-        job->setCancellable( false );
+-        connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+-            this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
+-        job->start();
++        if ( msg->parent()  && !msg->isComplete() ) {
++          FolderJob *job = msg->parent()->createJob( msg );
++          job->setCancellable( false );
++          connect(job, SIGNAL( messageRetrieved( KMMessage* ) ),
++                  this, SLOT( slotMessageRetrievedForSaving( KMMessage* ) ) );
++          job->start();
++        }
+       }
++    } else {
++      mJob->slotError( KIO::ERR_ABORTED,
++                       i18n("The message was removed while saving it. "
++                            "It has not been saved.") );
+     }
+   } else {
+     if ( mStandAloneMessage ) {
 Index: kmail/kmfoldercachedimap.cpp
 ===================================================================
---- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -75,6 +75,7 @@
  #include <globalsettings.h>
  
@@ -262,7 +337,7 @@ Index: kmail/kmfoldercachedimap.cpp
    QMap<ulong,int>::Iterator it = uidMap.find( uid );
    if( it != uidMap.end() ) {
      KMMsgBase *msg = getMsgBase( *it );
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
 +    kdDebug(5006) << "UID " << uid << " is supposed to be in the map" << endl;
 +    kdDebug(5006) << "UID's index is to be " << *it << endl;
 +    kdDebug(5006) << "There is a message there? " << (msg != 0) << endl;
@@ -275,7 +350,7 @@ Index: kmail/kmfoldercachedimap.cpp
        return msg;
 +    kdDebug(5006) << "########## Didn't find uid: " << uid << "in cache athough it's supposed to be there!" << endl;
    } else {
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
      kdDebug(5006) << "Didn't find uid: " << uid << "in cache!" << endl;
 +#endif
    }
@@ -285,7 +360,7 @@ Index: kmail/kmfoldercachedimap.cpp
    if( it != uidMap.end() )
      // Since the uid map is just rebuilt, no need for the sanity check
      return getMsgBase( *it );
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
    else
      kdDebug(5006) << "Reloaded, but stil didn't find uid: " << uid << endl;
 +#endif
@@ -346,7 +421,7 @@ Index: kmail/kmfoldercachedimap.cpp
  
    if( !msgsForDeletion.isEmpty() ) {
 -    removeMsg( msgsForDeletion );
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
 +      if ( KMessageBox::warningYesNo(
 +             0, i18n( "<qt><p>Mails on the server in folder <b>%1</b> were deleted. "
 +                 "Do you want to delete them locally?<br>UIDs: %2</p></qt>" )
@@ -387,7 +462,7 @@ Index: kmail/kmfoldercachedimap.cpp
          if( !existingMessage ) {
            if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::Delete ) ) {
 -            // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
 +            kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
 +#endif
              uidsForDeletionOnServer << uid;
@@ -400,7 +475,7 @@ Index: kmail/kmfoldercachedimap.cpp
 +  if ( !job->error() && !mFoundAnIMAPDigest ) {
 +      kdWarning(5006) << "######## Folderlisting did not complete, but there was no error! "
 +          "Aborting sync of folder: " << folder()->prettyURL() << endl;
-+#ifdef MAIL_LOSS_DEBUGGING
++#if MAIL_LOSS_DEBUGGING
 +      kmkernel->emergencyExit( i18n("Folder listing failed in interesting ways." ) );
 +#endif
 +  }
@@ -425,10 +500,30 @@ Index: kmail/kmfoldercachedimap.cpp
    if ( entry == KOLAB_FOLDERTYPE )
      mAnnotationFolderTypeChanged = false;
    else if ( entry == KOLAB_INCIDENCESFOR ) {
+Index: kmail/eventsrc
+===================================================================
+--- kmail/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -9,6 +9,7 @@
+ 
+ [new-mail-arrived]
+ Name=New Mail Arrived
++Name[ar]=وصل بريد جديد
+ Name[bg]=Имате ново писмо
+ Name[br]=Deuet eo ur postel nevez
+ Name[bs]=Stigla vam je nova pošta
+@@ -55,6 +56,7 @@
+ Name[zh_CN]=新邮件到达
+ Name[zh_TW]=您有新郵件
+ Comment=New mail arrived
++Comment[ar]=وصل بريد جديد
+ Comment[bg]=Имате ново писмо
+ Comment[br]=Deuet eo ur postel nevez
+ Comment[bs]=Stigla vam je nova pošta
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -192,6 +192,7 @@
  bool KMKernel::handleCommandLine( bool noArgsOpensReader )
  {
@@ -529,8 +624,8 @@ Index: kmail/kmkernel.cpp
      walletOpenFailed = true;
 Index: kmail/headerstyle.cpp
 ===================================================================
---- kmail/headerstyle.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/headerstyle.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/headerstyle.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/headerstyle.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -527,6 +527,40 @@
        userHTML = "&nbsp;";
      }
@@ -574,8 +669,8 @@ Index: kmail/headerstyle.cpp
        // no photo, look for a X-Face header
 Index: kmail/kmfoldercachedimap.h
 ===================================================================
---- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -445,6 +445,11 @@
        mLastUid. See above for details. */
    ulong mTentativeHighestUid;
@@ -590,8 +685,8 @@ Index: kmail/kmfoldercachedimap.h
  
 Index: kmail/kmmainwidget.cpp
 ===================================================================
---- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -846,6 +846,10 @@
      }
    }
@@ -616,8 +711,8 @@ Index: kmail/kmmainwidget.cpp
  
 Index: kmail/kmcomposewin.h
 ===================================================================
---- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -398,8 +398,8 @@
    void slotAttachRemove();
    void slotAttachSave();
@@ -666,8 +761,8 @@ Index: kmail/kmcomposewin.h
    bool mLastSignActionState, mLastEncryptActionState;
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -333,7 +333,7 @@
  
    connect( mAtmListView,
@@ -832,8 +927,8 @@ Index: kmail/kmcomposewin.cpp
    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 Index: kmail/popaccount.cpp
 ===================================================================
---- kmail/popaccount.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/popaccount.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -489,12 +489,12 @@
      mUidlFinished = TRUE;
  
@@ -855,8 +950,8 @@ Index: kmail/popaccount.cpp
      }
 Index: kmail/kmkernel.h
 ===================================================================
---- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -96,10 +96,19 @@
    /** returns id of composer if more are opened */
    int openComposer (const QString &to, const QString &cc, const QString &bcc,
@@ -890,8 +985,8 @@ Index: kmail/kmkernel.h
    bool folderIsDraftOrOutbox(const KMFolder *);
 Index: kmail/Mainpage.dox
 ===================================================================
---- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -793,7 +793,7 @@
  
    - @em BodyPartFormatter
@@ -901,10 +996,30 @@ Index: kmail/Mainpage.dox
  	generated HTML to and returns a result code with which it can
  	request more information or delegate the formatting back to
  	some default processor. BodyPartFormatters are meant to be
+Index: kmail/kmail_config_accounts.desktop
+===================================================================
+--- kmail/kmail_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kmail/kmail_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -13,6 +13,7 @@
+ X-KDE-CfgDlgHierarchy=KMail
+ 
+ Name=Accounts
++Name[ar]=الحسابات
+ Name[be]=Рахункі
+ Name[bg]=Сметки
+ Name[br]=Kontoù
+@@ -61,6 +62,7 @@
+ Name[zh_CN]=账户
+ Name[zh_TW]=帳號
+ Comment=Setup for Sending and Receiving Messages
++Comment[ar]=تعيينات إرسال و إستقبال الرسائل
+ Comment[bg]=Настройки на мрежата, сървърите и сметките
+ Comment[bs]=Postavke za slanje i prijem poruka
+ Comment[ca]=Configuració per enviar i rebre missatges
 Index: knode/articlewidget.h
 ===================================================================
---- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -145,7 +145,7 @@
        FancyFormatting = 2,
        AllowROT13 = 4
@@ -914,10 +1029,22 @@ Index: knode/articlewidget.h
      QString toHtmlString( const QString &line, int flags = ParseURL );
      /// convert the given image into a data:/ URL
      static QString imgToDataUrl( const QImage &image, const char* fmt );
+Index: knode/knode_config_accounts.desktop
+===================================================================
+--- knode/knode_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ knode/knode_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -13,6 +13,7 @@
+ X-KDE-CfgDlgHierarchy=KNode
+ 
+ Name=Accounts
++Name[ar]=الحسابات
+ Name[be]=Рахункі
+ Name[bg]=Сметки
+ Name[br]=Kontoù
 Index: knode/KNode.desktop
 ===================================================================
---- knode/KNode.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- knode/KNode.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -42,7 +42,7 @@
  GenericName[id]=Pembaca Berita
  GenericName[is]=Fréttaforrit
@@ -927,14 +1054,320 @@ Index: knode/KNode.desktop
  GenericName[km]=កម្មវិធី​អាន​ព័ត៌មាន
  GenericName[lt]=Naujienų skaityklė
  GenericName[lv]=Ziņu Lasītājs
+Index: doc/kalarm/mainwindow.png
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = image/png
 Index: doc/kalarm/editwindow.png
 ===================================================================
 Cannot display: file marked as a binary type.
 svn:mime-type = image/png
+Index: doc/kalarm/index.docbook
+===================================================================
+--- doc/kalarm/index.docbook	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ doc/kalarm/index.docbook	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" ?>
+-<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
++<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+   <!ENTITY kappname "&kalarm;">
+   <!ENTITY package "kdepim">
+   <!ENTITY % addindex "IGNORE">
+@@ -16,7 +16,6 @@
+ <authorgroup>
+ <author>
+ <firstname>David</firstname>
+-<othername></othername>
+ <surname>Jarvie</surname>
+ <affiliation>
+ <address><email>software@astrojar.org.uk</email></address>
+@@ -42,8 +41,8 @@
+ 
+ <!-- Don't change format of date and version of the documentation -->
+ 
+-<date>2006-04-09</date>
+-<releaseinfo>1.04.03</releaseinfo>
++<date>2006-10-21</date>
++<releaseinfo>1.04.06</releaseinfo>
+ 
+ <abstract>
+ <para>&kalarm; is a personal alarm message, command and email scheduler for &kde;.</para>
+@@ -617,7 +616,7 @@
+ <guimenuitem>Import Alarms...</guimenuitem></menuchoice>. The
+ import function scans the selected calendar file for events containing
+ alarms, and copies them (with new unique IDs) into &kalarm;'s calendar.
+-Events without alarms, and other types of calendar entry, are
++Events without alarms, and calendar entries other than events, are
+ ignored.</para>
+ 
+ <warning><para>If you import alarms from calendar files which were
+@@ -734,17 +733,15 @@
+ 
+ <itemizedlist>
+ <listitem>
+-<para>The <guilabel>Confirm acknowledgment</guilabel> checkbox lets
+-you specify whether you will be prompted for confirmation when you
+-close the alarm message window. This may be used as a safeguard
+-against accidental acknowledgment of alarms.</para>
+-</listitem>
++<para>The <guilabel>Sound</guilabel> option allows you to select
++whether an audible alarm should sound when the alarm message is
++displayed. Choose:</para>
+ 
++<itemizedlist>
+ <listitem>
+-<para>Check <guilabel>Sound</guilabel> if you want an audible alarm
+-to sound when the alarm message is displayed. Choose:</para>
++<para><guilabel>None</guilabel> to display the alarm silently.</para>
++</listitem>
+ 
+-<itemizedlist>
+ <listitem>
+ <para><guilabel>Beep</guilabel> to sound a beep.</para>
+ </listitem>
+@@ -758,11 +755,11 @@
+ </listitem>
+ 
+ <listitem>
+-<para><guilabel>File</guilabel> to play an audio file. Use the button
+-on the right to display the Sound File dialog which lets you select a
+-file to play and set volume and repetition options. If you hover the
+-mouse over the button, a tooltip will display the audio file currently
+-selected.</para>
++<para><guilabel>Sound file</guilabel> to play an audio file. Use the
++button on the right to display the Sound File dialog which lets you
++select a file to play and set volume and repetition options. If you
++hover the mouse over the button, a tooltip will display the audio file
++currently selected.</para>
+ 
+ <note><para>&kalarm; uses the &arts; sound server for repetition and
+ volume control. If &kalarm; has been built without &arts; support,
+@@ -817,25 +814,6 @@
+ </listitem>
+ 
+ <listitem>
+-<para>Check <guilabel>Reminder</guilabel> if you want to display a
+-reminder in advance of the main alarm and of each of its recurrences
+-(if any). Enter how long in advance using the edit controls beside
+-the checkbox.</para>
+-
+-<note><para>You can only display a reminder before each repetition of
+-an alarm if the repetitions are set up using the
+-<guilabel>Recurrence</guilabel> tab. If the
+-<guibutton>Simple Repetition</guibutton> button is used instead, a
+-reminder will be displayed before the first occurrence
+-only.</para></note>
+-
+-<para>If the alarm recurs, check <guilabel>Reminder for first
+-recurrence only</guilabel> if you only want a reminder before the
+-alarm's first recurrence. If this is not checked, the reminder period
+-is limited to being less than the recurrence interval.</para>
+-</listitem>
+-
+-<listitem>
+ <para>Select the background color for the alarm message window.
+ (The color selection list can be configured in the
+ <link linkend="preferences-fontcolour">Preferences dialog</link>.)</para>
+@@ -1029,6 +1007,28 @@
+ </sect2>
+ 
+ <sect2>
++<title>Reminder</title>
++
++<para>For a display alarm, check <guilabel>Reminder</guilabel> if you
++want to display a reminder in advance of the main alarm and of each of
++its recurrences (if any). Enter how long in advance using the edit
++controls beside the checkbox.</para>
++
++<note><para>You can only display a reminder before each repetition of
++an alarm if the repetitions are set up using the
++<guilabel>Recurrence</guilabel> tab. If the
++<guibutton>Simple Repetition</guibutton> button is used instead, a
++reminder will be displayed before the first occurrence
++only.</para></note>
++
++<para>If the alarm recurs, check <guilabel>Reminder for first
++recurrence only</guilabel> if you only want a reminder before the
++alarm's first recurrence. If this is not checked, the reminder period
++is limited to being less than the recurrence interval.</para>
++
++</sect2>
++
++<sect2>
+ <title>Cancelation</title>
+ 
+ <para>The late-cancelation options determine how an alarm is treated
+@@ -1236,6 +1236,12 @@
+ <sect2>
+ <title>Other controls</title>
+ 
++<para>For display alarms, the
++<guilabel>Confirm acknowledgment</guilabel> checkbox lets you specify
++whether you will be prompted for confirmation when you close the alarm
++message window. This may be used as a safeguard against accidental
++acknowledgment of alarms.</para>
++
+ <para>Select <guilabel>Show in &korganizer;</guilabel> to add the
+ alarm to &korganizer;'s active calendar, where it will appear as an
+ event without an alarm. This option allows you to track alarms in
+@@ -1701,22 +1707,6 @@
+ &kalarm;'s overall behavior:</para>
+ 
+ <itemizedlist>
+-<listitem><para><guilabel>Start alarm monitoring at login</guilabel>:
+-This starts alarm monitoring at KDE session login, by starting the
+-<application>alarm daemon</application>. Note that in order for alarms
+-to be activated, you also need to select appropriate options in the
+-<guilabel>Run Mode</guilabel> group box.</para>
+-
+-<warning><para>This option should always be checked unless you intend
+-to discontinue use of &kalarm;.</para></warning>
+-
+-<note><para>This option is automatically reselected whenever &kalarm;
+-is run. So if you have unchecked this option and want to continue to
+-prevent the <application>alarm daemon</application> from running at
+-login, you need to uncheck this option again each time you run
+-&kalarm;.</para></note>
+-</listitem>
+-
+ <listitem><para><guilabel>Run Mode</guilabel> group box: These options
+ control &kalarm;'s system tray icon, and also allow some control over
+ &kalarm;'s use of system resources by specifying whether or not to run
+@@ -1730,6 +1720,13 @@
+ monitors the alarm list and triggers alarms.</para>
+ 
+ <itemizedlist>
++<listitem><para><guilabel>Run only on demand</guilabel>: &kalarm;
++is run only when an alarm is triggered, if you run it manually, or
++while its system tray icon is displayed. In this mode the system tray
++icon can still be displayed, but closing the system tray icon has no
++effect on any &kalarm; windows.</para>
++</listitem>
++
+ <listitem><para><guilabel>Run continuously in system tray</guilabel>:
+ &kalarm; runs continuously and the system tray icon is always
+ displayed while it is running. In this mode, closing the system tray
+@@ -1738,10 +1735,6 @@
+ are:</para>
+ 
+ <itemizedlist>
+-<listitem><para><guilabel>Autostart at login</guilabel>: This starts
+-&kalarm; at &kde; session login, ensuring that &kalarm; runs at all
+-times unless you manually quit.</para>
+-</listitem>
+ <listitem><para><guilabel>Disable alarms while not running</guilabel>:
+ Selecting this option has the effect that alarms will be disabled
+ whenever &kalarm;'s system tray icon is not visible.</para>
+@@ -1759,22 +1752,37 @@
+ </listitem>
+ </itemizedlist>
+ 
++<!--
+ <para>In this mode, if no system tray exists, &kalarm; runs
+ continuously in the background and alarms are always enabled.</para>
++-->
+ </listitem>
+ 
+-<listitem><para><guilabel>Run only on demand</guilabel>: &kalarm;
+-is run only when an alarm is triggered, if you run it manually, or
+-while its system tray icon is displayed. In this mode the system tray
+-icon can still be displayed, but closing the system tray icon has no
+-effect on any &kalarm; windows.</para>
++<listitem><para><guilabel>Autostart at login</guilabel>: In continuous
++mode, this starts &kalarm; at &kde; session login, ensuring that
++&kalarm; runs at all times unless you manually quit.</para>
++</listitem>
+ 
+-<itemizedlist>
+ <listitem><para><guilabel>Autostart system tray icon at
+-login</guilabel>: This displays &kalarm;'s system tray icon at login.
+-&kalarm; will run until the system tray icon is closed.</para>
++login</guilabel>: In on-demand mode, this displays &kalarm;'s system
++tray icon at login. &kalarm; will run until the system tray icon is
++closed.</para>
+ </listitem>
+-</itemizedlist>
++
++<listitem><para><guilabel>Start alarm monitoring at login</guilabel>:
++This starts alarm monitoring at KDE session login, by starting the
++<application>alarm daemon</application>. Note that in order for alarms
++to be activated, you also need to select appropriate options in the
++<guilabel>Run Mode</guilabel> group box.</para>
++
++<warning><para>This option should always be checked unless you intend
++to discontinue use of &kalarm;.</para></warning>
++
++<note><para>This option is automatically reselected whenever &kalarm;
++is run. So if you have unchecked this option and want to continue to
++prevent the <application>alarm daemon</application> from running at
++login, you need to uncheck this option again each time you run
++&kalarm;.</para></note>
+ </listitem>
+ </itemizedlist>
+ </listitem>
+@@ -1823,17 +1831,20 @@
+ options control the storage of expired alarms.</para>
+ <itemizedlist>
+ <listitem><para><guilabel>Keep alarms after expiry</guilabel>:
+-Select this option to store expired alarms. Deselect it to keep no
+-record of alarms once they have expired.</para>
++Select this option to store expired and deleted alarms. Deselect it
++to keep no record of alarms once they cease to be active. Note that
++deleted alarms are only stored if they have previously been
++triggered. If you delete an alarm before it ever triggers, it is
++discarded.</para>
+ </listitem>
+ 
+ <listitem><para><guilabel>Discard expired alarms after</guilabel>:
+-Set the number of days to store expired alarms after their last
+-activation.</para>
++Set the number of days to store expired and deleted alarms, after which
++they are permanently deleted.</para>
+ </listitem>
+ 
+ <listitem><para><guibutton>Clear expired alarms</guibutton>: This
+-button discards all currently stored  expired alarms. This has no
++button discards all currently stored expired alarms. This has no
+ effect on alarms which subsequently expire; they will continue to be
+ stored according to the selected options.</para>
+ </listitem>
+@@ -2149,9 +2160,8 @@
+ </listitem>
+ 
+ <listitem><para>Set the default sound options. Note that a default
+-sound file may be specified even if <guilabel>Sound</guilabel> is
+-unchecked, or if <guilabel>Beep</guilabel> or
+-<guilabel>Speak</guilabel> is checked.</para>
++sound file may be specified even if the sound type is not set to
++<guilabel>Sound file</guilabel>.</para>
+ </listitem>
+ </itemizedlist>
+ 
+@@ -4030,16 +4040,16 @@
+ 
+ <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+ 
++&underFDL;               <!-- FDL: do not remove -->
++
++&underGPL;        	 <!-- GPL License -->
++
+ <para>Thanks go to the author of the &kde; 1 KAlarm application,
+ Stefan Nikolaus <email>stefan.nikolaus@stuco.uni-oldenburg.de</email>,
+ who kindly agreed to allow the name &kalarm; to be used by this
+ &kde; 2 / &kde; 3 application.
+ </para>
+ 
+-&underFDL;               <!-- FDL: do not remove -->
+-
+-&underGPL;        	 <!-- GPL License -->
+-
+ </chapter>
+ 
+ <appendix id="installation">
 Index: kalarm/messagewin.cpp
 ===================================================================
---- kalarm/messagewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/messagewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1437,18 +1437,18 @@
  		if (AlarmCalendar::activeCalendar()->event(mEventID))
  		{
@@ -977,8 +1410,8 @@ Index: kalarm/messagewin.cpp
  				event.setUid(KAEvent::EXPIRED);
 Index: kalarm/undo.cpp
 ===================================================================
---- kalarm/undo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/undo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/undo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/undo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -57,7 +57,7 @@
  		virtual UndoItem* restore() = 0;
  		virtual bool      deleteID(const QString& /*id*/)  { return false; }
@@ -1092,8 +1525,8 @@ Index: kalarm/undo.cpp
  				return 0;
 Index: kalarm/preferences.h
 ===================================================================
---- kalarm/preferences.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/preferences.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/preferences.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/preferences.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  preferences.h  -  program preference settings
@@ -1161,8 +1594,8 @@ Index: kalarm/preferences.h
  #endif // PREFERENCES_H
 Index: kalarm/editdlg.cpp
 ===================================================================
---- kalarm/editdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -163,7 +163,7 @@
   */
  EditAlarmDlg::EditAlarmDlg(bool Template, const QString& caption, QWidget* parent, const char* name,
@@ -1430,8 +1863,8 @@ Index: kalarm/editdlg.cpp
  	}
 Index: kalarm/functions.h
 ===================================================================
---- kalarm/functions.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/functions.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -45,14 +45,20 @@
  
  /** Return codes from fileType() */
@@ -1488,8 +1921,8 @@ Index: kalarm/functions.h
  
 Index: kalarm/alarmcalendar.h
 ===================================================================
---- kalarm/alarmcalendar.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/alarmcalendar.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/alarmcalendar.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/alarmcalendar.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -43,16 +43,16 @@
  		bool                  open();
  		int                   load();
@@ -1512,8 +1945,8 @@ Index: kalarm/alarmcalendar.h
  		void                  setPurgeDays(int days);
 Index: kalarm/soundpicker.h
 ===================================================================
---- kalarm/soundpicker.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/soundpicker.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/soundpicker.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/soundpicker.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  soundpicker.h  -  widget to select a sound file or a beep
@@ -1633,8 +2066,8 @@ Index: kalarm/soundpicker.h
  };
 Index: kalarm/preferences.cpp
 ===================================================================
---- kalarm/preferences.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/preferences.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/preferences.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/preferences.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  preferences.cpp  -  program preference settings
@@ -1835,8 +2268,8 @@ Index: kalarm/preferences.cpp
  }
 Index: kalarm/templatedlg.cpp
 ===================================================================
---- kalarm/templatedlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/templatedlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/templatedlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/templatedlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  templatedlg.cpp  -  dialogue to create, edit and delete alarm templates
@@ -1915,8 +2348,8 @@ Index: kalarm/templatedlg.cpp
  /******************************************************************************
 Index: kalarm/kalarm.h
 ===================================================================
---- kalarm/kalarm.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/kalarm.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -26,7 +26,7 @@
  #include <config.h>
  #endif
@@ -1928,8 +2361,8 @@ Index: kalarm/kalarm.h
  #include <kdeversion.h>
 Index: kalarm/mainwindow.cpp
 ===================================================================
---- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -114,7 +114,7 @@
  }
  
@@ -2134,8 +2567,8 @@ Index: kalarm/mainwindow.cpp
  		}
 Index: kalarm/editdlg.h
 ===================================================================
---- kalarm/editdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/editdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/editdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/editdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  editdlg.h  -  dialogue to create or modify an alarm or alarm template
@@ -2155,8 +2588,8 @@ Index: kalarm/editdlg.h
  		float               mSavedSoundVolume;    // mSoundPicker volume
 Index: kalarm/prefdlg.h
 ===================================================================
---- kalarm/prefdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/prefdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  prefdlg.h  -  program preferences dialog
@@ -2215,8 +2648,8 @@ Index: kalarm/prefdlg.h
  
 Index: kalarm/Changelog
 ===================================================================
---- kalarm/Changelog	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/Changelog	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,5 +1,12 @@
  KAlarm
  
@@ -2232,8 +2665,8 @@ Index: kalarm/Changelog
  
 Index: kalarm/daemon.h
 ===================================================================
---- kalarm/daemon.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/daemon.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/daemon.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/daemon.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -46,7 +46,7 @@
  		static bool      reregister()            { return registerWith(true); }
  		static bool      reset();
@@ -2245,8 +2678,8 @@ Index: kalarm/daemon.h
  		static void      checkStatus()           { checkIfRunning(); }
 Index: kalarm/sounddlg.cpp
 ===================================================================
---- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  sounddlg.cpp  -  sound file selection and configuration dialog
@@ -2276,8 +2709,8 @@ Index: kalarm/sounddlg.cpp
  	QSize s;
 Index: kalarm/prefdlg.cpp
 ===================================================================
---- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -48,6 +48,7 @@
  
  #include "alarmcalendar.h"
@@ -2658,8 +3091,8 @@ Index: kalarm/prefdlg.cpp
  		return i18n("You must enter a sound file when %1 is selected as the default sound type").arg(SoundPicker::i18n_File());;
 Index: kalarm/daemon.cpp
 ===================================================================
---- kalarm/daemon.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/daemon.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/daemon.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/daemon.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -374,24 +374,23 @@
  	// Tell the alarm daemon in case it is running.
  	AlarmDaemonIface_stub s(DAEMON_APP_NAME, DAEMON_DCOP_OBJECT);
@@ -2696,8 +3129,8 @@ Index: kalarm/daemon.cpp
  /******************************************************************************
 Index: kalarm/functions.cpp
 ===================================================================
---- kalarm/functions.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/functions.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -127,27 +127,37 @@
  * event in that listView instance.
  * 'event' is updated with the actual event ID.
@@ -3085,8 +3518,8 @@ Index: kalarm/functions.cpp
  	switch (code)
 Index: kalarm/alarmcalendar.cpp
 ===================================================================
---- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -578,26 +578,30 @@
  * Flag the end of a group of calendar update calls.
  * The calendar is saved if appropriate.
@@ -3149,8 +3582,8 @@ Index: kalarm/alarmcalendar.cpp
  /******************************************************************************
 Index: kalarm/soundpicker.cpp
 ===================================================================
---- kalarm/soundpicker.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/soundpicker.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/soundpicker.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/soundpicker.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  soundpicker.cpp  -  widget to select a sound file or a beep
@@ -3497,8 +3930,8 @@ Index: kalarm/soundpicker.cpp
  }
 Index: kalarm/birthdaydlg.cpp
 ===================================================================
---- kalarm/birthdaydlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kalarm/birthdaydlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kalarm/birthdaydlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kalarm/birthdaydlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,7 +1,7 @@
  /*
   *  birthdaydlg.cpp  -  dialog to pick birthdays from address book
@@ -3545,8 +3978,8 @@ Index: kalarm/birthdaydlg.cpp
  
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -327,6 +327,7 @@
  #else
    KABC::DistributionList *list = mManager->list( oldName );
@@ -3557,8 +3990,8 @@ Index: kaddressbook/features/distributionlistwidget.cpp
  
 Index: libkholidays/holidays/Makefile.am
 ===================================================================
---- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -11,7 +11,7 @@
                  holiday_nl \
                  holiday_no holiday_nz holiday_pl holiday_pt holiday_py \
@@ -3570,8 +4003,8 @@ Index: libkholidays/holidays/Makefile.am
                  holiday_Suedtirol
 Index: libkdepim/categoryeditdialog.cpp
 ===================================================================
---- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -76,6 +76,7 @@
    }
    mWidget->mButtonRemove->setEnabled( categoriesExist );
@@ -3582,8 +4015,8 @@ Index: libkdepim/categoryeditdialog.cpp
  void CategoryEditDialog::slotTextChanged(const QString &text)
 Index: libkdepim/addresseelineedit.cpp
 ===================================================================
---- libkdepim/addresseelineedit.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkdepim/addresseelineedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkdepim/addresseelineedit.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkdepim/addresseelineedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -660,6 +660,8 @@
              completionBox->setCurrentItem( item );
              completionBox->setSelected( item, wasSelected );
@@ -3627,8 +4060,8 @@ Index: libkdepim/addresseelineedit.cpp
        // and selecting making it current, instead of the one below.
 Index: libkcal/localdir.desktop
 ===================================================================
---- libkcal/localdir.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkcal/localdir.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkcal/localdir.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkcal/localdir.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -34,7 +34,7 @@
  Name[pt]=Calendário numa Directoria Local
  Name[pt_BR]=Calendário em Diretório Local
@@ -3640,8 +4073,8 @@ Index: libkcal/localdir.desktop
  Name[sr]=Календар у локалном директоријуму
 Index: libkcal/libical/src/libical/sspm.c
 ===================================================================
---- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1171,7 +1171,7 @@
  			     char *src,
  			     size_t *size)
@@ -3653,8 +4086,8 @@ Index: libkcal/libical/src/libical/sspm.c
      int valid_data = 0;
 Index: libkcal/htmlexport.h
 ===================================================================
---- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -37,7 +37,7 @@
  namespace KCal {
  
@@ -3666,8 +4099,8 @@ Index: libkcal/htmlexport.h
  {
 Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
 ===================================================================
---- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -99,7 +99,7 @@
                                      <bool>true</bool>
                                  </property>
@@ -3679,8 +4112,8 @@ Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
                              <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
 Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
 ===================================================================
---- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -47,7 +47,7 @@
  Comment[es]=Este conducto sincroniza las notas de su agenda electrónica con el directorio local.
  Comment[et]=See kanal sünkroniseerib pihuarvutis ja arvutis olevad memod.
@@ -3692,8 +4125,8 @@ Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
  Comment[hu]=Ezzel a csatolóval egy kézi számítógép memóit lehet szinkronizálni a helyi címjegyzékkel.
 Index: kpilot/conduits/docconduit/doc_conduit.desktop
 ===================================================================
---- kpilot/conduits/docconduit/doc_conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kpilot/conduits/docconduit/doc_conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kpilot/conduits/docconduit/doc_conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kpilot/conduits/docconduit/doc_conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -17,7 +17,7 @@
  Comment[hu]=Szöveges fájlok hozzáadása a kézi számítógéphez, DOC-olvasók számára.
  Comment[is]=Bætir textaskrám, sem hægt er að lesa í DOC lesara, við lófatölvuna þína.
@@ -3705,8 +4138,8 @@ Index: kpilot/conduits/docconduit/doc_conduit.desktop
  Comment[ms]=Menambah fail teks ke komputer telapak, sesuai dengan pembaca DOC.
 Index: kontact/plugins/akregator/akregatorplugin.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -65,7 +65,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -3718,8 +4151,8 @@ Index: kontact/plugins/akregator/akregatorplugin.desktop
  Name[ga]=Fothaí
 Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -64,7 +64,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -3731,8 +4164,8 @@ Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
  Name[ga]=Fothaí
 Index: kontact/interfaces/kontactplugin.desktop
 ===================================================================
---- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -15,7 +15,7 @@
  Name[es]=Plugin Kontact
  Name[et]=Kontacti plugin
@@ -3744,8 +4177,8 @@ Index: kontact/interfaces/kontactplugin.desktop
  Name[ga]=Breiseán Kontact
 Index: ktnef/gui/ktnef.desktop
 ===================================================================
---- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -57,7 +57,7 @@
  Comment[es]=A visor/extractor para archivos TNEF
  Comment[et]=TNEF-failide näitaja/ekstraktija
@@ -3757,8 +4190,8 @@ Index: ktnef/gui/ktnef.desktop
  Comment[hi]=टीएनईएफ फ़ाइलों के लिए एक प्रदर्शक/एक्सट्रेक्टर
 Index: korganizer/Makefile.am
 ===================================================================
---- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -171,7 +171,7 @@
  	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.h"` -o $(podir)/korganizer.pot
  	rm -f tips.cpp
@@ -3770,8 +4203,8 @@ Index: korganizer/Makefile.am
  
 Index: korganizer/korganizer.kcfg
 ===================================================================
---- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -74,7 +74,7 @@
  
      <entry type="Bool" key="Html With Save">
@@ -3808,6 +4241,19 @@ Index: korganizer/korganizer.kcfg
        <default>true</default>
      </entry>
  
+Index: korganizer/kotodoeditor.h
+===================================================================
+--- korganizer/kotodoeditor.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ korganizer/kotodoeditor.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+@@ -95,7 +95,7 @@
+   protected:
+     void loadTemplate( /*const*/ CalendarLocal& );
+     QStringList& templates() const;
+-    QString type() { return "ToDo"; }
++    QString type() { return "Todo"; }
+     void setupGeneral();
+     void setupRecurrence();
+     int msgItemDelete();
 
 Property changes on: korganizer/pixmaps
 ___________________________________________________________________
@@ -3818,8 +4264,8 @@ Makefile.in
 
 Index: korganizer/korganizer.desktop
 ===================================================================
---- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -1,6 +1,5 @@
  [Desktop Entry]
  Encoding=UTF-8
@@ -3838,8 +4284,8 @@ Index: korganizer/korganizer.desktop
  DocPath=korganizer/index.html
 Index: korganizer/korganizer_configgroupautomation.desktop
 ===================================================================
---- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 597699)
-+++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
+--- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
++++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -25,7 +25,7 @@
  Name[es]=Automatización del grupo
  Name[et]=Grupitöö
@@ -3852,7 +4298,7 @@ Index: korganizer/korganizer_configgroupautomation.desktop
 Index: korganizer/korganizer-import.desktop
 ===================================================================
 --- korganizer/korganizer-import.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 0)
-+++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 597699)
++++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
 @@ -0,0 +1,137 @@
 +[Desktop Entry]
 +Encoding=UTF-8
