@@ -26,6 +26,7 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.t
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
+Patch2:		kde-am.patch
 Patch3:		%{name}-kmail-vcardviewer.patch
 Patch4:		kde-ac260-lt.patch
 BuildRequires:	autoconf
@@ -483,6 +484,7 @@ libksieve, libmimelib.
 %patch100 -p0
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
 
