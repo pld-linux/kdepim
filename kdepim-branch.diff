@@ -1,7 +1,7 @@
 Index: akregator/src/librss/loader.h
 ===================================================================
---- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- akregator/src/librss/loader.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ akregator/src/librss/loader.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -227,7 +227,7 @@
  	 * 'OutputRetriever' will make it execute the script
  	 * '/home/myself/some-script.py' and assume whatever that script prints to
@@ -13,8 +13,8 @@ Index: akregator/src/librss/loader.h
  	 * 'slotLoadingComplete' method might look like this:
 Index: akregator/src/akregator.desktop
 ===================================================================
---- akregator/src/akregator.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- akregator/src/akregator.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -23,7 +23,7 @@
  GenericName[hu]=RSS hírolvasó
  GenericName[is]=RSS fréttaforrit
@@ -26,8 +26,8 @@ Index: akregator/src/akregator.desktop
  GenericName[ms]= Pembaca Suapan RSS 
 Index: akregator/src/eventsrc
 ===================================================================
---- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- akregator/src/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ akregator/src/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -15,7 +15,7 @@
  Name[es]=Origen añadido
  Name[et]=Kanal lisatud
@@ -39,8 +39,8 @@ Index: akregator/src/eventsrc
  Name[ga]=Cuireadh fotha leis
 Index: kmobile/devices/gammu/libkmobile_gammu.desktop
 ===================================================================
---- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmobile/devices/gammu/libkmobile_gammu.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmobile/devices/gammu/libkmobile_gammu.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -14,7 +14,7 @@
  Name[es]=Teléfono móvil u organizador (gammu)
  Name[et]=Mobiiltelefon või Organizer (gammu)
@@ -52,8 +52,8 @@ Index: kmobile/devices/gammu/libkmobile_gammu.desktop
  Name[ga]=Fón Póca nó Eagraí (gammu)
 Index: certmanager/lib/libkleopatrarc.desktop
 ===================================================================
---- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- certmanager/lib/libkleopatrarc.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ certmanager/lib/libkleopatrarc.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -99,7 +99,7 @@
  Name[es]=Clave revocada
  Name[et]=Tühistatud võti
@@ -65,8 +65,8 @@ Index: certmanager/lib/libkleopatrarc.desktop
  Name[he]=מפתח לא קביל
 Index: libkmime/kmime_message.cpp
 ===================================================================
---- libkmime/kmime_message.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkmime/kmime_message.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkmime/kmime_message.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkmime/kmime_message.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -62,6 +62,10 @@
    if( (h=to(false))!=0 )
      newHead+=h->as7BitString()+"\n";
@@ -91,8 +91,8 @@ Index: libkmime/kmime_message.cpp
  
 Index: libkmime/kmime_newsarticle.h
 ===================================================================
---- libkmime/kmime_newsarticle.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkmime/kmime_newsarticle.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkmime/kmime_newsarticle.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkmime/kmime_newsarticle.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -43,7 +43,6 @@
    virtual KMime::Headers::Newsgroups* newsgroups(bool create=true)      { KMime::Headers::Newsgroups *p=0; return getHeaderInstance(p, create); }
    virtual KMime::Headers::FollowUpTo* followUpTo(bool create=true)      { KMime::Headers::FollowUpTo *p=0; return getHeaderInstance(p, create); }
@@ -103,8 +103,8 @@ Index: libkmime/kmime_newsarticle.h
  protected:
 Index: libkmime/kmime_message.h
 ===================================================================
---- libkmime/kmime_message.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkmime/kmime_message.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkmime/kmime_message.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkmime/kmime_message.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -51,6 +51,7 @@
    virtual KMime::Headers::CC* cc(bool create=true)                      { KMime::Headers::CC *p=0; return getHeaderInstance(p, create); }
    virtual KMime::Headers::BCC* bcc(bool create=true)                    { KMime::Headers::BCC *p=0; return getHeaderInstance(p, create); }
@@ -115,8 +115,8 @@ Index: libkmime/kmime_message.h
    //hardcoded headers
 Index: kmail/kmfilterdlg.cpp
 ===================================================================
---- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmfilterdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmfilterdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -226,6 +226,7 @@
        gl->addMultiCellWidget( keyButtonLabel, 7, 7, 2, 2 );
        mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
@@ -135,8 +135,8 @@ Index: kmail/kmfilterdlg.cpp
      mFilterActionLabel->setEnabled( aChecked );
 Index: kmail/expirejob.cpp
 ===================================================================
---- kmail/expirejob.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/expirejob.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/expirejob.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/expirejob.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -125,7 +125,7 @@
      const KMMsgBase *mb = storage->getMsgBase( mCurrentIndex );
      if (mb == 0)
@@ -148,8 +148,8 @@ Index: kmail/expirejob.cpp
  
 Index: kmail/application_octetstream.desktop
 ===================================================================
---- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/application_octetstream.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/application_octetstream.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -39,7 +39,7 @@
  Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
  Comment[et]=Põhiosa vormindamisplugin (MIME tüübile application/octet-stream)
@@ -161,8 +161,8 @@ Index: kmail/application_octetstream.desktop
  Comment[hu]=Formázómodul application/octet-stream típusú adatfolyamokhoz
 Index: kmail/kmail_config_composer.desktop
 ===================================================================
---- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -13,6 +13,7 @@
  X-KDE-CfgDlgHierarchy=KMail
  
@@ -182,8 +182,8 @@ Index: kmail/kmail_config_composer.desktop
  Comment[gl]=Frases e comportamento xeral
 Index: kmail/kmail_config_identity.desktop
 ===================================================================
---- kmail/kmail_config_identity.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmail_config_identity.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmail_config_identity.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmail_config_identity.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -13,6 +13,7 @@
  X-KDE-CfgDlgHierarchy=KMail
  
@@ -202,8 +202,8 @@ Index: kmail/kmail_config_identity.desktop
  Comment[br]=Merañ an anvelezhioù
 Index: kmail/kmcommands.cpp
 ===================================================================
---- kmail/kmcommands.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmcommands.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -811,22 +811,28 @@
      assert( idx >= 0 );
      msg = p->getMsg(idx);
@@ -249,8 +249,8 @@ Index: kmail/kmcommands.cpp
      if ( mStandAloneMessage ) {
 Index: kmail/kmfoldercachedimap.cpp
 ===================================================================
---- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmfoldercachedimap.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmfoldercachedimap.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -75,6 +75,7 @@
  #include <globalsettings.h>
  
@@ -502,8 +502,8 @@ Index: kmail/kmfoldercachedimap.cpp
    else if ( entry == KOLAB_INCIDENCESFOR ) {
 Index: kmail/eventsrc
 ===================================================================
---- kmail/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/eventsrc	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/eventsrc	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -9,6 +9,7 @@
  
  [new-mail-arrived]
@@ -522,8 +522,8 @@ Index: kmail/eventsrc
  Comment[bs]=Stigla vam je nova pošta
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -192,6 +192,7 @@
  bool KMKernel::handleCommandLine( bool noArgsOpensReader )
  {
@@ -624,8 +624,8 @@ Index: kmail/kmkernel.cpp
      walletOpenFailed = true;
 Index: kmail/headerstyle.cpp
 ===================================================================
---- kmail/headerstyle.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/headerstyle.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/headerstyle.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/headerstyle.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -527,6 +527,40 @@
        userHTML = "&nbsp;";
      }
@@ -669,8 +669,8 @@ Index: kmail/headerstyle.cpp
        // no photo, look for a X-Face header
 Index: kmail/kmfoldercachedimap.h
 ===================================================================
---- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -445,6 +445,11 @@
        mLastUid. See above for details. */
    ulong mTentativeHighestUid;
@@ -685,8 +685,8 @@ Index: kmail/kmfoldercachedimap.h
  
 Index: kmail/kmmainwidget.cpp
 ===================================================================
---- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmmainwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmmainwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -846,6 +846,10 @@
      }
    }
@@ -711,8 +711,8 @@ Index: kmail/kmmainwidget.cpp
  
 Index: kmail/kmcomposewin.h
 ===================================================================
---- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmcomposewin.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmcomposewin.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -398,8 +398,8 @@
    void slotAttachRemove();
    void slotAttachSave();
@@ -761,8 +761,8 @@ Index: kmail/kmcomposewin.h
    bool mLastSignActionState, mLastEncryptActionState;
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -333,7 +333,7 @@
  
    connect( mAtmListView,
@@ -927,8 +927,8 @@ Index: kmail/kmcomposewin.cpp
    mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 Index: kmail/popaccount.cpp
 ===================================================================
---- kmail/popaccount.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/popaccount.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -489,12 +489,12 @@
      mUidlFinished = TRUE;
  
@@ -948,10 +948,30 @@ Index: kmail/popaccount.cpp
        // An attempt to work around buggy pop servers, these seem to be popular.
        mUidsOfNextSeenMsgsDict = mUidsOfSeenMsgsDict;
      }
+Index: kmail/kmfolder.cpp
+===================================================================
+--- kmail/kmfolder.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmfolder.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -700,6 +700,7 @@
+ {
+   if (units >= expireNever && units < expireMaxUnits)
+     mUnreadExpireUnits = units;
++    mStorage->writeConfig();
+ }
+ 
+ void KMFolder::setReadExpireAge( int age )
+@@ -714,6 +715,7 @@
+ {
+   if (units >= expireNever && units <= expireMaxUnits)
+     mReadExpireUnits = units;
++    mStorage->writeConfig();
+ }
+ 
+ 
 Index: kmail/kmkernel.h
 ===================================================================
---- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmkernel.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmkernel.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -96,10 +96,19 @@
    /** returns id of composer if more are opened */
    int openComposer (const QString &to, const QString &cc, const QString &bcc,
@@ -985,8 +1005,8 @@ Index: kmail/kmkernel.h
    bool folderIsDraftOrOutbox(const KMFolder *);
 Index: kmail/Mainpage.dox
 ===================================================================
---- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/Mainpage.dox	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/Mainpage.dox	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -793,7 +793,7 @@
  
    - @em BodyPartFormatter
@@ -998,8 +1018,8 @@ Index: kmail/Mainpage.dox
  	some default processor. BodyPartFormatters are meant to be
 Index: kmail/kmail_config_accounts.desktop
 ===================================================================
---- kmail/kmail_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kmail/kmail_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kmail/kmail_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kmail/kmail_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -13,6 +13,7 @@
  X-KDE-CfgDlgHierarchy=KMail
  
@@ -1018,8 +1038,8 @@ Index: kmail/kmail_config_accounts.desktop
  Comment[ca]=Configuració per enviar i rebre missatges
 Index: knode/articlewidget.h
 ===================================================================
---- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- knode/articlewidget.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ knode/articlewidget.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -145,7 +145,7 @@
        FancyFormatting = 2,
        AllowROT13 = 4
@@ -1031,8 +1051,8 @@ Index: knode/articlewidget.h
      static QString imgToDataUrl( const QImage &image, const char* fmt );
 Index: knode/knode_config_accounts.desktop
 ===================================================================
---- knode/knode_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ knode/knode_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- knode/knode_config_accounts.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ knode/knode_config_accounts.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -13,6 +13,7 @@
  X-KDE-CfgDlgHierarchy=KNode
  
@@ -1043,8 +1063,8 @@ Index: knode/knode_config_accounts.desktop
  Name[br]=Kontoù
 Index: knode/KNode.desktop
 ===================================================================
---- knode/KNode.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- knode/KNode.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -42,7 +42,7 @@
  GenericName[id]=Pembaca Berita
  GenericName[is]=Fréttaforrit
@@ -1064,8 +1084,8 @@ Cannot display: file marked as a binary type.
 svn:mime-type = image/png
 Index: doc/kalarm/index.docbook
 ===================================================================
---- doc/kalarm/index.docbook	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ doc/kalarm/index.docbook	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- doc/kalarm/index.docbook	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ doc/kalarm/index.docbook	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,5 +1,5 @@
  <?xml version="1.0" ?>
 -<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
@@ -1366,8 +1386,8 @@ Index: doc/kalarm/index.docbook
  <appendix id="installation">
 Index: kalarm/messagewin.cpp
 ===================================================================
---- kalarm/messagewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/messagewin.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1437,18 +1437,18 @@
  		if (AlarmCalendar::activeCalendar()->event(mEventID))
  		{
@@ -1410,8 +1430,8 @@ Index: kalarm/messagewin.cpp
  				event.setUid(KAEvent::EXPIRED);
 Index: kalarm/undo.cpp
 ===================================================================
---- kalarm/undo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/undo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/undo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/undo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -57,7 +57,7 @@
  		virtual UndoItem* restore() = 0;
  		virtual bool      deleteID(const QString& /*id*/)  { return false; }
@@ -1525,8 +1545,8 @@ Index: kalarm/undo.cpp
  				return 0;
 Index: kalarm/preferences.h
 ===================================================================
---- kalarm/preferences.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/preferences.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/preferences.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/preferences.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  preferences.h  -  program preference settings
@@ -1594,8 +1614,8 @@ Index: kalarm/preferences.h
  #endif // PREFERENCES_H
 Index: kalarm/editdlg.cpp
 ===================================================================
---- kalarm/editdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -163,7 +163,7 @@
   */
  EditAlarmDlg::EditAlarmDlg(bool Template, const QString& caption, QWidget* parent, const char* name,
@@ -1863,8 +1883,8 @@ Index: kalarm/editdlg.cpp
  	}
 Index: kalarm/functions.h
 ===================================================================
---- kalarm/functions.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/functions.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -45,14 +45,20 @@
  
  /** Return codes from fileType() */
@@ -1921,8 +1941,8 @@ Index: kalarm/functions.h
  
 Index: kalarm/alarmcalendar.h
 ===================================================================
---- kalarm/alarmcalendar.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/alarmcalendar.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/alarmcalendar.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/alarmcalendar.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -43,16 +43,16 @@
  		bool                  open();
  		int                   load();
@@ -1945,8 +1965,8 @@ Index: kalarm/alarmcalendar.h
  		void                  setPurgeDays(int days);
 Index: kalarm/soundpicker.h
 ===================================================================
---- kalarm/soundpicker.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/soundpicker.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/soundpicker.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/soundpicker.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  soundpicker.h  -  widget to select a sound file or a beep
@@ -2066,8 +2086,8 @@ Index: kalarm/soundpicker.h
  };
 Index: kalarm/preferences.cpp
 ===================================================================
---- kalarm/preferences.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/preferences.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/preferences.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/preferences.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  preferences.cpp  -  program preference settings
@@ -2268,8 +2288,8 @@ Index: kalarm/preferences.cpp
  }
 Index: kalarm/templatedlg.cpp
 ===================================================================
---- kalarm/templatedlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/templatedlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/templatedlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/templatedlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  templatedlg.cpp  -  dialogue to create, edit and delete alarm templates
@@ -2348,8 +2368,8 @@ Index: kalarm/templatedlg.cpp
  /******************************************************************************
 Index: kalarm/kalarm.h
 ===================================================================
---- kalarm/kalarm.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/kalarm.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -26,7 +26,7 @@
  #include <config.h>
  #endif
@@ -2361,8 +2381,8 @@ Index: kalarm/kalarm.h
  #include <kdeversion.h>
 Index: kalarm/mainwindow.cpp
 ===================================================================
---- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -114,7 +114,7 @@
  }
  
@@ -2567,8 +2587,8 @@ Index: kalarm/mainwindow.cpp
  		}
 Index: kalarm/editdlg.h
 ===================================================================
---- kalarm/editdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/editdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/editdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/editdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  editdlg.h  -  dialogue to create or modify an alarm or alarm template
@@ -2588,8 +2608,8 @@ Index: kalarm/editdlg.h
  		float               mSavedSoundVolume;    // mSoundPicker volume
 Index: kalarm/prefdlg.h
 ===================================================================
---- kalarm/prefdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/prefdlg.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  prefdlg.h  -  program preferences dialog
@@ -2648,8 +2668,8 @@ Index: kalarm/prefdlg.h
  
 Index: kalarm/Changelog
 ===================================================================
---- kalarm/Changelog	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/Changelog	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,5 +1,12 @@
  KAlarm
  
@@ -2665,8 +2685,8 @@ Index: kalarm/Changelog
  
 Index: kalarm/daemon.h
 ===================================================================
---- kalarm/daemon.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/daemon.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/daemon.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/daemon.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -46,7 +46,7 @@
  		static bool      reregister()            { return registerWith(true); }
  		static bool      reset();
@@ -2678,8 +2698,8 @@ Index: kalarm/daemon.h
  		static void      checkStatus()           { checkIfRunning(); }
 Index: kalarm/sounddlg.cpp
 ===================================================================
---- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  sounddlg.cpp  -  sound file selection and configuration dialog
@@ -2709,8 +2729,8 @@ Index: kalarm/sounddlg.cpp
  	QSize s;
 Index: kalarm/prefdlg.cpp
 ===================================================================
---- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -48,6 +48,7 @@
  
  #include "alarmcalendar.h"
@@ -3091,8 +3111,8 @@ Index: kalarm/prefdlg.cpp
  		return i18n("You must enter a sound file when %1 is selected as the default sound type").arg(SoundPicker::i18n_File());;
 Index: kalarm/daemon.cpp
 ===================================================================
---- kalarm/daemon.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/daemon.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/daemon.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/daemon.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -374,24 +374,23 @@
  	// Tell the alarm daemon in case it is running.
  	AlarmDaemonIface_stub s(DAEMON_APP_NAME, DAEMON_DCOP_OBJECT);
@@ -3129,8 +3149,8 @@ Index: kalarm/daemon.cpp
  /******************************************************************************
 Index: kalarm/functions.cpp
 ===================================================================
---- kalarm/functions.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/functions.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -127,27 +127,37 @@
  * event in that listView instance.
  * 'event' is updated with the actual event ID.
@@ -3518,8 +3538,8 @@ Index: kalarm/functions.cpp
  	switch (code)
 Index: kalarm/alarmcalendar.cpp
 ===================================================================
---- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -578,26 +578,30 @@
  * Flag the end of a group of calendar update calls.
  * The calendar is saved if appropriate.
@@ -3582,8 +3602,8 @@ Index: kalarm/alarmcalendar.cpp
  /******************************************************************************
 Index: kalarm/soundpicker.cpp
 ===================================================================
---- kalarm/soundpicker.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/soundpicker.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/soundpicker.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/soundpicker.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  soundpicker.cpp  -  widget to select a sound file or a beep
@@ -3930,8 +3950,8 @@ Index: kalarm/soundpicker.cpp
  }
 Index: kalarm/birthdaydlg.cpp
 ===================================================================
---- kalarm/birthdaydlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kalarm/birthdaydlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kalarm/birthdaydlg.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kalarm/birthdaydlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,7 +1,7 @@
  /*
   *  birthdaydlg.cpp  -  dialog to pick birthdays from address book
@@ -3978,8 +3998,8 @@ Index: kalarm/birthdaydlg.cpp
  
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -327,6 +327,7 @@
  #else
    KABC::DistributionList *list = mManager->list( oldName );
@@ -3988,11 +4008,332 @@ Index: kaddressbook/features/distributionlistwidget.cpp
    updateNameCombo();
  #endif
  
+Index: libkholidays/holidays/holiday_gr
+===================================================================
+--- libkholidays/holidays/holiday_gr	(.../tags/KDE/3.5.5/kdepim)	(revision 0)
++++ libkholidays/holidays/holiday_gr	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -0,0 +1,309 @@
++:
++: Greek holiday file.
++:
++: Author: capthookb (praktoreio2002@yahoo.gr)
++:
++: "weekend" or "red" indicate a "proper" holiday (i.e. you do not work)
++:  Other colours (black, green, yellow, blue, magenta, cyan, white)
++: can be used to distinguish between minor anniversaries or not-so-real
++: holidays, when you go working anyway.
++: "small" holidays are not as "invasive" in the month view in KOrganizer,
++: and do not take as much space.
++
++: Ονομαστικές εορτές
++
++small black "Βασίλης, Βασιλική, Βασιλεία, Βίβιαν" on 1.1
++small black "Συλβέστρος" on 2.1
++small black "Θεώνη" on 5.1
++small black "Άγια Θεοφάνεια (Αργία)" on 6.1
++small black "Φώτης, Φωτεινή, Θεοφάνης, Θεοφανία, Φανή, Ιορδάνης, Θεανώ, Ουρανία, Θεοπούλα" on 6.1
++small black "Ιωάννης, Ιωάννα, Πρόδρομος" on 7.1
++small black "Αγάθων, Δομινίκη, Παρθένα, Κύρος" on 8.1
++small black "Θεοδόσης, Θεοδοσία" on 11.1
++small black "Τατιάνα, Τατιανή" on 12.1
++small black "Αντώνης, Αντωνία" on 17.1
++small black "Αθανάσιος, Αθανασία, Κύριλλος" on 18.1
++small black "Μακάριος" on 19.1
++small black "Ευθύμης, Ευθυμία, Φαβιανός" on 20.1
++small black "Αγνή, Μάξιμος, Νεόφυτος, Πάτροκλος" on 21.1
++small black "Τιμόθεος, Αναστάσιος, Αναστασία" on 22.1
++small black "Αγαθάγγελος" on 23.1
++small black "Ξένη, Φίλωνας, Ζωσιμάς" on 24.1
++small black "Γρηγόρης, Γρηγορία, Μαργαρίτα" on 25.1
++small black "Ξενοφών" on 26.1
++small black "Χάρις, Παλλάδιος" on 28.1
++small black "Μαύρος, Χρυσή, Τριών Ιεραρχών (Σχολική Αργία)" on 30.1
++small black "Ευδοξία, Κύρος" on 31.1
++small black "Τρύφωνας" on 1.2
++small black "Υπαπαντή" on 2.2
++small black "Σταμάτ-ης/ία, Συμεώ-ν/νή, Σιμώνη, Ασημάκης, Ασημίνα, Μαλαματή" on 3.2
++small black "Ισίδωρος, Ιάσιμος, Ιασίμη" on 4.2
++small black "Αγαθή" on 5.2
++small black "Φώτης" on 6.2
++small black "Παρθένιος, Παρθενία" on 7.2
++small black "Ζαχαρίας, Ζαχαρούλα" on 8.2
++small black "Μάρκελος, Νικηφόρος, Νίκη" on 9.2
++small black "Χαράλαμπος, Χαραλαμπία, Χαρίκλεια, Χαρίλαος, Χαρούλα" on 10.2
++small black "Βλάσης, Βλασία, Θοδωρής, Θοδώρα, Αυγή " on 11.2
++small black "Μελέτης, Πλωτίνος" on 12.2
++small black "Πρίσκιλλα" on 13.2
++small black "Βαλεντίνος, Βαλεντίνη, Παγκόσμια Ημέρα Ερωτευμένων" on 14.2
++small black "Ευσέβιος, Ευσεβία" on 15.2
++small black "Πάμφιλος, Παμφίλη, Σέλευκος, Σελεύκη" on 16.2
++small black "Λέων, Αγαπητός" on 18.2
++small black "Φιλοθέη, Χλόη" on 19.2
++small black "Ανθούσα" on 22.2
++small black "Πολύκαρπος" on 23.2
++small black "Πορφύρης, Φωτεινή" on 26.2
++small black "Μαριάννα, Ασκληπιός" on 28.2
++small black "Ευδοκία, Χαρίσιος" on 1.3
++small black "Ευθαλία" on 2.3
++small black "Κλεόνικος, Κλεονίκη" on 3.3
++small black "Αρχέλαος, Eυλόγιος" on 5.3
++small black "Ησύχιος" on 6.3
++small black "Ευγένιος, Ευγενία" on 7.3
++small black "Ερμής, Θεοφύλακτος, Παγκόσμια Ημέρα της Γυναίκας" on 8.3
++small black "Σμάραγδος, Σμαράγδα, Ηλιάνα, Λεόντιος, Λεοντία, Λυσίμαχος Λυσιμαχη" on 9.3
++small black "Ξάνθος, Ξανθούλα, Σαράντης Σαραντούλα, Φιλοκτήμων" on 9.3
++small black "Θεόδωρος Θεοδώρα, Θώδος, Θώδη, Θαλλής, Θάλεια, Σωφρόνιος, Σωφρονία" on 11.3
++small black "Λωξάντρα, Ρωξάνη, Oρθοδόξης," on 12.3
++small black "Λέανδρος" on 13.3
++small black "Βενέδικτος, Βενεδίκτη" on 14.3
++small black "Αγάπιος" on 15.3
++small black "Χριστόδουλος, Ιουλιανός" on 16.3
++small black "Αλέξιος, Αλεξία" on 17.3
++small black "Χρύσανθος, Χρυσάνθη" on 19.3
++small black "Δρόσος, Δροσούλα" on 22.3
++small black "Ευαγγελισμός της Θεοτόκου " on 25.3
++small black "Ευάγγελος, Ευαγγελία" on 25.3
++small black "Πούλιος, Σύλας, Σύλια" on 26.3
++small black "Λυδία, Μακεδόνιος, Μακεδονούλα" on 27.3
++small black "Ευτύχιος, Ευτυχία" on 6.4
++small black "Ιωσήφ, Ιωσηφίνα" on 9.4
++small black "Δημοσθένης, Ηρακλής, Μιλτιάδης, Περικλής, Σοφοκλής, Επαμεινώνδας" on 10.4
++small black "Όμηρος, Πελοπίδας, Παρμενίων, Πολύβιος, Αναξιμένης, Φοιλοποίμην, Φίλης" on 10.4
++small black "Αρίσταρχος, Θωμαΐς" on 14.4
++small black "Λεωνίδας, Λάζαρος" on 15.4
++small black "Βάϊος, Βάϊα, Δάφνη, Γαλήνη, Χιονία" on 16.4
++small black "Ναθαναήλ, Νέαρχος, Νιάρχος" on 22.4
++small black "Αναστάσιος, Αναστασία, Λάμπρος, Λαμπρινή, Πασχάλης " on 23.4
++small black "Γεώργιος, Γεωργία, Ελισάβετ, Αχιλλέας" on 24.4
++small black "Μάρκος, Νίκη, Ραφαήλ" on 25.4
++small black "Ζωή, Πηγή" on 28.4
++small black "Ιάσωνας" on 29.4
++small black "Ιάκωβος, Θωμάς, Θωμαή, Ασημίνα" on 30.4
++weekend "Ιερεμίας" on 1.5
++small black "Έσπερος, Εσπέρια" on 2.5
++small black "Ροδόπη" on 3.5
++small black "Ειρήνη, Eιρηναίος, Ευφραίμ" on 5.5
++small black "Μυροφόρα" on 7.5
++small black "Θεολόγος" on 8.5
++small black "Χριστόφορος, Ησαΐας" on 9.5
++small black "Σίμων" on 10.5
++small black "Aρμόδιος,Μεθόδιος, Ολυμπία" on 11.5
++small black "Επιφάνειος" on 12.5
++small black "Γλυκερία" on 13.5
++small black "Γιορτή της Μητέρας, Αριστοτέλης" on 14.5
++small black "Καλή" on 15.5
++small black "Ανδρόνικος, Ανδρονίκη, Ιουνία" on 17.5
++small black "Ιουλία, Γαλάτεια" on 18.5
++small black "Θεόκτιστος, Μαγδαληνή, Πατρίκιος" on 19.5
++small black "Λυδία" on 20.5
++small black "Κωνσταντίνος, Κωνσταντίνα, Ελένη" on 21.5
++small black "Αιμίλιος, Αιμιλία, Έμυ" on 22.5
++small black "Μαρκιανή" on 24.5
++small black "Θεοδοσία" on 29.5
++small black "Πύρρος, Νεφέλη, Ιουστίνος, Ανάληψη" on 1.6
++small black "Νικηφόρος, Μαρίνος" on 2.6
++small black "Υπάτιος, Υπατία" on 3.6
++small black "Μάρθα" on 4.6
++small black "Aπόλλων, Δωρόθεος, Δωροθέα, Σελήνη, Νίκανδρος" on 5.6
++small black "Καλλιόπη" on 8.6
++small black "Ροδάνθη" on 9.6
++small black "Βαρθολομαίος, Βαρνάβας" on 11.6
++small black "Ονούφριος, Ζήνων,Κορίνα, Αγίου Πνεύματος" on 12.6
++small black "Ελισαίος" on 14.6
++small black "Αυγουστίνος, Αυγούστα, Ιερώνυμος, Μόνικα, Ορτανσία" on 15.6
++small black "Γιορτή του πατέρα" on 16.6
++small black "Έρασμος, Ερασμία, Aγίων Πάντων" on 18.6
++small black "Παΐσιος, Ζωσιμάς, Ζήσης" on 19.6
++small black "Ευσέβιος, Ευσεβία" on 22.6
++small black "Αριστοκλής" on 23.6
++small black "Φεβρωνία, Έρωτας" on 25.6
++small black "Γερμανός" on 28.6
++small black "Πέτρος, Πέτρα, Παύλος, Παυλίνα" on 29.6
++small black "Απόστολος, Αποστολία, Μελίτων" on 30.6
++small black "Αργύρης, Αργυρώ, Κοσμάς, Δαμιανός, Ανάργυρος" on 1.7
++small black "Υάκινθος, Ζουμπουλία" on 3.7
++small black "Λουκία" on 4.7
++small black "Λυκίας, Λύκιος, Λυκία, " on 6.7
++small black "Κυριακή" on 7.7
++small black "Θεόφιλος, Προκόπιος" on 8.7
++small black "Ευφημία, Όλγα" on 11.7
++small black "Βερονίκη, Βερενίκη " on 12.7
++small black "Σάρα" on 13.7
++small black "Ακύλας, Νικόδημος" on 14.7
++small black "Βλαδίμηρος, Ιουλίττα, Κήρυκος" on 15.7
++small black "Μαρίνα" on 17.7
++small black "Αιμίλιος, Αιμιλία" on 18.7
++small black "Ηλίας, Ηλιάνα" on 20.7
++small black "Μαγδαληνή, Μαρκέλλα, Μαριλένα" on 22.7
++small black "Φωκάς" on 23.7
++small black "Αθηναγόρας" on 24.7
++small black "Άννα, Ολυμπία" on 25.7
++small black "Παρασκευή, Παρασκευάς, Έρση" on 26.7
++small black "Παντελής" on 27.7
++small black "Ειρήνη, Χρυσοβαλάντης, Βαλάντης, Χρυσοβαλάντου, Ακάκιος" on 28.7
++small black "Καλλίνικος" on 29.7
++small black "Ανδρόνικος, Ανδρονίκη" on 30.7
++small black "Ιωσήφ, Ιωσηφίνα" on 31.7
++small black "Μάρκελος" on 1.8
++small black "Σωτήρης, Σωτηρία, Ευμορφία, Έμμυ, Μορφούλα" on 6.8
++small black "Αστέριος, Αστερία" on 7.8
++small black "Τριαντάφυλλος, Τριανταφυλλιά" on 8.8
++small black "Ρωμανός" on 9.8
++small black "Λαυρέντης, Λαυρεντία, Ευλαμπία, Ιππόλυτος, Ηρώ " on 10.8
++weekend "Κοίμηση της Θεοτόκου (Αργία)" on 15.8
++weekend "Μαρία, Μάριος, Παναγιώτης, Παναγιώτα, Δέσποινα, Θεοτόκης" on 15.8
++small black "Γεράσιμος, Αλκιβιάδης, Διομήδης, Σαράντης" on 16.8
++small black "Λευκοθέα, Μύρων, Μίρκα" on 17.8
++small black "Φλώρα" on 18.8
++small black "Σαμουήλ, Θεοχάρης" on 20.8
++small black "Aγαθόνικος" on 22.8
++small black "Κοσμάς" on 24.8
++small black "Βαρθολομαίος, Τίτος" on 25.8
++small black "Ναταλία, Ανδριανός, Ανδριανή" on 26.8
++small black "Φανούριος, Φανουρία, Αρκαδία" on 27.8
++small black "Θεοπίστη" on 29.8
++small black "Αλέξανδρος" on 30.8
++small black "Αδαμάντιος, Αδαμαντία, Αθηνά, Αντιγόνη, Ασπασία, Αφροδίτη, Δωδώνη" on 1.9
++small black "Ελπινίκη, Ερασμία, Ερατώ, Ευτέρπη, Θάλεια, Θεανώ, Καλλίστη, Κλειώ, Κλεονίκη" on 1.9
++small black "Κλεοπάτρα, Κοραλία, Μαργαρίτα, Μαριάνθη, Μελέτιος, Μελπομένη, Ουρανία" on 1.9
++small black "Πανδώρα, Πηνελόπη, Πολυμνία, Πολυνίκη, Σαπφώ, Συμεών, Τερψιχόρη, Χάιδω" on 1.9
++small black "Άνθιμος, Πολύδωρος, Φοίβη" on 3.9
++small black "Ερμιόνη, Μωυσής" on 4.9
++small black "Ζαχαρίας" on 5.9
++small black "Κασσιανή, Σώζων" on 7.9
++small black "Ιωακείμ" on 9.9
++small black "Εράστη, Εράστος, Μητροδώρα, Πουλχερία" on 10.9
++small black "Ευανθία" on 11.9
++small black "Αριστείδης, Κορνήλιος" on 13.9
++small black "Σταύρος, Σταυρούλα" on 14.9
++small black "Νικήτας, Βησσαρίων" on 15.9
++small black "Ευφημία" on 16.9
++small black "Σοφία, Ελπίδα, Αγάπη, Πίστη, Σόνια" on 17.9
++small black "Αριάδνη" on 18.9
++small black "Ευστάθιος, Ευσταθία" on 20.9
++small black "Ίωνας" on 21.9
++small black "Φωκάς, Ζωγραφιά" on 22.9
++small black "Πολυξένη, Ξανθίππη, Ξάνθιππος" on 23.9
++small black "Θέκλα, Μυρσίνη, Μυρτώ" on 24.9
++small black "Ευφροσύνη" on 25.9
++small black "Ζήνων" on 27.9
++small black "Κυριάκος, Κυριακή" on 29.9
++small black "Θηρεσία" on 1.10
++small black "Κυπριανός" on 2.10
++small black "Διονύσης, Διονυσία" on 3.10
++small black "Ιερόθεος, Φραγκίσκος" on 4.10
++small black "Χαριτινή" on 5.10
++small black "Σέργιος, Πολυχρόνης, Χρόνης" on 7.10
++small black "Πελαγία" on 8.10
++small black "Ευλάμπιος, Ευλαμπία" on 10.10
++small black "Ανδρομάχη, Ανδρόμαχος" on 12.10
++small black "Αγαθονίκη, Φλωρέντιος, Φλωρεντία" on 13.10
++small black "Λουκιανός" on 15.10
++small black "Λουκάς" on 18.10
++small black "Γεράσιμος, Αρτέμιος" on 20.10
++small black "Σωκράτης, Χριστόδουλος, Όυρσουλα" on 21.10
++small black "Αβέρκιος" on 22.10
++small black "Ιάκωβος" on 23.10
++small black "Χρυσάφης" on 25.10
++small black "Δημήτριος, Δήμητρα, Δανάη" on 26.10
++small black "Νέστορας" on 27.10
++small black "Ζηνοβία, Κλεόπας, Μαρκιανός" on 30.10
++small black "Αριστόβουλος" on 31.10
++small black "Αργύρης, Αργυρώ, Κοσμάς, Δαμιανός, Ανάργυρος" on 1.11
++small black "Αφθόνιος, Αφθονία" on 2.11
++small black "Ιωαννίκη" on 4.11
++small black "Λίνος" on 5.11
++small black "Λεονάρδος" on 6.11
++small black "Αθηνόδωρος" on 7.11
++small black "Σταμάτιος, Σταματία, Μιχάλης, Γαβριήλ, Γαβριέλα" on 8.11
++small black "Ταξιάρχης, Άγγελος, Αγγελική, Ματίνα, Σεραφείμ" on 8.11
++small black "Νεκτάριος, Νεκταρία" on 9.11
++small black "Ορέστης" on 10.11
++small black "Μηνάς, Mήνα, Βίκτωρ, Βικτωρία" on 11.11
++small black "Χρυσόστομος" on 13.11
++small black "Φίλιππος" on 14.11
++small black "Ματθαίος, Ιφιγένεια" on 16.11
++small black "Πλάτωνας" on 18.11
++small black "Μαρία, Μάριος" on 21.11
++small black "Φιλήμων" on 22.11
++small black "Μερώπη" on 23.11
++small black "Κατερίνα, Μερκούριος" on 25.11
++small black "Στέλιος, Στέλλα, Στέργιος" on 26.11
++small black "Φαίδρα" on 29.11
++small black "Ανδρέας, Ανδριάνα" on 30.11
++small black "Θεόκλητος, Ιακώβ" on 1.12
++small black "Βαρβάρα, Δαμασκηνός" on 4.12
++small black "Σάββας, Σαββούλα, Διογένης" on 5.12
++small black "Νίκος, Νικολέττα" on 6.12
++small black "Αμβρόσιος" on 7.12
++small black "Άννα" on 9.12
++small black "Ααρών, Αδάμ, Δαυίδ, Δανάη, Εύα, Ισαάκ, Ιώβ, Ραχήλ, Ρουμπίνη" on 11.12
++small black "Σπύρος, Σπυριδούλα" on 12.12
++small black "Ευστράτιος, Λουκάς, Λουκία, Άρης" on 13.12
++small black "Ελευθέριος, Ελευθερία, Ανθή, Σύλβια" on 15.12
++small black "Διονύσης, Διονυσία, Δανιήλ, Ρεβέκα, Σεβαστιανός, Σεβαστή" on 17.12
++small black "Ααρών, Αδάμ, Ισαάκ, Ραχήλ, Σάρα" on 17.12
++small black "Αγλαΐα" on 19.12
++small black "Ιγνάτιος" on 20.12
++small black "Θεμιστοκλής, Ιουλία" on 21.12
++small black "Αναστασία" on 22.12
++small black "Ευγένιος, Ευγενία" on 24.12
++small black "Χρήστος, Χριστίνα, Χρύσα" on 25.12
++weekend "Σύναξις Θεοτόκου (Αργία)" on 26.12
++weekend "Μανώλης, Εμμανουέλα, Δαβίδ" on 26.12
++small black "Στέφανος, Στεφανία" on 27.12
++small black "Δόμνα" on 28.12
++small black "Ιωσήφ" on 30.12
++weekend "Χριστούγεννα (Αργία)" on 25.12
++
++
++: Αργίες - Επέτειοι
++weekend "Πρωτοχρονιά (Αργία)" on 1.1
++weekend "Πρωτομαγιά (Αργία)" on 1.5
++weekend "Επέτειος του ΟΧΙ (Αργία)" 28.10
++weekend "Επέτειος της επανάστασης του 1821 (Αργία)" on 25.3
++small black "Εξέγερση του Πολυτεχνείου (Σχολική Αργία)" on 17.11
++
++: Κινητές εορτές
++
++small black "Τελώνου και Φαρισαίου - Αρχή Τριωδίου" on easter minus 70 days
++small black "Του Ασώτου" on easter minus 63 days
++small black "Τσικνοπέμπτη" on easter minus 59 days
++small black "Κυριακή των Απόκρεω" on easter minus 56 days
++small black "Τυροφάγου" on easter minus 49 days
++small black "Καθαρή Δευτέρα (Αργία)" on easter minus 48 days
++small black "Θεόδωρος, Θεοδώρα, Δώρα, Θώδης, Θώδος, Δώρης" on easter minus 43 days
++small black "Κυριακή της Ορθοδοξίας" on easter minus 42 days
++small black "Σάββατο του Λαζάρου" on easter minus 8 days
++small black "Κυριακή των Βαΐων" on easter minus 7 days
++small black "Μεγάλη Δευτέρα" on easter minus 6 days
++small black "Μεγάλη Τρίτη" on easter minus 5 days
++small black "Μεγάλη Τετάρτη" on easter minus 4 days
++small black "Μεγάλη Πέμπτη" on easter minus 3 days
++weekend "Μεγάλη Παρασκευή (Αργία)" on easter minus 2 days
++weekend "Μεγάλο Σάββατο" on easter minus 1 days
++weekend "Το Άγιον Πάσχα" on easter
++weekend "Δευτέρα του Πάσχα (Αργία)" on easter plus 1 days
++small black "Πηγή, Ζήσης, Ζησούλα, Ζήσιμος, Ζωή, Ζώης" on easter plus 5 days
++small black "Του Θωμά" on easter plus 7 days
++small black "Ανάληψη του Χριστού" on easter plus 39 days
++small black "Πεντηκοστή" on easter plus 49 days
++small black "Αγ. Πνεύματος" on easter plus 50 days
++small black "Αγ. Πάντων" on easter plus 56 days
++
++: Αλλαγή ώρας
++small black "Αλλαγή ώρας (1 ώρα πίσω)" on last sunday in october
++small black "Αλλαγή ώρας (1 ώρα μπροστά) " on last sunday in march
 Index: libkholidays/holidays/Makefile.am
 ===================================================================
---- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 599441)
-@@ -11,7 +11,7 @@
+--- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -5,13 +5,13 @@
+                 holiday_ca holiday_catalan holiday_co \
+                 holiday_ch holiday_cz holiday_de holiday_dk holiday_ee \
+                 holiday_es holiday_fi holiday_fr holiday_frswiss holiday_gb \
+-                holiday_gt \
++                holiday_gr holiday_gt \
+                 holiday_hu holiday_is holiday_il holiday_it holiday_ja \
+                 holiday_lt holiday_mx \
                  holiday_nl \
                  holiday_no holiday_nz holiday_pl holiday_pt holiday_py \
                  holiday_quebec \
@@ -4003,8 +4344,8 @@ Index: libkholidays/holidays/Makefile.am
                  holiday_Suedtirol
 Index: libkdepim/categoryeditdialog.cpp
 ===================================================================
---- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkdepim/categoryeditdialog.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkdepim/categoryeditdialog.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -76,6 +76,7 @@
    }
    mWidget->mButtonRemove->setEnabled( categoriesExist );
@@ -4015,8 +4356,8 @@ Index: libkdepim/categoryeditdialog.cpp
  void CategoryEditDialog::slotTextChanged(const QString &text)
 Index: libkdepim/addresseelineedit.cpp
 ===================================================================
---- libkdepim/addresseelineedit.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkdepim/addresseelineedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkdepim/addresseelineedit.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkdepim/addresseelineedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -660,6 +660,8 @@
              completionBox->setCurrentItem( item );
              completionBox->setSelected( item, wasSelected );
@@ -4060,8 +4401,8 @@ Index: libkdepim/addresseelineedit.cpp
        // and selecting making it current, instead of the one below.
 Index: libkcal/localdir.desktop
 ===================================================================
---- libkcal/localdir.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkcal/localdir.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkcal/localdir.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkcal/localdir.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -34,7 +34,7 @@
  Name[pt]=Calendário numa Directoria Local
  Name[pt_BR]=Calendário em Diretório Local
@@ -4071,10 +4412,23 @@ Index: libkcal/localdir.desktop
  Name[sk]=Kalendár v lokálnom priečinku
  Name[sl]=Koledar v krajevnem imeniku
  Name[sr]=Календар у локалном директоријуму
+Index: libkcal/calendarresources.cpp
+===================================================================
+--- libkcal/calendarresources.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkcal/calendarresources.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -106,6 +106,8 @@
+ {
+   close();
+   delete mManager;
++  delete mStandardPolicy;
++  delete mAskPolicy;
+ }
+ 
+ void CalendarResources::readConfig( KConfig *config )
 Index: libkcal/libical/src/libical/sspm.c
 ===================================================================
---- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkcal/libical/src/libical/sspm.c	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkcal/libical/src/libical/sspm.c	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1171,7 +1171,7 @@
  			     char *src,
  			     size_t *size)
@@ -4084,10 +4438,35 @@ Index: libkcal/libical/src/libical/sspm.c
      char buf[4] = {0,0,0,0};  
      int p = 0;
      int valid_data = 0;
+Index: libkcal/todo.cpp
+===================================================================
+--- libkcal/todo.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkcal/todo.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -275,11 +275,17 @@
+ 
+     if ( ( r->duration() == -1 || ( nextDate.isValid() && endDateTime.isValid()
+            && nextDate <= endDateTime ) ) ) {
+-      setDtDue( nextDate );
+-      while ( !recursAt( dtDue() ) || dtDue() <= QDateTime::currentDateTime() ) {
+-        setDtDue( r->getNextDateTime( dtDue() ) );
++
++      while ( !recursAt( nextDate ) || nextDate <= QDateTime::currentDateTime() ) {
++
++        if ( !nextDate.isValid() || nextDate > endDateTime ) {
++          return false;
++        }
++
++        nextDate = r->getNextDateTime( nextDate );
+       }
+ 
++      setDtDue( nextDate );
+       setCompleted( false );
+       setRevision( revision() + 1 );
+ 
 Index: libkcal/htmlexport.h
 ===================================================================
---- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- libkcal/htmlexport.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ libkcal/htmlexport.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -37,7 +37,7 @@
  namespace KCal {
  
@@ -4099,8 +4478,8 @@ Index: libkcal/htmlexport.h
  {
 Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
 ===================================================================
---- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -99,7 +99,7 @@
                                      <bool>true</bool>
                                  </property>
@@ -4112,8 +4491,8 @@ Index: kpilot/conduits/sysinfoconduit/sysinfo-setup_dialog.ui
                              <widget class="QRadioButton" row="1" column="0" rowspan="1" colspan="2">
 Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
 ===================================================================
---- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kpilot/conduits/memofileconduit/memofile-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -47,7 +47,7 @@
  Comment[es]=Este conducto sincroniza las notas de su agenda electrónica con el directorio local.
  Comment[et]=See kanal sünkroniseerib pihuarvutis ja arvutis olevad memod.
@@ -4125,8 +4504,8 @@ Index: kpilot/conduits/memofileconduit/memofile-conduit.desktop
  Comment[hu]=Ezzel a csatolóval egy kézi számítógép memóit lehet szinkronizálni a helyi címjegyzékkel.
 Index: kpilot/conduits/docconduit/doc_conduit.desktop
 ===================================================================
---- kpilot/conduits/docconduit/doc_conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kpilot/conduits/docconduit/doc_conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kpilot/conduits/docconduit/doc_conduit.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kpilot/conduits/docconduit/doc_conduit.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -17,7 +17,7 @@
  Comment[hu]=Szöveges fájlok hozzáadása a kézi számítógéphez, DOC-olvasók számára.
  Comment[is]=Bætir textaskrám, sem hægt er að lesa í DOC lesara, við lófatölvuna þína.
@@ -4138,8 +4517,8 @@ Index: kpilot/conduits/docconduit/doc_conduit.desktop
  Comment[ms]=Menambah fail teks ke komputer telapak, sesuai dengan pembaca DOC.
 Index: kontact/plugins/akregator/akregatorplugin.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -65,7 +65,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -4151,8 +4530,8 @@ Index: kontact/plugins/akregator/akregatorplugin.desktop
  Name[ga]=Fothaí
 Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -64,7 +64,7 @@
  Name[es]=Orígenes
  Name[et]=Kanalid
@@ -4164,8 +4543,8 @@ Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
  Name[ga]=Fothaí
 Index: kontact/interfaces/kontactplugin.desktop
 ===================================================================
---- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- kontact/interfaces/kontactplugin.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kontact/interfaces/kontactplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -15,7 +15,7 @@
  Name[es]=Plugin Kontact
  Name[et]=Kontacti plugin
@@ -4175,10 +4554,49 @@ Index: kontact/interfaces/kontactplugin.desktop
  Name[fi]=Kontact-liitännäinen
  Name[fr]=Module Kontact
  Name[ga]=Breiseán Kontact
+Index: kontact/src/kcmkontact.cpp
+===================================================================
+--- kontact/src/kcmkontact.cpp	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kontact/src/kcmkontact.cpp	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -104,6 +104,7 @@
+ {
+   mItem = item;
+   mPluginCombo = new QComboBox( parent );
++  connect( mPluginCombo, SIGNAL( activated( int ) ), SIGNAL( changed() ) );
+ }
+ 
+ PluginSelection::~PluginSelection()
+@@ -140,12 +141,6 @@
+   mItem->setValue( ptr->property("X-KDE-PluginInfo-Name").toString() );
+ }
+ 
+-void PluginSelection::itemClicked( QListViewItem *item )
+-{
+-  if ( item )
+-    emit changed();
+-}
+-
+ QValueList<QWidget *> PluginSelection::widgets() const
+ {
+   QValueList<QWidget *> widgets;
+Index: kontact/src/kcmkontact.h
+===================================================================
+--- kontact/src/kcmkontact.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ kontact/src/kcmkontact.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
+@@ -60,9 +60,6 @@
+     QValueList<QWidget *> widgets() const;
+     QComboBox *comboBox() const { return mPluginCombo; }
+ 
+-  private slots:
+-    void itemClicked( QListViewItem* );
+-
+   private:
+     QComboBox *mPluginCombo;
+     QValueList<KService::Ptr> mPluginList;
 Index: ktnef/gui/ktnef.desktop
 ===================================================================
---- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -57,7 +57,7 @@
  Comment[es]=A visor/extractor para archivos TNEF
  Comment[et]=TNEF-failide näitaja/ekstraktija
@@ -4190,8 +4608,8 @@ Index: ktnef/gui/ktnef.desktop
  Comment[hi]=टीएनईएफ फ़ाइलों के लिए एक प्रदर्शक/एक्सट्रेक्टर
 Index: korganizer/Makefile.am
 ===================================================================
---- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- korganizer/Makefile.am	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ korganizer/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -171,7 +171,7 @@
  	$(XGETTEXT) `find . -name "*.cpp" -o -name "*.h"` -o $(podir)/korganizer.pot
  	rm -f tips.cpp
@@ -4203,8 +4621,8 @@ Index: korganizer/Makefile.am
  
 Index: korganizer/korganizer.kcfg
 ===================================================================
---- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- korganizer/korganizer.kcfg	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ korganizer/korganizer.kcfg	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -74,7 +74,7 @@
  
      <entry type="Bool" key="Html With Save">
@@ -4243,8 +4661,8 @@ Index: korganizer/korganizer.kcfg
  
 Index: korganizer/kotodoeditor.h
 ===================================================================
---- korganizer/kotodoeditor.h	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ korganizer/kotodoeditor.h	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- korganizer/kotodoeditor.h	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ korganizer/kotodoeditor.h	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -95,7 +95,7 @@
    protected:
      void loadTemplate( /*const*/ CalendarLocal& );
@@ -4264,8 +4682,8 @@ Makefile.in
 
 Index: korganizer/korganizer.desktop
 ===================================================================
---- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -1,6 +1,5 @@
  [Desktop Entry]
  Encoding=UTF-8
@@ -4284,8 +4702,8 @@ Index: korganizer/korganizer.desktop
  DocPath=korganizer/index.html
 Index: korganizer/korganizer_configgroupautomation.desktop
 ===================================================================
---- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 599441)
-+++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
+--- korganizer/korganizer_configgroupautomation.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 600145)
++++ korganizer/korganizer_configgroupautomation.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -25,7 +25,7 @@
  Name[es]=Automatización del grupo
  Name[et]=Grupitöö
@@ -4298,7 +4716,7 @@ Index: korganizer/korganizer_configgroupautomation.desktop
 Index: korganizer/korganizer-import.desktop
 ===================================================================
 --- korganizer/korganizer-import.desktop	(.../tags/KDE/3.5.5/kdepim)	(revision 0)
-+++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 599441)
++++ korganizer/korganizer-import.desktop	(.../branches/KDE/3.5/kdepim)	(revision 600145)
 @@ -0,0 +1,137 @@
 +[Desktop Entry]
 +Encoding=UTF-8
