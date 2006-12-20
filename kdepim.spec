@@ -18,8 +18,8 @@ Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
-Source0:	ftp://sunsite.icm.edu.pl/pub/unix/kde/unstable/%{version}/src/%{name}-%{version}.tar.bz2
-##% Source0-md5:	7f8cc9a40c0190c5a6723f6325bcba06
+Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{_kdever}/src/%{name}-%{version}.tar.bz2
+# Source0-md5:	44b123e24579d306446f4fd35549b575
 #Patch100: %{name}-branch.diff
 #Patch0: kde-common-PLD.patch
 #Patch1: %{name}-kmail_toolbars.patch
