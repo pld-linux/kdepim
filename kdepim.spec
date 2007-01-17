@@ -16,17 +16,17 @@ Summary(pl):	Manad©er informacji osobistej (PIM) dla KDE
 Summary(ru):	Персональный планировщик (PIM) для KDE
 Summary(uk):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.5
-Release:	3
+Version:	3.5.6
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	3f2127f74cb496899bb3f1f6f702353b
+# Source0-md5:	06744c36252414c809d6df46058f1bfd
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		kde-am.patch
+Patch2:		%{name}-kpilot.patch
 Patch3:		%{name}-kmail-vcardviewer.patch
 Patch4:		kde-ac260-lt.patch
 BuildRequires:	autoconf
@@ -48,7 +48,7 @@ BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
-BuildRequires:	pilot-link-devel
+BuildRequires:	pilot-link-devel >= 0.12.1
 BuildRequires:	qt-designer-libs
 %{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 %{?with_apidocs:BuildRequires:	qt-doc}
@@ -590,7 +590,7 @@ sed -i 's/.*apidocs.*//' *.lang
 
 # remove checked files
 rm $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
-rm $RPM_BUILD_ROOT%{_iconsdir}/locolor/{16x16/apps/{kpilot,ktnef},32x32/apps/ktnef}.png
+rm $RPM_BUILD_ROOT%{_iconsdir}/locolor/{16x16/apps/ktnef,32x32/apps/ktnef}.png
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/*.la
 
@@ -712,6 +712,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
 %{_datadir}/config.kcfg/custommimeheader.kcfg
+%{_datadir}/config.kcfg/customtemplates_kfg.kcfg
 %{_datadir}/config.kcfg/egroupware.kcfg
 %{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/kontact.kcfg
@@ -721,6 +722,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
 %{_datadir}/config.kcfg/slox.kcfg
+%{_datadir}/config.kcfg/templatesconfiguration_kfg.kcfg
+
 #%{_datadir}/mimelnk/kdedevice/cellphone.desktop
 #%{_datadir}/mimelnk/kdedevice/pda.desktop
 %{_datadir}/services/akregator_mk4storage_plugin.desktop
