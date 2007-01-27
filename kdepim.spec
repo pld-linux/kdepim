@@ -26,9 +26,8 @@ Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.t
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
-Patch2:		%{name}-kpilot.patch
-Patch3:		%{name}-kmail-vcardviewer.patch
-Patch4:		kde-ac260-lt.patch
+Patch2:		%{name}-kmail-vcardviewer.patch
+Patch3:		kde-ac260-lt.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -486,7 +485,6 @@ libksieve, libmimelib.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
