@@ -1,0 +1,20 @@
+--- kdepim-3.5.6/kmail/kmmainwin.rc~	2007-01-15 13:28:46.000000000 +0200
++++ kdepim-3.5.6/kmail/kmmainwin.rc	2007-01-29 23:06:27.000000000 +0200
+@@ -175,7 +175,7 @@
+  </MenuBar>
+  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
+   <text>Main Toolbar</text>
+-  <Action name="new_message" />
++  <Action name="post_message" />
+   <Action name="file_save_as" />
+   <Action name="file_print" />
+   <Separator/>
+@@ -191,5 +191,8 @@
+   <Separator/>
+   <Action name="search_messages" />
+   <ActionList name="toolbar_filter_actions" />
++  <Action name="mark_all_as_read" />
++  <Action name="status_todo" />
++  <Action name="status_flag" />
+  </ToolBar>
+ </kpartgui>
