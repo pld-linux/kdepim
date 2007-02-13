@@ -11,10 +11,10 @@
 %define		_minbaseevr	9:%{version}
 
 Summary:	Personal Information Management (PIM) for KDE
-Summary(ko.UTF-8):   K 데스크탑 환경 - PIM (개인 정보 관리)
-Summary(pl.UTF-8):   Manadżer informacji osobistej (PIM) dla KDE
-Summary(ru.UTF-8):   Персональный планировщик (PIM) для KDE
-Summary(uk.UTF-8):   Персональный планувальник (PIM) для KDE
+Summary(ko.UTF-8):	K 데스크탑 환경 - PIM (개인 정보 관리)
+Summary(pl.UTF-8):	Manadżer informacji osobistej (PIM) dla KDE
+Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
+Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.6
 Release:	4
@@ -89,9 +89,9 @@ Desktop Environment (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
-Summary(pl.UTF-8):   Pliki nagłówkowe do KDE pim
-Summary(ru.UTF-8):   Файлы разработки для kdepim
-Summary(uk.UTF-8):   Файли розробки для kdepim
+Summary(pl.UTF-8):	Pliki nagłówkowe do KDE pim
+Summary(ru.UTF-8):	Файлы разработки для kdepim
+Summary(uk.UTF-8):	Файли розробки для kdepim
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdelibs-devel >= %{_minlibsevr}
@@ -117,7 +117,7 @@ bazujących na kdepim.
 
 %package apidocs
 Summary:	API documentation
-Summary(pl.UTF-8):   Dokumentacja API
+Summary(pl.UTF-8):	Dokumentacja API
 Group:		Documentation
 Requires:	kdelibs >= 9:3.2.90
 
@@ -136,7 +136,7 @@ libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
 
 %package -n kde-kio-groupwise
 Summary:	Groupwise protocol service
-Summary(pl.UTF-8):   Obsługa protokołu Groupwise
+Summary(pl.UTF-8):	Obsługa protokołu Groupwise
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -148,7 +148,7 @@ Obsługa protokołu Groupwise.
 
 %package -n kde-kio-imap4
 Summary:	IMAP4 protocol service
-Summary(pl.UTF-8):   Obsługa protokołu IMAP4
+Summary(pl.UTF-8):	Obsługa protokołu IMAP4
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-newimap4 < 9:3.4.0
@@ -161,7 +161,7 @@ Obsługa protokołu IMAP4.
 
 %package kaddressbook
 Summary:	Address book
-Summary(pl.UTF-8):   Książka adresowa
+Summary(pl.UTF-8):	Książka adresowa
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdelibs >= %{_minlibsevr}
@@ -174,7 +174,7 @@ Książka adresowa dla KDE.
 
 %package kalarm
 Summary:	A personal alarm scheduler
-Summary(pl.UTF-8):   Osobisty program do przypominania
+Summary(pl.UTF-8):	Osobisty program do przypominania
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kalarm
@@ -194,7 +194,7 @@ wysłania. Zawiera także demona obsługującego przypominanie.
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
-Summary(pl.UTF-8):   Program do komunikacji między PC a tel. komórkowym
+Summary(pl.UTF-8):	Program do komunikacji między PC a tel. komórkowym
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= %{_minlibsevr}
@@ -210,7 +210,7 @@ synchronizację danych z telefonu z danymi na PC.
 
 %package karm
 Summary:	Personal timetracker
-Summary(pl.UTF-8):   Osobisty czasomierz
+Summary(pl.UTF-8):	Osobisty czasomierz
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -226,8 +226,8 @@ do wystawiania rachunków wielu klientom.
 
 %package kmail
 Summary:	KDE Mail client
-Summary(pl.UTF-8):   Program pocztowy KDE
-Summary(pt_BR.UTF-8):   Cliente / leitor de e-mails para o KDE
+Summary(pl.UTF-8):	Program pocztowy KDE
+Summary(pt_BR.UTF-8):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
 URL:		http://kmail.kde.org/
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -280,8 +280,8 @@ Poderoso cliente / leitor de e-mails para o KDE.
 
 %package knode
 Summary:	KDE News Reader
-Summary(pl.UTF-8):   Czytnik newsów dla KDE
-Summary(pt_BR.UTF-8):   Leitor de notícias (news) do KDE
+Summary(pl.UTF-8):	Czytnik newsów dla KDE
+Summary(pt_BR.UTF-8):	Leitor de notícias (news) do KDE
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kde-kio-nntp >= %{_minbaseevr}
@@ -318,7 +318,7 @@ Leitor de notícias (news) do KDE.
 
 %package knotes
 Summary:	Yellow cards
-Summary(pl.UTF-8):   Żółte karteczki
+Summary(pl.UTF-8):	Żółte karteczki
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -335,7 +335,7 @@ komputerów.
 
 %package konsolekalendar
 Summary:	A command line ICard tool
-Summary(pl.UTF-8):   Narzędzie dostępu do plików kalendarza z linii poleceń
+Summary(pl.UTF-8):	Narzędzie dostępu do plików kalendarza z linii poleceń
 Group:		Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -367,8 +367,8 @@ Narzędzie dostępu do plików kalendarza z linii poleceń.
 
 %package korn
 Summary:	KDE 'biff' application
-Summary(pl.UTF-8):   Wskaźnik skrzynki pocztowej dla KDE
-Summary(pt_BR.UTF-8):   Miniaplicativo de monitoração da caixa de correio
+Summary(pl.UTF-8):	Wskaźnik skrzynki pocztowej dla KDE
+Summary(pt_BR.UTF-8):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-desktop >= %{_minbaseevr}
@@ -386,7 +386,7 @@ Miniaplicativo de monitoração da caixa de correio.
 
 %package kpilot
 Summary:	A sync tool for palmtops
-Summary(pl.UTF-8):   Narzędzie do synchronizacji z palmtopami
+Summary(pl.UTF-8):	Narzędzie do synchronizacji z palmtopami
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
@@ -444,7 +444,7 @@ Obsługuje urządzenia serii:
 
 %package libs
 Summary:	Shared kdepim libraries
-Summary(pl.UTF-8):   Współdzielone biblioteki kdepim
+Summary(pl.UTF-8):	Współdzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
 Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
