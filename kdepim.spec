@@ -17,12 +17,13 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.6
-Release:	8
+Release:	9
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
 # Source0-md5:	e37e6173fe9fd7f242c9502a4ae1d7de
+Source1:	kdepim-top-right-kitchensync.png
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -46,6 +47,7 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
+BuildRequires:	libopensync-devel
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
@@ -526,6 +528,8 @@ done
 	kmail/kmail.antispamrc
 
 rm -f configure
+
+install %{SOURCE1} kitchensync/src/about/top-right-kitchensync.png
 
 %build
 # speedup
