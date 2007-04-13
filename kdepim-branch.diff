@@ -40192,19 +40192,6 @@ Index: kaddressbook/features/resourceselection.desktop
  Comment[nl]=Plugin voor het beheren van adresboeken
  Comment[nn]=Programtillegg for handtering av adressebøker
  Comment[pl]=Wtyczka do zarządzania książkami adresowymi
-Index: Makefile.am.in
-===================================================================
---- Makefile.am.in	(.../tags/KDE/3.5.6/kdepim)	(wersja 653179)
-+++ Makefile.am.in	(.../branches/KDE/3.5/kdepim)	(wersja 653179)
-@@ -10,7 +10,7 @@
- # Libraries and their upwards dependencies
- COMPILE_AFTER_libemailfunctions = libkcal libkpimidentities kmail korganizer
- COMPILE_AFTER_libkholidays = korganizer kontact
--COMPILE_AFTER_libkcal = kalarm kitchensync konsolekalendar korganizer ksync libkpimexchange kpilot libkdepim karm knotes kresources kfile-plugins
-+COMPILE_AFTER_libkcal = kalarm kitchensync konsolekalendar korganizer libkpimexchange kpilot libkdepim karm knotes kresources kfile-plugins
- COMPILE_AFTER_mimelib = korn kmail
- COMPILE_AFTER_libkdenetwork = kmail knode
- COMPILE_AFTER_libksieve = kmail
 Index: libkholidays/holidays/holiday_nl
 ===================================================================
 --- libkholidays/holidays/holiday_nl	(.../tags/KDE/3.5.6/kdepim)	(wersja 653179)
