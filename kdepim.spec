@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.6
-Release:	10
+Release:	11
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -583,14 +583,11 @@ cat kleopatra.lang >> kmail.lang
 cat ktnef.lang >> kmail.lang
 %find_lang	kwatchgnupg	--with-kde
 cat kwatchgnupg.lang >> kmail.lang
-%find_lang	multisynk	--with-kde
 
 > %{name}.lang
 cat akregator.lang	>> %{name}.lang
 cat kontact.lang	>> %{name}.lang
 cat korganizer.lang	>> %{name}.lang
-# TODO
-cat multisynk.lang	>> %{name}.lang
 
 # Omit apidocs entries
 sed -i 's/.*apidocs.*//' *.lang
@@ -669,7 +666,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kpilotplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_multisynk.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_newstickerplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
