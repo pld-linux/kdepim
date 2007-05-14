@@ -16,14 +16,13 @@ Summary(pl.UTF-8):	Manadżer informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.6
-Release:	11
+Version:	3.5.7
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	e37e6173fe9fd7f242c9502a4ae1d7de
-Source1:	kdepim-top-right-kitchensync.png
+# Source0-md5:	a298f7fea2de0c72f7a34979b61e53fa
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -485,7 +484,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p0
+#%patch100 -p0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -528,8 +527,6 @@ done
 	kmail/kmail.antispamrc
 
 rm -f configure
-
-install %{SOURCE1} kitchensync/src/about/top-right-kitchensync.png
 
 %build
 # speedup
@@ -619,7 +616,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kitchensync
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
-%attr(755,root,root) %{_bindir}/ksync
 %attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
 
@@ -687,7 +683,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kontactsummary
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
-%{_datadir}/apps/ksync
 %{_datadir}/apps/kdepim
 %{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
@@ -745,6 +740,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/groupwarewizard.desktop
 %{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
+%{_iconsdir}/*/*/*/kitchensync.png
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
 %{_iconsdir}/*/*/actions/*rss*
@@ -822,7 +818,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpimidentities.so
 %{_libdir}/libkpinterfaces.so
 %{_libdir}/libksieve.so
-%{_libdir}/libksync.so
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
 %{_libdir}/libqgpgme.so
@@ -1110,7 +1105,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
 %attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
 %attr(755,root,root) %{_libdir}/libkslox.so.*.*.*
-%attr(755,root,root) %{_libdir}/libksync.so.*.*.*
 %attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
 %attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
