@@ -13,9 +13,9 @@
    <Separator/>
    <Action name="search_messages" />
    <ActionList name="toolbar_filter_actions" />
-+  <Action name="mark_all_as_read" />
 +  <Action name="status_todo" />
 +  <Action name="status_flag" />
++  <Action name="mark_all_as_read" />
   </ToolBar>
  </kpartgui>
 --- kdepim-3.5.6/kmail/kmail_part.rc~	2007-01-15 13:28:47.000000000 +0200
