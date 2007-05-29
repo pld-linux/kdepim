@@ -33,8 +33,8 @@
    <Separator/>
    <Action name="search_messages" />
    <ActionList name="toolbar_filter_actions" />
-+  <Action name="mark_all_as_read" />
 +  <Action name="status_todo" />
 +  <Action name="status_flag" />
++  <Action name="mark_all_as_read" />
   </ToolBar>
  </kpartgui>
