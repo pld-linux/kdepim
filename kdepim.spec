@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.7
-Release:	3
+Release:	4
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -1062,6 +1062,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libakregatorprivate.so
 %attr(755,root,root) %{_libdir}/libindex.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgwsoap.so.*.*.*
 %attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
 %attr(755,root,root) %{_libdir}/libkabc_groupdav.so.*.*.*
 %attr(755,root,root) %{_libdir}/libkabc_groupwise.so.*.*.*
