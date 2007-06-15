@@ -1,7 +1,7 @@
 Index: akregator/src/akregator.desktop
 ===================================================================
---- akregator/src/akregator.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- akregator/src/akregator.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ akregator/src/akregator.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -98,5 +98,5 @@
  Comment[zh_CN]=KDE RSS 新闻收集器
  Comment[zh_TW]=KDE 的 RSS 收集器
@@ -11,8 +11,8 @@ Index: akregator/src/akregator.desktop
  X-DCOP-ServiceType=Unique
 Index: wizards/groupwarewizard.desktop
 ===================================================================
---- wizards/groupwarewizard.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ wizards/groupwarewizard.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- wizards/groupwarewizard.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ wizards/groupwarewizard.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -48,4 +48,4 @@
  Icon=kontact
  Terminal=false
@@ -21,8 +21,8 @@ Index: wizards/groupwarewizard.desktop
 +Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Network;Email;
 Index: wizards/kmailchanges.h
 ===================================================================
---- wizards/kmailchanges.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ wizards/kmailchanges.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- wizards/kmailchanges.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ wizards/kmailchanges.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -25,6 +25,10 @@
  #include <kconfigpropagator.h>
  #include <kconfig.h>
@@ -56,8 +56,8 @@ Index: wizards/kmailchanges.h
  class CreateDisconnectedImapAccount : public CreateImapAccount
 Index: wizards/kmailchanges.cpp
 ===================================================================
---- wizards/kmailchanges.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ wizards/kmailchanges.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- wizards/kmailchanges.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ wizards/kmailchanges.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -30,6 +30,8 @@
  #include <identity.h>
  #include <kdebug.h>
@@ -158,8 +158,8 @@ Index: wizards/kmailchanges.cpp
 +}
 Index: kresources/egroupware/xmlrpciface.h
 ===================================================================
---- kresources/egroupware/xmlrpciface.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/egroupware/xmlrpciface.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/egroupware/xmlrpciface.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/egroupware/xmlrpciface.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -90,8 +90,8 @@
  
        template <typename T>
@@ -173,8 +173,8 @@ Index: kresources/egroupware/xmlrpciface.h
      public slots:
 Index: kresources/groupwise/soap/Makefile.am
 ===================================================================
---- kresources/groupwise/soap/Makefile.am	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/groupwise/soap/Makefile.am	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/groupwise/soap/Makefile.am	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/groupwise/soap/Makefile.am	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -11,13 +11,13 @@
                     $(top_builddir)/libkdepim/libkdepim.la
  soapdebug_SOURCES = soapdebug.cpp
@@ -194,8 +194,8 @@ Index: kresources/groupwise/soap/Makefile.am
  # make a header file from the wsdl
 Index: kresources/kolab/kabc/resourcekolab.cpp
 ===================================================================
---- kresources/kolab/kabc/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kabc/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kabc/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kabc/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -507,7 +507,8 @@
  void KABC::ResourceKolab::fromKMailAddSubresource( const QString& type,
                                                     const QString& subResource,
@@ -208,8 +208,8 @@ Index: kresources/kolab/kabc/resourcekolab.cpp
  
 Index: kresources/kolab/kabc/resourcekolab.h
 ===================================================================
---- kresources/kolab/kabc/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kabc/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kabc/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kabc/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -107,7 +107,8 @@
  
    // Listen to KMail changes in the amount of sub resources
@@ -222,8 +222,8 @@ Index: kresources/kolab/kabc/resourcekolab.h
    bool fromKMailAddIncidence( const QString& type, const QString& resource,
 Index: kresources/kolab/knotes/resourcekolab.cpp
 ===================================================================
---- kresources/kolab/knotes/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/knotes/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/knotes/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/knotes/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -328,7 +328,8 @@
  void ResourceKolab::fromKMailAddSubresource( const QString& type,
                                               const QString& subResource,
@@ -236,8 +236,8 @@ Index: kresources/kolab/knotes/resourcekolab.cpp
      // Not ours
 Index: kresources/kolab/knotes/resourcekolab.h
 ===================================================================
---- kresources/kolab/knotes/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/knotes/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/knotes/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/knotes/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -88,7 +88,8 @@
  
    /// Listen to KMail changes in the amount of sub resources
@@ -250,8 +250,8 @@ Index: kresources/kolab/knotes/resourcekolab.h
    void fromKMailAsyncLoadResult( const QMap<Q_UINT32, QString>& map,
 Index: kresources/kolab/shared/resourcekolabbase.h
 ===================================================================
---- kresources/kolab/shared/resourcekolabbase.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/shared/resourcekolabbase.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/shared/resourcekolabbase.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/shared/resourcekolabbase.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -90,7 +90,8 @@
    virtual void fromKMailAddSubresource( const QString& type,
                                          const QString& resource,
@@ -264,8 +264,8 @@ Index: kresources/kolab/shared/resourcekolabbase.h
  
 Index: kresources/kolab/shared/subresource.cpp
 ===================================================================
---- kresources/kolab/shared/subresource.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/shared/subresource.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/shared/subresource.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/shared/subresource.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -34,13 +34,21 @@
  
  using namespace Kolab;
@@ -310,8 +310,8 @@ Index: kresources/kolab/shared/subresource.cpp
    mWritable = writable;
 Index: kresources/kolab/shared/kmailconnection.h
 ===================================================================
---- kresources/kolab/shared/kmailconnection.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/shared/kmailconnection.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/shared/kmailconnection.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/shared/kmailconnection.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -59,7 +59,9 @@
    void fromKMailDelIncidence( const QString& type, const QString& resource,
                                const QString& xml );
@@ -325,8 +325,8 @@ Index: kresources/kolab/shared/kmailconnection.h
                                   const QString& folder );
 Index: kresources/kolab/shared/subresource.h
 ===================================================================
---- kresources/kolab/shared/subresource.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/shared/subresource.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/shared/subresource.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/shared/subresource.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -50,6 +50,9 @@
  
    SubResource( bool active, bool writable, const QString& label,
@@ -358,8 +358,8 @@ Index: kresources/kolab/shared/subresource.h
    // This is just for the abc plugin. But as long as only this is here,
 Index: kresources/kolab/shared/kmailconnection.cpp
 ===================================================================
---- kresources/kolab/shared/kmailconnection.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/shared/kmailconnection.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/shared/kmailconnection.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/shared/kmailconnection.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -98,8 +98,8 @@
      if ( !connectKMailSignal( "signalRefresh(QString,QString)",
                                "fromKMailRefresh(QString,QString)" ) )
@@ -396,8 +396,8 @@ Index: kresources/kolab/shared/kmailconnection.cpp
  void KMailConnection::fromKMailDelSubresource( const QString& type,
 Index: kresources/kolab/kcal/resourcekolab.cpp
 ===================================================================
---- kresources/kolab/kcal/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kcal/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kcal/resourcekolab.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kcal/resourcekolab.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -67,7 +67,8 @@
  
  ResourceKolab::ResourceKolab( const KConfig *config )
@@ -513,8 +513,8 @@ Index: kresources/kolab/kcal/resourcekolab.cpp
  }
 Index: kresources/kolab/kcal/incidence.cpp
 ===================================================================
---- kresources/kolab/kcal/incidence.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kcal/incidence.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kcal/incidence.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kcal/incidence.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -42,12 +42,10 @@
  using namespace Kolab;
  
@@ -531,8 +531,8 @@ Index: kresources/kolab/kcal/incidence.cpp
  Incidence::~Incidence()
 Index: kresources/kolab/kcal/resourcekolab.h
 ===================================================================
---- kresources/kolab/kcal/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kcal/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kcal/resourcekolab.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kcal/resourcekolab.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -110,7 +110,8 @@
  
    /// Listen to KMail changes in the amount of sub resources
@@ -567,8 +567,8 @@ Index: kresources/kolab/kcal/resourcekolab.h
    QString configFile() const {
 Index: kresources/kolab/kcal/incidence.h
 ===================================================================
---- kresources/kolab/kcal/incidence.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kresources/kolab/kcal/incidence.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kresources/kolab/kcal/incidence.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kresources/kolab/kcal/incidence.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -73,7 +73,10 @@
      QString role;
    };
@@ -581,10 +581,22 @@ Index: kresources/kolab/kcal/incidence.h
    virtual ~Incidence();
  
    void saveTo( KCal::Incidence* incidence );
+Index: certmanager/certificateinfowidgetimpl.cpp
+===================================================================
+--- certmanager/certificateinfowidgetimpl.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ certmanager/certificateinfowidgetimpl.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -267,6 +267,7 @@
+   if ( !proc->start( KProcess::NotifyOnExit, (KProcess::Communication)(KProcess::Stdout | KProcess::Stderr) ) ) {
+     QString wmsg = i18n("Failed to execute gpgsm:\n%1").arg( i18n( "program not found" ) );
+     dumpView->setText( wmsg );
++    delete proc;
+   }
+ }
+ 
 Index: certmanager/lib/ui/dnattributeorderconfigwidget.cpp
 ===================================================================
---- certmanager/lib/ui/dnattributeorderconfigwidget.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ certmanager/lib/ui/dnattributeorderconfigwidget.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- certmanager/lib/ui/dnattributeorderconfigwidget.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ certmanager/lib/ui/dnattributeorderconfigwidget.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -105,9 +105,9 @@
    d->currentLV->setSorting( -1 );
    glay->addWidget( d->currentLV, row, 2 );
@@ -599,8 +611,8 @@ Index: certmanager/lib/ui/dnattributeorderconfigwidget.cpp
    d->placeHolderItem = new QListViewItem( d->availableLV, "_X_", i18n("All others") );
 Index: libkpgp/kpgpui.cpp
 ===================================================================
---- libkpgp/kpgpui.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkpgp/kpgpui.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkpgp/kpgpui.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkpgp/kpgpui.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -304,8 +304,8 @@
  
    resize( dialogSize );
@@ -614,8 +626,8 @@ Index: libkpgp/kpgpui.cpp
    mKeyGoodPix    = new QPixmap( UserIcon("key_ok") );
 Index: libkmime/boolflags.cpp
 ===================================================================
---- libkmime/boolflags.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkmime/boolflags.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkmime/boolflags.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkmime/boolflags.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -28,7 +28,7 @@
      n=0;
    }
@@ -625,10 +637,24 @@ Index: libkmime/boolflags.cpp
      n=1;
    }
  
+Index: karm/ktimewidget.cpp
+===================================================================
+--- karm/ktimewidget.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ karm/ktimewidget.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -30,9 +30,6 @@
+       if ( ! ok )
+         return Invalid;
+ 
+-      if ( str.contains('-') != 0 )
+-        return Invalid;
+-
+       if ( _tp==MINUTE && val >= 60  )
+         return Invalid;
+       else
 Index: karm/support/karm.desktop
 ===================================================================
---- karm/support/karm.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ karm/support/karm.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- karm/support/karm.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ karm/support/karm.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -77,4 +77,4 @@
  Terminal=false
  X-KDE-StartupNotify=true
@@ -637,8 +663,8 @@ Index: karm/support/karm.desktop
 +Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Calendar;
 Index: libkpimexchange/core/exchangemonitor.cpp
 ===================================================================
---- libkpimexchange/core/exchangemonitor.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkpimexchange/core/exchangemonitor.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkpimexchange/core/exchangemonitor.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkpimexchange/core/exchangemonitor.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -109,12 +109,12 @@
    }
  
@@ -656,8 +682,8 @@ Index: libkpimexchange/core/exchangemonitor.cpp
  }
 Index: kdgantt/KDGanttViewSubwidgets.cpp
 ===================================================================
---- kdgantt/KDGanttViewSubwidgets.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kdgantt/KDGanttViewSubwidgets.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kdgantt/KDGanttViewSubwidgets.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kdgantt/KDGanttViewSubwidgets.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -58,7 +58,8 @@
  #include <kcalendarsystem.h>
  #include <kdebug.h>
@@ -689,8 +715,8 @@ Index: kdgantt/KDGanttViewSubwidgets.cpp
  }
 Index: kmail/kmail.antispamrc
 ===================================================================
---- kmail/kmail.antispamrc	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmail.antispamrc	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmail.antispamrc	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmail.antispamrc	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -22,8 +22,8 @@
  ScoreName=Spamassassin
  ScoreHeader=X-Spam-Status
@@ -726,8 +752,8 @@ Index: kmail/kmail.antispamrc
  Ident=bsfilter
 Index: kmail/imapaccountbase.cpp
 ===================================================================
---- kmail/imapaccountbase.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/imapaccountbase.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/imapaccountbase.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/imapaccountbase.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -81,6 +81,8 @@
  
    ImapAccountBase::ImapAccountBase( AccountManager * parent, const QString & name, uint id )
@@ -739,8 +765,8 @@ Index: kmail/imapaccountbase.cpp
        mCountLastUnread( 0 ),
 Index: kmail/kmailicalifaceimpl.cpp
 ===================================================================
---- kmail/kmailicalifaceimpl.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmailicalifaceimpl.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmailicalifaceimpl.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmailicalifaceimpl.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -52,6 +52,7 @@
  #include "accountmanager.h"
  #include "kmfoldercachedimap.h"
@@ -886,8 +912,8 @@ Index: kmail/kmailicalifaceimpl.cpp
    mResourceQuiet = q;
 Index: kmail/kmheaders.cpp
 ===================================================================
---- kmail/kmheaders.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmheaders.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmheaders.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmheaders.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -2077,7 +2077,9 @@
  void KMHeaders::resetCurrentTime()
  {
@@ -901,8 +927,8 @@ Index: kmail/kmheaders.cpp
  //-----------------------------------------------------------------------------
 Index: kmail/khtmlparthtmlwriter.cpp
 ===================================================================
---- kmail/khtmlparthtmlwriter.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/khtmlparthtmlwriter.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/khtmlparthtmlwriter.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/khtmlparthtmlwriter.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -49,7 +49,7 @@
    KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
  					    QObject * parent, const char * name )
@@ -914,8 +940,8 @@ Index: kmail/khtmlparthtmlwriter.cpp
      connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
 Index: kmail/bodyvisitor.cpp
 ===================================================================
---- kmail/bodyvisitor.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/bodyvisitor.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/bodyvisitor.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/bodyvisitor.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -45,6 +45,7 @@
      mBasicList += "APPLICATION/PKCS7-SIGNATURE";
      // groupware
@@ -979,8 +1005,8 @@ Index: kmail/bodyvisitor.cpp
  }
 Index: kmail/kmailicalIface.h
 ===================================================================
---- kmail/kmailicalIface.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmailicalIface.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmailicalIface.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmailicalIface.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -51,11 +51,12 @@
    struct SubResource {
      //dcopidl barfs on those constructors, but dcopidlng works
@@ -1029,8 +1055,8 @@ Index: kmail/kmailicalIface.h
  
 Index: kmail/jobscheduler.cpp
 ===================================================================
---- kmail/jobscheduler.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/jobscheduler.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/jobscheduler.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/jobscheduler.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -35,7 +35,7 @@
  using namespace KMail;
  
@@ -1042,8 +1068,8 @@ Index: kmail/jobscheduler.cpp
  {
 Index: kmail/globalsettings.cpp
 ===================================================================
---- kmail/globalsettings.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/globalsettings.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/globalsettings.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/globalsettings.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -40,7 +40,7 @@
  
  GlobalSettings::GlobalSettings()
@@ -1055,8 +1081,8 @@ Index: kmail/globalsettings.cpp
  
 Index: kmail/searchwindow.cpp
 ===================================================================
---- kmail/searchwindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/searchwindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/searchwindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/searchwindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -117,7 +117,7 @@
    mSortColumn(0),
    mSortOrder(Ascending),
@@ -1068,8 +1094,8 @@ Index: kmail/searchwindow.cpp
  {
 Index: kmail/kmreaderwin.cpp
 ===================================================================
---- kmail/kmreaderwin.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmreaderwin.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmreaderwin.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmreaderwin.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -509,7 +509,10 @@
      mSelectEncodingAction( 0 ),
      mToggleFixFontAction( 0 ),
@@ -1084,8 +1110,8 @@ Index: kmail/kmreaderwin.cpp
    mMimeTreeMode = 1;
 Index: kmail/kmailicalifaceimpl.h
 ===================================================================
---- kmail/kmailicalifaceimpl.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmailicalifaceimpl.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmailicalifaceimpl.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmailicalifaceimpl.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -274,6 +274,8 @@
  
    StorageFormat globalStorageFormat() const;
@@ -1097,8 +1123,8 @@ Index: kmail/kmailicalifaceimpl.h
    QGuardedPtr<KMFolder> mCalendar;
 Index: kmail/kmaccount.cpp
 ===================================================================
---- kmail/kmaccount.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmaccount.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmaccount.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmaccount.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -324,7 +324,7 @@
    if (mInterval <= 0) return;
    if(!mTimer)
@@ -1110,9 +1136,20 @@ Index: kmail/kmaccount.cpp
    else
 Index: kmail/kmcommands.cpp
 ===================================================================
---- kmail/kmcommands.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
-@@ -1217,7 +1217,7 @@
+--- kmail/kmcommands.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -699,6 +699,10 @@
+   KMMessage *newMsg = new KMMessage( new DwMessage( *msg->asDwMessage() ) );
+   newMsg->setComplete( msg->isComplete() );
+ 
++  // these fields need to be regenerated for the new message
++  newMsg->removeHeaderField("Date");
++  newMsg->removeHeaderField("Message-ID");
++
+   KMail::Composer *win = KMail::makeComposer();
+   newMsg->setTransferInProgress( false ); // From here on on, the composer owns the message.
+   win->setMsg( newMsg, FALSE, TRUE );
+@@ -1217,7 +1221,7 @@
      for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
        TemplateParser parser( fwdMsg, TemplateParser::Forward,
          msg->body(), false, false, false, false);
@@ -1121,7 +1158,7 @@ Index: kmail/kmcommands.cpp
  
        fwdMsg->link( msg, KMMsgStatusForwarded );
      }
-@@ -1521,7 +1521,7 @@
+@@ -1521,7 +1525,7 @@
      for ( KMMessage *msg = linklist.first(); msg; msg = linklist.next() ) {
        TemplateParser parser( fwdMsg, TemplateParser::Forward,
          msg->body(), false, false, false, false);
@@ -1130,7 +1167,7 @@ Index: kmail/kmcommands.cpp
  
        fwdMsg->link( msg, KMMsgStatusForwarded );
      }
-@@ -1924,7 +1924,7 @@
+@@ -1924,7 +1928,7 @@
    for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
    {
      KMFolder *srcFolder = msgBase->parent();
@@ -1141,8 +1178,8 @@ Index: kmail/kmcommands.cpp
      } else {
 Index: kmail/index.cpp
 ===================================================================
---- kmail/index.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/index.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/index.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/index.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -85,7 +85,7 @@
  	mIndex( 0 ),
  #endif
@@ -1163,8 +1200,8 @@ Index: kmail/index.cpp
  	connect( mTimer, SIGNAL( timeout() ), SLOT( act() ) );
 Index: kmail/kmkernel.cpp
 ===================================================================
---- kmail/kmkernel.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmkernel.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmkernel.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1464,6 +1464,9 @@
      kdDebug(5006) << k_funcinfo << "foldersPath (after transferMail): '" << foldersPath << "'" << endl;
    }
@@ -1195,8 +1232,8 @@ Index: kmail/kmkernel.cpp
    mBackgroundTasksTimer->start( 10000, true ); // 10s minute, singleshot
 Index: kmail/kmcommands.h
 ===================================================================
---- kmail/kmcommands.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmcommands.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmcommands.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmcommands.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -858,7 +858,7 @@
  {
    Q_OBJECT
@@ -1253,8 +1290,8 @@ Index: kmail/kmcommands.h
  };
 Index: kmail/kmcomposewin.cpp
 ===================================================================
---- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmcomposewin.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmcomposewin.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -4623,7 +4623,7 @@
    }
    else {
@@ -1266,8 +1303,8 @@ Index: kmail/kmcomposewin.cpp
      }
 Index: kmail/folderstorage.cpp
 ===================================================================
---- kmail/folderstorage.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/folderstorage.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/folderstorage.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/folderstorage.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -78,7 +78,7 @@
    mNoContent      = false;
    mNoChildren     = false;
@@ -1288,8 +1325,8 @@ Index: kmail/folderstorage.cpp
      }
 Index: kmail/popaccount.cpp
 ===================================================================
---- kmail/popaccount.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/popaccount.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/popaccount.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -55,7 +55,8 @@
  //-----------------------------------------------------------------------------
  PopAccount::PopAccount(AccountManager* aOwner, const QString& aAccountName, uint id)
@@ -1302,8 +1339,8 @@ Index: kmail/popaccount.cpp
    job = 0;
 Index: kmail/KMail.desktop
 ===================================================================
---- kmail/KMail.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/KMail.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/KMail.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/KMail.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -89,4 +89,4 @@
  X-DCOP-ServiceType=Unique
  X-DCOP-ServiceName=kmail
@@ -1312,8 +1349,8 @@ Index: kmail/KMail.desktop
 +Categories=Qt;KDE;Network;Office;Email;
 Index: kmail/compactionjob.cpp
 ===================================================================
---- kmail/compactionjob.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/compactionjob.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/compactionjob.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/compactionjob.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -51,7 +51,7 @@
  #define COMPACTIONJOB_TIMERINTERVAL 100
  
@@ -1334,8 +1371,8 @@ Index: kmail/compactionjob.cpp
  }
 Index: kmail/kmfoldersearch.cpp
 ===================================================================
---- kmail/kmfoldersearch.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmfoldersearch.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmfoldersearch.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmfoldersearch.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -80,7 +80,7 @@
      mFoundCount = 0;
      mSearchCount = 0;
@@ -1356,8 +1393,8 @@ Index: kmail/kmfoldersearch.cpp
  }
 Index: kmail/kmacctimap.cpp
 ===================================================================
---- kmail/kmacctimap.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmacctimap.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmacctimap.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmacctimap.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -57,7 +57,8 @@
  //-----------------------------------------------------------------------------
  KMAcctImap::KMAcctImap(AccountManager* aOwner, const QString& aAccountName, uint id):
@@ -1370,8 +1407,8 @@ Index: kmail/kmacctimap.cpp
    mScheduler = 0;
 Index: kmail/kmfoldertree.cpp
 ===================================================================
---- kmail/kmfoldertree.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/kmfoldertree.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/kmfoldertree.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/kmfoldertree.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -331,6 +331,8 @@
  KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
                              const char *name )
@@ -1405,8 +1442,8 @@ Index: kmail/kmfoldertree.cpp
        int action = -1;
 Index: kmail/actionscheduler.cpp
 ===================================================================
---- kmail/actionscheduler.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kmail/actionscheduler.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kmail/actionscheduler.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kmail/actionscheduler.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -81,19 +81,19 @@
    mAccount = false;
    lastCommand = 0;
@@ -1436,18 +1473,69 @@ Index: kmail/actionscheduler.cpp
    QValueList<KMFilter*>::Iterator it = filters.begin();
 Index: knode/KNode.desktop
 ===================================================================
---- knode/KNode.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- knode/KNode.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ knode/KNode.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -82,4 +82,4 @@
  GenericName[zu]=Umfundi wezindaba
  X-KDE-StartupNotify=true
  X-DCOP-ServiceType=Unique
 -Categories=Qt;KDE;Network;
 +Categories=Qt;KDE;Network;News;
+Index: kioslaves/imap4/imapparser.cc
+===================================================================
+--- kioslaves/imap4/imapparser.cc	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kioslaves/imap4/imapparser.cc	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -59,6 +59,19 @@
+ #include <kasciistricmp.h>
+ #include <kasciistringtools.h>
+ 
++#ifdef HAVE_LIBSASL2
++static sasl_callback_t client_callbacks[] = {
++    { SASL_CB_ECHOPROMPT, NULL, NULL },
++    { SASL_CB_NOECHOPROMPT, NULL, NULL },
++    { SASL_CB_GETREALM, NULL, NULL },
++    { SASL_CB_USER, NULL, NULL },
++    { SASL_CB_AUTHNAME, NULL, NULL },
++    { SASL_CB_PASS, NULL, NULL },
++    { SASL_CB_CANON_USER, NULL, NULL },
++    { SASL_CB_LIST_END, NULL, NULL }
++};
++#endif
++
+ imapParser::imapParser ()
+ {
+   sentQueue.setAutoDelete (false);
+@@ -222,7 +235,7 @@
+   result = sasl_client_new( "imap", /* FIXME: with cyrus-imapd, even imaps' digest-uri
+                                        must be 'imap'. I don't know if it's good or bad. */
+                        aFQDN.latin1(),
+-                       0, 0, 0, 0, &conn );
++                       0, 0, client_callbacks, 0, &conn );
+ 
+   if ( result != SASL_OK ) {
+     kdDebug(7116) << "sasl_client_new failed with: " << result << endl;
+@@ -1800,7 +1813,7 @@
+     QString temp = (*it);
+ 
+     int pt = temp.find ('/');
+-    if (pt > 0) 
++    if (pt > 0)
+     {
+       if (temp.findRev ('"', pt) == -1 || temp.find('"', pt) == -1)
+       {
+@@ -1832,7 +1845,7 @@
+     if (!_box.isEmpty () && _box[_box.length () - 1] == '/')
+       _box.truncate(_box.length() - 1);
+   }
+-  kdDebug(7116) << "URL: box= " << _box << ", section= " << _section << ", type= " 
++  kdDebug(7116) << "URL: box= " << _box << ", section= " << _section << ", type= "
+     << _type << ", uid= " << _uid << ", validity= " << _validity << ", info= " << _info << endl;
+ }
+ 
 Index: kioslaves/imap4/imapcommand.cc
 ===================================================================
---- kioslaves/imap4/imapcommand.cc	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kioslaves/imap4/imapcommand.cc	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kioslaves/imap4/imapcommand.cc	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kioslaves/imap4/imapcommand.cc	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -396,7 +396,7 @@
  imapCommand *
  imapCommand::clientGetQuotaroot( const QString& box )
@@ -1457,10 +1545,258 @@ Index: kioslaves/imap4/imapcommand.cc
    return new imapCommand ("GETQUOTAROOT", parameter);
  }
  
+Index: kioslaves/sieve/sieve.cpp
+===================================================================
+--- kioslaves/sieve/sieve.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kioslaves/sieve/sieve.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -14,7 +14,7 @@
+  *                                                                         *
+  ***************************************************************************/
+ 
+-/** 
++/**
+  * Portions adapted from the SMTP ioslave.
+  * Copyright (c) 2000, 2001 Alex Zepeda <jazepeda@pacbell.net>
+  * Copyright (c) 2001 Michael H�ckel <Michael@Haeckel.Net>
+@@ -60,7 +60,7 @@
+ #endif
+ 
+ #define SIEVE_DEFAULT_PORT 2000
+-  
++
+ static sasl_callback_t callbacks[] = {
+     { SASL_CB_ECHOPROMPT, NULL, NULL },
+     { SASL_CB_NOECHOPROMPT, NULL, NULL },
+@@ -73,6 +73,17 @@
+     { SASL_CB_LIST_END, NULL, NULL }
+ };
+ 
++static sasl_callback_t client_callbacks[] = {
++    { SASL_CB_ECHOPROMPT, NULL, NULL },
++    { SASL_CB_NOECHOPROMPT, NULL, NULL },
++    { SASL_CB_GETREALM, NULL, NULL },
++    { SASL_CB_USER, NULL, NULL },
++    { SASL_CB_AUTHNAME, NULL, NULL },
++    { SASL_CB_PASS, NULL, NULL },
++    { SASL_CB_CANON_USER, NULL, NULL },
++    { SASL_CB_LIST_END, NULL, NULL }
++};
++
+ static const unsigned int SIEVE_DEFAULT_RECIEVE_BUFFER = 512;
+ 
+ using namespace KIO;
+@@ -81,7 +92,7 @@
+ 	KDE_EXPORT int kdemain(int argc, char **argv)
+ 	{
+ 		KInstance instance("kio_sieve" );
+-		
++
+ 		ksDebug() << "*** Starting kio_sieve " << endl;
+ 
+ 		if (argc != 4) {
+@@ -230,17 +241,17 @@
+ bool kio_sieveProtocol::parseCapabilities(bool requestCapabilities/* = false*/)
+ {
+ 	ksDebug() << k_funcinfo << endl;
+-	
++
+ 	// Setup...
+ 	bool ret = false;
+-	
++
+ 	if (requestCapabilities) {
+ 		sendData("CAPABILITY");
+ 	}
+ 
+ 	while (receiveData()) {
+ 		ksDebug() << "Looping receive" << endl;
+-		
++
+ 		if (r.getType() == kio_sieveResponse::ACTION) {
+ 			if ( r.getAction().contains("ok", false) != -1 ) {
+ 				ksDebug() << "Sieve server ready & awaiting authentication." << endl;
+@@ -271,12 +282,12 @@
+ 			ksDebug() << "Server supports TLS" << endl;
+ 			m_supportsTLS = true;
+ 			setMetaData("tlsSupported", "true");
+-			
++
+ 		} else {
+ 			ksDebug() << "Unrecognised key " << r.getKey() << endl;
+ 		}
+ 	}
+-	
++
+ 	if (!m_supportsTLS) {
+ 		setMetaData("tlsSupported", "false");
+ 	}
+@@ -301,7 +312,7 @@
+ 		if ( query.startsWith("?") ) query.remove( 0, 1 );
+ 		QStringList q = QStringList::split( ",", query );
+ 		QStringList::iterator it;
+-  
++
+ 		for ( it = q.begin(); it != q.end(); ++it ) {
+ 			if ( ( (*it).section('=',0,0) ).lower() == "x-mech" ) {
+ 				auth = ( (*it).section('=',1) ).upper();
+@@ -325,7 +336,7 @@
+ bool kio_sieveProtocol::connect(bool useTLSIfAvailable)
+ {
+ 	ksDebug() << k_funcinfo << endl;
+-	
++
+ 	if (isConnectionValid()) return true;
+ 
+ 	infoMessage(i18n("Connecting to %1...").arg( m_sServer));
+@@ -334,7 +345,7 @@
+ 		error(ERR_CONNECTION_BROKEN, i18n("The connection to the server was lost."));
+ 		return false;
+ 	}
+-	
++
+ 	setBlockConnection(true);
+ 
+ 	if (!connectToHost(m_sServer, m_iPort, true)) {
+@@ -406,7 +417,7 @@
+ /*void kio_sieveProtocol::slave_status()
+ {
+ 	slaveStatus(isConnectionValid() ? m_sServer : "", isConnectionValid());
+-	
++
+ 	finished();
+ }*/
+ 
+@@ -600,7 +611,7 @@
+ 
+ 	if (operationSuccessful())
+ 		ksDebug() << "Script upload complete." << endl;
+-	
++
+ 	else {
+ 		/* The managesieve server parses received scripts and rejects
+ 		 * scripts which are not syntactically correct. Here we expect
+@@ -766,7 +777,7 @@
+ 	}
+ 
+ 	infoMessage(i18n("Done."));
+-	
++
+ 	finished();
+ }
+ 
+@@ -783,7 +794,7 @@
+     error(ERR_CANNOT_CHMOD, i18n("Cannot chmod to anything but 0700 (active) or 0600 (inactive script)."));
+     return;
+   }
+-  
++
+   finished();
+ }
+ 
+@@ -823,7 +834,7 @@
+ 
+ 		while(receiveData()) {
+ 			if (r.getType() == kio_sieveResponse::ACTION) {
+-				if (r.getAction().contains("OK", false) == 1) 
++				if (r.getAction().contains("OK", false) == 1)
+ 					// Script list completed
+ 					break;
+ 
+@@ -924,7 +935,7 @@
+   //some mechanisms do not require username && pass, so it doesn't need a popup
+   //window for getting this info
+   for ( ; interact->id != SASL_CB_LIST_END; interact++ ) {
+-    if ( interact->id == SASL_CB_AUTHNAME || 
++    if ( interact->id == SASL_CB_AUTHNAME ||
+          interact->id == SASL_CB_PASS ) {
+ 
+ 	    if (m_sUser.isEmpty() || m_sPass.isEmpty()) {
+@@ -938,7 +949,7 @@
+       break;
+     }
+   }
+-  
++
+   interact = ( sasl_interact_t * ) in;
+   while( interact->id != SASL_CB_LIST_END ) {
+     ksDebug() << "SASL_INTERACT id: " << interact->id << endl;
+@@ -993,7 +1004,7 @@
+ 
+   result = sasl_client_new( "sieve",
+                        m_sServer.latin1(),
+-                       0, 0, NULL, 0, &conn );
++                       0, 0, client_callbacks, 0, &conn );
+ 
+   if ( result != SASL_OK ) {
+     ksDebug() << "sasl_client_new failed with: " << result << endl;
+@@ -1013,7 +1024,7 @@
+     result = sasl_client_start(conn, strList.join(" ").latin1(), &client_interact,
+                        &out, &outlen, &mechusing);
+ 
+-    if (result == SASL_INTERACT) 
++    if (result == SASL_INTERACT)
+       if ( !saslInteract( client_interact, ai ) ) {
+         sasl_dispose( &conn );
+         return false;
+@@ -1042,15 +1053,15 @@
+   ksDebug() << "firstCommand: " << firstCommand << endl;
+ 	if (!sendData( firstCommand.latin1() ))
+ 		return false;
+-	
++
+ 	QCString command;
+-	
++
+ 	do {
+ 		receiveData();
+-		
++
+ 		if (operationResult() != OTHER)
+ 			break;
+-		
++
+ 		ksDebug() << "Challenge len  " << r.getQuantity() << endl;
+ 
+ 		if (r.getType() != kio_sieveResponse::QUANTITY) {
+@@ -1085,7 +1096,7 @@
+                                   &client_interact,
+                                   &out, &outlen);
+ 
+-      if (result == SASL_INTERACT) 
++      if (result == SASL_INTERACT)
+         if ( !saslInteract( client_interact, ai ) ) {
+           sasl_dispose( &conn );
+           return false;
+@@ -1099,7 +1110,7 @@
+       sasl_dispose( &conn );
+       return false;
+     }
+-   
++
+     tmp.setRawData( out, outlen );
+     KCodecs::base64Encode( tmp, challenge );
+     tmp.resetRawData( out, outlen );
+@@ -1110,7 +1121,7 @@
+ 
+ 	ksDebug() << "Challenges finished." << endl;
+   sasl_dispose( &conn );
+-    
++
+ 	if (operationResult() == OK) {
+ 		// Authentication succeeded.
+ 		return true;
+@@ -1264,6 +1275,6 @@
+ 			return BYE;
+ 		}
+ 	}
+-	
++
+ 	return OTHER;
+ }
 Index: libkdenetwork/gpgmepp/importresult.cpp
 ===================================================================
---- libkdenetwork/gpgmepp/importresult.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkdenetwork/gpgmepp/importresult.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkdenetwork/gpgmepp/importresult.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkdenetwork/gpgmepp/importresult.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -28,6 +28,7 @@
  
  #include <gpgme.h>
@@ -1471,8 +1807,8 @@ Index: libkdenetwork/gpgmepp/importresult.cpp
  public:
 Index: libkdenetwork/gpgmepp/callbacks.cpp
 ===================================================================
---- libkdenetwork/gpgmepp/callbacks.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkdenetwork/gpgmepp/callbacks.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkdenetwork/gpgmepp/callbacks.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkdenetwork/gpgmepp/callbacks.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -32,6 +32,7 @@
  #include <cerrno>
  #include <unistd.h>
@@ -1483,8 +1819,8 @@ Index: libkdenetwork/gpgmepp/callbacks.cpp
    return gpg_err_make_from_errno( (gpg_err_source_t)22, errno );
 Index: kalarm/editdlg.cpp
 ===================================================================
---- kalarm/editdlg.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1,7 +1,7 @@
  /*
   *  editdlg.cpp  -  dialogue to create or modify an alarm or alarm template
@@ -1505,21 +1841,21 @@ Index: kalarm/editdlg.cpp
  	event.set(dt, text, mBgColourChoose->color(), mFontColourButton->fgColour(), mFontColourButton->font(),
 Index: kalarm/kalarm.h
 ===================================================================
---- kalarm/kalarm.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/kalarm.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -26,7 +26,7 @@
  #include <config.h>
  #endif
  
 -#define KALARM_VERSION "1.4.12"
-+#define KALARM_VERSION "1.4.13"
++#define KALARM_VERSION "1.4.14"
  #define KALARM_NAME "KAlarm"
  
  #include <kdeversion.h>
 Index: kalarm/mainwindow.cpp
 ===================================================================
---- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/mainwindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1071,8 +1071,7 @@
  */
  void MainWindow::slotPreferences()
@@ -1530,10 +1866,56 @@ Index: kalarm/mainwindow.cpp
  }
  
  /******************************************************************************
+Index: kalarm/sounddlg.h
+===================================================================
+--- kalarm/sounddlg.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/sounddlg.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -27,6 +27,8 @@
+ 
+ class QHBox;
+ class QPushButton;
++class KArtsDispatcher;
++namespace KDE { class PlayObject; }
+ class LineEdit;
+ class PushButton;
+ class CheckBox;
+@@ -40,6 +42,7 @@
+ 	public:
+ 		SoundDlg(const QString& file, float volume, float fadeVolume, int fadeSeconds, bool repeat,
+ 		         const QString& caption, QWidget* parent, const char* name = 0);
++		~SoundDlg();
+ 		void           setReadOnly(bool);
+ 		bool           isReadOnly() const    { return mReadOnly; }
+ 		QString        getFile() const       { return mFileName; }
+@@ -63,8 +66,10 @@
+ 		void           slotVolumeToggled(bool on);
+ 		void           slotFadeToggled(bool on);
+ 		void           playSound();
++		void           checkAudioPlay();
+ 
+ 	private:
++		void           stopPlay();
+ 		bool           checkFile();
+ 
+ 		QPushButton*   mFilePlay;
+@@ -81,6 +86,13 @@
+ 		QString        mDefaultDir;     // current default directory for mFileEdit
+ 		QString        mFileName;
+ 		bool           mReadOnly;
++		// Sound file playing
++		KArtsDispatcher* mArtsDispatcher;
++		KDE::PlayObject* mPlayObject;
++		QTimer*          mPlayTimer;       // timer for playing the sound file
++		QString          mLocalAudioFile;  // local copy of audio file
++		QTime            mAudioFileStart;  // time when audio file loading started, or when play started
++		bool             mPlayStarted;      // the sound file has started playing
+ };
+ 
+ #endif
 Index: kalarm/prefdlg.h
 ===================================================================
---- kalarm/prefdlg.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/prefdlg.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/prefdlg.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1,7 +1,7 @@
  /*
   *  prefdlg.h  -  program preferences dialog
@@ -1565,15 +1947,19 @@ Index: kalarm/prefdlg.h
  
 Index: kalarm/Changelog
 ===================================================================
---- kalarm/Changelog	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
-@@ -1,12 +1,16 @@
+--- kalarm/Changelog	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -1,12 +1,20 @@
  KAlarm
  
 -=== Version 1.4.12 --- 11 May 2007 ===
++=== Version 1.4.14 --- 9 June 2007 ===
++In sound file dialogue change Play button to a Stop button while playing a file.
++
 +=== Version 1.4.13 --- 18 May 2007 ===
-+Time value in templates is not stored.
++Fix time value in templates not being stored.
 +Expand time spin boxes to make room for all digits.
++Make Preferences dialogue non-modal.
 +
 +=== Version 1.4.12 (KDE 3.5.7) --- 11 May 2007 ===
  Display advance reminders for each occurrence of recurring alarms.
@@ -1588,8 +1974,8 @@ Index: kalarm/Changelog
  === Version 1.4.11 --- 16 April 2007 ===
 Index: kalarm/kalarmapp.cpp
 ===================================================================
---- kalarm/kalarmapp.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/kalarmapp.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/kalarmapp.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/kalarmapp.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1683,11 +1683,7 @@
  				kdDebug(5950) << "KAlarmApp::execAlarm(): COMMAND: (script)" << endl;
  				QString tmpfile = createTempScriptFile(command, false, event, alarm);
@@ -1602,10 +1988,235 @@ Index: kalarm/kalarmapp.cpp
  				else
  					result = doShellCommand(tmpfile, event, &alarm, (flags | ProcData::TEMP_FILE));
  			}
+Index: kalarm/sounddlg.cpp
+===================================================================
+--- kalarm/sounddlg.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/sounddlg.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -34,7 +34,15 @@
+ #include <klocale.h>
+ #include <kstandarddirs.h>
+ #include <kiconloader.h>
++#ifdef WITHOUT_ARTS
+ #include <kaudioplayer.h>
++#else
++#include <qtimer.h>
++#include <arts/kartsdispatcher.h>
++#include <arts/kartsserver.h>
++#include <arts/kplayobjectfactory.h>
++#include <arts/kplayobject.h>
++#endif
+ #include <kmessagebox.h>
+ #include <kio/netaccess.h>
+ #include <kdebug.h>
+@@ -42,6 +50,7 @@
+ #include "checkbox.h"
+ #include "functions.h"
+ #include "lineedit.h"
++#include "mainwindow.h"
+ #include "pushbutton.h"
+ #include "slider.h"
+ #include "soundpicker.h"
+@@ -62,7 +71,10 @@
+ SoundDlg::SoundDlg(const QString& file, float volume, float fadeVolume, int fadeSeconds, bool repeat,
+                    const QString& caption, QWidget* parent, const char* name)
+ 	: KDialogBase(parent, name, true, caption, Ok|Cancel, Ok, false),
+-	  mReadOnly(false)
++	  mReadOnly(false),
++	  mArtsDispatcher(0),
++	  mPlayObject(0),
++	  mPlayTimer(0)
+ {
+ 	QWidget* page = new QWidget(this);
+ 	setMainWidget(page);
+@@ -179,6 +191,11 @@
+ 	slotVolumeToggled(volume >= 0);
+ }
+ 
++SoundDlg::~SoundDlg()
++{
++	stopPlay();
++}
++
+ /******************************************************************************
+ * Set the read-only status of the dialogue.
+ */
+@@ -261,31 +278,125 @@
+ }
+ 
+ /******************************************************************************
+-* Called when the file play button is clicked.
++* Called when the file play/stop button is clicked.
+ */
+ void SoundDlg::playSound()
+ {
++#ifdef WITHOUT_ARTS
+ 	if (checkFile())
+ 		KAudioPlayer::play(QFile::encodeName(mFileName));
++#else
++	if (mPlayObject)
++	{
++		stopPlay();
++		return;
++	}
++	if (!checkFile())
++		return;
++	KURL url(mFileName);
++	MainWindow* mmw = MainWindow::mainMainWindow();
++	if (!url.isValid()  ||  !KIO::NetAccess::exists(url, true, mmw)
++	||  !KIO::NetAccess::download(url, mLocalAudioFile, mmw))
++	{
++		kdError(5950) << "SoundDlg::playAudio(): Open failure: " << mFileName << endl;
++		KMessageBox::error(this, i18n("Cannot open audio file:\n%1").arg(mFileName));
++		return;
++	}
++	mPlayTimer = new QTimer(this);
++	connect(mPlayTimer, SIGNAL(timeout()), SLOT(checkAudioPlay()));
++	mArtsDispatcher = new KArtsDispatcher;
++	mPlayStarted = false;
++	mAudioFileStart = QTime::currentTime();
++	KArtsServer aserver;
++	Arts::SoundServerV2 sserver = aserver.server();
++	KDE::PlayObjectFactory factory(sserver);
++	mPlayObject = factory.createPlayObject(mLocalAudioFile, true);
++	mFilePlay->setPixmap(SmallIcon("player_stop"));
++	QToolTip::add(mFilePlay, i18n("Stop sound"));
++	QWhatsThis::add(mFilePlay, i18n("Stop playing the sound"));
++	connect(mPlayObject, SIGNAL(playObjectCreated()), SLOT(checkAudioPlay()));
++	if (!mPlayObject->object().isNull())
++		checkAudioPlay();
++#endif
+ }
+ 
+ /******************************************************************************
++*  Called when the audio file has loaded and is ready to play, or on a timer
++*  when play is expected to have completed.
++*  If it is ready to play, start playing it (for the first time or repeated).
++*  If play has not yet completed, wait a bit longer.
++*/
++void SoundDlg::checkAudioPlay()
++{
++#ifndef WITHOUT_ARTS
++	if (!mPlayObject)
++		return;
++	if (mPlayObject->state() == Arts::posIdle)
++	{
++		// The file has loaded and is ready to play, or play has completed
++		if (mPlayStarted)
++		{
++			// Play has completed
++			stopPlay();
++			return;
++		}
++
++		// Start playing the file
++		kdDebug(5950) << "SoundDlg::checkAudioPlay(): start\n";
++		mPlayStarted = true;
++		mPlayObject->play();
++	}
++
++	// The sound file is still playing
++	Arts::poTime overall = mPlayObject->overallTime();
++	Arts::poTime current = mPlayObject->currentTime();
++	int time = 1000*(overall.seconds - current.seconds) + overall.ms - current.ms;
++	if (time < 0)
++		time = 0;
++	kdDebug(5950) << "SoundDlg::checkAudioPlay(): wait for " << (time+100) << "ms\n";
++	mPlayTimer->start(time + 100, true);
++#endif
++}
++
++/******************************************************************************
++*  Called when play completes, the Silence button is clicked, or the window is
++*  closed, to terminate audio access.
++*/
++void SoundDlg::stopPlay()
++{
++#ifndef WITHOUT_ARTS
++	delete mPlayObject;      mPlayObject = 0;
++	delete mArtsDispatcher;  mArtsDispatcher = 0;
++	delete mPlayTimer;       mPlayTimer = 0;
++	if (!mLocalAudioFile.isEmpty())
++	{
++		KIO::NetAccess::removeTempFile(mLocalAudioFile);   // removes it only if it IS a temporary file
++		mLocalAudioFile = QString::null;
++	}
++	mFilePlay->setPixmap(SmallIcon("player_play"));
++	QToolTip::add(mFilePlay, i18n("Test the sound"));
++	QWhatsThis::add(mFilePlay, i18n("Play the selected sound file."));
++#endif
++}
++
++/******************************************************************************
+ * Check whether the specified sound file exists.
+ * Note that KAudioPlayer::play() can only cope with local files.
+ */
+ bool SoundDlg::checkFile()
+ {
+-	QString file = mFileEdit->text();
++	mFileName = mFileEdit->text();
+ 	KURL url;
+-	if (KURL::isRelativeURL(file))
++	if (KURL::isRelativeURL(mFileName))
+ 	{
+ 		// It's not an absolute URL, so check for an absolute path
+-		QFileInfo f(file);
++		QFileInfo f(mFileName);
+ 		if (!f.isRelative())
+-			url.setPath(file);
++			url.setPath(mFileName);
+ 	}
+ 	else
+-		url = KURL::fromPathOrURL(file);   // it's an absolute URL
++		url = KURL::fromPathOrURL(mFileName);   // it's an absolute URL
++#ifdef WITHOUT_ARTS
+ 	if (!url.isEmpty())
+ 	{
+ 		// It's an absolute path or URL.
+@@ -297,6 +408,9 @@
+ 		}
+ 	}
+ 	else
++#else
++	if (url.isEmpty())
++#endif
+ 	{
+ 		// It's a relative path.
+ 		// Find the first sound resource that contains files.
+@@ -311,7 +425,7 @@
+ 				if (dir.isReadable() && dir.count() > 2)
+ 				{
+ 					url.setPath(*it);
+-					url.addPath(file);
++					url.addPath(mFileName);
+ 					if (KIO::NetAccess::exists(url, true, this))
+ 					{
+ 						mFileName = url.path();
+@@ -321,16 +435,20 @@
+ 			}
+ 		}
+ 		url.setPath(QDir::homeDirPath());
+-		url.addPath(file);
++		url.addPath(mFileName);
+ 		if (KIO::NetAccess::exists(url, true, this))
+ 		{
+ 			mFileName = url.path();
+ 			return true;
+ 		}
+ 	}
++#ifdef WITHOUT_ARTS
+ 	KMessageBox::sorry(this, i18n("File not found"));
+ 	mFileName = QString::null;
+ 	return false;
++#else
++	return true;
++#endif
+ }
+ 
+ /******************************************************************************
 Index: kalarm/prefdlg.cpp
 ===================================================================
---- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/prefdlg.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/prefdlg.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1,7 +1,7 @@
  /*
   *  prefdlg.cpp  -  program preferences dialog
@@ -1668,8 +2279,8 @@ Index: kalarm/prefdlg.cpp
  // Restore all defaults in the options...
 Index: kalarm/lib/timespinbox.cpp
 ===================================================================
---- kalarm/lib/timespinbox.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/lib/timespinbox.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/lib/timespinbox.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/lib/timespinbox.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1,7 +1,7 @@
  /*
   *  timespinbox.cpp  -  time spinbox widget
@@ -1702,8 +2313,8 @@ Index: kalarm/lib/timespinbox.cpp
   * The entered time must either be 4 digits, or it must contain a colon, but
 Index: kalarm/lib/timespinbox.h
 ===================================================================
---- kalarm/lib/timespinbox.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/lib/timespinbox.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/lib/timespinbox.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/lib/timespinbox.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1,7 +1,7 @@
  /*
   *  timespinbox.h  -  time spinbox widget
@@ -1734,8 +2345,8 @@ Index: kalarm/lib/timespinbox.h
  		 *  @param minutes The new value of the spin box, expressed in minutes.
 Index: kalarm/kalarm.desktop
 ===================================================================
---- kalarm/kalarm.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/kalarm.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/kalarm.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/kalarm.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -72,4 +72,4 @@
  Terminal=false
  X-DCOP-ServiceType=Unique
@@ -1744,8 +2355,8 @@ Index: kalarm/kalarm.desktop
 +Categories=Qt;KDE;Utility;X-KDE-Utilities-PIM;Office;Calendar;
 Index: kalarm/traywindow.cpp
 ===================================================================
---- kalarm/traywindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kalarm/traywindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kalarm/traywindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kalarm/traywindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -145,8 +145,7 @@
  */
  void TrayWindow::slotPreferences()
@@ -1758,8 +2369,8 @@ Index: kalarm/traywindow.cpp
  /******************************************************************************
 Index: korn/KOrn.desktop
 ===================================================================
---- korn/KOrn.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korn/KOrn.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korn/KOrn.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korn/KOrn.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -74,4 +74,4 @@
  Name[ta]=கார்ன்
  Name[zh_TW]=Korn 信件通知
@@ -1768,8 +2379,8 @@ Index: korn/KOrn.desktop
 +Categories=Qt;KDE;Network;X-KDE-More;Office;Email;
 Index: kaddressbook/kaddressbook.desktop
 ===================================================================
---- kaddressbook/kaddressbook.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kaddressbook/kaddressbook.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kaddressbook/kaddressbook.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kaddressbook/kaddressbook.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -77,4 +77,4 @@
  MimeType=text/x-vcard;text/x-ldif
  ServiceTypes=KParts/ReadOnlyPart,Browser/View,DCOP/AddressBook
@@ -1778,8 +2389,8 @@ Index: kaddressbook/kaddressbook.desktop
 +Categories=Qt;KDE;Office;ContactManagement;
 Index: kaddressbook/features/distributionlistwidget.cpp
 ===================================================================
---- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kaddressbook/features/distributionlistwidget.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kaddressbook/features/distributionlistwidget.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -446,8 +446,11 @@
    if ( !contactItem )
      return;
@@ -1825,8 +2436,8 @@ Index: kaddressbook/features/distributionlistwidget.cpp
  
 Index: kaddressbook/features/distributionlistwidget.h
 ===================================================================
---- kaddressbook/features/distributionlistwidget.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kaddressbook/features/distributionlistwidget.h	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kaddressbook/features/distributionlistwidget.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kaddressbook/features/distributionlistwidget.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -130,7 +130,7 @@
      QString selected() const;
  
@@ -1838,8 +2449,8 @@ Index: kaddressbook/features/distributionlistwidget.h
      QButtonGroup *mButtonGroup;
 Index: libkdepim/recentaddresses.cpp
 ===================================================================
---- libkdepim/recentaddresses.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkdepim/recentaddresses.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkdepim/recentaddresses.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkdepim/recentaddresses.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -28,6 +28,7 @@
   *  your version.
   */
@@ -1898,8 +2509,8 @@ Index: libkdepim/recentaddresses.cpp
  void RecentAddresses::setMaxCount( int count )
 Index: libkcal/kcal_manager.desktop
 ===================================================================
---- libkcal/kcal_manager.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkcal/kcal_manager.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkcal/kcal_manager.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkcal/kcal_manager.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -51,6 +51,7 @@
  Name[sv]=Kalender
  Name[ta]=நாள்காட்டி
@@ -1910,8 +2521,8 @@ Index: libkcal/kcal_manager.desktop
  Name[uz]=Календар
 Index: libkcal/vcalformat.cpp
 ===================================================================
---- libkcal/vcalformat.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkcal/vcalformat.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkcal/vcalformat.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkcal/vcalformat.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -182,7 +182,10 @@
    // TODO: Use all data.
    Event::List events = calendar->events();
@@ -1934,8 +2545,8 @@ Makefile.in
 
 Index: libkcal/resourcecached.cpp
 ===================================================================
---- libkcal/resourcecached.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ libkcal/resourcecached.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- libkcal/resourcecached.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ libkcal/resourcecached.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -44,9 +44,10 @@
  
  ResourceCached::ResourceCached( const KConfig* config )
@@ -1951,8 +2562,8 @@ Index: libkcal/resourcecached.cpp
    connect( &mSaveTimer, SIGNAL( timeout() ), SLOT( slotSave() ) );
 Index: kpilot/conduits/docconduit/kpalmdoc.desktop
 ===================================================================
---- kpilot/conduits/docconduit/kpalmdoc.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kpilot/conduits/docconduit/kpalmdoc.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kpilot/conduits/docconduit/kpalmdoc.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kpilot/conduits/docconduit/kpalmdoc.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -61,4 +61,4 @@
  Terminal=false
  X-KDE-StartupNotify=true
@@ -1961,8 +2572,8 @@ Index: kpilot/conduits/docconduit/kpalmdoc.desktop
 +Categories=Qt;KDE;Utility;X-KDE-Utilities-File;Office;PDA;
 Index: kpilot/conduits/popmail/popmail-conduit.desktop
 ===================================================================
---- kpilot/conduits/popmail/popmail-conduit.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kpilot/conduits/popmail/popmail-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kpilot/conduits/popmail/popmail-conduit.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kpilot/conduits/popmail/popmail-conduit.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -93,6 +93,7 @@
  Name[sv]=Brev
  Name[ta]=அஞ்சல்
@@ -1973,8 +2584,8 @@ Index: kpilot/conduits/popmail/popmail-conduit.desktop
  Name[uz]=Хат-хабар
 Index: kpilot/kpilot/kpilot.desktop
 ===================================================================
---- kpilot/kpilot/kpilot.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kpilot/kpilot/kpilot.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kpilot/kpilot/kpilot.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kpilot/kpilot/kpilot.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -84,4 +84,4 @@
  Terminal=false
  X-KDE-StartupNotify=true
@@ -1983,18 +2594,31 @@ Index: kpilot/kpilot/kpilot.desktop
 +Categories=Qt;KDE;Utility;X-KDE-Utilities-Peripherals;Office;PDA;
 Index: kpilot/kpilot/kpilotdaemon.desktop
 ===================================================================
---- kpilot/kpilot/kpilotdaemon.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kpilot/kpilot/kpilotdaemon.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kpilot/kpilot/kpilotdaemon.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kpilot/kpilot/kpilotdaemon.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -40,4 +40,4 @@
  Type=Application
  Terminal=false
  X-DCOP-ServiceType=Unique
 -Categories=Qt;KDE;Utility;
 +Categories=Qt;KDE;Utility;Office;PDA;
+Index: kpilot/lib/options.h
+===================================================================
+--- kpilot/lib/options.h	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kpilot/lib/options.h	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -140,7 +140,7 @@
+ #define FUNCTIONSETUPL(a) const int fname = a; Q_UNUSED(fname);
+ #endif
+ 
+-#define KPILOT_VERSION	"4.9.1 (rabid dolphin)"
++#define KPILOT_VERSION	"4.9.2-pre1 (moribund alleycat)"
+ 
+ 
+ // Function to expand newlines in rich text to <br>\n
 Index: knotes/knotesnetrecv.cpp
 ===================================================================
---- knotes/knotesnetrecv.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ knotes/knotesnetrecv.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- knotes/knotesnetrecv.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ knotes/knotesnetrecv.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -77,7 +77,7 @@
      m_sock->enableRead( true );
  
@@ -2006,8 +2630,8 @@ Index: knotes/knotesnetrecv.cpp
  }
 Index: knotes/knotesalarm.cpp
 ===================================================================
---- knotes/knotesalarm.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ knotes/knotesalarm.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- knotes/knotesalarm.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ knotes/knotesalarm.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -44,7 +44,8 @@
  
  KNotesAlarm::KNotesAlarm( KNotesResourceManager *manager, QObject *parent, const char *name )
@@ -2020,8 +2644,8 @@ Index: knotes/knotesalarm.cpp
  
 Index: knotes/knotes_manager.desktop
 ===================================================================
---- knotes/knotes_manager.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ knotes/knotes_manager.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- knotes/knotes_manager.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ knotes/knotes_manager.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -48,6 +48,7 @@
  Name[sv]=Anteckningar
  Name[ta]=குறிப்புகள்
@@ -2032,8 +2656,8 @@ Index: knotes/knotes_manager.desktop
  Name[uz]=Ёзма хотира
 Index: knotes/knotes.desktop
 ===================================================================
---- knotes/knotes.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ knotes/knotes.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- knotes/knotes.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ knotes/knotes.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -88,4 +88,4 @@
  
  X-KDE-StartupNotify=true
@@ -2042,8 +2666,8 @@ Index: knotes/knotes.desktop
 +Categories=Qt;KDE;Utility;X-KDE-Utilities-Desktop;Office;
 Index: kontact/plugins/weather/weatherplugin.desktop
 ===================================================================
---- kontact/plugins/weather/weatherplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/weather/weatherplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/weather/weatherplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/weather/weatherplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -110,6 +110,7 @@
  Name[sr]=Време
  Name[sr@Latn]=Vreme
@@ -2054,8 +2678,8 @@ Index: kontact/plugins/weather/weatherplugin.desktop
  Name[uz]=Об-ҳаво хизмати
 Index: kontact/plugins/knode/knodeplugin.desktop
 ===================================================================
---- kontact/plugins/knode/knodeplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/knode/knodeplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/knode/knodeplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/knode/knodeplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -117,6 +117,7 @@
  Name[sv]=Nyheter
  Name[ta]=செய்திகள்
@@ -2066,8 +2690,8 @@ Index: kontact/plugins/knode/knodeplugin.desktop
  Name[uz]=Янгиликлар
 Index: kontact/plugins/specialdates/kcmsdsummary.desktop
 ===================================================================
---- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -54,6 +54,7 @@
  Name[sr@Latn]=Posebni datumi
  Name[sv]=Speciella datum
@@ -2086,8 +2710,8 @@ Index: kontact/plugins/specialdates/kcmsdsummary.desktop
  Comment[zh_CN]=特殊日期摘要设置
 Index: kontact/plugins/specialdates/specialdatesplugin.desktop
 ===================================================================
---- kontact/plugins/specialdates/specialdatesplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/specialdates/specialdatesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/specialdates/specialdatesplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/specialdates/specialdatesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -57,6 +57,7 @@
  Name[sr@Latn]=Posebni datumi
  Name[sv]=Speciella datum
@@ -2106,8 +2730,8 @@ Index: kontact/plugins/specialdates/specialdatesplugin.desktop
  Comment[zh_CN]=特殊日期插件
 Index: kontact/plugins/knotes/knotesplugin.desktop
 ===================================================================
---- kontact/plugins/knotes/knotesplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/knotes/knotesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/knotes/knotesplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/knotes/knotesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -114,6 +114,7 @@
  Name[sv]=Anteckningar
  Name[ta]=குறிப்புகள்
@@ -2118,8 +2742,8 @@ Index: kontact/plugins/knotes/knotesplugin.desktop
  Name[uz]=Ёзма хотира
 Index: kontact/plugins/kaddressbook/kaddressbookplugin.desktop
 ===================================================================
---- kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -119,6 +119,7 @@
  Name[sv]=Kontakter
  Name[ta]=தொடர்புகள்
@@ -2130,8 +2754,8 @@ Index: kontact/plugins/kaddressbook/kaddressbookplugin.desktop
  Name[uz]=Алоқалар
 Index: kontact/plugins/korganizer/kcmkorgsummary.desktop
 ===================================================================
---- kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -49,6 +49,7 @@
  Name[sr]=Састанци и обавезе
  Name[sr@Latn]=Sastanci i obaveze
@@ -2142,8 +2766,8 @@ Index: kontact/plugins/korganizer/kcmkorgsummary.desktop
  Name[zh_TW]=約會與待辦事項
 Index: kontact/plugins/korganizer/todoplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -104,6 +104,7 @@
  Name[sr@Latn]=Lista poslova
  Name[sv]=Uppgiftslista
@@ -2154,8 +2778,8 @@ Index: kontact/plugins/korganizer/todoplugin.desktop
  Name[uz]=Вазифалар
 Index: kontact/plugins/korganizer/journalplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/journalplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/korganizer/journalplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/korganizer/journalplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/korganizer/journalplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -96,6 +96,7 @@
  Name[sk]=Žurnál
  Name[sl]=Dnevnik
@@ -2166,8 +2790,8 @@ Index: kontact/plugins/korganizer/journalplugin.desktop
  Name[uz]=Кундалик
 Index: kontact/plugins/korganizer/korganizerplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/korganizerplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/korganizer/korganizerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/korganizer/korganizerplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/korganizer/korganizerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -120,6 +120,7 @@
  Name[sv]=Kalender
  Name[ta]=நாள்காட்டி
@@ -2178,8 +2802,8 @@ Index: kontact/plugins/korganizer/korganizerplugin.desktop
  Name[uz]=Календар
 Index: kontact/plugins/kmail/kmailplugin.desktop
 ===================================================================
---- kontact/plugins/kmail/kmailplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/kmail/kmailplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/kmail/kmailplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/kmail/kmailplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -121,6 +121,7 @@
  Name[sv]=Brev
  Name[ta]=அஞ்சல்
@@ -2190,8 +2814,8 @@ Index: kontact/plugins/kmail/kmailplugin.desktop
  Name[uz]=Хат-хабар
 Index: kontact/plugins/kmail/kcmkmailsummary.desktop
 ===================================================================
---- kontact/plugins/kmail/kcmkmailsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/kmail/kcmkmailsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/kmail/kcmkmailsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/kmail/kcmkmailsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -61,6 +61,7 @@
  Name[sv]=Brev
  Name[ta]=அஞ்சல்
@@ -2210,8 +2834,8 @@ Index: kontact/plugins/kmail/kcmkmailsummary.desktop
  Comment[zh_CN]=邮件摘要设置
 Index: kontact/plugins/summary/kcmkontactsummary.desktop
 ===================================================================
---- kontact/plugins/summary/kcmkontactsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/summary/kcmkontactsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/summary/kcmkontactsummary.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/summary/kcmkontactsummary.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -54,6 +54,7 @@
  Name[sr@Latn]=Komponente
  Name[sv]=Komponenter
@@ -2222,8 +2846,8 @@ Index: kontact/plugins/summary/kcmkontactsummary.desktop
  Name[uz]=Қисмлар
 Index: kontact/plugins/summary/summaryplugin.desktop
 ===================================================================
---- kontact/plugins/summary/summaryplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/summary/summaryplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/summary/summaryplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/summary/summaryplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -110,6 +110,7 @@
  Name[sv]=Översikt
  Name[ta]=சுருக்கம்
@@ -2234,8 +2858,8 @@ Index: kontact/plugins/summary/summaryplugin.desktop
  Name[uz]=Ҳисобот
 Index: kontact/plugins/newsticker/newstickerplugin.desktop
 ===================================================================
---- kontact/plugins/newsticker/newstickerplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/plugins/newsticker/newstickerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/plugins/newsticker/newstickerplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/plugins/newsticker/newstickerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -93,5 +93,6 @@
  Name[sl]=Prikazovalnik novic
  Name[sv]=Nyhetsövervakare
@@ -2245,8 +2869,8 @@ Index: kontact/plugins/newsticker/newstickerplugin.desktop
  Name[zh_CN]=新闻点点通
 Index: kontact/src/kontact.setdlg
 ===================================================================
---- kontact/src/kontact.setdlg	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/src/kontact.setdlg	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/src/kontact.setdlg	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/src/kontact.setdlg	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -48,6 +48,7 @@
  Name[sv]=Översikt
  Name[ta]=சுருக்கம்
@@ -2303,10 +2927,24 @@ Index: kontact/src/kontact.setdlg
  Name[tr]=Hava Durumu
  Name[uk]=Погода
  Name[uz]=Об-ҳаво
+Index: kontact/src/mainwindow.cpp
+===================================================================
+--- kontact/src/mainwindow.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/src/mainwindow.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
+@@ -787,7 +787,8 @@
+ 
+ void MainWindow::slotNewToolbarConfig()
+ {
+-  createGUI( mCurrentPlugin->part() );
++  if ( mCurrentPlugin && mCurrentPlugin->part() )
++    createGUI( mCurrentPlugin->part() );
+   applyMainWindowSettings( KGlobal::config(), "MainWindow" );
+ }
+ 
 Index: kontact/src/Kontact.desktop
 ===================================================================
---- kontact/src/Kontact.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kontact/src/Kontact.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kontact/src/Kontact.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kontact/src/Kontact.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -65,5 +65,5 @@
  GenericName[zh_TW]=個人資訊管理者
  Terminal=false
@@ -2316,8 +2954,8 @@ Index: kontact/src/Kontact.desktop
  DocPath=kontact/index.html
 Index: kandy/src/kandy.desktop
 ===================================================================
---- kandy/src/kandy.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ kandy/src/kandy.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- kandy/src/kandy.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ kandy/src/kandy.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -117,4 +117,4 @@
  GenericName[zu]=Ithuluzi Lamakhala ekhukhwini
  Terminal=false
@@ -2326,8 +2964,8 @@ Index: kandy/src/kandy.desktop
 +Categories=Qt;KDE;Utility;X-KDE-Utilities-Peripherals;Network;Telephony;
 Index: ktnef/gui/ktnef.desktop
 ===================================================================
---- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- ktnef/gui/ktnef.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ ktnef/gui/ktnef.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -5,6 +5,7 @@
  GenericName=TNEF File Viewer
  GenericName[af]=TNEF lêer leser
@@ -2344,8 +2982,8 @@ Index: ktnef/gui/ktnef.desktop
 +Categories=Qt;KDE;X-KDE-Utilities-PIM;Office;Network;Email;
 Index: korganizer/komailclient.cpp
 ===================================================================
---- korganizer/komailclient.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/komailclient.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/komailclient.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/komailclient.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -196,7 +196,8 @@
        int idx = attachment.find("METHOD");
        if (idx>=0) {
@@ -2358,8 +2996,8 @@ Index: korganizer/komailclient.cpp
          meth = "publish";
 Index: korganizer/datechecker.cpp
 ===================================================================
---- korganizer/datechecker.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/datechecker.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/datechecker.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/datechecker.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -54,7 +54,7 @@
      case FollowDay:
      case FollowMonth:
@@ -2371,8 +3009,8 @@ Index: korganizer/datechecker.cpp
        }
 Index: korganizer/interfaces/calendar/calendarplugin.desktop
 ===================================================================
---- korganizer/interfaces/calendar/calendarplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/interfaces/calendar/calendarplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/interfaces/calendar/calendarplugin.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/interfaces/calendar/calendarplugin.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -58,7 +58,7 @@
  Comment[sv]=Insticksprogram för kalender
  Comment[ta]=நாள்காட்டி சொருகுப்பொருள்
@@ -2384,8 +3022,8 @@ Index: korganizer/interfaces/calendar/calendarplugin.desktop
  Comment[uz]=Календар плагини
 Index: korganizer/interfaces/calendar/calendardecoration.desktop
 ===================================================================
---- korganizer/interfaces/calendar/calendardecoration.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/interfaces/calendar/calendardecoration.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/interfaces/calendar/calendardecoration.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/interfaces/calendar/calendardecoration.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -55,7 +55,7 @@
  Comment[sv]=Insticksprogram för kalenderdekoration
  Comment[ta]=நாள்காட்டி அலங்கார சொருகுப்பொருள்
@@ -2397,8 +3035,8 @@ Index: korganizer/interfaces/calendar/calendardecoration.desktop
  Comment[ven]=Pulagini yo khavhisiwaho ya khalenda
 Index: korganizer/koagenda.cpp
 ===================================================================
---- korganizer/koagenda.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/koagenda.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/koagenda.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/koagenda.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1044,6 +1044,7 @@
    setCursor( arrowCursor );
    bool multiModify = false;
@@ -2418,8 +3056,8 @@ Index: korganizer/koagenda.cpp
    mActionItem = 0;
 Index: korganizer/plugins/hebrew/hebrew.cpp
 ===================================================================
---- korganizer/plugins/hebrew/hebrew.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/plugins/hebrew/hebrew.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/plugins/hebrew/hebrew.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/plugins/hebrew/hebrew.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -108,4 +108,5 @@
    ConfigDialog *dlg = new ConfigDialog(parent);        //parent?
  
@@ -2428,8 +3066,8 @@ Index: korganizer/plugins/hebrew/hebrew.cpp
  }
 Index: korganizer/korganizer.desktop
 ===================================================================
---- korganizer/korganizer.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/korganizer.desktop	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/korganizer.desktop	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -54,7 +54,7 @@
  Comment[sv]=Kalender- och schemaläggningsprogram
  Comment[ta]=நாள்காட்டி மற்றும் திட்ட நிரல்
@@ -2447,8 +3085,8 @@ Index: korganizer/korganizer.desktop
 +Categories=Qt;KDE;Office;ProjectManagement;
 Index: korganizer/koagendaview.cpp
 ===================================================================
---- korganizer/koagendaview.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/koagendaview.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/koagendaview.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/koagendaview.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -1174,15 +1174,15 @@
      td->setDtDue( endDt );
    }
@@ -2471,8 +3109,8 @@ Index: korganizer/koagendaview.cpp
    // using a pointer to that item! => CRASH
 Index: korganizer/freebusymanager.cpp
 ===================================================================
---- korganizer/freebusymanager.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 673248)
-+++ korganizer/freebusymanager.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 673248)
+--- korganizer/freebusymanager.cpp	(.../tags/KDE/3.5.7/kdepim)	(wersja 676002)
++++ korganizer/freebusymanager.cpp	(.../branches/KDE/3.5/kdepim)	(wersja 676002)
 @@ -109,11 +109,10 @@
      mManager->saveFreeBusy( fb, p );
    }
