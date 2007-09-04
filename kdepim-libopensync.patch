@@ -1,0 +1,11 @@
+--- kitchensync/libqopensync/callbackhandler.cpp	2007-05-14 09:54:44.000000000 +0200
++++ kitchensync/libqopensync/callbackhandler.cpp-new	2007-09-04 17:47:16.635993411 +0200
+@@ -19,7 +19,7 @@
+     Boston, MA 02110-1301, USA.
+ */
+ 
+-#include <osengine/engine.h>
++#include <engine/engine.h>
+ 
+ #include <libqopensync/engine.h>
+ 
