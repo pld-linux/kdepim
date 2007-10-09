@@ -16,13 +16,13 @@ Summary(pl.UTF-8):	Manadżer informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.7
-Release:	7
+Version:	3.5.8
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	8571db6dcf4168614c96bb72c493f931
+# Source0-md5:	a1ffff553f1d6739c7791891028b176b
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -31,7 +31,6 @@ Patch3:		kde-ac260-lt.patch
 Patch4:		%{name}-kmail-toolbar.patch
 Patch5:		%{name}-kmail-pld-linux.patch
 Patch6:		%{name}-kmail-gpgme_passphrase_cb.patch
-Patch7:		%{name}-libopensync.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -48,7 +47,8 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
-BuildRequires:	libopensync-devel >= 0.31
+BuildRequires:	libopensync-devel >= 1:0.22
+BuildRequires:	libopensync-devel < 1:0.30
 BuildRequires:	libmal-devel >= 0.31
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
@@ -486,7 +486,7 @@ libksieve, libmimelib.
 
 %prep
 %setup -q
-%patch100 -p0
+#%patch100 -p0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -494,7 +494,6 @@ libksieve, libmimelib.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p0
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
