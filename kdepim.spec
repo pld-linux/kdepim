@@ -530,7 +530,7 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-rm -f configure
+mv -f configure{,.dist}
 
 %build
 # speedup
