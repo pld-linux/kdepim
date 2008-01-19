@@ -1,10 +1,9 @@
 # TODO
 # - subpackages for akregator, korganizer(?)
+#
 # Conditional build:
-%bcond_without	apidocs		# do not prepare API documentation
-%bcond_without	hidden_visibility	# pass '--fvisibility=hidden'
-					# & '--fvisibility-inlines-hidden'
-					# to g++
+%bcond_without	apidocs			# do not prepare API documentation
+%bcond_without	hidden_visibility	# don't use gcc hidden visibility
 #
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
@@ -12,7 +11,7 @@
 
 Summary:	Personal Information Management (PIM) for KDE
 Summary(ko.UTF-8):	K 데스크탑 환경 - PIM (개인 정보 관리)
-Summary(pl.UTF-8):	Manadżer informacji osobistej (PIM) dla KDE
+Summary(pl.UTF-8):	Zarządca informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
