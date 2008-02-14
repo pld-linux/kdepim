@@ -1,5 +1,5 @@
---- kdepim-3.5.6/kmail/kmmainwin.rc~	2007-01-15 13:28:46.000000000 +0200
-+++ kdepim-3.5.6/kmail/kmmainwin.rc	2007-01-29 23:06:27.000000000 +0200
+--- kdepim-3.5.9/kmail/kmmainwin.rc~	2008-02-14 23:26:54.000000000 +0200
++++ kdepim-3.5.9/kmail/kmmainwin.rc	2008-02-14 23:33:11.645281237 +0200
 @@ -175,7 +175,7 @@
   </MenuBar>
   <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
@@ -9,17 +9,16 @@
    <Action name="file_save_as" />
    <Action name="file_print" />
    <Separator/>
-@@ -191,5 +191,8 @@
-   <Separator/>
+@@ -201,5 +201,7 @@
    <Action name="search_messages" />
    <ActionList name="toolbar_filter_actions" />
-+  <Action name="status_todo" />
+   <Action name="create_todo"/>
 +  <Action name="status_flag" />
 +  <Action name="mark_all_as_read" />
   </ToolBar>
  </kpartgui>
---- kdepim-3.5.6/kmail/kmail_part.rc~	2007-01-15 13:28:47.000000000 +0200
-+++ kdepim-3.5.6/kmail/kmail_part.rc	2007-01-29 23:11:02.000000000 +0200
+--- kdepim-3.5.9/kmail/kmail_part.rc~	2008-02-14 23:36:06.000000000 +0200
++++ kdepim-3.5.9/kmail/kmail_part.rc	2008-02-14 23:36:32.748879880 +0200
 @@ -169,7 +169,7 @@
   </MenuBar>
   <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" >
@@ -29,11 +28,10 @@
    <Action name="file_save_as" />
    <Action name="file_print" />
    <Separator/>
-@@ -185,5 +185,8 @@
-   <Separator/>
+@@ -195,5 +195,7 @@
    <Action name="search_messages" />
    <ActionList name="toolbar_filter_actions" />
-+  <Action name="status_todo" />
+   <Action name="create_todo"/>
 +  <Action name="status_flag" />
 +  <Action name="mark_all_as_read" />
   </ToolBar>
