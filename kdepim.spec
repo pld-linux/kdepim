@@ -1,5 +1,87 @@
 # TODO
 # - subpackages for akregator, korganizer(?)
+# - unpackaged:
+#   /usr/bin/scalixadmin
+#   /usr/bin/scalixwizard
+#   /usr/lib/kde3/kabc_scalix.so
+#   /usr/lib/kde3/kcal_scalix.so
+#   /usr/lib/kde3/kio_scalix.so
+#   /usr/lib/kde3/knotes_scalix.so
+#   /usr/lib/kde3/libkaddrbk_distributionlistng.so
+#   /usr/lib/kde3/libscalixwizard.so
+#   /usr/lib/kde3/plugins/designer/kdepimwidgets.la
+#   /usr/lib/kde3/plugins/designer/kpartsdesignerplugin.la
+#   /usr/lib/libgpgme++.so.0
+#   /usr/lib/libgwsoap.so
+#   /usr/lib/libgwsoap.so.0
+#   /usr/lib/libindex.so.0
+#   /usr/lib/libkabc_groupdav.so.1
+#   /usr/lib/libkabc_groupwise.so.1
+#   /usr/lib/libkabc_newexchange.so.1
+#   /usr/lib/libkabc_slox.so.0
+#   /usr/lib/libkabc_xmlrpc.so.1
+#   /usr/lib/libkabckolab.so.0
+#   /usr/lib/libkabcscalix.so
+#   /usr/lib/libkabcscalix.so.0
+#   /usr/lib/libkabcscalix.so.0.0.0
+#   /usr/lib/libkabinterfaces.so.1
+#   /usr/lib/libkaddressbook.so.0
+#   /usr/lib/libkcal.so.2
+#   /usr/lib/libkcal_groupdav.so.1
+#   /usr/lib/libkcal_groupwise.so.1
+#   /usr/lib/libkcal_newexchange.so.1
+#   /usr/lib/libkcal_resourcefeatureplan.so.1
+#   /usr/lib/libkcal_resourceremote.so.1
+#   /usr/lib/libkcal_slox.so.0
+#   /usr/lib/libkcal_xmlrpc.so.1
+#   /usr/lib/libkcalkolab.so.0
+#   /usr/lib/libkcalscalix.so
+#   /usr/lib/libkcalscalix.so.0
+#   /usr/lib/libkcalscalix.so.0.0.0
+#   /usr/lib/libkdepim.so.1
+#   /usr/lib/libkgantt.so.0
+#   /usr/lib/libkgroupwarebase.so.0
+#   /usr/lib/libkgroupwaredav.so.0
+#   /usr/lib/libkholidays.so.1
+#   /usr/lib/libkitchensync.so.0
+#   /usr/lib/libkleopatra.so.1
+#   /usr/lib/libkmime.so.2
+#   /usr/lib/libknodecommon.so.3
+#   /usr/lib/libknodecommon.so.3.0.0
+#   /usr/lib/libknotes_xmlrpc.so.1
+#   /usr/lib/libknoteskolab.so.0
+#   /usr/lib/libknotesscalix.so
+#   /usr/lib/libknotesscalix.so.0
+#   /usr/lib/libknotesscalix.so.0.0.0
+#   /usr/lib/libkocorehelper.so.1
+#   /usr/lib/libkode.so.1
+#   /usr/lib/libkontact.so.1
+#   /usr/lib/libkorg_stdprinting.so.1
+#   /usr/lib/libkorganizer.so.1
+#   /usr/lib/libkorganizer_calendar.so.1
+#   /usr/lib/libkorganizer_eventviewer.so.1
+#   /usr/lib/libkpgp.so.2
+#   /usr/lib/libkpilot.so.0
+#   /usr/lib/libkpimexchange.so.1
+#   /usr/lib/libkpimidentities.so.1
+#   /usr/lib/libkpinterfaces.so.1
+#   /usr/lib/libksieve.so.0
+#   /usr/lib/libkslox.so
+#   /usr/lib/libkslox.so.0
+#   /usr/lib/libktnef.so.1
+#   /usr/lib/libmimelib.so.1
+#   /usr/lib/libqgpgme.so.0
+#   /usr/lib/libqopensync.so
+#   /usr/lib/libqopensync.so.0
+#   /usr/share/applications/kde/kontactdcop.desktop
+#   /usr/share/apps/kconf_update/kolab-resource.upd
+#   /usr/share/apps/kconf_update/upgrade-resourcetype.pl
+#   /usr/share/config.kcfg/scalix.kcfg
+#   /usr/share/icons/locolor/16x16/apps/kpilot.png
+#   /usr/share/services/kresources/kabc/scalix.desktop
+#   /usr/share/services/kresources/knotes/scalix.desktop
+#   /usr/share/services/scalix.protocol
+#   /usr/share/services/scalixs.protocol
 #
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
@@ -15,14 +97,14 @@ Summary(pl.UTF-8):	Zarządca informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.8
-Release:	2
+Version:	3.5.9
+Release:	0.1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	a1ffff553f1d6739c7791891028b176b
-Patch100:	%{name}-branch.diff
+# Source0-md5:	ba27b06599556c572a26f03608471ee2
+#Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail-vcardviewer.patch
