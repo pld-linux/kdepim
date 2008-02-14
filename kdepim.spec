@@ -11,10 +11,10 @@
 %define		_minbaseevr	9:%{version}
 
 Summary:	Personal Information Management (PIM) for KDE
-Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
-Summary(pl):	Manadøer informacji osobistej (PIM) dla KDE
-Summary(ru):	≈“”œŒ¡ÃÿŒŸ  –Ã¡Œ…“œ◊›…À (PIM) ƒÃ— KDE
-Summary(uk):	≈“”œŒ¡ÃÿŒŸ  –Ã¡Œ’◊¡ÃÿŒ…À (PIM) ƒÃ— KDE
+Summary(ko.UTF-8):	K Îç∞Ïä§ÌÅ¨ÌÉë ÌôòÍ≤Ω - PIM (Í∞úÏù∏ Ï†ïÎ≥¥ Í¥ÄÎ¶¨)
+Summary(pl.UTF-8):	Manad≈ºer informacji osobistej (PIM) dla KDE
+Summary(ru.UTF-8):	–ü–µ—Ä—Å–æ–Ω–∞–ª—å–Ω—ã–π –ø–ª–∞–Ω–∏—Ä–æ–≤—â–∏–∫ (PIM) –¥–ª—è KDE
+Summary(uk.UTF-8):	–ü–µ—Ä—Å–æ–Ω–∞–ª—å–Ω—ã–π –ø–ª–∞–Ω—É–≤–∞–ª—å–Ω–∏–∫ (PIM) –¥–ª—è KDE
 Name:		kdepim
 Version:	3.5.8
 Release:	2
@@ -79,23 +79,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 kdepim is a collection of Personal Information Management (PIM) tools
 for the K Desktop Environment (KDE).
 
-%description -l pl
+%description -l pl.UTF-8
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
 (KDE).
 
-%description -l ru
-kdepim - ‹‘œ Œ¡¬œ“ ’‘…Ã…‘ ƒÃ— ’–“¡◊Ã≈Œ…— –≈“”œŒ¡ÃÿŒœ  …Œ∆œ“Õ¡√…≈  ƒÃ—
+%description -l ru.UTF-8
+kdepim - —ç—Ç–æ –Ω–∞–±–æ—Ä —É—Ç–∏–ª–∏—Ç –¥–ª—è —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–µ—Ä—Å–æ–Ω–∞–ª—å–Ω–æ–π –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–µ–π –¥–ª—è
 K Desktop Environment (KDE).
 
-%description -l uk
-kdepim - √≈ Œ¡¬¶“ ’‘…Ã¶‘ ƒÃ— À≈“’◊¡ŒŒ— –≈“”œŒ¡ÃÿŒœ¿ …Œ∆œ“Õ¡√¶§¿ ƒÃ— K
+%description -l uk.UTF-8
+kdepim - —Ü–µ –Ω–∞–±—ñ—Ä —É—Ç–∏–ª—ñ—Ç –¥–ª—è –∫–µ—Ä—É–≤–∞–Ω–Ω—è –ø–µ—Ä—Å–æ–Ω–∞–ª—å–Ω–æ—é –∏–Ω—Ñ–æ—Ä–º–∞—Ü—ñ—î—é –¥–ª—è K
 Desktop Environment (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
-Summary(pl):	Pliki nag≥Ûwkowe do KDE pim
-Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
-Summary(uk):	Ê¡ Ã… “œ⁄“œ¬À… ƒÃ— kdepim
+Summary(pl.UTF-8):	Pliki nag≈Ç√≥wkowe do KDE pim
+Summary(ru.UTF-8):	–§–∞–π–ª—ã —Ä–∞–∑—Ä–∞–±–æ—Ç–∫–∏ –¥–ª—è kdepim
+Summary(uk.UTF-8):	–§–∞–π–ª–∏ —Ä–æ–∑—Ä–æ–±–∫–∏ –¥–ª—è kdepim
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdelibs-devel >= %{_minlibsevr}
@@ -107,21 +107,21 @@ Conflicts:	kdenetwork-devel < 10:3.1.90
 This package contains header files needed if you wish to build
 applications based on kdepim.
 
-%description devel -l pl
-Pakiet ten zawiera pliki nag≥Ûwkowe potrzebne do budowy aplikacji
-bazuj±cych na kdepim.
+%description devel -l pl.UTF-8
+Pakiet ten zawiera pliki nag≈Ç√≥wkowe potrzebne do budowy aplikacji
+bazujƒÖcych na kdepim.
 
-%description devel -l uk
-„≈  –¡À≈‘ Õ¶”‘…‘ÿ ∆¡ Ã… ⁄¡«œÃœ◊À¶◊ Œ≈œ¬»¶ƒŒ¶ ƒÃ— –œ¬’ƒœ◊… –“œ«“¡Õ,
-¬¡⁄œ◊¡Œ…» Œ¡ kdepim.
+%description devel -l uk.UTF-8
+–¶–µ–π –ø–∞–∫–µ—Ç –º—ñ—Å—Ç–∏—Ç—å —Ñ–∞–π–ª–∏ –∑–∞–≥–æ–ª–æ–≤–∫—ñ–≤ –Ω–µ–æ–±—Ö—ñ–¥–Ω—ñ –¥–ª—è –ø–æ–±—É–¥–æ–≤–∏ –ø—Ä–æ–≥—Ä–∞–º,
+–±–∞–∑–æ–≤–∞–Ω–∏—Ö –Ω–∞ kdepim.
 
-%description devel -l ru
-¸‘œ‘ –¡À≈‘ ”œƒ≈“÷…‘ ∆¡ ÃŸ ⁄¡«œÃœ◊Àœ◊ Œ≈œ¬»œƒ…ÕŸ≈ ƒÃ— –œ”‘“œ≈Œ…—
-–“œ«“¡ÕÕ, œ”Œœ◊¡ŒŒŸ» Œ¡ kdepim.
+%description devel -l ru.UTF-8
+–≠—Ç–æ—Ç –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç —Ñ–∞–π–ª—ã –∑–∞–≥–æ–ª–æ–≤–∫–æ–≤ –Ω–µ–æ–±—Ö–æ–¥–∏–º—ã–µ –¥–ª—è –ø–æ—Å—Ç—Ä–æ–µ–Ω–∏—è
+–ø—Ä–æ–≥—Ä–∞–º–º, –æ—Å–Ω–æ–≤–∞–Ω–Ω—ã—Ö –Ω–∞ kdepim.
 
 %package apidocs
 Summary:	API documentation
-Summary(pl):	Dokumentacja API
+Summary(pl.UTF-8):	Dokumentacja API
 Group:		Documentation
 Requires:	kdelibs >= 9:3.2.90
 
@@ -132,27 +132,27 @@ libknodecommon and the other kdepim's programming interfaces':
 - class members
 - namespaces
 
-%description apidocs -l pl
-Dokumentacja interfejsÛw programowania libkdepim, libkdenetwork,
+%description apidocs -l pl.UTF-8
+Dokumentacja interfejs√≥w programowania libkdepim, libkdenetwork,
 libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
-- listy klas i ich sk≥adnikÛw
-- listÍ przestrzeni nazw (namespace)
+- listy klas i ich sk≈Çadnik√≥w
+- listƒô przestrzeni nazw (namespace)
 
 %package -n kde-kio-groupwise
 Summary:	Groupwise protocol service
-Summary(pl):	Obs≥uga protoko≥u Groupwise
+Summary(pl.UTF-8):	Obs≈Çuga protoko≈Çu Groupwise
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description -n kde-kio-groupwise
 Groupwise protocol service.
 
-%description -n kde-kio-groupwise -l pl
-Obs≥uga protoko≥u Groupwise.
+%description -n kde-kio-groupwise -l pl.UTF-8
+Obs≈Çuga protoko≈Çu Groupwise.
 
 %package -n kde-kio-imap4
 Summary:	IMAP4 protocol service
-Summary(pl):	Obs≥uga protoko≥u IMAP4
+Summary(pl.UTF-8):	Obs≈Çuga protoko≈Çu IMAP4
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-newimap4 < 9:3.4.0
@@ -160,12 +160,12 @@ Obsoletes:	kde-kio-newimap4 < 9:3.4.0
 %description -n kde-kio-imap4
 IMAP4 protocol service.
 
-%description -n kde-kio-imap4 -l pl
-Obs≥uga protoko≥u IMAP4.
+%description -n kde-kio-imap4 -l pl.UTF-8
+Obs≈Çuga protoko≈Çu IMAP4.
 
 %package kaddressbook
 Summary:	Address book
-Summary(pl):	Ksi±øka adresowa
+Summary(pl.UTF-8):	KsiƒÖ≈ºka adresowa
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdelibs >= %{_minlibsevr}
@@ -173,12 +173,12 @@ Requires:	kdelibs >= %{_minlibsevr}
 %description kaddressbook
 The KDE address book.
 
-%description kaddressbook -l pl
-Ksi±øka adresowa dla KDE.
+%description kaddressbook -l pl.UTF-8
+KsiƒÖ≈ºka adresowa dla KDE.
 
 %package kalarm
 Summary:	A personal alarm scheduler
-Summary(pl):	Osobisty program do przypominania
+Summary(pl.UTF-8):	Osobisty program do przypominania
 Group:		X11/Libraries
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kalarm
@@ -189,16 +189,16 @@ lets you set up personal alarm messages which pop up on the screen at
 the chosen time, or you can schedule commands to be executed or emails
 to be sent. Also includes an alarm daemon.
 
-%description kalarm -l pl
+%description kalarm -l pl.UTF-8
 KAlarm to osobisty program do planowania i przypominania poprzez
-uruchomienie polecenia lub poczt± elektroniczn±. Umoøliwia ustawienie
-w≥asnej wiadomo∂ci alarmowej, ktÛra wyskoczy na ekranie o wybranym
-czasie albo zaszeregowanie poleceÒ do wykonania lub poczty do
-wys≥ania. Zawiera takøe demona obs≥uguj±cego przypominanie.
+uruchomienie polecenia lub pocztƒÖ elektronicznƒÖ. Umo≈ºliwia ustawienie
+w≈Çasnej wiadomo≈õci alarmowej, kt√≥ra wyskoczy na ekranie o wybranym
+czasie albo zaszeregowanie polece≈Ñ do wykonania lub poczty do
+wys≈Çania. Zawiera tak≈ºe demona obs≈ÇugujƒÖcego przypominanie.
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
-Summary(pl):	Program do komunikacji miÍdzy PC a tel. komÛrkowym
+Summary(pl.UTF-8):	Program do komunikacji miƒôdzy PC a tel. kom√≥rkowym
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= %{_minlibsevr}
@@ -208,13 +208,13 @@ Obsoletes:	kdepim-cellphone
 Kandy provides access to your mobile phone and allows to sync the data
 on the phone with the data on your desktop computer.
 
-%description kandy -l pl
-Kandy umoøliwia dostÍp do telefonu komÛrkowego i pozwala na
-synchronizacjÍ danych z telefonu z danymi na PC.
+%description kandy -l pl.UTF-8
+Kandy umo≈ºliwia dostƒôp do telefonu kom√≥rkowego i pozwala na
+synchronizacjƒô danych z telefonu z danymi na PC.
 
 %package karm
 Summary:	Personal timetracker
-Summary(pl):	Osobisty czasomierz
+Summary(pl.UTF-8):	Osobisty czasomierz
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -223,15 +223,15 @@ KArm - Punjambi language for "work" - tracks time spent on various
 tasks. It is useful for tracking hours to be billed to different
 clients.
 
-%description karm -l pl
-KArm (nazwa pochodzi od s≥owa "praca" w jÍzyku punjambi) ∂ledzi czas
-spÍdzony na rÛønych zajÍciach. Jest przydatny przy obliczaniu godzin
-do wystawiania rachunkÛw wielu klientom.
+%description karm -l pl.UTF-8
+KArm (nazwa pochodzi od s≈Çowa "praca" w jƒôzyku punjambi) ≈õledzi czas
+spƒôdzony na r√≥≈ºnych zajƒôciach. Jest przydatny przy obliczaniu godzin
+do wystawiania rachunk√≥w wielu klientom.
 
 %package kmail
 Summary:	KDE Mail client
-Summary(pl):	Program pocztowy KDE
-Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
+Summary(pl.UTF-8):	Program pocztowy KDE
+Summary(pt_BR.UTF-8):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
 URL:		http://kmail.kde.org/
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -261,31 +261,31 @@ This is electronic mail client for KDE with a huge amount of features:
 - import of mail from other clients
 - and more...
 
-%description kmail -l pl
-Program pocztowy dla KDE o olbrzymich moøliwo∂ciach, obejmuj±cych:
-- obs≥ugÍ SMTP/maildir/POP3/IMAP z SSL/TLS i pipeliningiem
-- ksi±økÍ adresow±
-- automatyczne szyfrowanie przy uøyciu OpenPGP (PGP lub GnuPG)
-- potÍøne filtry pocztowe
-- zagnieødøone skrzynki pocztowe z obs≥ug± list pocztowych
-- ∂ci±ganie na ø±danie lub usuwanie bez ∂ci±gania duøych listÛw z
+%description kmail -l pl.UTF-8
+Program pocztowy dla KDE o olbrzymich mo≈ºliwo≈õciach, obejmujƒÖcych:
+- obs≈Çugƒô SMTP/maildir/POP3/IMAP z SSL/TLS i pipeliningiem
+- ksiƒÖ≈ºkƒô adresowƒÖ
+- automatyczne szyfrowanie przy u≈ºyciu OpenPGP (PGP lub GnuPG)
+- potƒô≈ºne filtry pocztowe
+- zagnie≈ºd≈ºone skrzynki pocztowe z obs≈ÇugƒÖ list pocztowych
+- ≈õciƒÖganie na ≈ºƒÖdanie lub usuwanie bez ≈õciƒÖgania du≈ºych list√≥w z
   serwera POP3
-- pe≥n± obs≥ugÍ listÛw we wszystkich jÍzykach i zestawach znakÛw
-  obs≥ugiwanych przez Qt
-- przeszukiwanie wiadomo∂ci z prezentacj± w wirtualnych folderach
-- usuwanie powtÛrzonych listÛw
-- w±tkowanie wiadomo∂ci
-- kontrolÍ pisowni w locie
-- import poczty z innych klientÛw
-- wiele wiÍcej...
+- pe≈ÇnƒÖ obs≈Çugƒô list√≥w we wszystkich jƒôzykach i zestawach znak√≥w
+  obs≈Çugiwanych przez Qt
+- przeszukiwanie wiadomo≈õci z prezentacjƒÖ w wirtualnych folderach
+- usuwanie powt√≥rzonych list√≥w
+- wƒÖtkowanie wiadomo≈õci
+- kontrolƒô pisowni w locie
+- import poczty z innych klient√≥w
+- wiele wiƒôcej...
 
-%description kmail -l pt_BR
+%description kmail -l pt_BR.UTF-8
 Poderoso cliente / leitor de e-mails para o KDE.
 
 %package knode
 Summary:	KDE News Reader
-Summary(pl):	Czytnik newsÛw dla KDE
-Summary(pt_BR):	Leitor de notÌcias (news) do KDE
+Summary(pl.UTF-8):	Czytnik news√≥w dla KDE
+Summary(pt_BR.UTF-8):	Leitor de not√≠cias (news) do KDE
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kde-kio-nntp >= %{_minbaseevr}
@@ -305,24 +305,24 @@ Environment. It features:
 - full scoring
 - and more...
 
-%description knode -l pl
-KNode to czytnik newsÛw zgodny ze specyfikacj± GKNSA przeznaczony dla
-∂rodowiska KDE. Jego moøliwo∂ci obejmuj±:
-- wszystkie podstawowe cechy czytnika newsÛw (czytanie i wysy≥anie
-  artyku≥Ûw, w±tkowanie...)
-- obs≥ugÍ wielu serwerÛw news
-- czytanie i tworzenie wieloczÍ∂ciowych wiadomo∂ci MIME
-- wy∂wietlanie za≥±cznikÛw w tek∂cie (tekstowych i obrazkÛw)
+%description knode -l pl.UTF-8
+KNode to czytnik news√≥w zgodny ze specyfikacjƒÖ GKNSA przeznaczony dla
+≈õrodowiska KDE. Jego mo≈ºliwo≈õci obejmujƒÖ:
+- wszystkie podstawowe cechy czytnika news√≥w (czytanie i wysy≈Çanie
+  artyku≈Ç√≥w, wƒÖtkowanie...)
+- obs≈Çugƒô wielu serwer√≥w news
+- czytanie i tworzenie wieloczƒô≈õciowych wiadomo≈õci MIME
+- wy≈õwietlanie za≈ÇƒÖcznik√≥w w tek≈õcie (tekstowych i obrazk√≥w)
 - konfigurowalne filtry, fonty i kolory
-- pe≥ny scoring
-- wiele wiÍcej...
+- pe≈Çny scoring
+- wiele wiƒôcej...
 
-%description knode -l pt_BR
-Leitor de notÌcias (news) do KDE.
+%description knode -l pt_BR.UTF-8
+Leitor de not√≠cias (news) do KDE.
 
 %package knotes
 Summary:	Yellow cards
-Summary(pl):	ØÛ≥te karteczki
+Summary(pl.UTF-8):	≈ª√≥≈Çte karteczki
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -331,15 +331,15 @@ KNotes allows you to place Post-It notes on your desktop. In addition
 to serving as a reminder, KNotes can mail and print your notes, and
 accept drag and drop even from remote sites.
 
-%description knotes -l pl
-KNotes pozwala umieszczaÊ na pulpicie notatki z opcj± wysy≥ania.
-Dodatkowo, aby mÛc s≥uøyÊ za przypominajkÍ, KNotes moøe wysy≥aÊ pocztÍ
-i drukowaÊ notatki, a takøe przyjmowaÊ przeci±ganie nawet ze zdalnych
-komputerÛw.
+%description knotes -l pl.UTF-8
+KNotes pozwala umieszczaƒá na pulpicie notatki z opcjƒÖ wysy≈Çania.
+Dodatkowo, aby m√≥c s≈Çu≈ºyƒá za przypominajkƒô, KNotes mo≈ºe wysy≈Çaƒá pocztƒô
+i drukowaƒá notatki, a tak≈ºe przyjmowaƒá przeciƒÖganie nawet ze zdalnych
+komputer√≥w.
 
 %package konsolekalendar
 Summary:	A command line ICard tool
-Summary(pl):	NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ
+Summary(pl.UTF-8):	Narzƒôdzie dostƒôpu do plik√≥w kalendarza z linii polece≈Ñ
 Group:		Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -355,24 +355,24 @@ Main features of KonsoleKalendar:
 - insert/remove/modify calendar entries
 - export calendar entries to other file formats
 
-%description konsolekalendar -l pl
-KonsoleKalendar to dzia≥aj±cy z linii poleceÒ interfejs do kalendarzy
-KDE. Pozwala ogl±daÊ, wstawiaÊ, usuwaÊ i modyfikowaÊ zdarzenia w
-kalendarzu z linii poleceÒ lub jÍzyka skryptowego. Ponadto
-KonsoleKalendar potrafi wyeksportowaÊ kalendarz KDE do wielu innych
-formatÛw.
+%description konsolekalendar -l pl.UTF-8
+KonsoleKalendar to dzia≈ÇajƒÖcy z linii polece≈Ñ interfejs do kalendarzy
+KDE. Pozwala oglƒÖdaƒá, wstawiaƒá, usuwaƒá i modyfikowaƒá zdarzenia w
+kalendarzu z linii polece≈Ñ lub jƒôzyka skryptowego. Ponadto
+KonsoleKalendar potrafi wyeksportowaƒá kalendarz KDE do wielu innych
+format√≥w.
 
-G≥Ûwne moøliwo∂ci programu KonsoleKalendar:
-- wypisywanie wpisÛw kalendarza od daty pocz±tkowej do koÒcowej
-- wstawianie/usuwanie/modyfikowanie wpisÛw
-- eksportowanie wpisÛw kalendarza do innych formatÛw plikÛw.
+G≈Ç√≥wne mo≈ºliwo≈õci programu KonsoleKalendar:
+- wypisywanie wpis√≥w kalendarza od daty poczƒÖtkowej do ko≈Ñcowej
+- wstawianie/usuwanie/modyfikowanie wpis√≥w
+- eksportowanie wpis√≥w kalendarza do innych format√≥w plik√≥w.
 
-NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ.
+Narzƒôdzie dostƒôpu do plik√≥w kalendarza z linii polece≈Ñ.
 
 %package korn
 Summary:	KDE 'biff' application
-Summary(pl):	Wskaºnik skrzynki pocztowej dla KDE
-Summary(pt_BR):	Miniaplicativo de monitoraÁ„o da caixa de correio
+Summary(pl.UTF-8):	Wska≈∫nik skrzynki pocztowej dla KDE
+Summary(pt_BR.UTF-8):	Miniaplicativo de monitora√ß√£o da caixa de correio
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-desktop >= %{_minbaseevr}
@@ -381,16 +381,16 @@ Obsoletes:	kdenetwork-korn
 %description korn
 A simple program showing number of mails in your folders.
 
-%description korn -l pl
-Programik pokazuj±cy liczbÍ wiadomo∂ci w wybranych folderach
+%description korn -l pl.UTF-8
+Programik pokazujƒÖcy liczbƒô wiadomo≈õci w wybranych folderach
 pocztowych.
 
-%description korn -l pt_BR
-Miniaplicativo de monitoraÁ„o da caixa de correio.
+%description korn -l pt_BR.UTF-8
+Miniaplicativo de monitora√ß√£o da caixa de correio.
 
 %package kpilot
 Summary:	A sync tool for palmtops
-Summary(pl):	NarzÍdzie do synchronizacji z palmtopami
+Summary(pl.UTF-8):	Narzƒôdzie do synchronizacji z palmtopami
 Group:		X11/Applications
 #Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
@@ -419,36 +419,36 @@ It supports:
 - and Garmin iQue 3600
 - others might work, but have not been tested
 
-%description kpilot -l pl
+%description kpilot -l pl.UTF-8
 KPilot to odpowiednik oprogramowania Palm Desktop firmy Palm Inc,
-umoøliwiaj±cy wymianÍ informacji miÍdzy urz±dzeniami Palm, Palm Pilot
-i Visor a komputerem z KDE. KPilot jako taki nie zastÍpuje Palm
-Desktop - ≥±czy i integruje wiele aplikacji KDE 3.x w pakiet, ktÛrym
-moøna zrobiÊ tyle samo, a nawet wiÍcej, co przy uøyciu Palm Desktop.
+umo≈ºliwiajƒÖcy wymianƒô informacji miƒôdzy urzƒÖdzeniami Palm, Palm Pilot
+i Visor a komputerem z KDE. KPilot jako taki nie zastƒôpuje Palm
+Desktop - ≈ÇƒÖczy i integruje wiele aplikacji KDE 3.x w pakiet, kt√≥rym
+mo≈ºna zrobiƒá tyle samo, a nawet wiƒôcej, co przy u≈ºyciu Palm Desktop.
 
-KPilot ma wtyczki do wymiany informacji miÍdzy Palmem a innymi
+KPilot ma wtyczki do wymiany informacji miƒôdzy Palmem a innymi
 aplikacjami, takimi jak KOrganizer albo serwery POP3/SMTP. W KPilocie
-moøna wy∂wietlaÊ i modyfikowaÊ kontakty, pisaÊ notatki lub instalowaÊ
+mo≈ºna wy≈õwietlaƒá i modyfikowaƒá kontakty, pisaƒá notatki lub instalowaƒá
 nowe programy na Palmie.
 
-Obs≥uguje urz±dzenia serii:
+Obs≈Çuguje urzƒÖdzenia serii:
 - Palm Pilot, m100, m500, Zire, Tungsten
 - Handspring Visor i Treo
-- Sony CliÈ (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c, T675c, 665c)
+- Sony Cli√© (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c, T675c, 665c)
 - Garmin iQue 3600
-- mog± dzia≥aÊ takøe inne, ale nie by≥y testowane.
+- mogƒÖ dzia≈Çaƒá tak≈ºe inne, ale nie by≈Çy testowane.
 
-%description kpilot -l ru
-’‘…Ã…‘¡ ƒÃ— ”…Œ»“œŒ…⁄¡√…… ” 3com Palm Pilots … ”œ◊Õ≈”‘…ÕŸÕ… ” Œ…Õ…
-’”‘“œ ”‘◊¡Õ…,
+%description kpilot -l ru.UTF-8
+—É—Ç–∏–ª–∏—Ç–∞ –¥–ª—è —Å–∏–Ω—Ö—Ä–æ–Ω–∏–∑–∞—Ü–∏–∏ —Å 3com Palm Pilots –∏ —Å–æ–≤–º–µ—Å—Ç–∏–º—ã–º–∏ —Å –Ω–∏–º–∏
+—É—Å—Ç—Ä–æ–π—Å—Ç–≤–∞–º–∏,
 
-%description kpilot -l uk
-’‘…Ã¶‘¡ ƒÃ— ”…Œ»“œŒ¶⁄¡√¶ß ⁄ 3com Palm Pilots ‘¡ ”’Õ¶”Œ…Õ… ⁄ Œ…Õ…
-–“…”‘“œ—Õ….
+%description kpilot -l uk.UTF-8
+—É—Ç–∏–ª—ñ—Ç–∞ –¥–ª—è —Å–∏–Ω—Ö—Ä–æ–Ω—ñ–∑–∞—Ü—ñ—ó –∑ 3com Palm Pilots —Ç–∞ —Å—É–º—ñ—Å–Ω–∏–º–∏ –∑ –Ω–∏–º–∏
+–ø—Ä–∏—Å—Ç—Ä–æ—è–º–∏.
 
 %package libs
 Summary:	Shared kdepim libraries
-Summary(pl):	WspÛ≥dzielone biblioteki kdepim
+Summary(pl.UTF-8):	Wsp√≥≈Çdzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
 Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
@@ -479,8 +479,8 @@ Libraries shared between PIM applications in KDE, which include:
 libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib and more
 
-%description libs -l pl
-Biblioteki wspÛ≥dzielone pomiÍdzy aplikacjami PIM w KDE, m.in.
+%description libs -l pl.UTF-8
+Biblioteki wsp√≥≈Çdzielone pomiƒôdzy aplikacjami PIM w KDE, m.in.
 libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
