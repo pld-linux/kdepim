@@ -47,9 +47,9 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 %{?with_apidocs:BuildRequires:	graphviz}
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
-BuildRequires:	libopensync-devel >= 1:0.22
-BuildRequires:	libopensync-devel < 1:0.30
 BuildRequires:	libmal-devel >= 0.31
+BuildRequires:	libopensync-devel < 1:0.30
+BuildRequires:	libopensync-devel >= 1:0.22
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
