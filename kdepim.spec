@@ -705,7 +705,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/akregator
 %{_datadir}/apps/kconf_update/korganizer.upd
-%{_datadir}/apps/kconf_update/kolab-resource.upd
+%{_datadir}/apps/kconf_update/kolab-reource.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
 %{_datadir}/apps/kgantt
@@ -965,11 +965,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.so
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_xdiff.so
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
+%{_datadir}/apps/kconf_update/kmail.upd
+%{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.sh
-%{_datadir}/apps/kconf_update/kmail.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp-3.1-upgrade-address-data.pl
-%attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-signature.pl
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-transport.pl
 %{_datadir}/apps/kleopatra
@@ -1064,8 +1064,8 @@ rm -rf $RPM_BUILD_ROOT
 %files korn -f korn.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
-%{_libdir}/kconf_update_bin/korn-3-4-config_change
 %{_datadir}/apps/kconf_update/korn-*.upd
+%attr(755,root,root) %{_libdir}/kconf_update_bin/korn-3-4-config_change
 %attr(755,root,root) %{_datadir}/apps/kconf_update/korn-3-5*.pl
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
