@@ -586,12 +586,14 @@ if [ ! -f installed.stamp ]; then
 	%{__rm} $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
 
 	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/*.la
+	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
+	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
+
+	# unsupported
+	rm -rf $RPM_BUILD_ROOT%{_iconsdir}/locolor
+
 	touch installed.stamp
 fi
-
-%{__rm} -f $RPM_BUILD_ROOT%{_iconsdir}/locolor/{16x16/apps/{kpilot,ktnef},32x32/apps/ktnef}.png
-rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
-rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
 
 rm -f *.lang
 
@@ -705,7 +707,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/akregator
 %{_datadir}/apps/kconf_update/korganizer.upd
-%{_datadir}/apps/kconf_update/kolab-reource.upd
+%{_datadir}/apps/kconf_update/kolab-resource.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
 %{_datadir}/apps/kgantt
@@ -929,7 +931,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart/kalarm*.desktop
 %{_desktopdir}/kde/kalarm.desktop
-%{_iconsdir}/[!l]*/*/*/kalarm.png
+%{_iconsdir}/crystalsvg/*/*/kalarm.png
+%{_iconsdir}/hicolor/*/*/kalarm.png
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
@@ -1106,7 +1109,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpalmdoc.desktop
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
-%{_iconsdir}/[!l]*/*/*/kpilot*.png
+%{_iconsdir}/hicolor/*/*/kpilot.png
+%{_iconsdir}/crystalsvg/*/*/kpilotDaemon.png
 
 %files libs
 %defattr(644,root,root,755)
