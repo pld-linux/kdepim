@@ -142,7 +142,7 @@ libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
 Summary:	Groupwise protocol service
 Summary(pl.UTF-8):	Obsługa protokołu Groupwise
 Group:		X11/Libraries
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description -n kde-kio-groupwise
 Groupwise protocol service.
@@ -154,7 +154,7 @@ Obsługa protokołu Groupwise.
 Summary:	IMAP4 protocol service
 Summary(pl.UTF-8):	Obsługa protokołu IMAP4
 Group:		X11/Libraries
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-newimap4 < 9:3.4.0
 
 %description -n kde-kio-imap4
@@ -167,7 +167,7 @@ Obsługa protokołu IMAP4.
 Summary:	Scalix protocol service
 Summary(pl.UTF-8):	Obsługa protokołu Scalix
 Group:		X11/Libraries
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdelibs-libs >= %{_minlibsevr}
 
 %description -n kde-kio-scalix
 Scalix protocol service.
@@ -180,7 +180,6 @@ Summary:	Address book
 Summary(pl.UTF-8):	Książka adresowa
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	kdelibs >= %{_minlibsevr}
 
 %description kaddressbook
 The KDE address book.
@@ -192,7 +191,7 @@ Książka adresowa dla KDE.
 Summary:	A personal alarm scheduler
 Summary(pl.UTF-8):	Osobisty program do przypominania
 Group:		X11/Libraries
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kalarm
 
 %description kalarm
@@ -212,7 +211,7 @@ wysłania. Zawiera także demona obsługującego przypominanie.
 Summary:	A communication program between mobile phone and PC
 Summary(pl.UTF-8):	Program do komunikacji między PC a tel. komórkowym
 Group:		X11/Applications
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= %{_minlibsevr}
 Obsoletes:	kdepim-cellphone
 
@@ -228,7 +227,7 @@ synchronizację danych z telefonu z danymi na PC.
 Summary:	Personal timetracker
 Summary(pl.UTF-8):	Osobisty czasomierz
 Group:		X11/Applications
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
@@ -387,7 +386,7 @@ Summary:	KDE 'biff' application
 Summary(pl.UTF-8):	Wskaźnik skrzynki pocztowej dla KDE
 Summary(pt_BR.UTF-8):	Miniaplicativo de monitoração da caixa de correio
 Group:		X11/Applications
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-desktop >= %{_minbaseevr}
 Obsoletes:	kdenetwork-korn
 
@@ -405,7 +404,7 @@ Miniaplicativo de monitoração da caixa de correio.
 Summary:	A sync tool for palmtops
 Summary(pl.UTF-8):	Narzędzie do synchronizacji z palmtopami
 Group:		X11/Applications
-#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
 Obsoletes:	kdepim-kpalmdoc
 Obsoletes:	kdepim-pilot
