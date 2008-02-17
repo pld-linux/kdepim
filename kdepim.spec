@@ -16,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.9
-Release:	1
+Release:	2
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -1022,8 +1022,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/knode
 %attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
 %attr(755,root,root) %{_libdir}/kde3/libknodepart.so*
-%attr(755,root,root) %{_libdir}/libknodecommon.so.3.0.0
-%attr(755,root,root) %ghost %{_libdir}/libknodecommon.so.3
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
 %{_datadir}/services/knode_config_accounts.desktop
@@ -1175,7 +1173,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkmailprivate.so
 %attr(755,root,root) %{_libdir}/libkmime.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkmime.so.2
-%attr(755,root,root) %{_libdir}/libknodecommon.so
+%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libknodecommon.so.3
 %attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libknotes_xmlrpc.so.1
 %attr(755,root,root) %{_libdir}/libknoteskolab.so.*.*.*
