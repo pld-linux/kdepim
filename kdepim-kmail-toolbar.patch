@@ -36,3 +36,19 @@
 +  <Action name="mark_all_as_read" />
   </ToolBar>
  </kpartgui>
+--- kmail-3.5.9/kmcomposerui.rc/kmcomposerui.rc~	2008-02-13 11:39:37.000000000 +0200
++++ kmail-3.5.9/kmcomposerui.rc/kmcomposerui.rc	2008-02-19 14:23:51.807830875 +0200
+@@ -78,4 +78,5 @@
+   <Action name="sign_message" />
+   <Action name="encrypt_message" />
++  <Action name="wordwrap" />
+   <Action name="options_select_crypto" />
+  </ToolBar>
+@@ -112,4 +113,7 @@
+   <Action name="align_center" />
+   <Action name="align_right" />
+  </ToolBar>
++ <ActionProperties>
++  <Action icon="view_text" name="wordwrap" />
++ </ActionProperties>
+ </kpartgui>
