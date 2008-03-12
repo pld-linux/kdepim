@@ -49,7 +49,6 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
-BuildRequires:	libopensync02-devel < 1:0.30
 BuildRequires:	libopensync02-devel >= 1:0.22
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
