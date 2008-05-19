@@ -1,28 +1,29 @@
 # TODO
 # - subpackages for akregator, korganizer(?)
-#
 # Conditional build:
-%bcond_without	apidocs			# do not prepare API documentation
-%bcond_with	hidden_visibility	# don't use gcc hidden visibility
+%bcond_without	apidocs		# do not prepare API documentation
+%bcond_with	hidden_visibility	# pass '--fvisibility=hidden'
+					# & '--fvisibility-inlines-hidden'
+					# to g++
 #
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
 %define		_minbaseevr	9:%{version}
 
 Summary:	Personal Information Management (PIM) for KDE
-Summary(ko.UTF-8):	K Îç∞Ïä§ÌÅ¨ÌÉë ÌôòÍ≤Ω - PIM (Í∞úÏù∏ Ï†ïÎ≥¥ Í¥ÄÎ¶¨)
-Summary(pl.UTF-8):	ZarzƒÖdca informacji osobistej (PIM) dla KDE
-Summary(ru.UTF-8):	–ü–µ—Ä—Å–æ–Ω–∞–ª—å–Ω—ã–π –ø–ª–∞–Ω–∏—Ä–æ–≤—â–∏–∫ (PIM) –¥–ª—è KDE
-Summary(uk.UTF-8):	–ü–µ—Ä—Å–æ–Ω–∞–ª—å–Ω—ã–π –ø–ª–∞–Ω—É–≤–∞–ª—å–Ω–∏–∫ (PIM) –¥–ª—è KDE
+Summary(ko):	K µ•Ω∫≈©≈æ »Ø∞Ê - PIM (∞≥¿Œ ¡§∫∏ ∞¸∏Æ)
+Summary(pl):	Manadøer informacji osobistej (PIM) dla KDE
+Summary(ru):	≈“”œŒ¡ÃÿŒŸ  –Ã¡Œ…“œ◊›…À (PIM) ƒÃ— KDE
+Summary(uk):	≈“”œŒ¡ÃÿŒŸ  –Ã¡Œ’◊¡ÃÿŒ…À (PIM) ƒÃ— KDE
 Name:		kdepim
-Version:	3.5.9
+Version:	3.5.8
 Release:	2
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	ba27b06599556c572a26f03608471ee2
-#Patch100:	%{name}-branch.diff
+# Source0-md5:	a1ffff553f1d6739c7791891028b176b
+Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail-vcardviewer.patch
@@ -48,8 +49,7 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
-BuildRequires:	libopensync-devel < 1:0.30
-BuildRequires:	libopensync-devel >= 1:0.22
+BuildRequires:	libopensync-devel
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
@@ -57,8 +57,8 @@ BuildRequires:	pilot-link-devel >= 0.12.1
 BuildRequires:	qt-designer-libs
 %{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 %{?with_apidocs:BuildRequires:	qt-doc}
-BuildRequires:	rpmbuild(find_lang) >= 1.32
 BuildRequires:	rpmbuild(macros) >= 1.129
+#BuildRequires:	unsermake >= 040511
 BuildRequires:	zlib-devel
 BuildConflicts:	indexlib
 BuildConflicts:	kdepim-kontact-libs
@@ -79,23 +79,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 kdepim is a collection of Personal Information Management (PIM) tools
 for the K Desktop Environment (KDE).
 
-%description -l pl.UTF-8
+%description -l pl
 kdepim jest jest zestawem aplikacji PIM dla K Desktop Environment
 (KDE).
 
-%description -l ru.UTF-8
-kdepim - —ç—Ç–æ –Ω–∞–±–æ—Ä —É—Ç–∏–ª–∏—Ç –¥–ª—è —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–µ—Ä—Å–æ–Ω–∞–ª—å–Ω–æ–π –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–µ–π –¥–ª—è
+%description -l ru
+kdepim - ‹‘œ Œ¡¬œ“ ’‘…Ã…‘ ƒÃ— ’–“¡◊Ã≈Œ…— –≈“”œŒ¡ÃÿŒœ  …Œ∆œ“Õ¡√…≈  ƒÃ—
 K Desktop Environment (KDE).
 
-%description -l uk.UTF-8
-kdepim - —Ü–µ –Ω–∞–±—ñ—Ä —É—Ç–∏–ª—ñ—Ç –¥–ª—è –∫–µ—Ä—É–≤–∞–Ω–Ω—è –ø–µ—Ä—Å–æ–Ω–∞–ª—å–Ω–æ—é –∏–Ω—Ñ–æ—Ä–º–∞—Ü—ñ—î—é –¥–ª—è K
+%description -l uk
+kdepim - √≈ Œ¡¬¶“ ’‘…Ã¶‘ ƒÃ— À≈“’◊¡ŒŒ— –≈“”œŒ¡ÃÿŒœ¿ …Œ∆œ“Õ¡√¶§¿ ƒÃ— K
 Desktop Environment (KDE).
 
 %package devel
 Summary:	Development files for KDE pim
-Summary(pl.UTF-8):	Pliki nag≈Ç√≥wkowe do KDE pim
-Summary(ru.UTF-8):	–§–∞–π–ª—ã —Ä–∞–∑—Ä–∞–±–æ—Ç–∫–∏ –¥–ª—è kdepim
-Summary(uk.UTF-8):	–§–∞–π–ª–∏ —Ä–æ–∑—Ä–æ–±–∫–∏ –¥–ª—è kdepim
+Summary(pl):	Pliki nag≥Ûwkowe do KDE pim
+Summary(ru):	Ê¡ ÃŸ “¡⁄“¡¬œ‘À… ƒÃ— kdepim
+Summary(uk):	Ê¡ Ã… “œ⁄“œ¬À… ƒÃ— kdepim
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdelibs-devel >= %{_minlibsevr}
@@ -107,21 +107,21 @@ Conflicts:	kdenetwork-devel < 10:3.1.90
 This package contains header files needed if you wish to build
 applications based on kdepim.
 
-%description devel -l pl.UTF-8
-Pakiet ten zawiera pliki nag≈Ç√≥wkowe potrzebne do budowy aplikacji
-bazujƒÖcych na kdepim.
+%description devel -l pl
+Pakiet ten zawiera pliki nag≥Ûwkowe potrzebne do budowy aplikacji
+bazuj±cych na kdepim.
 
-%description devel -l uk.UTF-8
-–¶–µ–π –ø–∞–∫–µ—Ç –º—ñ—Å—Ç–∏—Ç—å —Ñ–∞–π–ª–∏ –∑–∞–≥–æ–ª–æ–≤–∫—ñ–≤ –Ω–µ–æ–±—Ö—ñ–¥–Ω—ñ –¥–ª—è –ø–æ–±—É–¥–æ–≤–∏ –ø—Ä–æ–≥—Ä–∞–º,
-–±–∞–∑–æ–≤–∞–Ω–∏—Ö –Ω–∞ kdepim.
+%description devel -l uk
+„≈  –¡À≈‘ Õ¶”‘…‘ÿ ∆¡ Ã… ⁄¡«œÃœ◊À¶◊ Œ≈œ¬»¶ƒŒ¶ ƒÃ— –œ¬’ƒœ◊… –“œ«“¡Õ,
+¬¡⁄œ◊¡Œ…» Œ¡ kdepim.
 
-%description devel -l ru.UTF-8
-–≠—Ç–æ—Ç –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç —Ñ–∞–π–ª—ã –∑–∞–≥–æ–ª–æ–≤–∫–æ–≤ –Ω–µ–æ–±—Ö–æ–¥–∏–º—ã–µ –¥–ª—è –ø–æ—Å—Ç—Ä–æ–µ–Ω–∏—è
-–ø—Ä–æ–≥—Ä–∞–º–º, –æ—Å–Ω–æ–≤–∞–Ω–Ω—ã—Ö –Ω–∞ kdepim.
+%description devel -l ru
+¸‘œ‘ –¡À≈‘ ”œƒ≈“÷…‘ ∆¡ ÃŸ ⁄¡«œÃœ◊Àœ◊ Œ≈œ¬»œƒ…ÕŸ≈ ƒÃ— –œ”‘“œ≈Œ…—
+–“œ«“¡ÕÕ, œ”Œœ◊¡ŒŒŸ» Œ¡ kdepim.
 
 %package apidocs
 Summary:	API documentation
-Summary(pl.UTF-8):	Dokumentacja API
+Summary(pl):	Dokumentacja API
 Group:		Documentation
 Requires:	kdelibs >= 9:3.2.90
 
@@ -132,66 +132,55 @@ libknodecommon and the other kdepim's programming interfaces':
 - class members
 - namespaces
 
-%description apidocs -l pl.UTF-8
-Dokumentacja interfejs√≥w programowania libkdepim, libkdenetwork,
+%description apidocs -l pl
+Dokumentacja interfejsÛw programowania libkdepim, libkdenetwork,
 libkmailprivate, libknodecommon i innych z kdepim wraz z przypisami:
-- listy klas i ich sk≈Çadnik√≥w
-- listƒô przestrzeni nazw (namespace)
+- listy klas i ich sk≥adnikÛw
+- listÍ przestrzeni nazw (namespace)
 
 %package -n kde-kio-groupwise
 Summary:	Groupwise protocol service
-Summary(pl.UTF-8):	Obs≈Çuga protoko≈Çu Groupwise
+Summary(pl):	Obs≥uga protoko≥u Groupwise
 Group:		X11/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description -n kde-kio-groupwise
 Groupwise protocol service.
 
-%description -n kde-kio-groupwise -l pl.UTF-8
-Obs≈Çuga protoko≈Çu Groupwise.
+%description -n kde-kio-groupwise -l pl
+Obs≥uga protoko≥u Groupwise.
 
 %package -n kde-kio-imap4
 Summary:	IMAP4 protocol service
-Summary(pl.UTF-8):	Obs≈Çuga protoko≈Çu IMAP4
+Summary(pl):	Obs≥uga protoko≥u IMAP4
 Group:		X11/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kde-kio-newimap4 < 9:3.4.0
 
 %description -n kde-kio-imap4
 IMAP4 protocol service.
 
-%description -n kde-kio-imap4 -l pl.UTF-8
-Obs≈Çuga protoko≈Çu IMAP4.
-
-%package -n kde-kio-scalix
-Summary:	Scalix protocol service
-Summary(pl.UTF-8):	Obs≈Çuga protoko≈Çu Scalix
-Group:		X11/Libraries
-Requires:	kdelibs-libs >= %{_minlibsevr}
-
-%description -n kde-kio-scalix
-Scalix protocol service.
-
-%description -n kde-kio-scalix -l pl.UTF-8
-Obs≈Çuga protoko≈Çu Scalix.
+%description -n kde-kio-imap4 -l pl
+Obs≥uga protoko≥u IMAP4.
 
 %package kaddressbook
 Summary:	Address book
-Summary(pl.UTF-8):	KsiƒÖ≈ºka adresowa
+Summary(pl):	Ksi±øka adresowa
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdelibs >= %{_minlibsevr}
 
 %description kaddressbook
 The KDE address book.
 
-%description kaddressbook -l pl.UTF-8
-KsiƒÖ≈ºka adresowa dla KDE.
+%description kaddressbook -l pl
+Ksi±øka adresowa dla KDE.
 
 %package kalarm
 Summary:	A personal alarm scheduler
-Summary(pl.UTF-8):	Osobisty program do przypominania
+Summary(pl):	Osobisty program do przypominania
 Group:		X11/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Obsoletes:	kalarm
 
 %description kalarm
@@ -200,18 +189,18 @@ lets you set up personal alarm messages which pop up on the screen at
 the chosen time, or you can schedule commands to be executed or emails
 to be sent. Also includes an alarm daemon.
 
-%description kalarm -l pl.UTF-8
+%description kalarm -l pl
 KAlarm to osobisty program do planowania i przypominania poprzez
-uruchomienie polecenia lub pocztƒÖ elektronicznƒÖ. Umo≈ºliwia ustawienie
-w≈Çasnej wiadomo≈õci alarmowej, kt√≥ra wyskoczy na ekranie o wybranym
-czasie albo zaszeregowanie polece≈Ñ do wykonania lub poczty do
-wys≈Çania. Zawiera tak≈ºe demona obs≈ÇugujƒÖcego przypominanie.
+uruchomienie polecenia lub poczt± elektroniczn±. Umoøliwia ustawienie
+w≥asnej wiadomo∂ci alarmowej, ktÛra wyskoczy na ekranie o wybranym
+czasie albo zaszeregowanie poleceÒ do wykonania lub poczty do
+wys≥ania. Zawiera takøe demona obs≥uguj±cego przypominanie.
 
 %package kandy
 Summary:	A communication program between mobile phone and PC
-Summary(pl.UTF-8):	Program do komunikacji miƒôdzy PC a tel. kom√≥rkowym
+Summary(pl):	Program do komunikacji miÍdzy PC a tel. komÛrkowym
 Group:		X11/Applications
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-core >= %{_minlibsevr}
 Obsoletes:	kdepim-cellphone
 
@@ -219,30 +208,30 @@ Obsoletes:	kdepim-cellphone
 Kandy provides access to your mobile phone and allows to sync the data
 on the phone with the data on your desktop computer.
 
-%description kandy -l pl.UTF-8
-Kandy umo≈ºliwia dostƒôp do telefonu kom√≥rkowego i pozwala na
-synchronizacjƒô danych z telefonu z danymi na PC.
+%description kandy -l pl
+Kandy umoøliwia dostÍp do telefonu komÛrkowego i pozwala na
+synchronizacjÍ danych z telefonu z danymi na PC.
 
 %package karm
 Summary:	Personal timetracker
-Summary(pl.UTF-8):	Osobisty czasomierz
+Summary(pl):	Osobisty czasomierz
 Group:		X11/Applications
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description karm
 KArm - Punjambi language for "work" - tracks time spent on various
 tasks. It is useful for tracking hours to be billed to different
 clients.
 
-%description karm -l pl.UTF-8
-KArm (nazwa pochodzi od s≈Çowa "praca" w jƒôzyku punjambi) ≈õledzi czas
-spƒôdzony na r√≥≈ºnych zajƒôciach. Jest przydatny przy obliczaniu godzin
-do wystawiania rachunk√≥w wielu klientom.
+%description karm -l pl
+KArm (nazwa pochodzi od s≥owa "praca" w jÍzyku punjambi) ∂ledzi czas
+spÍdzony na rÛønych zajÍciach. Jest przydatny przy obliczaniu godzin
+do wystawiania rachunkÛw wielu klientom.
 
 %package kmail
 Summary:	KDE Mail client
-Summary(pl.UTF-8):	Program pocztowy KDE
-Summary(pt_BR.UTF-8):	Cliente / leitor de e-mails para o KDE
+Summary(pl):	Program pocztowy KDE
+Summary(pt_BR):	Cliente / leitor de e-mails para o KDE
 Group:		X11/Applications
 URL:		http://kmail.kde.org/
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
@@ -272,31 +261,31 @@ This is electronic mail client for KDE with a huge amount of features:
 - import of mail from other clients
 - and more...
 
-%description kmail -l pl.UTF-8
-Program pocztowy dla KDE o olbrzymich mo≈ºliwo≈õciach, obejmujƒÖcych:
-- obs≈Çugƒô SMTP/maildir/POP3/IMAP z SSL/TLS i pipeliningiem
-- ksiƒÖ≈ºkƒô adresowƒÖ
-- automatyczne szyfrowanie przy u≈ºyciu OpenPGP (PGP lub GnuPG)
-- potƒô≈ºne filtry pocztowe
-- zagnie≈ºd≈ºone skrzynki pocztowe z obs≈ÇugƒÖ list pocztowych
-- ≈õciƒÖganie na ≈ºƒÖdanie lub usuwanie bez ≈õciƒÖgania du≈ºych list√≥w z
+%description kmail -l pl
+Program pocztowy dla KDE o olbrzymich moøliwo∂ciach, obejmuj±cych:
+- obs≥ugÍ SMTP/maildir/POP3/IMAP z SSL/TLS i pipeliningiem
+- ksi±økÍ adresow±
+- automatyczne szyfrowanie przy uøyciu OpenPGP (PGP lub GnuPG)
+- potÍøne filtry pocztowe
+- zagnieødøone skrzynki pocztowe z obs≥ug± list pocztowych
+- ∂ci±ganie na ø±danie lub usuwanie bez ∂ci±gania duøych listÛw z
   serwera POP3
-- pe≈ÇnƒÖ obs≈Çugƒô list√≥w we wszystkich jƒôzykach i zestawach znak√≥w
-  obs≈Çugiwanych przez Qt
-- przeszukiwanie wiadomo≈õci z prezentacjƒÖ w wirtualnych folderach
-- usuwanie powt√≥rzonych list√≥w
-- wƒÖtkowanie wiadomo≈õci
-- kontrolƒô pisowni w locie
-- import poczty z innych klient√≥w
-- wiele wiƒôcej...
+- pe≥n± obs≥ugÍ listÛw we wszystkich jÍzykach i zestawach znakÛw
+  obs≥ugiwanych przez Qt
+- przeszukiwanie wiadomo∂ci z prezentacj± w wirtualnych folderach
+- usuwanie powtÛrzonych listÛw
+- w±tkowanie wiadomo∂ci
+- kontrolÍ pisowni w locie
+- import poczty z innych klientÛw
+- wiele wiÍcej...
 
-%description kmail -l pt_BR.UTF-8
+%description kmail -l pt_BR
 Poderoso cliente / leitor de e-mails para o KDE.
 
 %package knode
 Summary:	KDE News Reader
-Summary(pl.UTF-8):	Czytnik news√≥w dla KDE
-Summary(pt_BR.UTF-8):	Leitor de not√≠cias (news) do KDE
+Summary(pl):	Czytnik newsÛw dla KDE
+Summary(pt_BR):	Leitor de notÌcias (news) do KDE
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kde-kio-nntp >= %{_minbaseevr}
@@ -316,42 +305,41 @@ Environment. It features:
 - full scoring
 - and more...
 
-%description knode -l pl.UTF-8
-KNode to czytnik news√≥w zgodny ze specyfikacjƒÖ GKNSA przeznaczony dla
-≈õrodowiska KDE. Jego mo≈ºliwo≈õci obejmujƒÖ:
-- wszystkie podstawowe cechy czytnika news√≥w (czytanie i wysy≈Çanie
-  artyku≈Ç√≥w, wƒÖtkowanie...)
-- obs≈Çugƒô wielu serwer√≥w news
-- czytanie i tworzenie wieloczƒô≈õciowych wiadomo≈õci MIME
-- wy≈õwietlanie za≈ÇƒÖcznik√≥w w tek≈õcie (tekstowych i obrazk√≥w)
+%description knode -l pl
+KNode to czytnik newsÛw zgodny ze specyfikacj± GKNSA przeznaczony dla
+∂rodowiska KDE. Jego moøliwo∂ci obejmuj±:
+- wszystkie podstawowe cechy czytnika newsÛw (czytanie i wysy≥anie
+  artyku≥Ûw, w±tkowanie...)
+- obs≥ugÍ wielu serwerÛw news
+- czytanie i tworzenie wieloczÍ∂ciowych wiadomo∂ci MIME
+- wy∂wietlanie za≥±cznikÛw w tek∂cie (tekstowych i obrazkÛw)
 - konfigurowalne filtry, fonty i kolory
-- pe≈Çny scoring
-- wiele wiƒôcej...
+- pe≥ny scoring
+- wiele wiÍcej...
 
-%description knode -l pt_BR.UTF-8
-Leitor de not√≠cias (news) do KDE.
+%description knode -l pt_BR
+Leitor de notÌcias (news) do KDE.
 
 %package knotes
 Summary:	Yellow cards
-Summary(pl.UTF-8):	≈ª√≥≈Çte karteczki
+Summary(pl):	ØÛ≥te karteczki
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	kde-kio-scalix >= %{epoch}:%{version}-%{release}
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
 to serving as a reminder, KNotes can mail and print your notes, and
 accept drag and drop even from remote sites.
 
-%description knotes -l pl.UTF-8
-KNotes pozwala umieszczaƒá na pulpicie notatki z opcjƒÖ wysy≈Çania.
-Dodatkowo, aby m√≥c s≈Çu≈ºyƒá za przypominajkƒô, KNotes mo≈ºe wysy≈Çaƒá pocztƒô
-i drukowaƒá notatki, a tak≈ºe przyjmowaƒá przeciƒÖganie nawet ze zdalnych
-komputer√≥w.
+%description knotes -l pl
+KNotes pozwala umieszczaÊ na pulpicie notatki z opcj± wysy≥ania.
+Dodatkowo, aby mÛc s≥uøyÊ za przypominajkÍ, KNotes moøe wysy≥aÊ pocztÍ
+i drukowaÊ notatki, a takøe przyjmowaÊ przeci±ganie nawet ze zdalnych
+komputerÛw.
 
 %package konsolekalendar
 Summary:	A command line ICard tool
-Summary(pl.UTF-8):	Narzƒôdzie dostƒôpu do plik√≥w kalendarza z linii polece≈Ñ
+Summary(pl):	NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ
 Group:		Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
@@ -367,44 +355,44 @@ Main features of KonsoleKalendar:
 - insert/remove/modify calendar entries
 - export calendar entries to other file formats
 
-%description konsolekalendar -l pl.UTF-8
-KonsoleKalendar to dzia≈ÇajƒÖcy z linii polece≈Ñ interfejs do kalendarzy
-KDE. Pozwala oglƒÖdaƒá, wstawiaƒá, usuwaƒá i modyfikowaƒá zdarzenia w
-kalendarzu z linii polece≈Ñ lub jƒôzyka skryptowego. Ponadto
-KonsoleKalendar potrafi wyeksportowaƒá kalendarz KDE do wielu innych
-format√≥w.
+%description konsolekalendar -l pl
+KonsoleKalendar to dzia≥aj±cy z linii poleceÒ interfejs do kalendarzy
+KDE. Pozwala ogl±daÊ, wstawiaÊ, usuwaÊ i modyfikowaÊ zdarzenia w
+kalendarzu z linii poleceÒ lub jÍzyka skryptowego. Ponadto
+KonsoleKalendar potrafi wyeksportowaÊ kalendarz KDE do wielu innych
+formatÛw.
 
-G≈Ç√≥wne mo≈ºliwo≈õci programu KonsoleKalendar:
-- wypisywanie wpis√≥w kalendarza od daty poczƒÖtkowej do ko≈Ñcowej
-- wstawianie/usuwanie/modyfikowanie wpis√≥w
-- eksportowanie wpis√≥w kalendarza do innych format√≥w plik√≥w.
+G≥Ûwne moøliwo∂ci programu KonsoleKalendar:
+- wypisywanie wpisÛw kalendarza od daty pocz±tkowej do koÒcowej
+- wstawianie/usuwanie/modyfikowanie wpisÛw
+- eksportowanie wpisÛw kalendarza do innych formatÛw plikÛw.
 
-Narzƒôdzie dostƒôpu do plik√≥w kalendarza z linii polece≈Ñ.
+NarzÍdzie dostÍpu do plikÛw kalendarza z linii poleceÒ.
 
 %package korn
 Summary:	KDE 'biff' application
-Summary(pl.UTF-8):	Wska≈∫nik skrzynki pocztowej dla KDE
-Summary(pt_BR.UTF-8):	Miniaplicativo de monitora√ß√£o da caixa de correio
+Summary(pl):	Wskaºnik skrzynki pocztowej dla KDE
+Summary(pt_BR):	Miniaplicativo de monitoraÁ„o da caixa de correio
 Group:		X11/Applications
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	kdebase-desktop >= %{_minbaseevr}
 Obsoletes:	kdenetwork-korn
 
 %description korn
 A simple program showing number of mails in your folders.
 
-%description korn -l pl.UTF-8
-Programik pokazujƒÖcy liczbƒô wiadomo≈õci w wybranych folderach
+%description korn -l pl
+Programik pokazuj±cy liczbÍ wiadomo∂ci w wybranych folderach
 pocztowych.
 
-%description korn -l pt_BR.UTF-8
-Miniaplicativo de monitora√ß√£o da caixa de correio.
+%description korn -l pt_BR
+Miniaplicativo de monitoraÁ„o da caixa de correio.
 
 %package kpilot
 Summary:	A sync tool for palmtops
-Summary(pl.UTF-8):	Narzƒôdzie do synchronizacji z palmtopami
+Summary(pl):	NarzÍdzie do synchronizacji z palmtopami
 Group:		X11/Applications
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+#Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Requires:	pilot-link
 Obsoletes:	kdepim-kpalmdoc
 Obsoletes:	kdepim-pilot
@@ -426,41 +414,41 @@ new programs on your Palm.
 It supports:
 - Palm Pilot, m100, m500, Zire, Tungsten series
 - Handspring Visor and Treo series
-- Sony Cli√© series (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c,
+- Sony CliÈ series (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c,
   T675c, 665c)
 - and Garmin iQue 3600
 - others might work, but have not been tested
 
-%description kpilot -l pl.UTF-8
+%description kpilot -l pl
 KPilot to odpowiednik oprogramowania Palm Desktop firmy Palm Inc,
-umo≈ºliwiajƒÖcy wymianƒô informacji miƒôdzy urzƒÖdzeniami Palm, Palm Pilot
-i Visor a komputerem z KDE. KPilot jako taki nie zastƒôpuje Palm
-Desktop - ≈ÇƒÖczy i integruje wiele aplikacji KDE 3.x w pakiet, kt√≥rym
-mo≈ºna zrobiƒá tyle samo, a nawet wiƒôcej, co przy u≈ºyciu Palm Desktop.
+umoøliwiaj±cy wymianÍ informacji miÍdzy urz±dzeniami Palm, Palm Pilot
+i Visor a komputerem z KDE. KPilot jako taki nie zastÍpuje Palm
+Desktop - ≥±czy i integruje wiele aplikacji KDE 3.x w pakiet, ktÛrym
+moøna zrobiÊ tyle samo, a nawet wiÍcej, co przy uøyciu Palm Desktop.
 
-KPilot ma wtyczki do wymiany informacji miƒôdzy Palmem a innymi
+KPilot ma wtyczki do wymiany informacji miÍdzy Palmem a innymi
 aplikacjami, takimi jak KOrganizer albo serwery POP3/SMTP. W KPilocie
-mo≈ºna wy≈õwietlaƒá i modyfikowaƒá kontakty, pisaƒá notatki lub instalowaƒá
+moøna wy∂wietlaÊ i modyfikowaÊ kontakty, pisaÊ notatki lub instalowaÊ
 nowe programy na Palmie.
 
-Obs≈Çuguje urzƒÖdzenia serii:
+Obs≥uguje urz±dzenia serii:
 - Palm Pilot, m100, m500, Zire, Tungsten
 - Handspring Visor i Treo
-- Sony Cli√© (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c, T675c, 665c)
+- Sony CliÈ (TJ35/E1, TJ25, T415, SJ120/333, S300, T625c, T675c, 665c)
 - Garmin iQue 3600
-- mogƒÖ dzia≈Çaƒá tak≈ºe inne, ale nie by≈Çy testowane.
+- mog± dzia≥aÊ takøe inne, ale nie by≥y testowane.
 
-%description kpilot -l ru.UTF-8
-—É—Ç–∏–ª–∏—Ç–∞ –¥–ª—è —Å–∏–Ω—Ö—Ä–æ–Ω–∏–∑–∞—Ü–∏–∏ —Å 3com Palm Pilots –∏ —Å–æ–≤–º–µ—Å—Ç–∏–º—ã–º–∏ —Å –Ω–∏–º–∏
-—É—Å—Ç—Ä–æ–π—Å—Ç–≤–∞–º–∏,
+%description kpilot -l ru
+’‘…Ã…‘¡ ƒÃ— ”…Œ»“œŒ…⁄¡√…… ” 3com Palm Pilots … ”œ◊Õ≈”‘…ÕŸÕ… ” Œ…Õ…
+’”‘“œ ”‘◊¡Õ…,
 
-%description kpilot -l uk.UTF-8
-—É—Ç–∏–ª—ñ—Ç–∞ –¥–ª—è —Å–∏–Ω—Ö—Ä–æ–Ω—ñ–∑–∞—Ü—ñ—ó –∑ 3com Palm Pilots —Ç–∞ —Å—É–º—ñ—Å–Ω–∏–º–∏ –∑ –Ω–∏–º–∏
-–ø—Ä–∏—Å—Ç—Ä–æ—è–º–∏.
+%description kpilot -l uk
+’‘…Ã¶‘¡ ƒÃ— ”…Œ»“œŒ¶⁄¡√¶ß ⁄ 3com Palm Pilots ‘¡ ”’Õ¶”Œ…Õ… ⁄ Œ…Õ…
+–“…”‘“œ—Õ….
 
 %package libs
 Summary:	Shared kdepim libraries
-Summary(pl.UTF-8):	Wsp√≥≈Çdzielone biblioteki kdepim
+Summary(pl):	WspÛ≥dzielone biblioteki kdepim
 Group:		X11/Libraries
 Requires:	kdelibs >= %{_minlibsevr}
 Provides:	kdepim-kmail-libs = %{epoch}:%{version}-%{release}
@@ -491,14 +479,14 @@ Libraries shared between PIM applications in KDE, which include:
 libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib and more
 
-%description libs -l pl.UTF-8
-Biblioteki wsp√≥≈Çdzielone pomiƒôdzy aplikacjami PIM w KDE, m.in.
+%description libs -l pl
+Biblioteki wspÛ≥dzielone pomiÍdzy aplikacjami PIM w KDE, m.in.
 libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
 %setup -q
-#%patch100 -p0
+%patch100 -p0
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -542,7 +530,7 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-mv -f configure{,.dist}
+rm -f configure
 
 %build
 # speedup
@@ -570,34 +558,14 @@ fi
 %{?with_apidocs:%{__make} apidox}
 
 %install
-if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
-	rm -rf makeinstall.stamp installed.stamp $RPM_BUILD_ROOT
-
-	%{__make} install \
-		DESTDIR=$RPM_BUILD_ROOT \
-		kde_htmldir=%{_kdedocdir}
-
-	touch makeinstall.stamp
-fi
-
-if [ ! -f installed.stamp ]; then
-	# remove checked files
-	%{__rm} $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
-
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/*.la
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
-
-	# unsupported
-	rm -rf $RPM_BUILD_ROOT%{_iconsdir}/locolor
-
-	touch installed.stamp
-fi
-
+rm -rf $RPM_BUILD_ROOT
 rm -f *.lang
 
-> %{name}.lang
-%find_lang	akregator	--with-kde -a %{name}.lang
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	kde_htmldir=%{_kdedocdir}
+
+%find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kandy		--with-kde
@@ -606,25 +574,34 @@ rm -f *.lang
 %find_lang	knode		--with-kde
 %find_lang	knotes		--with-kde
 %find_lang	konsolekalendar	--with-kde
-%find_lang	kontact		--with-kde -a %{name}.lang
-%find_lang	korganizer	--with-kde -a %{name}.lang
+%find_lang	kontact		--with-kde
+%find_lang	korganizer	--with-kde
 %find_lang	korn		--with-kde
-%find_lang	kleopatra	--with-kde -a kmail.lang
+%find_lang	kleopatra	--with-kde
+cat kleopatra.lang >> kmail.lang
 %find_lang	kpilot		--with-kde
-%find_lang	ktnef		--with-kde -a kmail.lang
-%find_lang	kwatchgnupg	--with-kde -a kmail.lang
+%find_lang	ktnef		--with-kde
+cat ktnef.lang >> kmail.lang
+%find_lang	kwatchgnupg	--with-kde
+cat kwatchgnupg.lang >> kmail.lang
+
+> %{name}.lang
+cat akregator.lang	>> %{name}.lang
+cat kontact.lang	>> %{name}.lang
+cat korganizer.lang	>> %{name}.lang
 
 # Omit apidocs entries
-%{__sed} -i -e '/apidocs/d' *.lang
+sed -i 's/.*apidocs.*//' *.lang
+
+# remove checked files
+rm $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
+rm $RPM_BUILD_ROOT%{_iconsdir}/locolor/{16x16/apps/{ktnef,kpilot},32x32/apps/ktnef}.png
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	libs			-p /sbin/ldconfig
 %postun	libs			-p /sbin/ldconfig
-
-%post	knode			-p /sbin/ldconfig
-%postun	knode			-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -636,8 +613,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_bindir}/kode
 %attr(755,root,root) %{_bindir}/kolabwizard
-%attr(755,root,root) %{_bindir}/scalixadmin
-%attr(755,root,root) %{_bindir}/scalixwizard
 %attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kxml_compiler
 %attr(755,root,root) %{_bindir}/kitchensync
@@ -646,68 +621,124 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
 
+%{_libdir}/kde3/conduit_memofile.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_memofile.so
+%{_libdir}/kde3/conduit_notepad.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_notepad.so
+%{_libdir}/kde3/kabc_groupdav.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_groupdav.so
+%{_libdir}/kde3/kabc_groupwise.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_groupwise.so
+%{_libdir}/kde3/kabc_kolab.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_kolab.so
+%{_libdir}/kde3/kabc_newexchange.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_newexchange.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_scalix.so
+%{_libdir}/kde3/kabc_slox.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_slox.so
+%{_libdir}/kde3/kabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
+#%{_libdir}/kde3/kcal_blogging.la
+#%attr(755,root,root) %{_libdir}/kde3/kcal_blogging.so
+%{_libdir}/kde3/kcal_groupdav.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_groupdav.so
+%{_libdir}/kde3/kcal_groupwise.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_groupwise.so
+%{_libdir}/kde3/kcal_kabc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
+%{_libdir}/kde3/kcal_kolab.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_kolab.so
+%{_libdir}/kde3/kcal_local.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_local.so
+%{_libdir}/kde3/kcal_localdir.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
+%{_libdir}/kde3/kcal_newexchange.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_newexchange.so
+%{_libdir}/kde3/kcal_remote.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
+%{_libdir}/kde3/kcal_resourcefeatureplan.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_resourcefeatureplan.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_scalix.so
+%{_libdir}/kde3/kcal_slox.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_slox.so
+%{_libdir}/kde3/kcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
+#%{_libdir}/kde3/kcm_kabsummary.la
+#%attr(755,root,root) %{_libdir}/kde3/kcm_kabsummary.so
+%{_libdir}/kde3/kcm_kmailsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmailsummary.so
+%{_libdir}/kde3/kcm_kontact.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontact.so
+%{_libdir}/kde3/kcm_kontactknt.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontactknt.so
+%{_libdir}/kde3/kcm_kontactsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontactsummary.so
+%{_libdir}/kde3/kcm_korganizer.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
+%{_libdir}/kde3/kcm_korgsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_korgsummary.so
+%{_libdir}/kde3/kcm_sdsummary.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_sdsummary.so
+%{_libdir}/kde3/kded_networkstatus.la
 %attr(755,root,root) %{_libdir}/kde3/kded_networkstatus.so
+%{_libdir}/kde3/kfile_ics.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_ics.so
+%{_libdir}/kde3/libakregatorpart.la
 %attr(755,root,root) %{_libdir}/kde3/libakregatorpart.so*
+#%{_libdir}/kde3/libkded_ksharedfile.la
+#%attr(755,root,root) %{_libdir}/kde3/libkded_ksharedfile.so
+%{_libdir}/kde3/libexchangewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
+%{_libdir}/kde3/libgroupwisewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
+%{_libdir}/kde3/libakregator_mk4storage_plugin.la
 %attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
+%{_libdir}/kde3/libkitchensyncpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
+%{_libdir}/kde3/libkontact_akregator.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_akregator.so
+%{_libdir}/kde3/libkontact_journalplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
+%{_libdir}/kde3/libkontact_kaddressbookplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
+%{_libdir}/kde3/libkontact_karm.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_karm.so
+%{_libdir}/kde3/libkontact_kmailplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
+%{_libdir}/kde3/libkontact_knodeplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
+%{_libdir}/kde3/libkontact_knotesplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_knotesplugin.so
+%{_libdir}/kde3/libkontact_korganizerplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
+%{_libdir}/kde3/libkontact_todoplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
+%{_libdir}/kde3/libkontact_kpilotplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kpilotplugin.so
+%{_libdir}/kde3/libkontact_newstickerplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_newstickerplugin.so
+%{_libdir}/kde3/libkontact_specialdatesplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
+%{_libdir}/kde3/libkontact_summaryplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
+%{_libdir}/kde3/libkontact_weatherplugin.la
 %attr(755,root,root) %{_libdir}/kde3/libkontact_weatherplugin.so
+%{_libdir}/kde3/libkorg_*.la
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%{_libdir}/kde3/libkorganizerpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
+%{_libdir}/kde3/libegroupwarewizard.la
 %attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
+%{_libdir}/kde3/libkolabwizard.la
 %attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
+%{_libdir}/kde3/libsloxwizard.la
 %attr(755,root,root) %{_libdir}/kde3/libsloxwizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libscalixwizard.so
+%{_libdir}/kde3/resourcecalendarexchange.la
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
+%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kdepimwidgets.so
+%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/akregator
 %{_datadir}/apps/kconf_update/korganizer.upd
-%{_datadir}/apps/kconf_update/kolab-resource.upd
-%attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
 %{_datadir}/apps/kgantt
 %{_datadir}/apps/kitchensync
@@ -728,7 +759,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/mk4config.kcfg
 %{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
-%{_datadir}/config.kcfg/scalix.kcfg
 %{_datadir}/config.kcfg/slox.kcfg
 %{_datadir}/config.kcfg/templatesconfiguration_kfg.kcfg
 
@@ -755,7 +785,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kabc/kabc_xmlrpc.desktop
 %{_datadir}/services/kresources/kabc/kolab.desktop
 %{_datadir}/services/kresources/kabc/kabc_ox.desktop
-%{_datadir}/services/kresources/kabc/scalix.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
 %{_datadir}/services/webcal.protocol
@@ -772,7 +801,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/korganizer.desktop
 %{_desktopdir}/kde/kitchensync.desktop
 %{_desktopdir}/kde/groupwarewizard.desktop
-%{_desktopdir}/kde/kontactdcop.desktop
 %{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/*/*/*/kitchensync.png
@@ -812,7 +840,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/mimelib
 %{_includedir}/qgpgme
 %{_libdir}/libgpgme++.so
-%{_libdir}/libgwsoap.so
 %{_libdir}/libkabc_groupdav.so
 %{_libdir}/libindex.so
 %{_libdir}/libkabc_groupwise.so
@@ -820,7 +847,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkabc_slox.so
 %{_libdir}/libkabc_xmlrpc.so
 %{_libdir}/libkabckolab.so
-%{_libdir}/libkabcscalix.so
 %{_libdir}/libkabinterfaces.so
 %{_libdir}/libkaddressbook.so
 %{_libdir}/libkcal.so
@@ -832,7 +858,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkcal_slox.so
 %{_libdir}/libkcal_xmlrpc.so
 %{_libdir}/libkcalkolab.so
-%{_libdir}/libkcalscalix.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
 %{_libdir}/libkgroupwarebase.so
@@ -843,7 +868,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkmime.so
 %{_libdir}/libknotes_xmlrpc.so
 %{_libdir}/libknoteskolab.so
-%{_libdir}/libknotesscalix.so
 %{_libdir}/libkocorehelper.so
 %{_libdir}/libkode.so
 %{_libdir}/libkontact.so
@@ -857,13 +881,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkpimidentities.so
 %{_libdir}/libkpinterfaces.so
 %{_libdir}/libksieve.so
-%{_libdir}/libkslox.so
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
 %{_libdir}/libqgpgme.so
-%{_libdir}/libqopensync.so
-
-%{_libdir}/*.la
 
 %if %{with apidocs}
 %files apidocs
@@ -873,40 +893,48 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n kde-kio-imap4
 %defattr(644,root,root,755)
+%{_libdir}/kde3/kio_imap4.la
 %attr(755,root,root) %{_libdir}/kde3/kio_imap4.so
 %{_datadir}/services/imap4.protocol
 %{_datadir}/services/imaps.protocol
 
 %files -n kde-kio-groupwise
 %defattr(644,root,root,755)
+%{_libdir}/kde3/kio_groupwise.la
 %attr(755,root,root) %{_libdir}/kde3/kio_groupwise.so
 %{_datadir}/config.kcfg/groupwise.kcfg
 %{_datadir}/services/groupwise.protocol
 %{_datadir}/services/groupwises.protocol
 
-%files -n kde-kio-scalix
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/kde3/kio_scalix.so
-%{_datadir}/services/scalix.protocol
-%{_datadir}/services/scalixs.protocol
-
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
+%{_libdir}/kde3/kcm_kabconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
+%{_libdir}/kde3/kcm_kabcustomfields.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabcustomfields.so
+%{_libdir}/kde3/kcm_kabldapconfig.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kabldapconfig.so
+%{_libdir}/kde3/kfile_vcf.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
+%{_libdir}/kde3/ldifvcardthumbnail.la
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
+%{_libdir}/kde3/libkaddrbk_cardview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
+%{_libdir}/kde3/libkaddrbk_cryptosettings.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cryptosettings.so
+%{_libdir}/kde3/libkaddrbk_distributionlist.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlistng.so
+%{_libdir}/kde3/libkaddrbk_iconview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
+%{_libdir}/kde3/libkaddrbk_resourceselection.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_resourceselection.so
+%{_libdir}/kde3/libkaddrbk_tableview.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_tableview.so
+%{_libdir}/kde3/libkaddrbk_*_xxport.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_*_xxport.so
+%{_libdir}/kde3/libkaddressbookpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
 %{_datadir}/services/kabconfig.desktop
@@ -930,8 +958,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart/kalarm*.desktop
 %{_desktopdir}/kde/kalarm.desktop
-%{_iconsdir}/crystalsvg/*/*/kalarm.png
-%{_iconsdir}/hicolor/*/*/kalarm.png
+%{_iconsdir}/[!l]*/*/*/kalarm.png
 
 %files kandy -f kandy.lang
 %defattr(644,root,root,755)
@@ -943,6 +970,7 @@ rm -rf $RPM_BUILD_ROOT
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
+%{_libdir}/kde3/libkarmpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkarmpart.so
 %{_datadir}/apps/karm
 %{_datadir}/apps/karmpart
@@ -960,18 +988,25 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
+%{_libdir}/kde3/kcm_kmail.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
+%{_libdir}/kde3/kcm_kleopatra.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kleopatra.so
+%{_libdir}/kde3/libkmail_bodypartformatter_application_octetstream.la
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_application_octetstream.so
+%{_libdir}/kde3/libkmail_bodypartformatter_text_calendar.la
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_calendar.so
+%{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.la
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.so
+%{_libdir}/kde3/libkmail_bodypartformatter_text_xdiff.la
 %attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_xdiff.so
+%{_libdir}/kde3/libkmailpart.la
 %attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
-%{_datadir}/apps/kconf_update/kmail.upd
-%{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.sh
+%{_datadir}/apps/kconf_update/kmail.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp-3.1-upgrade-address-data.pl
+%attr(755,root,root) %{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-signature.pl
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-transport.pl
 %{_datadir}/apps/kleopatra
@@ -1005,9 +1040,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/gpg.png
 %{_iconsdir}/*/*/apps/gpgsm.png
 # kio-mbox
+%{_libdir}/kde3/kio_mbox.la
 %attr(755,root,root) %{_libdir}/kde3/kio_mbox.so
 %{_datadir}/services/mbox.protocol
 # kio-sieve
+%{_libdir}/kde3/kio_sieve.la
 %attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
 %{_datadir}/services/sieve.protocol
 # ktnef
@@ -1016,11 +1053,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
+#%{_mandir}/man1/ktnef*.1*
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
+%{_libdir}/kde3/kcm_knode.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
+%{_libdir}/kde3/libknodepart.la
 %attr(755,root,root) %{_libdir}/kde3/libknodepart.so*
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
@@ -1038,9 +1078,11 @@ rm -rf $RPM_BUILD_ROOT
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
+%{_libdir}/kde3/knotes_kolab.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_kolab.so
+%{_libdir}/kde3/knotes_local.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_local.so
-%attr(755,root,root) %{_libdir}/kde3/knotes_scalix.so
+%{_libdir}/kde3/knotes_xmlrpc.la
 %attr(755,root,root) %{_libdir}/kde3/knotes_xmlrpc.so
 %{_datadir}/apps/knotes
 %{_datadir}/config.kcfg/knoteconfig.kcfg
@@ -1048,7 +1090,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/services/kresources/knotes
 %{_datadir}/services/kresources/knotes/imap.desktop
 %{_datadir}/services/kresources/knotes/local.desktop
-%{_datadir}/services/kresources/knotes/scalix.desktop
 %{_datadir}/services/kresources/knotes/knotes_xmlrpc.desktop
 %{_datadir}/services/kresources/knotes/kolabresource.desktop
 %{_datadir}/services/kresources/knotes_manager.desktop
@@ -1064,8 +1105,8 @@ rm -rf $RPM_BUILD_ROOT
 %files korn -f korn.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korn
+%{_libdir}/kconf_update_bin/korn-3-4-config_change
 %{_datadir}/apps/kconf_update/korn-*.upd
-%attr(755,root,root) %{_libdir}/kconf_update_bin/korn-3-4-config_change
 %attr(755,root,root) %{_datadir}/apps/kconf_update/korn-3-5*.pl
 %{_desktopdir}/kde/KOrn.desktop
 %{_iconsdir}/*/*/*/korn.png
@@ -1074,16 +1115,27 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
+%{_libdir}/kde3/conduit_address.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_address.so
+%{_libdir}/kde3/conduit_doc.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_doc.so
+%{_libdir}/kde3/conduit_knotes.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_knotes.so
+%{_libdir}/kde3/conduit_popmail.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_popmail.so
+%{_libdir}/kde3/conduit_mal.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_mal.so
+%{_libdir}/kde3/conduit_sysinfo.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_sysinfo.so
+%{_libdir}/kde3/conduit_time.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_time.so
+%{_libdir}/kde3/conduit_todo.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_todo.so
+%{_libdir}/kde3/conduit_vcal.la
 %attr(755,root,root) %{_libdir}/kde3/conduit_vcal.so
+%{_libdir}/kde3/kcm_kpilot.la
 %attr(755,root,root) %{_libdir}/kde3/kcm_kpilot.so
+%{_libdir}/kde3/kfile_palm.la
 %attr(755,root,root) %{_libdir}/kde3/kfile_palm.so
 %{_datadir}/apps/kconf_update/kpalmdoc.upd
 %{_datadir}/apps/kconf_update/kpilot.upd
@@ -1106,117 +1158,114 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/kpalmdoc.desktop
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
-%{_iconsdir}/hicolor/*/*/kpilot.png
-%{_iconsdir}/crystalsvg/*/*/kpilotDaemon.png
+%{_iconsdir}/[!l]*/*/*/kpilot*.png
 
 %files libs
 %defattr(644,root,root,755)
+%{_libdir}/libakregatorprivate.la
 %attr(755,root,root) %{_libdir}/libakregatorprivate.so
+%{_libdir}/libindex.la
 %attr(755,root,root) %{_libdir}/libindex.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libindex.so.0
+%{_libdir}/libgpgme++.la
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgpgme++.so.0
+%{_libdir}/libgwsoap.la
 %attr(755,root,root) %{_libdir}/libgwsoap.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgwsoap.so.0
+%{_libdir}/libkaddressbook.la
 %attr(755,root,root) %{_libdir}/libkaddressbook.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkaddressbook.so.0
+%{_libdir}/libkabc_groupdav.la
 %attr(755,root,root) %{_libdir}/libkabc_groupdav.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabc_groupdav.so.1
+%{_libdir}/libkabc_groupwise.la
 %attr(755,root,root) %{_libdir}/libkabc_groupwise.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabc_groupwise.so.1
+%{_libdir}/libkabc_newexchange.la
 %attr(755,root,root) %{_libdir}/libkabc_newexchange.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabc_newexchange.so.1
+%{_libdir}/libkabc_slox.la
 %attr(755,root,root) %{_libdir}/libkabc_slox.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabc_slox.so.0
+%{_libdir}/libkabc_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkabc_xmlrpc.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabc_xmlrpc.so.1
+%{_libdir}/libkabckolab.la
 %attr(755,root,root) %{_libdir}/libkabckolab.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabckolab.so.0
-%attr(755,root,root) %{_libdir}/libkabcscalix.so.0.0.0
-%attr(755,root,root) %ghost %{_libdir}/libkabcscalix.so.0
+%{_libdir}/libkabinterfaces.la
 %attr(755,root,root) %{_libdir}/libkabinterfaces.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkabinterfaces.so.1
+%{_libdir}/libkcal.la
 %attr(755,root,root) %{_libdir}/libkcal.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal.so.2
+#%{_libdir}/libkcal_blogging.la
+#%attr(755,root,root) %{_libdir}/libkcal_blogging.so.*.*.*
+%{_libdir}/libkcal_groupdav.la
 %attr(755,root,root) %{_libdir}/libkcal_groupdav.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_groupdav.so.1
+%{_libdir}/libkcal_groupwise.la
 %attr(755,root,root) %{_libdir}/libkcal_groupwise.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_groupwise.so.1
+%{_libdir}/libkcal_newexchange.la
 %attr(755,root,root) %{_libdir}/libkcal_newexchange.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_newexchange.so.1
+%{_libdir}/libkcal_resourcefeatureplan.la
 %attr(755,root,root) %{_libdir}/libkcal_resourcefeatureplan.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_resourcefeatureplan.so.1
+%{_libdir}/libkcal_resourceremote.la
 %attr(755,root,root) %{_libdir}/libkcal_resourceremote.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_resourceremote.so.1
+%{_libdir}/libkcal_slox.la
 %attr(755,root,root) %{_libdir}/libkcal_slox.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_slox.so.0
+%{_libdir}/libkcal_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libkcal_xmlrpc.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcal_xmlrpc.so.1
+%{_libdir}/libkcalkolab.la
 %attr(755,root,root) %{_libdir}/libkcalkolab.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcalkolab.so.0
-%attr(755,root,root) %{_libdir}/libkcalscalix.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkcalscalix.so.0
+%{_libdir}/libkdepim.la
 %attr(755,root,root) %{_libdir}/libkdepim.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkdepim.so.1
+%{_libdir}/libkgantt.la
 %attr(755,root,root) %{_libdir}/libkgantt.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkgantt.so.0
+%{_libdir}/libkgroupwarebase.la
 %attr(755,root,root) %{_libdir}/libkgroupwarebase.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkgroupwarebase.so.0
+%{_libdir}/libkgroupwaredav.la
 %attr(755,root,root) %{_libdir}/libkgroupwaredav.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkgroupwaredav.so.0
+%{_libdir}/libkholidays.la
 %attr(755,root,root) %{_libdir}/libkholidays.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkholidays.so.1
+%{_libdir}/libkitchensync.la
 %attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
+%{_libdir}/libkleopatra.la
 %attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkleopatra.so.1
+%{_libdir}/libkmailprivate.la
 %attr(755,root,root) %{_libdir}/libkmailprivate.so
+%{_libdir}/libkmime.la
 %attr(755,root,root) %{_libdir}/libkmime.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkmime.so.2
-%attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libknodecommon.so.3
+%{_libdir}/libknodecommon.la
+%attr(755,root,root) %{_libdir}/libknodecommon.so
+%{_libdir}/libknotes_xmlrpc.la
 %attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libknotes_xmlrpc.so.1
+%{_libdir}/libknoteskolab.la
 %attr(755,root,root) %{_libdir}/libknoteskolab.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libknoteskolab.so.0
-%attr(755,root,root) %{_libdir}/libknotesscalix.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libknotesscalix.so.0
+%{_libdir}/libkocorehelper.la
 %attr(755,root,root) %{_libdir}/libkocorehelper.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkocorehelper.so.1
+%{_libdir}/libkode.la
 %attr(755,root,root) %{_libdir}/libkode.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkode.so.1
+%{_libdir}/libkontact.la
 %attr(755,root,root) %{_libdir}/libkontact.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkontact.so.1
+%{_libdir}/libkorg_stdprinting.la
 %attr(755,root,root) %{_libdir}/libkorg_stdprinting.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorg_stdprinting.so.1
+%{_libdir}/libkorganizer.la
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer.so.1
+%{_libdir}/libkorganizer_calendar.la
 %attr(755,root,root) %{_libdir}/libkorganizer_calendar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer_calendar.so.1
+%{_libdir}/libkorganizer_eventviewer.la
 %attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer_eventviewer.so.1
+%{_libdir}/libkpgp.la
 %attr(755,root,root) %{_libdir}/libkpgp.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpgp.so.2
+%{_libdir}/libkpilot.la
 %attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpilot.so.0
+%{_libdir}/libkpimexchange.la
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpimexchange.so.1
+%{_libdir}/libkpimidentities.la
 %attr(755,root,root) %{_libdir}/libkpimidentities.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpimidentities.so.1
+%{_libdir}/libkpinterfaces.la
 %attr(755,root,root) %{_libdir}/libkpinterfaces.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpinterfaces.so.1
+%{_libdir}/libksieve.la
 %attr(755,root,root) %{_libdir}/libksieve.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libksieve.so.0
+%{_libdir}/libkslox.la
 %attr(755,root,root) %{_libdir}/libkslox.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkslox.so.0
+%{_libdir}/libktnef.la
 %attr(755,root,root) %{_libdir}/libktnef.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libktnef.so.1
+%{_libdir}/libmimelib.la
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libmimelib.so.1
+%{_libdir}/libqopensync.la
 %attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
+%{_libdir}/libqgpgme.la
 %attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqgpgme.so.0
 %{_datadir}/apps/libical
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
