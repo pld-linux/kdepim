@@ -1,0 +1,10 @@
+--- kdepim-3.5.8/kmail/templatesconfiguration.cpp~	2007-01-15 13:28:46.000000000 +0200
++++ kdepim-3.5.8/kmail/templatesconfiguration.cpp	2007-10-17 12:50:25.008102324 +0300
+@@ -541,6 +541,7 @@
+     "Date: %ODATE\n"
+     "From: %OFROMADDR\n"
+     "To: %OTOADDR\n"
++    "Cc: %OCCADDR\n"
+     "\n"
+     "%TEXT\n"
+     "-------------------------------------------------------\n"
