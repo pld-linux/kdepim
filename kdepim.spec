@@ -16,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.9
-Release:	7
+Release:	8
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -49,7 +49,7 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
-BuildRequires:	libopensync-devel >= 1:0.22
+BuildRequires:	libopensync02-devel >= 1:0.22
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
