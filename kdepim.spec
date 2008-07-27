@@ -16,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.9
-Release:	8
+Release:	9
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -903,7 +903,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cryptosettings.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so*
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlistng.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_resourceselection.so
