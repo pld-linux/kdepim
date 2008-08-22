@@ -15,13 +15,13 @@ Summary(pl.UTF-8):	Zarządca informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.9
-Release:	2
+Version:	3.5.10
+Release:	1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
 Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	ba27b06599556c572a26f03608471ee2
+# Source0-md5:	fc93e458a8eec8131ede56cff30c28b2
 #Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -31,6 +31,7 @@ Patch4:		%{name}-kmail-toolbar.patch
 Patch5:		%{name}-kmail-pld-linux.patch
 Patch6:		%{name}-kmail-gpgme_passphrase_cb.patch
 Patch7:		%{name}-kmail-templatesconfiguration.patch
+Patch8:		%{name}-sparc64.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -57,6 +58,7 @@ BuildRequires:	pilot-link-devel >= 0.12.1
 BuildRequires:	qt-designer-libs
 %{?with_hidden_visibility:BuildRequires:	qt-devel >= 6:3.3.5.051113-1}
 %{?with_apidocs:BuildRequires:	qt-doc}
+BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(find_lang) >= 1.32
 BuildRequires:	rpmbuild(macros) >= 1.129
 BuildRequires:	zlib-devel
@@ -507,6 +509,7 @@ libksieve, libmimelib.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
@@ -901,7 +904,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cryptosettings.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so
+%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so*
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlistng.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
 %attr(755,root,root) %{_libdir}/kde3/libkaddrbk_resourceselection.so
