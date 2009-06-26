@@ -1,7 +1,7 @@
 Index: akregator/src/mk4storage/akregator_mk4storage_plugin.desktop
 ===================================================================
---- akregator/src/mk4storage/akregator_mk4storage_plugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ akregator/src/mk4storage/akregator_mk4storage_plugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- akregator/src/mk4storage/akregator_mk4storage_plugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ akregator/src/mk4storage/akregator_mk4storage_plugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -83,7 +83,7 @@
  Comment[nn]=Programtillegg til Akregator
  Comment[pl]=Wtyczka dla Akregatora
@@ -13,8 +13,8 @@ Index: akregator/src/mk4storage/akregator_mk4storage_plugin.desktop
  Comment[sk]=Modul pre Akregator
 Index: akregator/src/akregator_plugin.desktop
 ===================================================================
---- akregator/src/akregator_plugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ akregator/src/akregator_plugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- akregator/src/akregator_plugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ akregator/src/akregator_plugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -39,7 +39,7 @@
  Comment[nn]=Programtillegg til Akregator
  Comment[pl]=Wtyczka dla Akregatora
@@ -26,8 +26,8 @@ Index: akregator/src/akregator_plugin.desktop
  Comment[sk]=Modul pre Akregator
 Index: wizards/groupwarewizard.desktop
 ===================================================================
---- wizards/groupwarewizard.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ wizards/groupwarewizard.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- wizards/groupwarewizard.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ wizards/groupwarewizard.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -34,7 +34,7 @@
  Name[nn]=KDE-vegvisar for gruppevare
  Name[pl]=Asystent KDE Groupware
@@ -39,8 +39,8 @@ Index: wizards/groupwarewizard.desktop
  Name[sl]=Čarovnik za KDE Groupware
 Index: kresources/scalix/kabc/scalix.desktop
 ===================================================================
---- kresources/scalix/kabc/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kresources/scalix/kabc/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kresources/scalix/kabc/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kresources/scalix/kabc/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -5,6 +5,7 @@
  Name[da]=Adressebog på Scalix-server via KMail
  Name[de]=Adressbuch auf einem Scalix-Server via KMail
@@ -51,8 +51,8 @@ Index: kresources/scalix/kabc/scalix.desktop
  Name[is]=Vistfangaskrá á Scalix-þjóni gegnum KMail
 Index: kresources/scalix/knotes/scalix.desktop
 ===================================================================
---- kresources/scalix/knotes/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kresources/scalix/knotes/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kresources/scalix/knotes/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kresources/scalix/knotes/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -5,6 +5,7 @@
  Name[da]=Noter på Scalix-server via KMail
  Name[de]=Notizen auf einem Scalix-Server via KMail
@@ -63,8 +63,8 @@ Index: kresources/scalix/knotes/scalix.desktop
  Name[is]=Minnismiðar á Scalix-þjóni gegnum KMail
 Index: kresources/scalix/kcal/scalix.desktop
 ===================================================================
---- kresources/scalix/kcal/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kresources/scalix/kcal/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kresources/scalix/kcal/scalix.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kresources/scalix/kcal/scalix.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -5,6 +5,7 @@
  Name[da]=Kalender på Scalix-server via KMail
  Name[de]=Kalender auf einem Scalix-Server via KMail
@@ -81,10 +81,23 @@ Index: kresources/scalix/kcal/scalix.desktop
  Name[ru]=Календарь на сервере Scalix через KMail
  Name[sk]=Kalendár na Scalix serveri pomocou KMail
  Name[sr]=Календар на Scalix серверу преко KMail-а
+Index: certmanager/lib/backends/qgpgme/qgpgmebackend.cpp
+===================================================================
+--- certmanager/lib/backends/qgpgme/qgpgmebackend.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ certmanager/lib/backends/qgpgme/qgpgmebackend.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
+@@ -54,7 +54,7 @@
+     mOpenPGPProtocol( 0 ),
+     mSMIMEProtocol( 0 )
+ {
+-
++  GpgME::initializeLibrary();
+ }
+ 
+ Kleo::QGpgMEBackend::~QGpgMEBackend() {
 Index: libkmime/kmime_util.cpp
 ===================================================================
---- libkmime/kmime_util.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkmime/kmime_util.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkmime/kmime_util.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkmime/kmime_util.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -195,8 +195,10 @@
            {
              str = KCodecs::base64Decode(str);
@@ -100,8 +113,8 @@ Index: libkmime/kmime_util.cpp
  
 Index: kmail/editorwatcher.cpp
 ===================================================================
---- kmail/editorwatcher.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/editorwatcher.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/editorwatcher.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/editorwatcher.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -32,8 +32,12 @@
  #include <cassert>
  
@@ -118,8 +131,8 @@ Index: kmail/editorwatcher.cpp
  #include <sys/syscall.h>
 Index: kmail/kmail_config_composer.desktop
 ===================================================================
---- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/kmail_config_composer.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/kmail_config_composer.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -71,6 +71,7 @@
  Comment[da]=Skabeloner & Generel opførsel
  Comment[de]=Vorlagen und allgemeines Verhalten
@@ -130,8 +143,8 @@ Index: kmail/kmail_config_composer.desktop
  Comment[et]=Mallid ja üldine käitumine
 Index: kmail/kmcommands.cpp
 ===================================================================
---- kmail/kmcommands.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/kmcommands.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/kmcommands.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -2414,7 +2414,8 @@
          .arg( mUrl.prettyURL() ), QString::null, i18n("Execute"), KStdGuiItem::cancel() ) != KMessageBox::Yes)
          return Canceled;
@@ -144,8 +157,8 @@ Index: kmail/kmcommands.cpp
      return Failed;
 Index: kmail/kmfoldercachedimap.h
 ===================================================================
---- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/kmfoldercachedimap.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/kmfoldercachedimap.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -213,8 +213,11 @@
    void setSilentUpload( bool silent ) { mSilentUpload = silent; }
    bool silentUpload() { return mSilentUpload; }
@@ -162,8 +175,8 @@ Index: kmail/kmfoldercachedimap.h
  
 Index: kmail/configure.in.in
 ===================================================================
---- kmail/configure.in.in	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/configure.in.in	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -57,8 +57,30 @@
    AC_LANG_RESTORE
    ])
@@ -198,8 +211,8 @@ Index: kmail/configure.in.in
      AC_MSG_RESULT(no)
 Index: kmail/accountmanager.cpp
 ===================================================================
---- kmail/accountmanager.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/accountmanager.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/accountmanager.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/accountmanager.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -7,6 +7,7 @@
  #include "accountmanager.h"
  
@@ -222,8 +235,8 @@ Index: kmail/accountmanager.cpp
    }
 Index: kmail/kmfoldertree.cpp
 ===================================================================
---- kmail/kmfoldertree.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kmail/kmfoldertree.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kmail/kmfoldertree.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kmail/kmfoldertree.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -432,6 +432,9 @@
    connect(kmkernel->acctMgr(), SIGNAL(accountRemoved(KMAccount*)),
            this, SLOT(slotAccountRemoved(KMAccount*)));
@@ -236,8 +249,8 @@ Index: kmail/kmfoldertree.cpp
  
 Index: kioslaves/sieve/sieve.cpp
 ===================================================================
---- kioslaves/sieve/sieve.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kioslaves/sieve/sieve.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kioslaves/sieve/sieve.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kioslaves/sieve/sieve.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1290,7 +1290,7 @@
      const int minor = regExp.cap( 2 ).toInt();
      const int patch = regExp.cap( 3 ).toInt();
@@ -247,10 +260,51 @@ Index: kioslaves/sieve/sieve.cpp
        ksDebug() << k_funcinfo << "Enabling compat mode for Cyrus < 2.3.11 or Cyrus marked as \"kolab-nocaps\"" << endl;
        return true;
      }
+Index: libkdenetwork/gpgmepp/context.cpp
+===================================================================
+--- libkdenetwork/gpgmepp/context.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkdenetwork/gpgmepp/context.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
+@@ -53,6 +53,10 @@
+ 
+ namespace GpgME {
+ 
++  void initializeLibrary() {
++    gpgme_check_version( 0 );
++  }
++
+   const char * Error::source() const {
+     return gpgme_strsource( (gpgme_error_t)mErr );
+   }
+Index: libkdenetwork/gpgmepp/Makefile.am
+===================================================================
+--- libkdenetwork/gpgmepp/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkdenetwork/gpgmepp/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 987532)
+@@ -46,7 +46,7 @@
+ #   (Interfaces added/removed/changed:  CURRENT++, REVISION=0)
+ #   (Interfaces added:                  AGE++)
+ #   (Interfaces removed/changed:        AGE=0)
+-libgpgme___la_LDFLAGS = -no-undefined -version-info 3:0:3
++libgpgme___la_LDFLAGS = -no-undefined -version-info 4:0:4
+ libgpgme___la_LIBADD = $(GPGME_LIBS)
+ libgpgme___la_DEPENDENCIES = $(GPGME_LIBS_DEP)
+ 
+Index: libkdenetwork/gpgmepp/context.h
+===================================================================
+--- libkdenetwork/gpgmepp/context.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkdenetwork/gpgmepp/context.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
+@@ -287,6 +287,8 @@
+   //
+   //
+ 
++  KDE_EXPORT void initializeLibrary();
++
+   KDE_EXPORT GpgME::Error setDefaultLocale( int category, const char * value );
+ 
+   KDE_EXPORT Context * wait( GpgME::Error & e, bool hang=true );
 Index: kalarm/alarmevent.cpp
 ===================================================================
---- kalarm/alarmevent.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/alarmevent.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/alarmevent.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/alarmevent.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  alarmevent.cpp  -  represents calendar alarms and events
@@ -290,8 +344,8 @@ Index: kalarm/alarmevent.cpp
  /******************************************************************************
 Index: kalarm/messagewin.cpp
 ===================================================================
---- kalarm/messagewin.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/messagewin.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/messagewin.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  messagewin.cpp  -  displays an alarm message
@@ -385,8 +439,8 @@ Index: kalarm/messagewin.cpp
  * Gets the mime type of a text file from not only its extension (as per
 Index: kalarm/templatepickdlg.cpp
 ===================================================================
---- kalarm/templatepickdlg.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/templatepickdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/templatepickdlg.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/templatepickdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  templatepickdlg.cpp  -  dialogue to choose an alarm template
@@ -408,8 +462,8 @@ Index: kalarm/templatepickdlg.cpp
  	slotSelectionChanged();        // enable or disable the OK button
 Index: kalarm/editdlg.cpp
 ===================================================================
---- kalarm/editdlg.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/editdlg.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/editdlg.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1522,7 +1522,8 @@
  	bool limit = true;
  	int repeatInterval;
@@ -422,8 +476,8 @@ Index: kalarm/editdlg.cpp
  		if (!mExpiredRecurrence)
 Index: kalarm/functions.h
 ===================================================================
---- kalarm/functions.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/functions.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/functions.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  functions.h  -  miscellaneous functions
@@ -443,8 +497,8 @@ Index: kalarm/functions.h
  int                 localeFirstDayOfWeek();
 Index: kalarm/kalarm.h
 ===================================================================
---- kalarm/kalarm.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/kalarm.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/kalarm.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -26,7 +26,7 @@
  #include <config.h>
  #endif
@@ -456,8 +510,8 @@ Index: kalarm/kalarm.h
  #include <kdeversion.h>
 Index: kalarm/Changelog
 ===================================================================
---- kalarm/Changelog	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/Changelog	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/Changelog	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,6 +1,23 @@
  KAlarm Change Log
  
@@ -485,8 +539,8 @@ Index: kalarm/Changelog
  - Expand font selection control when dialogue is expanded.
 Index: kalarm/kalarmapp.cpp
 ===================================================================
---- kalarm/kalarmapp.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/kalarmapp.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/kalarmapp.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/kalarmapp.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  kalarmapp.cpp  -  the KAlarm application object
@@ -512,8 +566,8 @@ Index: kalarm/kalarmapp.cpp
  			break;
 Index: kalarm/lib/spinbox.cpp
 ===================================================================
---- kalarm/lib/spinbox.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/lib/spinbox.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/lib/spinbox.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/lib/spinbox.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  spinbox.cpp  -  spin box with read-only option and shift-click step value
@@ -693,8 +747,8 @@ Index: kalarm/lib/spinbox.cpp
  		if (adjust)
 Index: kalarm/lib/spinbox2private.h
 ===================================================================
---- kalarm/lib/spinbox2private.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/lib/spinbox2private.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/lib/spinbox2private.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/lib/spinbox2private.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  spinbox2private.h  -  private classes for SpinBox2 (for Qt 3)
@@ -737,8 +791,8 @@ Index: kalarm/lib/spinbox2private.h
  		bool         mReadOnly;       // value cannot be changed
 Index: kalarm/lib/spinbox2.cpp
 ===================================================================
---- kalarm/lib/spinbox2.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/lib/spinbox2.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/lib/spinbox2.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/lib/spinbox2.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  spinbox2.cpp  -  spin box with extra pair of spin buttons (for Qt 3)
@@ -868,8 +922,8 @@ Index: kalarm/lib/spinbox2.cpp
  
 Index: kalarm/lib/dateedit.cpp
 ===================================================================
---- kalarm/lib/dateedit.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/lib/dateedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/lib/dateedit.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/lib/dateedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -61,11 +61,13 @@
  		{
  			pastLimitMessage(mMinDate, mMinDateErrString,
@@ -886,8 +940,8 @@ Index: kalarm/lib/dateedit.cpp
  }
 Index: kalarm/lib/spinbox.h
 ===================================================================
---- kalarm/lib/spinbox.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/lib/spinbox.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/lib/spinbox.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/lib/spinbox.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  spinbox.h  -  spin box with shift-click step value and read-only option
@@ -908,8 +962,8 @@ Index: kalarm/lib/spinbox.h
  
 Index: kalarm/recurrenceedit.cpp
 ===================================================================
---- kalarm/recurrenceedit.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/recurrenceedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/recurrenceedit.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/recurrenceedit.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1224,11 +1224,7 @@
  DailyRule::DailyRule(bool readOnly, QWidget* parent, const char* name)
  	: DayWeekRule(i18n("day(s)"),
@@ -924,8 +978,8 @@ Index: kalarm/recurrenceedit.cpp
  
 Index: kalarm/functions.cpp
 ===================================================================
---- kalarm/functions.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/functions.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/functions.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  functions.cpp  -  miscellaneous functions
@@ -1046,8 +1100,8 @@ Index: kalarm/functions.cpp
 +#endif // HAVE_XTEST
 Index: kalarm/alarmcalendar.cpp
 ===================================================================
---- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/alarmcalendar.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/alarmcalendar.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,7 +1,7 @@
  /*
   *  alarmcalendar.cpp  -  KAlarm calendar file access
@@ -1101,8 +1155,8 @@ Index: kalarm/alarmcalendar.cpp
  		Event* e = *it;
 Index: kalarm/Makefile.am
 ===================================================================
---- kalarm/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kalarm/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kalarm/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kalarm/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -33,7 +33,7 @@
  	$(top_builddir)/kalarm/kalarmd/libkalarmd.la \
  	$(top_builddir)/libkdepim/libkdepim.la \
@@ -1114,8 +1168,8 @@ Index: kalarm/Makefile.am
  	editdlg.h editdlgprivate.h emailidcombo.h eventlistviewbase.h find.h \
 Index: kaddressbook/xxport/vcard_xxport.desktop
 ===================================================================
---- kaddressbook/xxport/vcard_xxport.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kaddressbook/xxport/vcard_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kaddressbook/xxport/vcard_xxport.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kaddressbook/xxport/vcard_xxport.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -37,7 +37,7 @@
  Name[nn]=KAB vCard XXPort programtillegg
  Name[pl]=Wtyczka KAB do importu/eksportu z/do formatu vCard
@@ -1127,8 +1181,8 @@ Index: kaddressbook/xxport/vcard_xxport.desktop
  Name[sl]=Vstavek KAB vCard XXPort
 Index: kaddressbook/features/distributionlistng.desktop
 ===================================================================
---- kaddressbook/features/distributionlistng.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kaddressbook/features/distributionlistng.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kaddressbook/features/distributionlistng.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kaddressbook/features/distributionlistng.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -6,6 +6,7 @@
  Name[da]=Næste generations-plugin til KAB-Distribution-liste
  Name[de]=Verteilerlisten-Modul für neues Adressbuch
@@ -1139,8 +1193,8 @@ Index: kaddressbook/features/distributionlistng.desktop
  Name[is]=Næstu kynslóðar íforrit fyrir KAB dreifilista
 Index: Makefile.am.in
 ===================================================================
---- Makefile.am.in	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ Makefile.am.in	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- Makefile.am.in	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ Makefile.am.in	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -38,6 +38,7 @@
  COMPILE_BEFORE_akregator = libkdepim
  COMPILE_BEFORE_knotes = libkdepim
@@ -1151,8 +1205,8 @@ Index: Makefile.am.in
  DISTCLEANFILES = inst-apps
 Index: libkholidays/holidays/holiday_ja
 ===================================================================
---- libkholidays/holidays/holiday_ja	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/holiday_ja	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/holiday_ja	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/holiday_ja	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1,80 +0,0 @@
 -:
 -: Japanese holiday file. Copy to ~/.holiday
@@ -1237,7 +1291,7 @@ Index: libkholidays/holidays/holiday_ja
 Index: libkholidays/holidays/holiday_jp
 ===================================================================
 --- libkholidays/holidays/holiday_jp	(.../tags/KDE/3.5.10/kdepim)	(revision 0)
-+++ libkholidays/holidays/holiday_jp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
++++ libkholidays/holidays/holiday_jp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -0,0 +1,80 @@
 +:
 +: Japanese holiday file. Copy to ~/.holiday
@@ -1328,8 +1382,8 @@ Added: svn:mergeinfo
 
 Index: libkholidays/holidays/holiday_pl
 ===================================================================
---- libkholidays/holidays/holiday_pl	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/holiday_pl	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/holiday_pl	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/holiday_pl	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -2,36 +2,37 @@
  : sob kwi 10 15:47:14 CEST 1999
  : by Krzysztof P. Jasiutowicz <kpjas@promail.pl>
@@ -1389,8 +1443,8 @@ Index: libkholidays/holidays/holiday_pl
  "Początek wiosny" on march 21
 Index: libkholidays/holidays/holiday_ru
 ===================================================================
---- libkholidays/holidays/holiday_ru	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/holiday_ru	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/holiday_ru	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/holiday_ru	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -106,6 +106,6 @@
  blue 	"День Конституции Российской Федерации" on 12.12
  blue 	"День Ракетных войск стратегического назначения" on 17.12
@@ -1401,8 +1455,8 @@ Index: libkholidays/holidays/holiday_ru
  blue 	"День спасателя Российской Федерации" on 27.12
 Index: libkholidays/holidays/holiday_ar
 ===================================================================
---- libkholidays/holidays/holiday_ar	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/holiday_ar	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/holiday_ar	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/holiday_ar	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -7,6 +7,7 @@
  : Related national laws
  : http://www.uncu.edu.ar/contenido/skins/unc/download/Ley%2023555.pdf
@@ -1425,8 +1479,8 @@ Index: libkholidays/holidays/holiday_ar
  
 Index: libkholidays/holidays/holiday_se
 ===================================================================
---- libkholidays/holidays/holiday_se	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/holiday_se	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/holiday_se	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/holiday_se	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -23,8 +23,8 @@
  :Before 2005
  :black "Nationaldagen" black on 6.6
@@ -1440,8 +1494,8 @@ Index: libkholidays/holidays/holiday_se
  black "1. Advent" on sunday before 24.12 minus 21 days
 Index: libkholidays/holidays/Makefile.am
 ===================================================================
---- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkholidays/holidays/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkholidays/holidays/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -8,7 +8,7 @@
                  holiday_ch holiday_cz holiday_de holiday_dk holiday_ee \
                  holiday_es holiday_fi holiday_fr holiday_frswiss holiday_gb \
@@ -1453,8 +1507,8 @@ Index: libkholidays/holidays/Makefile.am
                  holiday_no holiday_nz holiday_pl holiday_pt holiday_py \
 Index: configure.in.in
 ===================================================================
---- configure.in.in	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- configure.in.in	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ configure.in.in	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -11,6 +11,12 @@
  if test "$x_includes" != "NONE"; then
    AC_DEFINE(HAVE_X11_HEADERS,1,Define if you have X11 header files)
@@ -1471,7 +1525,7 @@ Index: configure.in.in
 Index: kabc/kabcdistlistupdater/kabcdistlistupdater.cpp
 ===================================================================
 --- kabc/kabcdistlistupdater/kabcdistlistupdater.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 0)
-+++ kabc/kabcdistlistupdater/kabcdistlistupdater.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
++++ kabc/kabcdistlistupdater/kabcdistlistupdater.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -0,0 +1,95 @@
 +/*
 +    This file is part of libkabc.
@@ -1571,7 +1625,7 @@ Index: kabc/kabcdistlistupdater/kabcdistlistupdater.cpp
 Index: kabc/kabcdistlistupdater/Makefile.am
 ===================================================================
 --- kabc/kabcdistlistupdater/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 0)
-+++ kabc/kabcdistlistupdater/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 958029)
++++ kabc/kabcdistlistupdater/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -0,0 +1,12 @@
 +INCLUDES = -I$(includedir)/kabc -I$(top_srcdir) $(all_includes)
 +
@@ -1588,7 +1642,7 @@ Index: kabc/kabcdistlistupdater/Makefile.am
 Index: kabc/kabcdistlistupdater/kabcdistlistupdater.desktop
 ===================================================================
 --- kabc/kabcdistlistupdater/kabcdistlistupdater.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 0)
-+++ kabc/kabcdistlistupdater/kabcdistlistupdater.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
++++ kabc/kabcdistlistupdater/kabcdistlistupdater.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -0,0 +1,21 @@
 +# KDE Config File
 +[Desktop Entry]
@@ -1613,8 +1667,8 @@ Index: kabc/kabcdistlistupdater/kabcdistlistupdater.desktop
 +OnlyShowIn=KDE;
 Index: kabc/Makefile.am
 ===================================================================
---- kabc/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kabc/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kabc/Makefile.am	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kabc/Makefile.am	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -1 +1,5 @@
 -SUBDIRS = kabc2mutt
 +if compile_newdistrlists
@@ -1624,8 +1678,8 @@ Index: kabc/Makefile.am
 +SUBDIRS = kabc2mutt $(KABCDISTLISTUPDATER)
 Index: libkcal/incidence.cpp
 ===================================================================
---- libkcal/incidence.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ libkcal/incidence.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- libkcal/incidence.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ libkcal/incidence.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -107,6 +107,8 @@
  
  Incidence& Incidence::operator=( const Incidence &i )
@@ -1637,8 +1691,8 @@ Index: libkcal/incidence.cpp
    mCreated = i.mCreated;
 Index: kontact/plugins/akregator/akregatorplugin.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/akregator/akregatorplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/akregator/akregatorplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -19,6 +19,7 @@
  Comment[da]=Feed-læserkomponent (Akregator-plugin)
  Comment[de]=News-Leser (Akregator-Modul)
@@ -1666,8 +1720,8 @@ Index: kontact/plugins/akregator/akregatorplugin.desktop
  Name[sr@Latn]=Dovodi
 Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
 ===================================================================
---- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/akregator/akregatorplugin3.2.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -48,7 +48,7 @@
  Comment[nn]=Akregator-programtillegg
  Comment[pl]=Wtyczka Akregatora
@@ -1688,8 +1742,8 @@ Index: kontact/plugins/akregator/akregatorplugin3.2.desktop
  Name[sr@Latn]=Dovodi
 Index: kontact/plugins/test/kptestplugin.desktop
 ===================================================================
---- kontact/plugins/test/kptestplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/test/kptestplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/test/kptestplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/test/kptestplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -95,7 +95,7 @@
  Name[nn]=Test-programtillegg
  Name[nso]=Plugin ya Teko
@@ -1701,8 +1755,8 @@ Index: kontact/plugins/test/kptestplugin.desktop
  Name[se]=Geahččalan-lassemoduvla
 Index: kontact/plugins/weather/weatherplugin.desktop
 ===================================================================
---- kontact/plugins/weather/weatherplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/weather/weatherplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/weather/weatherplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/weather/weatherplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Vejrkomponent til Kontact
  Comment[de]=Wetter-Komponente für Kontact
@@ -1713,8 +1767,8 @@ Index: kontact/plugins/weather/weatherplugin.desktop
  Comment[is]=Kontact veðurfréttaeining
 Index: kontact/plugins/knode/knodeplugin.desktop
 ===================================================================
---- kontact/plugins/knode/knodeplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/knode/knodeplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/knode/knodeplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/knode/knodeplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -19,6 +19,7 @@
  Comment[da]=Nyhedskomponent (KNode-plugin)
  Comment[de]=News-Komponente (KNode-Modul)
@@ -1725,8 +1779,8 @@ Index: kontact/plugins/knode/knodeplugin.desktop
  Comment[is]=Fréttaeining (KNode íforrit)
 Index: kontact/plugins/specialdates/kcmsdsummary.desktop
 ===================================================================
---- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/specialdates/kcmsdsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/specialdates/kcmsdsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -16,6 +16,7 @@
  Name[da]=Oversigt over særlige datoer
  Name[de]=Übersicht über besondere Termine
@@ -1745,8 +1799,8 @@ Index: kontact/plugins/specialdates/kcmsdsummary.desktop
  Name[sr@Latn]=Pregled posebnih datuma
 Index: kontact/plugins/specialdates/specialdatesplugin.desktop
 ===================================================================
---- kontact/plugins/specialdates/specialdatesplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/specialdates/specialdatesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/specialdates/specialdatesplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/specialdates/specialdatesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -72,6 +72,7 @@
  Comment[da]=Komponent til særlige datoer
  Comment[de]=Komponente für Übersicht über besondere Termine
@@ -1765,8 +1819,8 @@ Index: kontact/plugins/specialdates/specialdatesplugin.desktop
  Comment[sr@Latn]=Komponenta posebnih datuma
 Index: kontact/plugins/kitchensync/kitchensync.desktop
 ===================================================================
---- kontact/plugins/kitchensync/kitchensync.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/kitchensync/kitchensync.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/kitchensync/kitchensync.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/kitchensync/kitchensync.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -18,6 +18,8 @@
  Comment[da]=Synkronisergingskomponent (Kitchensync-plugin)
  Comment[de]=Abgleich-Komponente (KitchenSync-Modul)
@@ -1786,8 +1840,8 @@ Index: kontact/plugins/kitchensync/kitchensync.desktop
  Comment[sv]=Synkroniseringskomponent (Kitchensynk-insticksprogram)
 Index: kontact/plugins/kpilot/kpilotplugin.desktop
 ===================================================================
---- kontact/plugins/kpilot/kpilotplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/kpilot/kpilotplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/kpilot/kpilotplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/kpilot/kpilotplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Komponent til palm-værktøjer (KPilot-plugin)
  Comment[de]=Palm-Komponente (KPilot-Modul)
@@ -1798,8 +1852,8 @@ Index: kontact/plugins/kpilot/kpilotplugin.desktop
  Comment[is]=Palm verkfæraeining (KPilot íforrit)
 Index: kontact/plugins/knotes/knotesplugin.desktop
 ===================================================================
---- kontact/plugins/knotes/knotesplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/knotes/knotesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/knotes/knotesplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/knotes/knotesplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -19,6 +19,7 @@
  Comment[da]=Notatkomponent (KNotes-plugin)
  Comment[de]=Notizen-Komponente (KNotes-Modul)
@@ -1810,8 +1864,8 @@ Index: kontact/plugins/knotes/knotesplugin.desktop
  Comment[is]=Minnismiðaeining (KNotes íforrit)
 Index: kontact/plugins/karm/karmplugin.desktop
 ===================================================================
---- kontact/plugins/karm/karmplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/karm/karmplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/karm/karmplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/karm/karmplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -18,6 +18,7 @@
  Comment[da]=Time Tracker-komponent (KArm-plugin)
  Comment[de]=Zeitplaner-Komponente (KArm-Modul)
@@ -1838,8 +1892,8 @@ Index: kontact/plugins/karm/karmplugin.desktop
  Name[sv]=Tidmätning
 Index: kontact/plugins/kaddressbook/kaddressbookplugin.desktop
 ===================================================================
---- kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/kaddressbook/kaddressbookplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Kontaktkomponent (KAddressbook-plugin)
  Comment[de]=Kontakte-Komponente (Adressbuch-Modul)
@@ -1850,8 +1904,8 @@ Index: kontact/plugins/kaddressbook/kaddressbookplugin.desktop
  Comment[is]=Vistfangaskráreining (KAddressBook íforrit)
 Index: kontact/plugins/korganizer/kcmkorgsummary.desktop
 ===================================================================
---- kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/korganizer/kcmkorgsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -16,6 +16,7 @@
  Name[da]=Oversigt over møder og gøremål
  Name[de]=Übersicht über Termine und Aufgaben
@@ -1862,8 +1916,8 @@ Index: kontact/plugins/korganizer/kcmkorgsummary.desktop
  Name[is]=Yfirlit um fundi og verkþætti
 Index: kontact/plugins/korganizer/todoplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/korganizer/todoplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/korganizer/todoplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Komponent til gøremålsliste (KOrganizer-plugin)
  Comment[de]=Aufgabenlisten-Komponente (KOrganizer-Modul)
@@ -1898,8 +1952,8 @@ Index: kontact/plugins/korganizer/todoplugin.desktop
  Name[sv]=Uppgift
 Index: kontact/plugins/korganizer/journalplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/journalplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/korganizer/journalplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/korganizer/journalplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/korganizer/journalplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Journalkomponent (KOrganizer-plugin)
  Comment[de]=Journal-Komponente (KOrganizer-Modul)
@@ -1910,8 +1964,8 @@ Index: kontact/plugins/korganizer/journalplugin.desktop
  Comment[is]=Dagbókareining (Journal KOrganizer íforrit)
 Index: kontact/plugins/korganizer/korganizerplugin.desktop
 ===================================================================
---- kontact/plugins/korganizer/korganizerplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/korganizer/korganizerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/korganizer/korganizerplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/korganizer/korganizerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -21,6 +21,7 @@
  Comment[da]=Kalenderkomponent (KOrganizer-plugin)
  Comment[de]=Kalender-Komponente (KOrganizer-Modul)
@@ -1930,8 +1984,8 @@ Index: kontact/plugins/korganizer/korganizerplugin.desktop
  Comment[sv]=Kalenderkomponent (Korganizer-insticksprogram)
 Index: kontact/plugins/kmail/kmailplugin.desktop
 ===================================================================
---- kontact/plugins/kmail/kmailplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/kmail/kmailplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/kmail/kmailplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/kmail/kmailplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -22,6 +22,7 @@
  Comment[da]=Post-komponent (KMail-plugin)
  Comment[de]=E-Mail-Komponente (KMail-Modul)
@@ -1970,8 +2024,8 @@ Index: kontact/plugins/kmail/kmailplugin.desktop
  Name[sv]=E-post
 Index: kontact/plugins/kmail/kcmkmailsummary.desktop
 ===================================================================
---- kontact/plugins/kmail/kcmkmailsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/kmail/kcmkmailsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/kmail/kcmkmailsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/kmail/kcmkmailsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -16,6 +16,7 @@
  Name[da]=Oversigt over e-mail
  Name[de]=E-Mail-Übersicht
@@ -2006,8 +2060,8 @@ Index: kontact/plugins/kmail/kcmkmailsummary.desktop
  Comment[sv]=Inställning av e-postöversikt
 Index: kontact/plugins/summary/kcmkontactsummary.desktop
 ===================================================================
---- kontact/plugins/summary/kcmkontactsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/summary/kcmkontactsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/summary/kcmkontactsummary.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/summary/kcmkontactsummary.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -16,6 +16,7 @@
  Name[da]=Elementer i opsummeringsvisning
  Name[de]=Elemente der Zusammenfassungsansicht
@@ -2018,8 +2072,8 @@ Index: kontact/plugins/summary/kcmkontactsummary.desktop
  Name[ja]=要約ビューの項目
 Index: kontact/plugins/summary/summaryplugin.desktop
 ===================================================================
---- kontact/plugins/summary/summaryplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/summary/summaryplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/summary/summaryplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/summary/summaryplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -17,6 +17,7 @@
  Comment[da]=Komponent for opsummeringsvisning
  Comment[de]=Zusammenfassungsansicht-Komponente
@@ -2030,8 +2084,8 @@ Index: kontact/plugins/summary/summaryplugin.desktop
  Comment[is]=Eining fyrir yfirlitssýn
 Index: kontact/plugins/newsticker/newstickerplugin.desktop
 ===================================================================
---- kontact/plugins/newsticker/newstickerplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/plugins/newsticker/newstickerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/plugins/newsticker/newstickerplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/plugins/newsticker/newstickerplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -20,6 +20,7 @@
  Comment[da]=Nyhedstelegraf-komponent
  Comment[de]=Newsticker-Komponente
@@ -2042,8 +2096,8 @@ Index: kontact/plugins/newsticker/newstickerplugin.desktop
  Comment[is]=Fréttastrimilseining
 Index: kontact/src/kontact.setdlg
 ===================================================================
---- kontact/src/kontact.setdlg	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ kontact/src/kontact.setdlg	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- kontact/src/kontact.setdlg	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ kontact/src/kontact.setdlg	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -5,6 +5,7 @@
  Name[da]=Opsummeringsvisning
  Name[de]=Übersicht
@@ -2128,8 +2182,8 @@ Index: kontact/src/kontact.setdlg
  Comment[sv]=Komponent med väderrapport
 Index: korganizer/korganizer_configplugins.desktop
 ===================================================================
---- korganizer/korganizer_configplugins.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/korganizer_configplugins.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/korganizer_configplugins.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/korganizer_configplugins.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -100,7 +100,7 @@
  Comment[nn]=Oppsett av KOrganizer-programtillegg
  Comment[pl]=Konfiguracja wtyczek KOrganizera
@@ -2141,8 +2195,8 @@ Index: korganizer/korganizer_configplugins.desktop
  Comment[sl]=Nastavitve vstavka KOrganizerja
 Index: korganizer/koincidencetooltip.h
 ===================================================================
---- korganizer/koincidencetooltip.h	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/koincidencetooltip.h	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/koincidencetooltip.h	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/koincidencetooltip.h	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -39,7 +39,7 @@
  class KOIncidenceToolTip : public QToolTip
  {
@@ -2154,8 +2208,8 @@ Index: korganizer/koincidencetooltip.h
    public:
 Index: korganizer/interfaces/calendar/calendarplugin.desktop
 ===================================================================
---- korganizer/interfaces/calendar/calendarplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/interfaces/calendar/calendarplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/interfaces/calendar/calendarplugin.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/interfaces/calendar/calendarplugin.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -47,7 +47,7 @@
  Comment[nso]=Plugin ya Tshupamabaka
  Comment[pl]=Wtyczka do kalendarza
@@ -2167,8 +2221,8 @@ Index: korganizer/interfaces/calendar/calendarplugin.desktop
  Comment[se]=Kaleandarlassemoduvla
 Index: korganizer/interfaces/calendar/calendardecoration.desktop
 ===================================================================
---- korganizer/interfaces/calendar/calendardecoration.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/interfaces/calendar/calendardecoration.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/interfaces/calendar/calendardecoration.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/interfaces/calendar/calendardecoration.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -44,7 +44,7 @@
  Comment[nso]=Plugin ya Kgabiso ya Tshupamabaka
  Comment[pl]=Wtyczka do dekoracji kalendarza
@@ -2180,8 +2234,8 @@ Index: korganizer/interfaces/calendar/calendardecoration.desktop
  Comment[se]=Kaleandarčiŋaid lassemoduvla
 Index: korganizer/plugins/datenums/datenums.desktop
 ===================================================================
---- korganizer/plugins/datenums/datenums.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/datenums/datenums.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/datenums/datenums.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/datenums/datenums.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -81,7 +81,7 @@
  Comment[nn]=For kvar dag vil dette programtillegget visa nummeret til denne dagen i året øvst i tidsplanen. 1. februar vil til dømes visast som dag 32.
  Comment[pl]=Ta wtyczka dla każdego dnia pokazuje jego numer kolejny w roku, na szczycie widoku planu. Na przykład, 1 luty to 32 dzień roku.
@@ -2193,8 +2247,8 @@ Index: korganizer/plugins/datenums/datenums.desktop
  Comment[sl]=Za vsak dan ta vstavek prikazuje številko dneva v letu na vrhu praikaza agende. Npr., 1. februar je 32. dan v letu.
 Index: korganizer/plugins/projectview/projectview.desktop
 ===================================================================
---- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/projectview/projectview.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/projectview/projectview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -42,7 +42,7 @@
  Name[nso]=Plugin ya Pono ya Porojeke ya KMmeakanyi
  Name[pl]=Wtyczka przeglądania projektów dla Organizatora
@@ -2215,8 +2269,8 @@ Index: korganizer/plugins/projectview/projectview.desktop
  Comment[sl]=Ta vstavek prikazuje projektno načrtovanje za KOrganizer (kot prikaz opravil ali mesečni prikaz). Če omogočite ta vstavek, lahko preklopite na projektni prikaz in si ogledate seznam opravil kot v projektnem prikazu.
 Index: korganizer/plugins/exchange/exchange.desktop
 ===================================================================
---- korganizer/plugins/exchange/exchange.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/exchange/exchange.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/exchange/exchange.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/exchange/exchange.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -83,7 +83,7 @@
  Comment[nn]=Dette programtillegget lèt KOrganizer-brukarar arbeida saman med Microsoft Exchange 2000-gruppevaretenarar.
  Comment[pl]=Ta wtyczka pozwala KOrganizerowi współpracować z serwerami pracy grupowej Microsoft Exchange.
@@ -2228,8 +2282,8 @@ Index: korganizer/plugins/exchange/exchange.desktop
  Comment[sl]=Ta vstavke omogoča uporabnikom KOrganizerja delo s strežniki Microsoft Exchange 2000.
 Index: korganizer/plugins/printing/year/yearprint.desktop
 ===================================================================
---- korganizer/plugins/printing/year/yearprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/printing/year/yearprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/printing/year/yearprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/printing/year/yearprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -67,7 +67,7 @@
  Comment[nl]=Deze plugin maakt het mogelijk om een jaarkalender af te drukken.
  Comment[pl]=Ta wtyczka pozwala drukować roczny kalendarz.
@@ -2241,8 +2295,8 @@ Index: korganizer/plugins/printing/year/yearprint.desktop
  Comment[sl]=Ta vstavek vam omogoča natis letnega koledarja.
 Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
 ===================================================================
---- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/printing/whatsnext/whatsnextprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -77,7 +77,7 @@
  Comment[nn]=Dette programtillegget lèt deg skriva ut ei liste over alle dei komande hendingane og oppføringane i hugselista.
  Comment[pl]=Ta wtyczka pozwala wydrukować wszystkie przyszłe zdarzenia i zadania.
@@ -2254,8 +2308,8 @@ Index: korganizer/plugins/printing/whatsnext/whatsnextprint.desktop
  Comment[sl]=Ta vstavek vam omogoča natis seznama vseh prihahajočih dogodkov in čakajočih opravil.
 Index: korganizer/plugins/printing/list/listprint.desktop
 ===================================================================
---- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/printing/list/listprint.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/printing/list/listprint.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -77,7 +77,7 @@
  Comment[nn]=Dette programtillegget lèt deg skriva ut hendingar og hugselister på listeform.
  Comment[pl]=Ta wtyczka pozwala drukować zdarzenia i zadania w postaci listy.
@@ -2267,8 +2321,8 @@ Index: korganizer/plugins/printing/list/listprint.desktop
  Comment[sl]=Ta vstavek vam omogoča natis dogodkov in čakajočih opravil v obliki seznama.
 Index: korganizer/plugins/timespanview/timespanview.desktop
 ===================================================================
---- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/plugins/timespanview/timespanview.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/plugins/timespanview/timespanview.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -33,7 +33,7 @@
  Name[nn]=Programtillegg for tidsromsvising i KOrganizer
  Name[pl]=Wtyczka widoku zakresu czasu dla KOrganizera
@@ -2289,8 +2343,8 @@ Index: korganizer/plugins/timespanview/timespanview.desktop
  Comment[sl]=Ta vstavek ponuja časovni prikaz za KOrganizer (kot prikaz opravil ali mesečni prikaz). Če omogočite ta vstavek, lahko preklopite na časovni prikaz in si ogledate dogodke kot v Ganttovem diagramu.
 Index: korganizer/korganizer_configviews.desktop
 ===================================================================
---- korganizer/korganizer_configviews.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/korganizer_configviews.desktop	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/korganizer_configviews.desktop	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/korganizer_configviews.desktop	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -37,7 +37,7 @@
  Name[he]=תצוגות
  Name[hi]=दृश्य
@@ -2302,8 +2356,8 @@ Index: korganizer/korganizer_configviews.desktop
  Name[ka]=ხედები
 Index: korganizer/koincidencetooltip.cpp
 ===================================================================
---- korganizer/koincidencetooltip.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 958029)
-+++ korganizer/koincidencetooltip.cpp	(.../branches/KDE/3.5/kdepim)	(revision 958029)
+--- korganizer/koincidencetooltip.cpp	(.../tags/KDE/3.5.10/kdepim)	(revision 987532)
++++ korganizer/koincidencetooltip.cpp	(.../branches/KDE/3.5/kdepim)	(revision 987532)
 @@ -34,7 +34,7 @@
  */
  
