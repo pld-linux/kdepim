@@ -16,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	5
+Release:	6
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -170,7 +170,7 @@ Obsługa protokołu IMAP4.
 Summary:	Scalix protocol service
 Summary(pl.UTF-8):	Obsługa protokołu Scalix
 Group:		X11/Libraries
-Requires:	kdelibs-libs >= %{_minlibsevr}
+Requires:	kdelibs >= %{_minlibsevr}
 
 %description -n kde-kio-scalix
 Scalix protocol service.
