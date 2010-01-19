@@ -16,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	6
+Release:	7
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -34,6 +34,7 @@ Patch7:		%{name}-kmail-templatesconfiguration.patch
 Patch8:		%{name}-sparc64.patch
 Patch9:		%{name}-inotify.patch
 Patch10:	kde-am.patch
+Patch11:	gcc44.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -513,6 +514,7 @@ libksieve, libmimelib.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop

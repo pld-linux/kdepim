@@ -1,0 +1,15 @@
+Revert stupididy from http://websvn.kde.org/?view=revision&revision=462288
+
+fixes build with gcc 4.4
+
+--- kdepim-3.5.10/indexlib/memvector.tcc~	2010-01-19 13:14:35.000000000 +0200
++++ kdepim-3.5.10/indexlib/memvector.tcc	2010-01-19 13:14:36.764665735 +0200
+@@ -33,7 +33,7 @@
+ 	data_->resize( n_s * byte_io::byte_lenght<value_type>() + byte_io::byte_lenght<unsigned>() );
+ 	iterator p_end = end();
+ 	byte_io::write<unsigned>( data_->rw_base( 0 ), n_s );
+-	while ( operator !=<unsigned, unsigned>(p_end, end()) ) {
++	while ( p_end != end() ) {
+ 		*p_end = value_type();
+ 		++p_end;
+ 		
