@@ -79,6 +79,9 @@ Obsoletes:	kdepim-ksync
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+# build broken with spaces in CC
+%undefine	with_ccache
+
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
 for the K Desktop Environment (KDE).
