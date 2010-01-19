@@ -581,7 +581,11 @@ fi
 	--with-distribution="PLD Linux Distribution" \
 	--with-qt-libraries=%{_libdir}
 
-%{__make}
+# build in kresources/featureplan fails, kxml_compiler is invoked several times
+# instead of one job and commands get out of sync:
+# In file included from kcal_resourcefeatureplanconfig.cpp:33:
+# kcal_resourcefeatureplan.h:26:26: warning: kde-features.h is shorter than expected
+%{__make} -j1
 %{?with_apidocs:%{__make} apidox}
 
 %install
