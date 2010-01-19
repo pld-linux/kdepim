@@ -340,7 +340,7 @@ Summary:	Yellow cards
 Summary(pl.UTF-8):	Żółte karteczki
 Group:		X11/Applications
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-Requires:	kde-kio-scalix >= %{epoch}:%{version}-%{release}
+Suggests:	kde-kio-scalix
 
 %description knotes
 KNotes allows you to place Post-It notes on your desktop. In addition
