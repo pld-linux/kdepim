@@ -1,5 +1,9 @@
 # TODO
 # - subpackages for akregator, korganizer(?)
+# - unpackaged:
+#   /usr/bin/kabcdistlistupdater
+#   /usr/lib64/libknodecommon.so
+#   /usr/share/autostart/kabcdistlistupdater.desktop
 #
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
