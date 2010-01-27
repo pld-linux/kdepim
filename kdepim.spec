@@ -1,5 +1,5 @@
 # TODO
-# - subpackages for akregator, korganizer(?)
+# - subpackages for akregator, korganizer(?), kitchensync
 # - unpackaged:
 #   /usr/bin/kabcdistlistupdater
 #   /usr/lib64/libknodecommon.so
@@ -8,6 +8,7 @@
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
+%bcond_without	kitchensync		# build with kitchensync
 #
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
@@ -56,7 +57,7 @@ BuildRequires:	gpgme-devel >= 1:1.0.0
 BuildRequires:	kdelibs-devel >= %{_minlibsevr}
 BuildRequires:	libgnokii-devel
 BuildRequires:	libmal-devel >= 0.31
-BuildRequires:	libopensync02-devel >= 1:0.22
+%{?with_kitchensync:BuildRequires:	libopensync02-devel >= 1:0.22}
 BuildRequires:	lockdev-devel
 BuildRequires:	openssl-devel
 BuildRequires:	pcre-devel
@@ -659,7 +660,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/scalixwizard
 %attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kxml_compiler
-%attr(755,root,root) %{_bindir}/kitchensync
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/networkstatustestservice
@@ -699,7 +699,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
 %attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_akregator.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
@@ -729,7 +728,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
 %{_datadir}/apps/kgantt
-%{_datadir}/apps/kitchensync
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
 %{_datadir}/apps/korgac
@@ -789,17 +787,24 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/Kontact.desktop
 %{_desktopdir}/kde/akregator.desktop
 %{_desktopdir}/kde/korganizer.desktop
-%{_desktopdir}/kde/kitchensync.desktop
+
 %{_desktopdir}/kde/groupwarewizard.desktop
 %{_desktopdir}/kde/kontactdcop.desktop
 %{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/*/korganizer*.png
-%{_iconsdir}/*/*/*/kitchensync.png
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
 %{_iconsdir}/*/*/actions/*rss*
 %{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
 %{_iconsdir}/crystalsvg/22x22/actions/button_more.png
+
+%if %{with kitchensync}
+%attr(755,root,root) %{_bindir}/kitchensync
+%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
+%{_datadir}/apps/kitchensync
+%{_desktopdir}/kde/kitchensync.desktop
+%{_iconsdir}/*/*/*/kitchensync.png
+%endif
 
 %files devel
 %defattr(644,root,root,755)
@@ -857,7 +862,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkgroupwarebase.so
 %{_libdir}/libkgroupwaredav.so
 %{_libdir}/libkholidays.so
-%{_libdir}/libkitchensync.so
 %{_libdir}/libkleopatra.so
 %{_libdir}/libkmime.so
 %{_libdir}/libknotes_xmlrpc.so
@@ -880,7 +884,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
 %{_libdir}/libqgpgme.so
+%if %{with kitchensync}
+%{_libdir}/libkitchensync.so
 %{_libdir}/libqopensync.so
+%endif
 
 %{_libdir}/*.la
 
@@ -1185,8 +1192,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkgroupwaredav.so.0
 %attr(755,root,root) %{_libdir}/libkholidays.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkholidays.so.1
-%attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
 %attr(755,root,root) %{_libdir}/libkleopatra.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkleopatra.so.1
 %attr(755,root,root) %{_libdir}/libkmailprivate.so
@@ -1232,10 +1237,15 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libktnef.so.1
 %attr(755,root,root) %{_libdir}/libmimelib.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libmimelib.so.1
-%attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
 %attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libqgpgme.so.0
 %{_datadir}/apps/libical
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
+
+%if %{with kitchensync}
+%attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
+%attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
+%endif
