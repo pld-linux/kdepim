@@ -9,6 +9,7 @@
 %bcond_without	apidocs			# do not prepare API documentation
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
 %bcond_without	kitchensync		# build with kitchensync
+%bcond_without	indexlib		# disable full text indexing support
 #
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
@@ -39,7 +40,7 @@ Patch7:		%{name}-kmail-templatesconfiguration.patch
 Patch8:		%{name}-sparc64.patch
 Patch9:		%{name}-inotify.patch
 Patch10:	kde-am.patch
-Patch11:	gcc44.patch
+Patch11:	kdepim-3.5.10-gcc_4.4-2.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -250,6 +251,18 @@ clients.
 KArm (nazwa pochodzi od słowa "praca" w języku punjambi) śledzi czas
 spędzony na różnych zajęciach. Jest przydatny przy obliczaniu godzin
 do wystawiania rachunków wielu klientom.
+
+%package kitchensync
+Summary:	kitchensync
+Summary(pl.UTF-8):	kitchensync
+Group:		X11/Applications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description kitchensync
+kitchensync.
+
+%description kitchensync -l pl.UTF-8
+kitchensync.
 
 %package kmail
 Summary:	KDE Mail client
@@ -567,12 +580,14 @@ if [ ! -f configure ]; then
 	%{__make} -f admin/Makefile.common cvs
 fi
 
+export PKG_CONFIG_PATH=%{_libdir}/pkgconfig
+
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
 	%{!?debug:--disable-rpath} \
 	--disable-final \
 	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
-	--enable-indexlib \
+	%{?with_indexlib:--enable-indexlib} \
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
@@ -588,6 +603,8 @@ fi
 # kcal_resourcefeatureplan.h:26:26: warning: kde-features.h is shorter than expected
 %{__make} -j1
 %{?with_apidocs:%{__make} apidox}
+
+rm -f makeinstall.stamp
 
 %install
 if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
@@ -607,6 +624,10 @@ if [ ! -f installed.stamp ]; then
 	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/*.la
 	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
 	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
+
+	# are there any apps that actually link to these?
+	rm -f $RPM_BUILD_ROOT%{_libdir}/libkitchensync.so
+	rm -f $RPM_BUILD_ROOT%{_libdir}/libqopensync.so
 
 	# unsupported
 	rm -rf $RPM_BUILD_ROOT%{_iconsdir}/locolor
@@ -642,6 +663,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %post	libs			-p /sbin/ldconfig
 %postun	libs			-p /sbin/ldconfig
+
+%post	kitchensync		-p /sbin/ldconfig
+%postun	kitchensync		-p /sbin/ldconfig
 
 %post	knode			-p /sbin/ldconfig
 %postun	knode			-p /sbin/ldconfig
@@ -798,14 +822,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/crystalsvg/22x22/actions/button_fewer.png
 %{_iconsdir}/crystalsvg/22x22/actions/button_more.png
 
-%if %{with kitchensync}
-%attr(755,root,root) %{_bindir}/kitchensync
-%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
-%{_datadir}/apps/kitchensync
-%{_desktopdir}/kde/kitchensync.desktop
-%{_iconsdir}/*/*/*/kitchensync.png
-%endif
-
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/indexlib-config
@@ -884,10 +900,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
 %{_libdir}/libqgpgme.so
-%if %{with kitchensync}
-%{_libdir}/libkitchensync.so
-%{_libdir}/libqopensync.so
-%endif
 
 %{_libdir}/*.la
 
@@ -976,6 +988,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 
+%if %{with kitchensync}
+%files kitchensync
+%attr(755,root,root) %{_bindir}/kitchensync
+%attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
+%attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
+%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
+%{_datadir}/apps/kitchensync
+%{_desktopdir}/kde/kitchensync.desktop
+%{_iconsdir}/*/*/*/kitchensync.png
+%endif
+
 %files kmail -f kmail.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kmail
@@ -1042,6 +1067,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
+
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -1242,10 +1268,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/libical
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
-
-%if %{with kitchensync}
-%attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
-%attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
-%endif
