@@ -1,5 +1,5 @@
 # TODO
-# - subpackages for akregator, korganizer(?), kitchensync
+# - subpackages for akregator, korganizer(?)
 # - unpackaged:
 #   /usr/bin/kabcdistlistupdater
 #   /usr/lib64/libknodecommon.so
@@ -10,7 +10,8 @@
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
 %bcond_without	kitchensync		# build with kitchensync
 %bcond_without	indexlib		# disable full text indexing support
-#
+%bcond_with	arts			# build with aRts support
+
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
 %define		_minbaseevr	9:%{version}
@@ -22,7 +23,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	7
+Release:	7.10
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -41,8 +42,9 @@ Patch8:		%{name}-sparc64.patch
 Patch9:		%{name}-inotify.patch
 Patch10:	kde-am.patch
 Patch11:	kdepim-3.5.10-gcc_4.4-2.patch
+Patch12:	gcc45.patch
 BuildRequires:	autoconf
-BuildRequires:	autoconf
+BuildRequires:	autoconf < 2.64
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
@@ -536,6 +538,7 @@ libksieve, libmimelib.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
@@ -580,7 +583,7 @@ if [ ! -f configure ]; then
 	%{__make} -f admin/Makefile.common cvs
 fi
 
-export PKG_CONFIG_PATH=%{_libdir}/pkgconfig
+export PKG_CONFIG_PATH=%{_pkgconfigdir}
 
 %configure \
 	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
@@ -588,6 +591,7 @@ export PKG_CONFIG_PATH=%{_libdir}/pkgconfig
 	--disable-final \
 	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
 	%{?with_indexlib:--enable-indexlib} \
+	--with%{!?with_arts:out}-arts \
 %if "%{_lib}" == "lib64"
 	--enable-libsuffix=64 \
 %endif
@@ -990,6 +994,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %if %{with kitchensync}
 %files kitchensync
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kitchensync
 %attr(755,root,root) %{_libdir}/libkitchensync.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
