@@ -23,7 +23,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	7.10
+Release:	7.12
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -41,7 +41,7 @@ Patch7:		%{name}-kmail-templatesconfiguration.patch
 Patch8:		%{name}-sparc64.patch
 Patch9:		%{name}-inotify.patch
 Patch10:	kde-am.patch
-Patch11:	kdepim-3.5.10-gcc_4.4-2.patch
+Patch11:	%{name}-3.5.10-gcc_4.4-2.patch
 Patch12:	gcc45.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf < 2.64
@@ -81,9 +81,7 @@ Obsoletes:	akregator
 #Obsoletes:	kdeaddons-konqueror
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
-Obsoletes:	kdepim-korganizer
 Obsoletes:	kdepim-kresources
-Obsoletes:	kdepim-ksync
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -408,6 +406,36 @@ Główne możliwości programu KonsoleKalendar:
 
 Narzędzie dostępu do plików kalendarza z linii poleceń.
 
+%package korganizer
+Summary:	A complete calendar and scheduling program
+Summary(pl.UTF-8):	Kalendarz wraz z harmonogramem zadań
+Group:		X11/Applications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdebase-desktop >= %{_minbaseevr}
+Obsoletes:	kdepim-kgantt
+Obsoletes:	kdepim-ksync
+Obsoletes:	korganizer
+
+%description korganizer
+A complete calendar and scheduling program, which supports information
+interchange with other calendar applications through the industry
+standard vCalendar and iCalendar file format.
+
+%description korganizer -l pl.UTF-8
+Kalendarz wraz z harmonogramem zadań (KOrganizer), który wspiera
+wymianę informacji z innymi tego typu aplikacjami poprzez standard
+przemysłowy (vCalendar i iCalendar).
+
+%description korganizer -l ru.UTF-8
+полнофункциональная программа календаря и персонального планировщика
+(KOrganizer поддерживает обмен информацией с другими программами
+такого рода через стандартный формат файла vCalendar)
+
+%description korganizer -l uk.UTF-8
+повнофункціональна програма календара та персонального планувальника
+(KOrganizer підтримує обмін информацією з іншими програмами такого
+роду через стандартний формат файлу vCalendar)
+
 %package korn
 Summary:	KDE 'biff' application
 Summary(pl.UTF-8):	Wskaźnik skrzynki pocztowej dla KDE
@@ -497,7 +525,6 @@ Obsoletes:	indexlib
 Obsoletes:	kdenetwork
 Obsoletes:	kdepim-commonlibs
 Obsoletes:	kdepim-kaddressbook-libs
-Obsoletes:	kdepim-kgantt
 Obsoletes:	kdepim-kmail-libs
 Obsoletes:	kdepim-kontact-libs
 Obsoletes:	kdepim-korganizer-libs
@@ -652,7 +679,7 @@ rm -f *.lang
 %find_lang	knotes		--with-kde
 %find_lang	konsolekalendar	--with-kde
 %find_lang	kontact		--with-kde -a %{name}.lang
-%find_lang	korganizer	--with-kde -a %{name}.lang
+%find_lang	korganizer	--with-kde
 %find_lang	korn		--with-kde
 %find_lang	kleopatra	--with-kde -a kmail.lang
 %find_lang	kpilot		--with-kde
@@ -681,15 +708,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/exchangewizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 %attr(755,root,root) %{_bindir}/groupwisewizard
-%attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_bindir}/kode
 %attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/scalixadmin
 %attr(755,root,root) %{_bindir}/scalixwizard
 %attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kxml_compiler
-%attr(755,root,root) %{_bindir}/korgac
-%attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
 
@@ -718,7 +742,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontact.so
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontactknt.so
 %attr(755,root,root) %{_libdir}/kde3/kcm_kontactsummary.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
 %attr(755,root,root) %{_libdir}/kde3/kcm_korgsummary.so
 %attr(755,root,root) %{_libdir}/kde3/kcm_sdsummary.so
 %attr(755,root,root) %{_libdir}/kde3/kded_networkstatus.so
@@ -741,8 +764,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_weatherplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
-%attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
 %attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
 %attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
 %attr(755,root,root) %{_libdir}/kde3/libsloxwizard.so*
@@ -751,24 +772,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kdepimwidgets.so
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/akregator
-%{_datadir}/apps/kconf_update/korganizer.upd
 %{_datadir}/apps/kconf_update/kolab-resource.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
-%{_datadir}/apps/kgantt
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
-%{_datadir}/apps/korgac
-%{_datadir}/apps/korganizer
 %{_datadir}/apps/kdepim
-%{_datadir}/autostart/korgac.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
 %{_datadir}/config.kcfg/custommimeheader.kcfg
 %{_datadir}/config.kcfg/customtemplates_kfg.kcfg
 %{_datadir}/config.kcfg/egroupware.kcfg
 %{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/kontact.kcfg
-%{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/config.kcfg/memofileconduit.kcfg
 %{_datadir}/config.kcfg/mk4config.kcfg
 %{_datadir}/config.kcfg/pimemoticons.kcfg
@@ -789,8 +804,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kfile_ics.desktop
 %{_datadir}/services/kontact
 %{_datadir}/services/kontactconfig.desktop
-%{_datadir}/services/korganizer
-%{_datadir}/services/korganizer_*.desktop
 %{_datadir}/services/kresources/kabc/imap.desktop
 %{_datadir}/services/kresources/kabc/kabc_groupdav.desktop
 %{_datadir}/services/kresources/kabc/kabc_groupwise.desktop
@@ -803,23 +816,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kabc/scalix.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
-%{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/akregator_plugin.desktop
-%{_datadir}/servicetypes/calendardecoration.desktop
-%{_datadir}/servicetypes/calendarplugin.desktop
-%{_datadir}/servicetypes/dcopcalendar.desktop
 %{_datadir}/servicetypes/kaddressbookimprotocol.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
-%{_datadir}/servicetypes/korganizerpart.desktop
 %{_datadir}/servicetypes/korgprintplugin.desktop
 %{_desktopdir}/kde/Kontact.desktop
 %{_desktopdir}/kde/akregator.desktop
-%{_desktopdir}/kde/korganizer.desktop
 
 %{_desktopdir}/kde/groupwarewizard.desktop
 %{_desktopdir}/kde/kontactdcop.desktop
 %{_iconsdir}/*/*/apps/akregator*
-%{_iconsdir}/*/*/*/korganizer*.png
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
 %{_iconsdir}/*/*/actions/*rss*
@@ -1073,7 +1079,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
 
-
 %files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
@@ -1117,6 +1122,30 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/konsolekalendar
 %{_desktopdir}/kde/konsolekalendar.desktop
 %{_iconsdir}/crystalsvg/*/*/konsolekalendar.png
+
+%files korganizer -f korganizer.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/korgac
+%attr(755,root,root) %{_bindir}/korganizer*
+%attr(755,root,root) %{_bindir}/ical2vcal
+%attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
+%attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
+%attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
+%{_datadir}/apps/kgantt
+%{_datadir}/apps/korgac
+%{_datadir}/apps/korganizer
+%{_datadir}/apps/kconf_update/korganizer.upd
+%{_datadir}/autostart/korgac.desktop
+%{_datadir}/config.kcfg/korganizer.kcfg
+%{_datadir}/services/korganizer
+%{_datadir}/services/korganizer_*.desktop
+%{_datadir}/services/webcal.protocol
+%{_datadir}/servicetypes/calendardecoration.desktop
+%{_datadir}/servicetypes/calendarplugin.desktop
+%{_datadir}/servicetypes/dcopcalendar.desktop
+%{_datadir}/servicetypes/korganizerpart.desktop
+%{_desktopdir}/kde/korganizer.desktop
+%{_iconsdir}/*/*/*/korganizer*.png
 
 %files korn -f korn.lang
 %defattr(644,root,root,755)
