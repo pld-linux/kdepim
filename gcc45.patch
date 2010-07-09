@@ -1,5 +1,5 @@
---- /home/glen/BUILD/kdepim-3.5.10/konsolekalendar/main.cpp~	2008-02-13 11:39:54.000000000 +0200
-+++ /home/glen/BUILD/kdepim-3.5.10/konsolekalendar/main.cpp	2010-07-08 23:23:01.418447242 +0300
+--- kdepim-3.5.10/konsolekalendar/main.cpp~	2008-02-13 11:39:54.000000000 +0200
++++ kdepim-3.5.10/konsolekalendar/main.cpp	2010-07-08 23:23:01.418447242 +0300
 @@ -799,13 +799,13 @@
    if ( !args->isSet( "time" )     && !args->isSet( "epoch-start" ) &&
         !args->isSet( "end-time" ) && !args->isSet( "epoch-end" ) ) {
@@ -32,3 +32,49 @@
      kdDebug() << "main | datetimestamp | "
                << "setting enddatetime from enddate and endtime"
                << endl;
+--- kdepim-3.5.10/kontact/plugins/korganizer/summarywidget.cpp~	2010-07-09 07:07:04.411706749 +0300
++++ kdepim-3.5.10/kontact/plugins/korganizer/summarywidget.cpp	2010-07-09 07:07:06.365662692 +0300
+@@ -167,7 +167,7 @@
+       QString datestr;
+ 
+       // Modify event date for printing
+-      QDate sD = QDate::QDate( dt.year(), dt.month(), dt.day() );
++      QDate sD = QDate( dt.year(), dt.month(), dt.day() );
+       if ( ( sD.month() == currentDate.month() ) &&
+            ( sD.day()   == currentDate.day() ) ) {
+         datestr = i18n( "Today" );
+@@ -227,10 +227,10 @@
+         QTime sET = ev->dtEnd().time();
+         if ( ev->isMultiDay() ) {
+           if ( ev->dtStart().date() < dt ) {
+-            sST = QTime::QTime( 0, 0 );
++            sST = QTime( 0, 0 );
+           }
+           if ( ev->dtEnd().date() > dt ) {
+-            sET = QTime::QTime( 23, 59 );
++            sET = QTime( 23, 59 );
+           }
+         }
+         datestr = i18n( "Time from - to", "%1 - %2" )
+--- kdepim-3.5.10/kontact/plugins/specialdates/sdsummarywidget.h~	2006-01-19 18:56:12.000000000 +0200
++++ kdepim-3.5.10/kontact/plugins/specialdates/sdsummarywidget.h	2010-07-09 07:16:38.055608345 +0300
+@@ -78,7 +78,7 @@
+     bool mShowHolidays;
+     bool mShowSpecialsFromCal;
+ 
+-    KHolidays::KHolidays *mHolidays;
++    KHolidays *mHolidays;
+ };
+ 
+ #endif
+--- kdepim-3.5.10/kontact/plugins/specialdates/sdsummarywidget.cpp~	2006-10-01 20:30:38.000000000 +0300
++++ kdepim-3.5.10/kontact/plugins/specialdates/sdsummarywidget.cpp	2010-07-09 07:17:02.894986721 +0300
+@@ -438,7 +438,7 @@
+ 
+       //Muck with the year -- change to the year 'daysTo' days away
+       int year = currentDate.addDays( (*addrIt).daysTo ).year();
+-      QDate sD = QDate::QDate( year,
++      QDate sD = QDate( year,
+                            (*addrIt).date.month(), (*addrIt).date.day() );
+ 
+       if ( (*addrIt).daysTo == 0 ) {
