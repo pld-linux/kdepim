@@ -899,7 +899,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkorganizer.so
 %{_libdir}/libkorganizer_eventviewer.so
 %{_libdir}/libkorganizer_calendar.so
-%{_libdir}/libkorg_stdprinting.so
 %{_libdir}/libkpgp.so
 %{_libdir}/libkpilot.so
 %{_libdir}/libkpimexchange.so
