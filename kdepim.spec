@@ -1,8 +1,3 @@
-# TODO
-# - subpackages for akregator?
-# - unpackaged:
-#   /usr/lib64/libknodecommon.so
-#
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
@@ -21,7 +16,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	7.13
+Release:	7.19
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -74,8 +69,6 @@ BuildConflicts:	indexlib
 BuildConflicts:	kdepim-kontact-libs
 BuildConflicts:	kdepim-libkmailprivate
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-# subpackage akregator
-Obsoletes:	akregator
 #Obsoletes:	kdeaddons-konqueror
 Obsoletes:	kdeaddons-kontact
 Obsoletes:	kdepim-kontact
@@ -185,6 +178,18 @@ Scalix protocol service.
 
 %description -n kde-kio-scalix -l pl.UTF-8
 Obsługa protokołu Scalix.
+
+%package akregator
+Summary:	News feed reader
+Group:		X11/Applications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	kdebase-desktop >= %{_minbaseevr}
+Obsoletes:	akregator
+
+%description akregator
+Akregator is a news feed reader for the KDE desktop. It enables you to
+follow news sites, blogs and other RSS/Atom-enabled websites without
+the need to manually check for updates using a web browser.
 
 %package kaddressbook
 Summary:	Address book
@@ -668,7 +673,7 @@ fi
 rm -f *.lang
 
 > %{name}.lang
-%find_lang	akregator	--with-kde -a %{name}.lang
+%find_lang	akregator	--with-kde
 %find_lang	kaddressbook	--with-kde
 %find_lang	kalarm		--with-kde
 %find_lang	kandy		--with-kde
@@ -703,7 +708,6 @@ rm -rf $RPM_BUILD_ROOT
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README.Kolab
-%attr(755,root,root) %{_bindir}/akregator
 %attr(755,root,root) %{_bindir}/exchangewizard
 %attr(755,root,root) %{_bindir}/*groupwarewizard
 %attr(755,root,root) %{_bindir}/groupwisewizard
@@ -745,22 +749,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/kcm_sdsummary.so
 %attr(755,root,root) %{_libdir}/kde3/kded_networkstatus.so
 %attr(755,root,root) %{_libdir}/kde3/kfile_ics.so
-%attr(755,root,root) %{_libdir}/kde3/libakregatorpart.so*
 %attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
 %attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_akregator.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_karm.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_knotesplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_kpilotplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_newstickerplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkontact_weatherplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
@@ -770,7 +765,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kdepimwidgets.so
 %attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
-%{_datadir}/apps/akregator
 %{_datadir}/apps/kconf_update/kolab-resource.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
@@ -778,7 +772,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kontactsummary
 %{_datadir}/apps/kdepim
 %{_datadir}/autostart/kabcdistlistupdater.desktop
-%{_datadir}/config.kcfg/akregator.kcfg
 %{_datadir}/config.kcfg/custommimeheader.kcfg
 %{_datadir}/config.kcfg/customtemplates_kfg.kcfg
 %{_datadir}/config.kcfg/egroupware.kcfg
@@ -792,8 +785,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/slox.kcfg
 %{_datadir}/config.kcfg/templatesconfiguration_kfg.kcfg
 
-%{_datadir}/services/akregator_mk4storage_plugin.desktop
-%{_datadir}/services/akregator_part.desktop
 %{_datadir}/services/feed.protocol
 %{_datadir}/services/kcmkmailsummary.desktop
 %{_datadir}/services/kcmkontactknt.desktop
@@ -802,7 +793,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kcmsdsummary.desktop
 %{_datadir}/services/kded/networkstatus.desktop
 %{_datadir}/services/kfile_ics.desktop
-%{_datadir}/services/kontact
+%dir %{_datadir}/services/kontact
+%{_datadir}/services/kontact/specialdatesplugin.desktop
+%{_datadir}/services/kontact/summaryplugin.desktop
+%{_datadir}/services/kontact/weatherplugin.desktop
 %{_datadir}/services/kontactconfig.desktop
 %{_datadir}/services/kresources/kabc/imap.desktop
 %{_datadir}/services/kresources/kabc/kabc_groupdav.desktop
@@ -816,16 +810,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/kabc/scalix.desktop
 %{_datadir}/services/kresources/kcal
 %{_datadir}/services/kresources/kcal_manager.desktop
-%{_datadir}/servicetypes/akregator_plugin.desktop
 %{_datadir}/servicetypes/kaddressbookimprotocol.desktop
 %{_datadir}/servicetypes/kontactplugin.desktop
 %{_datadir}/servicetypes/korgprintplugin.desktop
 %{_desktopdir}/kde/Kontact.desktop
-%{_desktopdir}/kde/akregator.desktop
 
 %{_desktopdir}/kde/groupwarewizard.desktop
 %{_desktopdir}/kde/kontactdcop.desktop
-%{_iconsdir}/*/*/apps/akregator*
 %{_iconsdir}/*/*/apps/kontact.png
 %{_iconsdir}/*/*/actions/kontact_*.png
 %{_iconsdir}/*/*/actions/*rss*
@@ -938,6 +929,22 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/scalix.protocol
 %{_datadir}/services/scalixs.protocol
 
+%files akregator -f akregator.lang
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/akregator
+%attr(755,root,root) %{_libdir}/libakregatorprivate.so
+%attr(755,root,root) %{_libdir}/kde3/libakregatorpart.so*
+%attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_akregator.so
+%{_datadir}/apps/akregator
+%{_datadir}/config.kcfg/akregator.kcfg
+%{_datadir}/services/akregator_mk4storage_plugin.desktop
+%{_datadir}/services/akregator_part.desktop
+%{_datadir}/services/kontact/akregatorplugin*.desktop
+%{_datadir}/servicetypes/akregator_plugin.desktop
+%{_desktopdir}/kde/akregator.desktop
+%{_iconsdir}/*/*/apps/akregator*
+
 %files kaddressbook -f kaddressbook.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
@@ -963,6 +970,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kaddressbook
 %{_datadir}/services/kfile_vcf.desktop
 %{_datadir}/services/ldifvcardthumbnail.desktop
+%{_datadir}/services/kontact/kaddressbookplugin.desktop
 %{_datadir}/servicetypes/dcopaddressbook.desktop
 %{_datadir}/servicetypes/kaddressbook_contacteditorwidget.desktop
 %{_datadir}/servicetypes/kaddressbook_extension.desktop
@@ -995,6 +1003,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/karm
 %{_datadir}/apps/karmpart
 %{_datadir}/services/karm_part.desktop
+%{_datadir}/services/kontact/karmplugin.desktop
 %{_desktopdir}/kde/karm.desktop
 %{_iconsdir}/*/*/*/karm.png
 
@@ -1054,6 +1063,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kleopatra_config_appear.desktop
 %{_datadir}/services/kleopatra_config_dirserv.desktop
 %{_datadir}/services/kleopatra_config_dnorder.desktop
+%{_datadir}/services/kontact/kmailplugin.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
 %{_desktopdir}/kde/KMail.desktop
@@ -1084,6 +1094,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/knode
 %attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
 %attr(755,root,root) %{_libdir}/kde3/libknodepart.so*
+%attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
 %{_datadir}/services/knode_config_accounts.desktop
@@ -1093,6 +1104,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/knode_config_post_news.desktop
 %{_datadir}/services/knode_config_privacy.desktop
 %{_datadir}/services/knode_config_read_news.desktop
+%{_datadir}/services/kontact/knodeplugin.desktop
 %{_desktopdir}/kde/KNode.desktop
 %{_iconsdir}/*/*/*/knode.png
 %{_iconsdir}/*/*/*/knode2.png
@@ -1114,6 +1126,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kresources/knotes/knotes_xmlrpc.desktop
 %{_datadir}/services/kresources/knotes/kolabresource.desktop
 %{_datadir}/services/kresources/knotes_manager.desktop
+%{_datadir}/services/kontact/knotesplugin.desktop
 %{_desktopdir}/kde/knotes.desktop
 %{_iconsdir}/*/*/*/knotes.png
 
@@ -1126,7 +1139,7 @@ rm -rf $RPM_BUILD_ROOT
 %files korganizer -f korganizer.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/korgac
-%attr(755,root,root) %{_bindir}/korganizer*
+%attr(755,root,root) %{_bindir}/korganizer
 %attr(755,root,root) %{_bindir}/ical2vcal
 %attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkorganizer.so.1
@@ -1135,6 +1148,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkorganizer_eventviewer.so.1
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_newstickerplugin.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
+%attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
 %{_datadir}/apps/kgantt
@@ -1145,6 +1163,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/korganizer.kcfg
 %{_datadir}/services/korganizer
 %{_datadir}/services/korganizer_*.desktop
+%{_datadir}/services/kontact/journalplugin.desktop
+%{_datadir}/services/kontact/korganizerplugin.desktop
+%{_datadir}/services/kontact/newstickerplugin.desktop
+%{_datadir}/services/kontact/todoplugin.desktop
 %{_datadir}/services/webcal.protocol
 %{_datadir}/servicetypes/calendardecoration.desktop
 %{_datadir}/servicetypes/calendarplugin.desktop
@@ -1195,6 +1217,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kpilot_config.desktop
 %{_datadir}/services/*conduit.desktop
 %{_datadir}/servicetypes/kpilotconduit.desktop
+%{_datadir}/services/kontact/kpilotplugin.desktop
 %{_desktopdir}/kde/kpalmdoc.desktop
 %{_desktopdir}/kde/kpilot*.desktop
 %{_iconsdir}/*/*/apps/kpalmdoc.png
@@ -1203,7 +1226,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libakregatorprivate.so
 %attr(755,root,root) %{_libdir}/libindex.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libindex.so.0
 %attr(755,root,root) %{_libdir}/libgpgme++.so.*.*.*
