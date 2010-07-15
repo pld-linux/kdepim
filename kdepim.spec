@@ -1,9 +1,7 @@
 # TODO
-# - subpackages for akregator, korganizer(?)
+# - subpackages for akregator?
 # - unpackaged:
-#   /usr/bin/kabcdistlistupdater
 #   /usr/lib64/libknodecommon.so
-#   /usr/share/autostart/kabcdistlistupdater.desktop
 #
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
@@ -23,7 +21,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.10
-Release:	7.12
+Release:	7.13
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -641,7 +639,7 @@ rm -f makeinstall.stamp
 if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
 	rm -rf makeinstall.stamp installed.stamp $RPM_BUILD_ROOT
 
-	%{__make} install \
+	%{__make} install -j1 \
 		DESTDIR=$RPM_BUILD_ROOT \
 		kde_htmldir=%{_kdedocdir}
 
@@ -658,6 +656,7 @@ if [ ! -f installed.stamp ]; then
 
 	# are there any apps that actually link to these?
 	rm -f $RPM_BUILD_ROOT%{_libdir}/libkitchensync.so
+	rm -f $RPM_BUILD_ROOT%{_libdir}/libknodecommon.so
 	rm -f $RPM_BUILD_ROOT%{_libdir}/libqopensync.so
 
 	# unsupported
@@ -712,11 +711,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kolabwizard
 %attr(755,root,root) %{_bindir}/scalixadmin
 %attr(755,root,root) %{_bindir}/scalixwizard
+%attr(755,root,root) %{_bindir}/kabcdistlistupdater
 %attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kxml_compiler
 %attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
-
 %attr(755,root,root) %{_libdir}/kde3/conduit_memofile.so
 %attr(755,root,root) %{_libdir}/kde3/conduit_notepad.so
 %attr(755,root,root) %{_libdir}/kde3/kabc_groupdav.so
@@ -778,6 +777,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kontact
 %{_datadir}/apps/kontactsummary
 %{_datadir}/apps/kdepim
+%{_datadir}/autostart/kabcdistlistupdater.desktop
 %{_datadir}/config.kcfg/akregator.kcfg
 %{_datadir}/config.kcfg/custommimeheader.kcfg
 %{_datadir}/config.kcfg/customtemplates_kfg.kcfg
@@ -899,6 +899,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkorganizer.so
 %{_libdir}/libkorganizer_eventviewer.so
 %{_libdir}/libkorganizer_calendar.so
+%{_libdir}/libkorg_stdprinting.so
 %{_libdir}/libkpgp.so
 %{_libdir}/libkpilot.so
 %{_libdir}/libkpimexchange.so
@@ -1127,6 +1128,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/korgac
 %attr(755,root,root) %{_bindir}/korganizer*
 %attr(755,root,root) %{_bindir}/ical2vcal
+%attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkorganizer.so.1
+%attr(755,root,root) %{_libdir}/libkorganizer_calendar.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkorganizer_calendar.so.1
+%attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkorganizer_eventviewer.so.1
 %attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
 %attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
 %attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
@@ -1272,12 +1279,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkontact.so.1
 %attr(755,root,root) %{_libdir}/libkorg_stdprinting.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkorg_stdprinting.so.1
-%attr(755,root,root) %{_libdir}/libkorganizer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer.so.1
-%attr(755,root,root) %{_libdir}/libkorganizer_calendar.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer_calendar.so.1
-%attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkorganizer_eventviewer.so.1
 %attr(755,root,root) %{_libdir}/libkpgp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkpgp.so.2
 %attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
