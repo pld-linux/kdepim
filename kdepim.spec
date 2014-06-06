@@ -5,6 +5,10 @@
 %bcond_without	kitchensync		# build with kitchensync
 %bcond_without	indexlib		# disable full text indexing support
 %bcond_with	arts			# build with aRts support
+%bcond_without	gnokii		# Enable gnokii support
+%bcond_without	xscreensaver	# Enable xscreensaver support (idle detection in karm)
+%bcond_with	caldav		# Enable caldav support
+%bcond_with	carddav		# Enable carddav support
 
 %define		_state		stable
 %define		_minlibsevr	9:%{version}
@@ -31,11 +35,11 @@ Patch5:		%{name}-kmail-pld-linux.patch
 Patch6:		%{name}-kmail-gpgme_passphrase_cb.patch
 Patch8:		%{name}-sparc64.patch
 BuildRequires:	autoconf
-BuildRequires:	autoconf < 2.64
 BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	bluez-libs-devel
 BuildRequires:	boost-devel >= 1.35.0
+BuildRequires:	cmake >= 2.8
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	docbook-dtd42-xml
 %{?with_apidocs:BuildRequires:	doxygen}
@@ -72,8 +76,8 @@ Obsoletes:	kdepim-kresources
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-# build broken with spaces in CC
-%undefine	with_ccache
+# Usage: onoff BCOND_NAME
+%define		onoff() %{expand:%%{?with_%{1}:ON}%%{!?with_%{1}:OFF}}
 
 %description
 kdepim is a collection of Personal Information Management (PIM) tools
@@ -586,41 +590,39 @@ done
 %{__sed} -i -e 's,\($HOME/\.annoyance-filter/annoyance-filter\)\(.*\),annoyance-filter\2,g' \
 	kmail/kmail.antispamrc
 
-mv -f configure{,.dist}
-
 %build
-# speedup
-if [ ! -f configure ]; then
-	cp %{_datadir}/automake/config.sub admin
-	%{__make} -f admin/Makefile.common cvs
-fi
+install -d build
+cd build
 
-export PKG_CONFIG_PATH=%{_pkgconfigdir}
+%cmake \
+	-Wno-dev \
+	-DWITH_ARTS=%{onoff arts} \
+	-DWITH_SASL=ON \
+	-DWITH_NEWDISTRLISTS=ON  \
+	-DWITH_GNOKII=%{onoff gnokii} \
+	-DWITH_EXCHANGE=ON \
+	-DWITH_EGROUPWARE=ON \
+	-DWITH_KOLAB=ON \
+	-DWITH_SLOX=ON \
+	-DWITH_GROUPWISE=ON \
+	-DWITH_FEATUREPLAN=ON \
+	-DWITH_GROUPDAV=ON \
+	-DWITH_BIRTHDAYS=ON \
+	-DWITH_NEWEXCHANGE=ON \
+	-DWITH_SCALIX=ON \
+	-DWITH_CALDAV=%{onoff caldav} \
+	-DWITH_CARDDAV=%{onoff carddav} \
+	-DWITH_INDEXLIB=ON \
+	-DWITH_XSCREENSAVER=%{onoff xscreensaver} \
+	-DBUILD_ALL=ON \
+	-DBUILD_KITCHENSYNC=%{onoff kitchensync} \
+	..
 
-%configure \
-	--%{?debug:en}%{!?debug:dis}able-debug%{?debug:=full} \
-	%{!?debug:--disable-rpath} \
-	--disable-final \
-	%{?with_hidden_visibility:--enable-gcc-hidden-visibility} \
-	%{?with_indexlib:--enable-indexlib} \
-	--with%{!?with_arts:out}-arts \
-%if "%{_lib}" == "lib64"
-	--enable-libsuffix=64 \
-%endif
-	--with-gpg=/usr/bin/gpg \
-	--with-gpgsm=/usr/bin/gpgsm \
-	--enable-newdistrlists \
-	--with-distribution="PLD Linux Distribution" \
-	--with-qt-libraries=%{_libdir}
+%{__make}
 
-# build in kresources/featureplan fails, kxml_compiler is invoked several times
-# instead of one job and commands get out of sync:
-# In file included from kcal_resourcefeatureplanconfig.cpp:33:
-# kcal_resourcefeatureplan.h:26:26: warning: kde-features.h is shorter than expected
-%{__make} -j1
 %{?with_apidocs:%{__make} apidox}
 
-rm -f makeinstall.stamp
+rm -f ../makeinstall.stamp
 
 %install
 if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
