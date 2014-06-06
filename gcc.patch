@@ -1,0 +1,10 @@
+--- kdepim-trinity-3.5.13.2/certmanager/lib/cryptplug.cpp~	2014-06-06 23:31:41.000000000 +0300
++++ kdepim-trinity-3.5.13.2/certmanager/lib/cryptplug.cpp	2014-06-07 00:50:19.664019348 +0300
+@@ -30,6 +30,7 @@
+ 
+ #include "kleo/oidmap.h"
+ 
++#include <unistd.h>
+ #include <gpgmepp/context.h>
+ #include <gpgmepp/data.h>
+ #include <gpgmepp/importresult.h>

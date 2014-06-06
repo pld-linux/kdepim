@@ -34,6 +34,7 @@ Patch4:		%{name}-kmail-toolbar.patch
 Patch5:		%{name}-kmail-pld-linux.patch
 Patch6:		%{name}-kmail-gpgme_passphrase_cb.patch
 Patch8:		%{name}-sparc64.patch
+Patch9:		gcc.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -561,6 +562,7 @@ libksieve, libmimelib.
 %patch5 -p1
 %patch6 -p1
 %patch8 -p1
+%patch9 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
