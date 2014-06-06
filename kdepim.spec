@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_without	apidocs			# do not prepare API documentation
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
@@ -15,13 +16,13 @@ Summary(pl.UTF-8):	Zarządca informacji osobistej (PIM) dla KDE
 Summary(ru.UTF-8):	Персональный планировщик (PIM) для KDE
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
-Version:	3.5.10
-Release:	7.19
+Version:	3.5.13.2
+Release:	0.1
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
-Source0:	ftp://ftp.kde.org/pub/kde/%{_state}/%{version}/src/%{name}-%{version}.tar.bz2
-# Source0-md5:	fc93e458a8eec8131ede56cff30c28b2
+Source0:	http://ftp.fau.de/trinity/releases/%{version}/%{name}-trinity-%{version}.tar.xz
+# Source0-md5:	58b046176655b4a3c6a6b3d56d3e2f69
 Patch100:	%{name}-branch.diff
 Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
@@ -64,6 +65,8 @@ BuildRequires:	qt-designer-libs
 BuildRequires:	readline-devel
 BuildRequires:	rpmbuild(find_lang) >= 1.32
 BuildRequires:	rpmbuild(macros) >= 1.129
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 BuildConflicts:	indexlib
 BuildConflicts:	kdepim-kontact-libs
@@ -554,8 +557,7 @@ libkdenetwork, libkdepim, libkmailprivate, libknodecommon, libkpilot,
 libksieve, libmimelib.
 
 %prep
-%setup -q
-%patch100 -p0
+%setup -q -n %{name}-trinity-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
