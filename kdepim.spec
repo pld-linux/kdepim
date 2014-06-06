@@ -24,19 +24,12 @@ Group:		X11/Applications
 Source0:	http://ftp.fau.de/trinity/releases/%{version}/%{name}-trinity-%{version}.tar.xz
 # Source0-md5:	58b046176655b4a3c6a6b3d56d3e2f69
 Patch100:	%{name}-branch.diff
-Patch0:		kde-common-PLD.patch
 Patch1:		%{name}-kmail_toolbars.patch
 Patch2:		%{name}-kmail-vcardviewer.patch
-Patch3:		kde-ac260-lt.patch
 Patch4:		%{name}-kmail-toolbar.patch
 Patch5:		%{name}-kmail-pld-linux.patch
 Patch6:		%{name}-kmail-gpgme_passphrase_cb.patch
-Patch7:		%{name}-kmail-templatesconfiguration.patch
 Patch8:		%{name}-sparc64.patch
-Patch9:		%{name}-inotify.patch
-Patch10:	kde-am.patch
-Patch11:	%{name}-3.5.10-gcc_4.4-2.patch
-Patch12:	gcc45.patch
 BuildRequires:	autoconf
 BuildRequires:	autoconf < 2.64
 BuildRequires:	automake
@@ -558,28 +551,15 @@ libksieve, libmimelib.
 
 %prep
 %setup -q -n %{name}-trinity-%{version}
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
 
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;Calendar;/' \
 	korganizer/korganizer.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	kpilot/kpilot/kpilotdaemon.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	kpilot/kpilot/kpilot.desktop
-%{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;PDA;/' \
-	kpilot/conduits/docconduit/kpalmdoc.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;ContactManagement;/' \
 	kaddressbook/kaddressbook.desktop
 %{__sed} -i -e 's/Categories=.*/Categories=Qt;KDE;Office;X-PIM;/' \
