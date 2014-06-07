@@ -78,6 +78,7 @@ Obsoletes:	kdepim-kresources
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_libexecdir	%{_libdir}/kde3
+%define		_applnkdir	%{_datadir}/applnk
 
 # Usage: onoff BCOND_NAME
 %define		onoff() %{expand:%%{?with_%{1}:ON}%%{!?with_%{1}:OFF}}
@@ -641,7 +642,7 @@ fi
 
 if [ ! -f installed.stamp ]; then
 	# remove checked files
-	%{__rm} $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
+	%{__rm} $RPM_BUILD_ROOT%{_applnkdir}/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
 
 	rm -f $RPM_BUILD_ROOT%{_libexecdir}/*.la
 	rm -f $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kdepimwidgets.la
@@ -970,7 +971,7 @@ rm -rf $RPM_BUILD_ROOT
 %files kalarm -f kalarm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kalarm*
-%{_datadir}/applnk/.hidden/kalarmd.desktop
+%{_applnkdir}/.hidden/kalarmd.desktop
 %{_datadir}/apps/kalarm*
 %{_datadir}/autostart/kalarm*.desktop
 %{_desktopdir}/kde/kalarm.desktop
