@@ -77,6 +77,8 @@ Obsoletes:	kdepim-kresources
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_libexecdir	%{_libdir}/kde3
+
 # Usage: onoff BCOND_NAME
 %define		onoff() %{expand:%%{?with_%{1}:ON}%%{!?with_%{1}:OFF}}
 
@@ -641,9 +643,9 @@ if [ ! -f installed.stamp ]; then
 	# remove checked files
 	%{__rm} $RPM_BUILD_ROOT%{_datadir}/applnk/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
 
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/*.la
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kdepimwidgets.la
-	rm -f $RPM_BUILD_ROOT%{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.la
+	rm -f $RPM_BUILD_ROOT%{_libexecdir}/*.la
+	rm -f $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kdepimwidgets.la
+	rm -f $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kpartsdesignerplugin.la
 
 	# are there any apps that actually link to these?
 	rm -f $RPM_BUILD_ROOT%{_libdir}/libkitchensync.so
@@ -706,51 +708,51 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kxml_compiler
 %attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
-%attr(755,root,root) %{_libdir}/kde3/conduit_memofile.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_notepad.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_groupdav.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_groupwise.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_kolab.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_newexchange.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_scalix.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_slox.so
-%attr(755,root,root) %{_libdir}/kde3/kabc_xmlrpc.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_groupdav.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_groupwise.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_kabc.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_kolab.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_local.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_localdir.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_newexchange.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_remote.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_resourcefeatureplan.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_scalix.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_slox.so
-%attr(755,root,root) %{_libdir}/kde3/kcal_xmlrpc.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kmailsummary.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kontact.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kontactknt.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kontactsummary.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_korgsummary.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_sdsummary.so
-%attr(755,root,root) %{_libdir}/kde3/kded_networkstatus.so
-%attr(755,root,root) %{_libdir}/kde3/kfile_ics.so
-%attr(755,root,root) %{_libdir}/kde3/libexchangewizard.so
-%attr(755,root,root) %{_libdir}/kde3/libgroupwisewizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libkontact_kaddressbookplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_karm.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_kmailplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_knotesplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_kpilotplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_summaryplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_weatherplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libegroupwarewizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libkolabwizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libsloxwizard.so*
-%attr(755,root,root) %{_libdir}/kde3/libscalixwizard.so
-%attr(755,root,root) %{_libdir}/kde3/resourcecalendarexchange.so
-%attr(755,root,root) %{_libdir}/kde3/plugins/designer/kdepimwidgets.so
-%attr(755,root,root) %{_libdir}/kde3/plugins/designer/kpartsdesignerplugin.so
+%attr(755,root,root) %{_libexecdir}/conduit_memofile.so
+%attr(755,root,root) %{_libexecdir}/conduit_notepad.so
+%attr(755,root,root) %{_libexecdir}/kabc_groupdav.so
+%attr(755,root,root) %{_libexecdir}/kabc_groupwise.so
+%attr(755,root,root) %{_libexecdir}/kabc_kolab.so
+%attr(755,root,root) %{_libexecdir}/kabc_newexchange.so
+%attr(755,root,root) %{_libexecdir}/kabc_scalix.so
+%attr(755,root,root) %{_libexecdir}/kabc_slox.so
+%attr(755,root,root) %{_libexecdir}/kabc_xmlrpc.so
+%attr(755,root,root) %{_libexecdir}/kcal_groupdav.so
+%attr(755,root,root) %{_libexecdir}/kcal_groupwise.so
+%attr(755,root,root) %{_libexecdir}/kcal_kabc.so
+%attr(755,root,root) %{_libexecdir}/kcal_kolab.so
+%attr(755,root,root) %{_libexecdir}/kcal_local.so
+%attr(755,root,root) %{_libexecdir}/kcal_localdir.so
+%attr(755,root,root) %{_libexecdir}/kcal_newexchange.so
+%attr(755,root,root) %{_libexecdir}/kcal_remote.so
+%attr(755,root,root) %{_libexecdir}/kcal_resourcefeatureplan.so
+%attr(755,root,root) %{_libexecdir}/kcal_scalix.so
+%attr(755,root,root) %{_libexecdir}/kcal_slox.so
+%attr(755,root,root) %{_libexecdir}/kcal_xmlrpc.so
+%attr(755,root,root) %{_libexecdir}/kcm_kmailsummary.so
+%attr(755,root,root) %{_libexecdir}/kcm_kontact.so
+%attr(755,root,root) %{_libexecdir}/kcm_kontactknt.so
+%attr(755,root,root) %{_libexecdir}/kcm_kontactsummary.so
+%attr(755,root,root) %{_libexecdir}/kcm_korgsummary.so
+%attr(755,root,root) %{_libexecdir}/kcm_sdsummary.so
+%attr(755,root,root) %{_libexecdir}/kded_networkstatus.so
+%attr(755,root,root) %{_libexecdir}/kfile_ics.so
+%attr(755,root,root) %{_libexecdir}/libexchangewizard.so
+%attr(755,root,root) %{_libexecdir}/libgroupwisewizard.so*
+%attr(755,root,root) %{_libexecdir}/libkontact_kaddressbookplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_karm.so
+%attr(755,root,root) %{_libexecdir}/libkontact_kmailplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_knotesplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_kpilotplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_summaryplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_weatherplugin.so
+%attr(755,root,root) %{_libexecdir}/libegroupwarewizard.so*
+%attr(755,root,root) %{_libexecdir}/libkolabwizard.so*
+%attr(755,root,root) %{_libexecdir}/libsloxwizard.so*
+%attr(755,root,root) %{_libexecdir}/libscalixwizard.so
+%attr(755,root,root) %{_libexecdir}/resourcecalendarexchange.so
+%attr(755,root,root) %{_libexecdir}/plugins/designer/kdepimwidgets.so
+%attr(755,root,root) %{_libexecdir}/plugins/designer/kpartsdesignerplugin.so
 %{_datadir}/apps/kconf_update/kolab-resource.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/upgrade-resourcetype.pl
 %{_datadir}/apps/kdepimwidgets
@@ -898,20 +900,20 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n kde-kio-imap4
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/kde3/kio_imap4.so
+%attr(755,root,root) %{_libexecdir}/kio_imap4.so
 %{_datadir}/services/imap4.protocol
 %{_datadir}/services/imaps.protocol
 
 %files -n kde-kio-groupwise
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/kde3/kio_groupwise.so
+%attr(755,root,root) %{_libexecdir}/kio_groupwise.so
 %{_datadir}/config.kcfg/groupwise.kcfg
 %{_datadir}/services/groupwise.protocol
 %{_datadir}/services/groupwises.protocol
 
 %files -n kde-kio-scalix
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/kde3/kio_scalix.so
+%attr(755,root,root) %{_libexecdir}/kio_scalix.so
 %{_datadir}/services/scalix.protocol
 %{_datadir}/services/scalixs.protocol
 
@@ -919,9 +921,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/akregator
 %attr(755,root,root) %{_libdir}/libakregatorprivate.so
-%attr(755,root,root) %{_libdir}/kde3/libakregatorpart.so*
-%attr(755,root,root) %{_libdir}/kde3/libakregator_mk4storage_plugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_akregator.so
+%attr(755,root,root) %{_libexecdir}/libakregatorpart.so*
+%attr(755,root,root) %{_libexecdir}/libakregator_mk4storage_plugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_akregator.so
 %{_datadir}/apps/akregator
 %{_datadir}/config.kcfg/akregator.kcfg
 %{_datadir}/services/akregator_mk4storage_plugin.desktop
@@ -935,20 +937,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kabc2mutt
 %attr(755,root,root) %{_bindir}/kaddressbook
-%attr(755,root,root) %{_libdir}/kde3/kcm_kabconfig.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kabcustomfields.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kabldapconfig.so
-%attr(755,root,root) %{_libdir}/kde3/kfile_vcf.so
-%attr(755,root,root) %{_libdir}/kde3/ldifvcardthumbnail.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cardview.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_cryptosettings.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlist.so*
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_distributionlistng.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_iconview.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_resourceselection.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_tableview.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddrbk_*_xxport.so
-%attr(755,root,root) %{_libdir}/kde3/libkaddressbookpart.so
+%attr(755,root,root) %{_libexecdir}/kcm_kabconfig.so
+%attr(755,root,root) %{_libexecdir}/kcm_kabcustomfields.so
+%attr(755,root,root) %{_libexecdir}/kcm_kabldapconfig.so
+%attr(755,root,root) %{_libexecdir}/kfile_vcf.so
+%attr(755,root,root) %{_libexecdir}/ldifvcardthumbnail.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_cardview.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_cryptosettings.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_distributionlist.so*
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_distributionlistng.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_iconview.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_resourceselection.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_tableview.so
+%attr(755,root,root) %{_libexecdir}/libkaddrbk_*_xxport.so
+%attr(755,root,root) %{_libexecdir}/libkaddressbookpart.so
 %{_datadir}/apps/kaddressbook
 %{_datadir}/services/kabconfig.desktop
 %{_datadir}/services/kabcustomfields.desktop
@@ -985,7 +987,7 @@ rm -rf $RPM_BUILD_ROOT
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
-%attr(755,root,root) %{_libdir}/kde3/libkarmpart.so
+%attr(755,root,root) %{_libexecdir}/libkarmpart.so
 %{_datadir}/apps/karm
 %{_datadir}/apps/karmpart
 %{_datadir}/services/karm_part.desktop
@@ -1001,7 +1003,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkitchensync.so.0
 %attr(755,root,root) %{_libdir}/libqopensync.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libqopensync.so.0
-%attr(755,root,root) %{_libdir}/kde3/libkitchensyncpart.so
+%attr(755,root,root) %{_libexecdir}/libkitchensyncpart.so
 %{_datadir}/apps/kitchensync
 %{_desktopdir}/kde/kitchensync.desktop
 %{_iconsdir}/*/*/*/kitchensync.png
@@ -1017,13 +1019,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kmailcvt
 %attr(755,root,root) %{_bindir}/kleopatra
 %attr(755,root,root) %{_bindir}/kwatchgnupg
-%attr(755,root,root) %{_libdir}/kde3/kcm_kmail.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kleopatra.so
-%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_application_octetstream.so
-%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_calendar.so
-%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_vcard.so
-%attr(755,root,root) %{_libdir}/kde3/libkmail_bodypartformatter_text_xdiff.so
-%attr(755,root,root) %{_libdir}/kde3/libkmailpart.so*
+%attr(755,root,root) %{_libexecdir}/kcm_kmail.so
+%attr(755,root,root) %{_libexecdir}/kcm_kleopatra.so
+%attr(755,root,root) %{_libexecdir}/libkmail_bodypartformatter_application_octetstream.so
+%attr(755,root,root) %{_libexecdir}/libkmail_bodypartformatter_text_calendar.so
+%attr(755,root,root) %{_libexecdir}/libkmail_bodypartformatter_text_vcard.so
+%attr(755,root,root) %{_libexecdir}/libkmail_bodypartformatter_text_xdiff.so
+%attr(755,root,root) %{_libexecdir}/libkmailpart.so*
 %{_datadir}/apps/kconf_update/kmail.upd
 %{_datadir}/apps/kconf_update/kpgp.upd
 %attr(755,root,root) %{_datadir}/apps/kconf_update/kmail*.pl
@@ -1063,10 +1065,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/gpg.png
 %{_iconsdir}/*/*/apps/gpgsm.png
 # kio-mbox
-%attr(755,root,root) %{_libdir}/kde3/kio_mbox.so
+%attr(755,root,root) %{_libexecdir}/kio_mbox.so
 %{_datadir}/services/mbox.protocol
 # kio-sieve
-%attr(755,root,root) %{_libdir}/kde3/kio_sieve.so
+%attr(755,root,root) %{_libexecdir}/kio_sieve.so
 %{_datadir}/services/sieve.protocol
 # ktnef
 %attr(755,root,root) %{_bindir}/ktnef
@@ -1078,9 +1080,9 @@ rm -rf $RPM_BUILD_ROOT
 %files knode -f knode.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knode
-%attr(755,root,root) %{_libdir}/kde3/kcm_knode.so
-%attr(755,root,root) %{_libdir}/kde3/libknodepart.so*
-%attr(755,root,root) %{_libdir}/kde3/libkontact_knodeplugin.so
+%attr(755,root,root) %{_libexecdir}/kcm_knode.so
+%attr(755,root,root) %{_libexecdir}/libknodepart.so*
+%attr(755,root,root) %{_libexecdir}/libkontact_knodeplugin.so
 %{_datadir}/apps/knode
 %{_datadir}/services/knewsservice.protocol
 %{_datadir}/services/knode_config_accounts.desktop
@@ -1098,10 +1100,10 @@ rm -rf $RPM_BUILD_ROOT
 %files knotes -f knotes.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/knotes
-%attr(755,root,root) %{_libdir}/kde3/knotes_kolab.so
-%attr(755,root,root) %{_libdir}/kde3/knotes_local.so
-%attr(755,root,root) %{_libdir}/kde3/knotes_scalix.so
-%attr(755,root,root) %{_libdir}/kde3/knotes_xmlrpc.so
+%attr(755,root,root) %{_libexecdir}/knotes_kolab.so
+%attr(755,root,root) %{_libexecdir}/knotes_local.so
+%attr(755,root,root) %{_libexecdir}/knotes_scalix.so
+%attr(755,root,root) %{_libexecdir}/knotes_xmlrpc.so
 %{_datadir}/apps/knotes
 %{_datadir}/config.kcfg/knoteconfig.kcfg
 %{_datadir}/config.kcfg/knotesglobalconfig.kcfg
@@ -1133,14 +1135,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkorganizer_calendar.so.1
 %attr(755,root,root) %{_libdir}/libkorganizer_eventviewer.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkorganizer_eventviewer.so.1
-%attr(755,root,root) %{_libdir}/kde3/kcm_korganizer.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_journalplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_korganizerplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_newstickerplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_specialdatesplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkontact_todoplugin.so
-%attr(755,root,root) %{_libdir}/kde3/libkorg_*.so
-%attr(755,root,root) %{_libdir}/kde3/libkorganizerpart.so
+%attr(755,root,root) %{_libexecdir}/kcm_korganizer.so
+%attr(755,root,root) %{_libexecdir}/libkontact_journalplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_korganizerplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_newstickerplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_specialdatesplugin.so
+%attr(755,root,root) %{_libexecdir}/libkontact_todoplugin.so
+%attr(755,root,root) %{_libexecdir}/libkorg_*.so
+%attr(755,root,root) %{_libexecdir}/libkorganizerpart.so
 %{_datadir}/apps/kgantt
 %{_datadir}/apps/korgac
 %{_datadir}/apps/korganizer
@@ -1174,17 +1176,17 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
-%attr(755,root,root) %{_libdir}/kde3/conduit_address.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_doc.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_knotes.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_popmail.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_mal.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_sysinfo.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_time.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_todo.so
-%attr(755,root,root) %{_libdir}/kde3/conduit_vcal.so
-%attr(755,root,root) %{_libdir}/kde3/kcm_kpilot.so
-%attr(755,root,root) %{_libdir}/kde3/kfile_palm.so
+%attr(755,root,root) %{_libexecdir}/conduit_address.so
+%attr(755,root,root) %{_libexecdir}/conduit_doc.so
+%attr(755,root,root) %{_libexecdir}/conduit_knotes.so
+%attr(755,root,root) %{_libexecdir}/conduit_popmail.so
+%attr(755,root,root) %{_libexecdir}/conduit_mal.so
+%attr(755,root,root) %{_libexecdir}/conduit_sysinfo.so
+%attr(755,root,root) %{_libexecdir}/conduit_time.so
+%attr(755,root,root) %{_libexecdir}/conduit_todo.so
+%attr(755,root,root) %{_libexecdir}/conduit_vcal.so
+%attr(755,root,root) %{_libexecdir}/kcm_kpilot.so
+%attr(755,root,root) %{_libexecdir}/kfile_palm.so
 %{_datadir}/apps/kconf_update/kpalmdoc.upd
 %{_datadir}/apps/kconf_update/kpilot.upd
 %{_datadir}/apps/kpilot
