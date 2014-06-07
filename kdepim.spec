@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	apidocs			# do not prepare API documentation
+%bcond_with	apidocs			# do not prepare API documentation
 %bcond_without	hidden_visibility	# don't use gcc hidden visibility
 %bcond_without	kitchensync		# build with kitchensync
 %bcond_without	indexlib		# disable full text indexing support
@@ -77,7 +77,7 @@ Obsoletes:	kdepim-kresources
 #Obsoletes:	kdepim-libkcal
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_libexecdir	%{_libdir}/kde3
+%define		_libexecdir	%{_libdir}/trinity
 %define		_applnkdir	%{_datadir}/applnk
 
 # Usage: onoff BCOND_NAME
@@ -601,6 +601,9 @@ cd build
 
 %cmake \
 	-Wno-dev \
+	-DPLUGIN_INSTALL_DIR=%{_libexecdir} \
+	-DHTML_INSTALL_DIR=%{_kdedocdir} \
+	-DAPPS_INSTALL_DIR=%{_applnkdir} \
 	-DWITH_ARTS=%{onoff arts} \
 	-DWITH_SASL=ON \
 	-DWITH_NEWDISTRLISTS=ON  \
@@ -630,10 +633,12 @@ cd build
 rm -f ../makeinstall.stamp
 
 %install
+test -f makeinstall.stamp -a %{_specdir}/%{name}.spec -nt makeinstall.stamp && rm -f makeinstall.stamp
+
 if [ ! -f makeinstall.stamp -o ! -d $RPM_BUILD_ROOT ]; then
 	rm -rf makeinstall.stamp installed.stamp $RPM_BUILD_ROOT
 
-	%{__make} install -j1 \
+	%{__make} -C build install \
 		DESTDIR=$RPM_BUILD_ROOT \
 		kde_htmldir=%{_kdedocdir}
 
