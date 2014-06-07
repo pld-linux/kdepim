@@ -21,7 +21,7 @@ Summary(ru.UTF-8):	Персональный планировщик (PIM) для 
 Summary(uk.UTF-8):	Персональный планувальник (PIM) для KDE
 Name:		kdepim
 Version:	3.5.13.2
-Release:	0.1
+Release:	0.4
 Epoch:		9
 License:	GPL
 Group:		X11/Applications
@@ -324,6 +324,16 @@ Program pocztowy dla KDE o olbrzymich możliwościach, obejmujących:
 
 %description kmail -l pt_BR.UTF-8
 Poderoso cliente / leitor de e-mails para o KDE.
+
+%package kmobile
+Summary:	Synchronize and manage mobile phone with your PC
+Group:		Applications/Communications
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description kmobile
+KMobileTools is a nice TDE-based application that allows to
+synchronize and manage mobile phones with your PC. It handles full SMS
+control, dialing calls, phonebook, and phone status monitoring.
 
 %package knode
 Summary:	KDE News Reader
@@ -649,14 +659,18 @@ if [ ! -f installed.stamp ]; then
 	# remove checked files
 	%{__rm} $RPM_BUILD_ROOT%{_applnkdir}/{Applications/kalarm,Utilities/{kandy,karm,kmailcvt}}.desktop
 
-	rm -f $RPM_BUILD_ROOT%{_libexecdir}/*.la
-	rm -f $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kdepimwidgets.la
-	rm -f $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kpartsdesignerplugin.la
+	%{__rm} $RPM_BUILD_ROOT%{_libexecdir}/libkmobile_skeleton.so
+	%{__rm} $RPM_BUILD_ROOT%{_datadir}/services/libkmobile_skeleton.desktop
+
+	%{__rm} $RPM_BUILD_ROOT%{_libexecdir}/*.la
+	%{__rm} $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kdepimwidgets.la
+	%{__rm} $RPM_BUILD_ROOT%{_libexecdir}/plugins/designer/kpartsdesignerplugin.la
 
 	# are there any apps that actually link to these?
-	rm -f $RPM_BUILD_ROOT%{_libdir}/libkitchensync.so
-	rm -f $RPM_BUILD_ROOT%{_libdir}/libknodecommon.so
-	rm -f $RPM_BUILD_ROOT%{_libdir}/libqopensync.so
+	%{__rm} $RPM_BUILD_ROOT%{_libdir}/libkitchensync.so
+	%{__rm} $RPM_BUILD_ROOT%{_libdir}/libknodecommon.so
+	%{__rm} $RPM_BUILD_ROOT%{_libdir}/libqopensync.so
+	%{__rm} $RPM_BUILD_ROOT%{_libdir}/libakregatorprivate.so
 
 	# unsupported
 	rm -rf $RPM_BUILD_ROOT%{_iconsdir}/locolor
@@ -699,6 +713,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	knode			-p /sbin/ldconfig
 %postun	knode			-p /sbin/ldconfig
 
+%post	akregator	-p /sbin/ldconfig
+%postun	akregator	-p /sbin/ldconfig
+
+%post	karm	-p /sbin/ldconfig
+%postun	karm	-p /sbin/ldconfig
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc README.Kolab
@@ -712,10 +732,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/kabcdistlistupdater
 %attr(755,root,root) %{_bindir}/kontact
 %attr(755,root,root) %{_bindir}/kxml_compiler
-%attr(755,root,root) %{_bindir}/networkstatustestservice
+#%attr(755,root,root) %{_bindir}/networkstatustestservice
 %attr(755,root,root) %{_bindir}/sloxwizard
-%attr(755,root,root) %{_libexecdir}/conduit_memofile.so
-%attr(755,root,root) %{_libexecdir}/conduit_notepad.so
+#%attr(755,root,root) %{_libexecdir}/conduit_memofile.so
+#%attr(755,root,root) %{_libexecdir}/conduit_notepad.so
 %attr(755,root,root) %{_libexecdir}/kabc_groupdav.so
 %attr(755,root,root) %{_libexecdir}/kabc_groupwise.so
 %attr(755,root,root) %{_libexecdir}/kabc_kolab.so
@@ -741,7 +761,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/kcm_kontactsummary.so
 %attr(755,root,root) %{_libexecdir}/kcm_korgsummary.so
 %attr(755,root,root) %{_libexecdir}/kcm_sdsummary.so
-%attr(755,root,root) %{_libexecdir}/kded_networkstatus.so
+#%attr(755,root,root) %{_libexecdir}/kded_networkstatus.so
 %attr(755,root,root) %{_libexecdir}/kfile_ics.so
 %attr(755,root,root) %{_libexecdir}/libexchangewizard.so
 %attr(755,root,root) %{_libexecdir}/libgroupwisewizard.so*
@@ -749,7 +769,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/libkontact_karm.so
 %attr(755,root,root) %{_libexecdir}/libkontact_kmailplugin.so
 %attr(755,root,root) %{_libexecdir}/libkontact_knotesplugin.so
-%attr(755,root,root) %{_libexecdir}/libkontact_kpilotplugin.so
+#%attr(755,root,root) %{_libexecdir}/libkontact_kpilotplugin.so
 %attr(755,root,root) %{_libexecdir}/libkontact_summaryplugin.so
 %attr(755,root,root) %{_libexecdir}/libkontact_weatherplugin.so
 %attr(755,root,root) %{_libexecdir}/libegroupwarewizard.so*
@@ -771,7 +791,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/config.kcfg/egroupware.kcfg
 %{_datadir}/config.kcfg/kolab.kcfg
 %{_datadir}/config.kcfg/kontact.kcfg
-%{_datadir}/config.kcfg/memofileconduit.kcfg
+#%{_datadir}/config.kcfg/memofileconduit.kcfg
 %{_datadir}/config.kcfg/mk4config.kcfg
 %{_datadir}/config.kcfg/pimemoticons.kcfg
 %{_datadir}/config.kcfg/replyphrases.kcfg
@@ -785,7 +805,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kcmkontactsummary.desktop
 %{_datadir}/services/kcmkorgsummary.desktop
 %{_datadir}/services/kcmsdsummary.desktop
-%{_datadir}/services/kded/networkstatus.desktop
+#%{_datadir}/services/kded/networkstatus.desktop
 %{_datadir}/services/kfile_ics.desktop
 %dir %{_datadir}/services/kontact
 %{_datadir}/services/kontact/specialdatesplugin.desktop
@@ -820,12 +840,13 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/indexlib-config
-%{_includedir}/KNotesIface.h
 %{_includedir}/KNotesAppIface.h
+%{_includedir}/KNotesIface.h
 %{_includedir}/kdepimmacros.h
 %{_includedir}/kmailIface.h
 %{_includedir}/kmailicalIface.h
 %{_includedir}/kmailpartIface.h
+%{_includedir}/kpimprefs.h
 %{_includedir}/akregator
 %{_includedir}/calendar
 %{_includedir}/gpgme++
@@ -839,7 +860,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/kmail
 %{_includedir}/kontact
 %{_includedir}/korganizer
-%{_includedir}/kpilot
+#%{_includedir}/kpilot
 %{_includedir}/ksieve
 %{_includedir}/ktnef
 %{_includedir}/libemailfunctions
@@ -868,6 +889,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkcal_xmlrpc.so
 %{_libdir}/libkcalkolab.so
 %{_libdir}/libkcalscalix.so
+%{_libdir}/libkarm.so
+%{_libdir}/libknotes.so
 %{_libdir}/libkdepim.so
 %{_libdir}/libkgantt.so
 %{_libdir}/libkgroupwarebase.so
@@ -886,7 +909,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libkorganizer_calendar.so
 %{_libdir}/libkorg_stdprinting.so
 %{_libdir}/libkpgp.so
-%{_libdir}/libkpilot.so
+#%{_libdir}/libkpilot.so
 %{_libdir}/libkpimexchange.so
 %{_libdir}/libkpimidentities.so
 %{_libdir}/libkpinterfaces.so
@@ -895,6 +918,25 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libktnef.so
 %{_libdir}/libmimelib.so
 %{_libdir}/libqgpgme.so
+
+%{_datadir}/cmake/certmanager.cmake
+%{_datadir}/cmake/indexlib.cmake
+%{_datadir}/cmake/kgantt.cmake
+%{_datadir}/cmake/kmail.cmake
+%{_datadir}/cmake/knotes.cmake
+%{_datadir}/cmake/korganizer.cmake
+%{_datadir}/cmake/kresources.cmake
+%{_datadir}/cmake/ktnef.cmake
+%{_datadir}/cmake/libkcal.cmake
+%{_datadir}/cmake/libkdenetwork.cmake
+%{_datadir}/cmake/libkdepim.cmake
+%{_datadir}/cmake/libkholidays.cmake
+%{_datadir}/cmake/libkmime.cmake
+%{_datadir}/cmake/libkpgp.cmake
+%{_datadir}/cmake/libkpimexchange.cmake
+%{_datadir}/cmake/libkpimidentities.cmake
+%{_datadir}/cmake/libksieve.cmake
+%{_datadir}/cmake/mimelib.cmake
 
 %{_libdir}/*.la
 
@@ -926,7 +968,8 @@ rm -rf $RPM_BUILD_ROOT
 %files akregator -f akregator.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/akregator
-%attr(755,root,root) %{_libdir}/libakregatorprivate.so
+%attr(755,root,root) %{_libdir}/libakregatorprivate.so.0
+%attr(755,root,root) %ghost %{_libdir}/libakregatorprivate.so.*.*.*
 %attr(755,root,root) %{_libexecdir}/libakregatorpart.so*
 %attr(755,root,root) %{_libexecdir}/libakregator_mk4storage_plugin.so
 %attr(755,root,root) %{_libexecdir}/libkontact_akregator.so
@@ -950,7 +993,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libexecdir}/ldifvcardthumbnail.so
 %attr(755,root,root) %{_libexecdir}/libkaddrbk_cardview.so
 %attr(755,root,root) %{_libexecdir}/libkaddrbk_cryptosettings.so
-%attr(755,root,root) %{_libexecdir}/libkaddrbk_distributionlist.so*
+#%attr(755,root,root) %{_libexecdir}/libkaddrbk_distributionlist.so*
 %attr(755,root,root) %{_libexecdir}/libkaddrbk_distributionlistng.so
 %attr(755,root,root) %{_libexecdir}/libkaddrbk_iconview.so
 %attr(755,root,root) %{_libexecdir}/libkaddrbk_resourceselection.so
@@ -989,10 +1032,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/apps/kandy
 %{_datadir}/config.kcfg/kandy.kcfg
 %{_desktopdir}/kde/kandy.desktop
+%{_iconsdir}/crystalsvg/*/apps/kandy.png
 
 %files karm -f karm.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/karm
+%attr(755,root,root) %{_libdir}/libkarm.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libkarm.so.0
 %attr(755,root,root) %{_libexecdir}/libkarmpart.so
 %{_datadir}/apps/karm
 %{_datadir}/apps/karmpart
@@ -1060,6 +1106,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/services/kontact/kmailplugin.desktop
 %{_datadir}/servicetypes/dcopimap.desktop
 %{_datadir}/servicetypes/dcopmail.desktop
+%{_datadir}/apps/konqueror/servicemenus/email.desktop
 %{_desktopdir}/kde/KMail.desktop
 %{_desktopdir}/kde/kmail_view.desktop
 # hidden (todo)
@@ -1082,6 +1129,20 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/mimelnk/application/ms-tnef.desktop
 %{_desktopdir}/kde/ktnef.desktop
 %{_iconsdir}/hicolor/*/apps/ktnef.png
+
+%files kmobile
+%defattr(644,root,root,755)
+%doc kmobile/{TODO,DESIGN}
+%attr(755,root,root) %{_bindir}/kmobile
+%attr(755,root,root) %{_libdir}/libkmobileclient.so
+%attr(755,root,root) %{_libdir}/libkmobiledevice.so
+%{_datadir}/services/libkmobile_digicam.desktop
+%{_datadir}/services/libkmobile_gammu.desktop
+%{_datadir}/servicetypes/libkmobile.desktop
+%{_iconsdir}/default.kde/*/devices/mobile_*.png
+%{_iconsdir}/hicolor/*/apps/kmobile.png
+%{_datadir}/apps/kmobile/kmobileui.rc
+%{_desktopdir}/kde/kmobile.desktop
 
 %files knode -f knode.lang
 %defattr(644,root,root,755)
@@ -1180,6 +1241,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files kpilot -f kpilot.lang
 %defattr(644,root,root,755)
+%if 0
 %attr(755,root,root) %{_bindir}/kpalmdoc
 %attr(755,root,root) %{_bindir}/kpilot*
 %attr(755,root,root) %{_libexecdir}/conduit_address.so
@@ -1217,6 +1279,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/*/*/apps/kpalmdoc.png
 %{_iconsdir}/hicolor/*/*/kpilot.png
 %{_iconsdir}/crystalsvg/*/*/kpilotDaemon.png
+%endif
 
 %files libs
 %defattr(644,root,root,755)
@@ -1281,6 +1344,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkmime.so.2
 %attr(755,root,root) %{_libdir}/libknodecommon.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libknodecommon.so.3
+%attr(755,root,root) %{_libdir}/libknotes.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libknotes.so.0
 %attr(755,root,root) %{_libdir}/libknotes_xmlrpc.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libknotes_xmlrpc.so.1
 %attr(755,root,root) %{_libdir}/libknoteskolab.so.*.*.*
@@ -1297,8 +1362,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libkorg_stdprinting.so.1
 %attr(755,root,root) %{_libdir}/libkpgp.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkpgp.so.2
-%attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libkpilot.so.0
+#%attr(755,root,root) %{_libdir}/libkpilot.so.*.*.*
+#%attr(755,root,root) %ghost %{_libdir}/libkpilot.so.0
 %attr(755,root,root) %{_libdir}/libkpimexchange.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libkpimexchange.so.1
 %attr(755,root,root) %{_libdir}/libkpimidentities.so.*.*.*
@@ -1315,6 +1380,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libmimelib.so.1
 %attr(755,root,root) %{_libdir}/libqgpgme.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libqgpgme.so.0
-%{_datadir}/apps/libical
+#%{_datadir}/apps/libical
 %{_datadir}/apps/libkdepim
 %{_datadir}/apps/libkholidays
+
